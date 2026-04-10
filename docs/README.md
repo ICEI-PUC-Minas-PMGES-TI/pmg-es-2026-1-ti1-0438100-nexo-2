@@ -25,7 +25,7 @@ A documentação do projeto é estruturada da seguinte forma:
 6. Solução
 7. Referências Bibliográficas
 
-✅ [Documentação de Design Thinking (MIRO)](file:///C:/Users/Sophia%20de%20F%C3%A1tima/Downloads/G9%20-%20Infraestrutura%20Urbana%202%20(1).pdf)
+✅ [Documentação de Design Thinking (MIRO)](https://miro.com/app/board/uXjVGttxm6w=/?share_link_id=405329199487)
 
 # Contexto
 
