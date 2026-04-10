@@ -6,9 +6,14 @@ Informações básicas do projeto.
 * **Repositório GitHub:** [LINK PARA O REPOSITÓRIO NO GITHUB]
 * **Membros da equipe:**
 
-  * [Fulano](https://github.com/fulano) ⚠️ EXEMPLO ⚠️
-  * [Beltrano](https://github.com/beltrano) ⚠️ EXEMPLO ⚠️
-  * [Cicrano](https://github.com/cicrano) ⚠️ EXEMPLO ⚠️
+  * [Bernardo Guedes da Silveira](https://github.com/) 
+  * [Gabriel Moreira Bonifácio de Azevedo](https://github.com/TibaJr) 
+  * [Giovanna Marques Freire Barbosa](https://github.com/giomfb07)
+  * [Gustavo Ryan Gomes Guedes](https://github.com/)
+  * [Rafael Felipe Oliveira do Espirito Santo](https://github.com/rizencoding)
+  * [Sophia de Fatima Simões Almeida](https://github.com/)
+  * [Warlley Silva Baião Braga](https://github.com/)
+ 
 
 A documentação do projeto é estruturada da seguinte forma:
 
