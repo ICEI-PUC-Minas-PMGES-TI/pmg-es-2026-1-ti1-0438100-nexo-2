@@ -1,18 +1,25 @@
-# Nome do projeto
-
-Escreva um ou dois parágrafo resumindo o objetivo do seu projeto.
+# Zella 
+O Zella é um sistema web desenvolvido para atuar como um canal de denúncia, comunicação e transparência entre a população, empresas de infraestrutura e a prefeitura de uma cidade.
+O sistema tem o objetivo de melhorar o bem-estar da população, que diariamente enfrenta problemas graves de infraestrutura, como buracos nas vias públicas, patrimônios deteriorados e espaços que necessitam de reforma ou reconstrução.
+Nesse contexto, o Zella permite que cidadãos registrem denúncias de forma simples e acessível, enquanto órgãos responsáveis, como a prefeitura e empresas privadas de infraestrutura, podem acompanhar, responder e atualizar o andamento das demandas.
+Dessa forma, o sistema promove uma comunicação mais rápida, eficiente e transparente entre todas as partes envolvidas, contribuindo para a melhoria da gestão urbana e da qualidade de vida na cidade.
 
 ## Alunos integrantes da equipe
 
-* Nome completo do aluno 1
-* Nome completo do aluno 2
-* Nome completo do aluno 3
-* Nome completo do aluno 4
+* Bernardo Guedes da Silveira
+* Gabriel Moreira Bonifácio de Azevedo
+* Giovanna Marques Freire Barbosa
+* Gustavo Ryan Gomes Guedes
+* Rafael Felipe Oliveira do Espirito Santo
+* Sophia de Fatima Simões Almeida
+* Warlley Silva Baião Braga
+
 
 ## Professores responsáveis
 
-* Nome completo do professor 1
-* Nome completo do professor 2
+* Diego Augusto de Faria Barros
+* Henrique Almeida Louzada
+* Lucca Soares de Paiva Lacerda
 
 
 
