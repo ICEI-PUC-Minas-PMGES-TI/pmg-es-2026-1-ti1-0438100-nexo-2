@@ -11,7 +11,7 @@ Informações básicas do projeto.
   * [Giovanna Marques Freire Barbosa](https://github.com/giomfb07)
   * [Gustavo Ryan Gomes Guedes](https://github.com/)
   * [Rafael Felipe Oliveira do Espirito Santo](https://github.com/rizencoding)
-  * [Sophia de Fatima Simões Almeida](https://github.com/)
+  * [Sophia de Fatima Simões Almeida](https://github.com/sophiafatima)
   * [Warlley Silva Baião Braga](https://github.com/)
  
 
@@ -25,7 +25,7 @@ A documentação do projeto é estruturada da seguinte forma:
 6. Solução
 7. Referências Bibliográficas
 
-✅ [Documentação de Design Thinking (MIRO)](files/processo-dt.pdf)
+✅ [Documentação de Design Thinking (MIRO)](file:///C:/Users/Sophia%20de%20F%C3%A1tima/Downloads/G9%20-%20Infraestrutura%20Urbana%202%20(1).pdf)
 
 # Contexto
 
