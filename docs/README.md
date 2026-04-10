@@ -33,18 +33,18 @@ Detalhes sobre o espaço de problema, os objetivos do projeto, sua justificativa
 
 ## Problema
 
-**✳️✳️✳️ COLOQUE AQUI O SEU TEXTO ✳️✳️✳️**
+**✳️✳️✳️ O Zella é um sistema web desenvolvido para atuar como um canal de denúncia, comunicação e transparência entre a população, empresas de infraestrutura e a prefeitura de uma cidade.
+O sistema tem o objetivo de melhorar o bem-estar da população, que diariamente enfrenta problemas graves de infraestrutura, como buracos nas vias públicas, patrimônios deteriorados e espaços que necessitam de reforma ou reconstrução.
+Nesse contexto, o Zella permite que cidadãos registrem denúncias de forma simples e acessível, enquanto órgãos responsáveis, como a prefeitura e empresas privadas de infraestrutura, podem acompanhar, responder e atualizar o andamento das demandas.
+Dessa forma, o sistema promove uma comunicação mais rápida, eficiente e transparente entre todas as partes envolvidas, contribuindo para a melhoria da gestão urbana e da qualidade de vida na cidade. ✳️✳️✳️**
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Nesse momento você deve apresentar o problema que a sua aplicação deve resolver. No entanto, não é a hora de comentar sobre a aplicação. Descreva também o contexto em que essa aplicação será usada, se houver: empresa, tecnologias, etc. Novamente, descreva apenas o que de fato existir, pois ainda não é a hora de apresentar requisitos detalhados ou projetos.
->
+##-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 > **Orientações**:
 >
 > - [Objetivos, Problema de pesquisa e Justificativa](https://medium.com/@versioparole/objetivos-problema-de-pesquisa-e-justificativa-c98c8233b9c3)
 > - [Matriz Certezas, Suposições e Dúvidas](https://medium.com/educa%C3%A7%C3%A3o-fora-da-caixa/matriz-certezas-suposi%C3%A7%C3%B5es-e-d%C3%BAvidas-fa2263633655)
 > - [Brainstorming](https://www.euax.com.br/2018/09/brainstorming/)
-
+##-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 ## Objetivos
 
 **✳️✳️✳️ COLOQUE AQUI O SEU TEXTO ✳️✳️✳️**
