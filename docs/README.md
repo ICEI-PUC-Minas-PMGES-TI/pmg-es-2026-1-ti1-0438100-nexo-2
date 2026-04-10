@@ -9,10 +9,10 @@ Informações básicas do projeto.
   * [Bernardo Guedes da Silveira](https://github.com/) 
   * [Gabriel Moreira Bonifácio de Azevedo](https://github.com/TibaJr) 
   * [Giovanna Marques Freire Barbosa](https://github.com/giomfb07)
-  * [Gustavo Ryan Gomes Guedes](https://github.com/)
+  * [Gustavo Ryan Gomes Guedes](https://github.com/gustavoryan-del)
   * [Rafael Felipe Oliveira do Espirito Santo](https://github.com/rizencoding)
   * [Sophia de Fatima Simões Almeida](https://github.com/sophiafatima)
-  * [Warlley Silva Baião Braga](https://github.com/)
+  * [Warlley Silva Baião Braga](https://github.com/warlleyz)
  
 
 A documentação do projeto é estruturada da seguinte forma:
