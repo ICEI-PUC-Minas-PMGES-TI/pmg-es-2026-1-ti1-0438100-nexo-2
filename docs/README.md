@@ -33,10 +33,10 @@ Detalhes sobre o espaço de problema, os objetivos do projeto, sua justificativa
 
 ## Problema
 
-** O Zella é um sistema web desenvolvido para atuar como um canal de denúncia, comunicação e transparência entre a população, empresas de infraestrutura e a prefeitura de uma cidade.
+O Zella é um sistema web desenvolvido para atuar como um canal de denúncia, comunicação e transparência entre a população, empresas de infraestrutura e a prefeitura de uma cidade.
 O sistema tem o objetivo de melhorar o bem-estar da população, que diariamente enfrenta problemas graves de infraestrutura, como buracos nas vias públicas, patrimônios deteriorados e espaços que necessitam de reforma ou reconstrução.
 Nesse contexto, o Zella permite que cidadãos registrem denúncias de forma simples e acessível, enquanto órgãos responsáveis, como a prefeitura e empresas privadas de infraestrutura, podem acompanhar, responder e atualizar o andamento das demandas.
-Dessa forma, o sistema promove uma comunicação mais rápida, eficiente e transparente entre todas as partes envolvidas, contribuindo para a melhoria da gestão urbana e da qualidade de vida na cidade. **
+Dessa forma, o sistema promove uma comunicação mais rápida, eficiente e transparente entre todas as partes envolvidas, contribuindo para a melhoria da gestão urbana e da qualidade de vida na cidade.
 
 ##-------------------------------------------------------------------------------------------------------------------------------------------------------------------------
 > **Orientações**:
