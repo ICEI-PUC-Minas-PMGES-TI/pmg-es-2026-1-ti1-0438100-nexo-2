@@ -86,6 +86,7 @@ Além disso, o sistema também atende às empresas de infraestrutura, que são r
 
 Durante a etapa de entendimento, foi aplicada a abordagem de Design Thinking, com o objetivo de compreender profundamente o problema relacionado à comunicação entre a população, empresas de infraestrutura e órgãos públicos. 
 *Matriz CSD*
+
  CERTEZAS: 
   * A tecnologia pode facilitar a comunicação entre cidadãos e órgãos públicos.
   * Falta de manutenção urbana pode causar acidentes e transtornos.
@@ -94,6 +95,7 @@ Durante a etapa de entendimento, foi aplicada a abordagem de Design Thinking, co
   * Informações com localização e imagens facilitam a resolução do problema.
   * A organização dos dados permite encontrar regiões com maior necessidade de manutenção.
   * A divulgação do sistema é essencial para que mais pessoas da comunidade possam divulgar suas dores e para garantir a visibilidade da prefeitura.
+    
 SUPOSIÇÕES:
  * Centralizar os relatos ajudaria a prefeitura a identificar problemas mais rapidamente.
  * Um sistema com fotos aumentaria a confiabilidade dos relatos.
@@ -101,7 +103,8 @@ SUPOSIÇÕES:
  * Se os problemas fossem resolvidos rapidamente, mais pessoas passariam a usar a plataforma.
  * Notificações sobre atualização do problema aumentariam o engajamento.
  * A categorização dos problemas ajudaria na organização dos relatos.
-DUVIDAS:
+   
+DÚVIDAS:
  * Como garantir que os relatos enviados são verdadeiros?
  * Como evitar relatos duplicados do mesmo problema?
  * Como manter os usuários informados sobre a resolução do problema?
