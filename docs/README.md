@@ -114,7 +114,7 @@ DÚVIDAS:
  * Como integrar a plataforma com sistemas já utilizados por órgãos responsáveis?
  * Como garantir visibilidade as dores dos nossos usuários?
 
-[Mapa de stakeholders](<G9 - Infraestrutura Urbana 2.jpg>)
+![Mapa de stakeholders](G9-InfraestruturaUrbana2.jpg)
 
 > * **Mapa de stakeholders**: ferramenta que nos permite compreender o grupo de pessoas e entidades que devemos estudar e conversar para entender mais sobre o problema
 > * **Entrevistas qualitativas**: série de entrevistas qualitativas para validar suposições e solucionar as dúvidas com as principais pessoas envolvidas;
