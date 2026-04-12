@@ -6,7 +6,7 @@ Informações básicas do projeto.
 * **Repositório GitHub:** [LINK PARA O REPOSITÓRIO NO GITHUB]
 * **Membros da equipe:**
 
-  * [Bernardo Guedes da Silveira](https://github.com/) 
+  * [Bernardo Guedes da Silveira](https://github.com/Bernardo-Guedes) 
   * [Gabriel Moreira Bonifácio de Azevedo](https://github.com/TibaJr) 
   * [Giovanna Marques Freire Barbosa](https://github.com/giomfb07)
   * [Gustavo Ryan Gomes Guedes](https://github.com/gustavoryan-del)
