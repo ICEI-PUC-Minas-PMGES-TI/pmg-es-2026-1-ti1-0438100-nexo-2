@@ -28,8 +28,15 @@ A documentação do projeto é estruturada da seguinte forma:
 ✅ [Documentação de Design Thinking (MIRO)](https://miro.com/app/board/uXjVGttxm6w=/?share_link_id=405329199487)
 
 # Contexto
+ 
+O projeto Zella surge em um contexto urbano onde problemas de infraestrutura são frequentes e impactam diretamente a qualidade de vida da população. Buracos nas vias, iluminação pública precária, patrimônios deteriorados e falta de manutenção em espaços públicos são exemplos comuns. A criação do Zella se justifica pela necessidade de modernizar e otimizar a gestão urbana, utilizando tecnologia para resolver problemas reais e frequentes da sociedade. 
 
-Detalhes sobre o espaço de problema, os objetivos do projeto, sua justificativa e público-alvo.
+O sistema Zella é voltado para três principais grupos:
+
+*População em geral: cidadãos que desejam registrar denúncias e acompanhar a resolução de problemas;
+*Prefeituras e órgãos públicos: responsáveis pela gestão e manutenção da infraestrutura urbana;
+*Empresas de infraestrutura: prestadoras de serviços que atuam na execução das demandas.
+
 
 ## Problema
 
@@ -39,50 +46,39 @@ Nesse contexto, o Zella permite que cidadãos registrem denúncias de forma simp
 Dessa forma, o sistema promove uma comunicação mais rápida, eficiente e transparente entre todas as partes envolvidas, contribuindo para a melhoria da gestão urbana e da qualidade de vida na cidade.
 
 
-> **Orientações**:
->
-> - [Objetivos, Problema de pesquisa e Justificativa](https://medium.com/@versioparole/objetivos-problema-de-pesquisa-e-justificativa-c98c8233b9c3)
-> - [Matriz Certezas, Suposições e Dúvidas](https://medium.com/educa%C3%A7%C3%A3o-fora-da-caixa/matriz-certezas-suposi%C3%A7%C3%B5es-e-d%C3%BAvidas-fa2263633655)
-> - [Brainstorming](https://www.euax.com.br/2018/09/brainstorming/)
-
 ## Objetivos
 
-**✳️✳️✳️ COLOQUE AQUI O SEU TEXTO ✳️✳️✳️**
+Desenvolver um sistema web que funcione como um canal eficiente de denúncia, comunicação e transparência entre a população, empresas de infraestrutura e a prefeitura, visando melhorar a gestão urbana e a qualidade de vida da população.
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Aqui você deve descrever os objetivos do trabalho indicando que o objetivo geral é desenvolver um software para solucionar o problema apresentado acima. Apresente também alguns (pelo menos 2) objetivos específicos dependendo de onde você vai querer concentrar a sua prática investigativa, ou como você vai aprofundar no seu trabalho.
->
-> **Orientações**:
->
-> - [Objetivo geral e objetivo específico: como fazer e quais verbos utilizar](https://blog.mettzer.com/diferenca-entre-objetivo-geral-e-objetivo-especifico/)
+Objetivos Específicos:
+ * Possibilitar o acompanhamento em tempo real do andamento das solicitações;
+ * Disponibilizar dados e informações para análise e tomada de decisão por parte dos gestores;
+ * Facilitar a comunicação entre população, órgãos públicos e empresas responsáveis;
+
+
 
 ## Justificativa
 
-**✳️✳️✳️ COLOQUE AQUI O SEU TEXTO ✳️✳️✳️**
+O desenvolvimento do sistema Zella se justifica pela necessidade de melhorar a comunicação entre a população, o poder público e as empresas responsáveis pela infraestrutura urbana. Atualmente, muitos cidadãos enfrentam dificuldades para registrar denúncias e acompanhar a resolução de problemas, o que gera insatisfação, falta de confiança e sensação de abandono por parte dos órgãos responsáveis.
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Descreva a importância ou a motivação para trabalhar com esta aplicação que você escolheu. Indique as razões pelas quais você escolheu seus objetivos específicos ou as razões para aprofundar em certos aspectos do software.
->
-> O grupo de trabalho pode fazer uso de questionários, entrevistas e dados estatísticos, que podem ser apresentados, com o objetivo de esclarecer detalhes do problema que será abordado pelo grupo.
->
-> **Orientações**:
->
-> - [Como montar a justificativa](https://guiadamonografia.com.br/como-montar-justificativa-do-tcc/)
+Além disso, os métodos tradicionais de atendimento, como ligações telefônicas ou atendimentos presenciais, tendem a ser burocráticos, lentos e pouco transparentes, dificultando a eficiência na resolução das demandas. A ausência de um sistema centralizado também compromete a organização das informações e a tomada de decisões estratégicas por parte da gestão pública.
+
+Diante desse cenário, o Zella propõe uma solução tecnológica que facilita o registro de denúncias, permite o acompanhamento em tempo real e promove maior transparência nos processos. Com isso, o sistema contribui para a modernização da gestão urbana, otimização dos serviços públicos e maior engajamento da população.
+
+Assim, o projeto se torna relevante não apenas pela inovação tecnológica, mas principalmente pelo seu impacto social, ao promover melhorias na qualidade de vida e no bem-estar da população.
+
+
 
 ## Público-Alvo
 
-**✳️✳️✳️ COLOQUE AQUI O SEU TEXTO ✳️✳️✳️**
+O sistema Zella é direcionado a um público diversificado, composto principalmente por cidadãos, órgãos públicos e empresas de infraestrutura, que interagem entre si dentro do contexto da gestão urbana.
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Descreva o mercado para o qual a solução está sendo desenvolvida, detalhando um pouco mais sobre o perfil dos usuários: conhecimentos prévios, relação com a tecnologia, relações hierárquicas, etc. Adicione informações sobre o público-alvo por meio de uma descrição textual ou por meio do mapa de stakeholders, ou como o grupo achar mais conveniente.
->
-> **Orientações**:
->
-> - [Público-alvo: o que é, tipos, como definir seu público e exemplos](https://klickpages.com.br/blog/publico-alvo-o-que-e/)
-> - [Qual a diferença entre público-alvo e persona?](https://rockcontent.com/blog/diferenca-publico-alvo-e-persona/)
+Em primeiro lugar, destaca-se a população em geral, formada por cidadãos de diferentes faixas etárias, níveis de escolaridade e graus de familiaridade com tecnologia. Esse público utiliza, em sua maioria, smartphones e aplicações web no dia a dia, porém nem todos possuem conhecimentos técnicos avançados. Por isso, o sistema deve apresentar uma interface simples, intuitiva e acessível, permitindo que qualquer pessoa consiga registrar denúncias e acompanhar solicitações sem dificuldades. Esses usuários ocupam uma posição de solicitantes dentro do sistema.
+
+Outro grupo importante é composto pelos órgãos públicos, especialmente prefeituras e setores responsáveis pela manutenção urbana. Esses usuários possuem maior nível de conhecimento técnico e administrativo, sendo responsáveis por analisar, validar, encaminhar e , dependendo da situação, resolver as demandas registradas. Dentro da hierarquia do sistema, atuam como gestores e moderadores das informações, tendo acesso a funcionalidades mais avançadas, como gerenciamento de denúncias, atualização de status e geração de relatórios.
+
+Além disso, o sistema também atende às empresas de infraestrutura, que são responsáveis pela execução dos serviços, como obras, reparos e manutenções. Esses usuários interagem diretamente com as demandas aprovadas, atualizando o andamento das atividades e informando a conclusão dos serviços. Geralmente possuem conhecimento técnico específico de suas áreas de atuação e utilizam o sistema como ferramenta de trabalho e comunicação com o setor público.
+
 
 # Product Discovery
 
