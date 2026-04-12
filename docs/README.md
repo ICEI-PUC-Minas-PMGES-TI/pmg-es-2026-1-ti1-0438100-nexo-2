@@ -116,7 +116,7 @@ DÚVIDAS:
 
 ![Mapa de stakeholders](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/bd552b9a7ad891947df4608448d819032b8216f6/docs/images/G9%20-%20Infraestrutura%20Urbana%202.jpg)
 
-> * **Mapa de stakeholders**: ferramenta que nos permite compreender o grupo de pessoas e entidades que devemos estudar e conversar para entender mais sobre o problema
+
 > * **Entrevistas qualitativas**: série de entrevistas qualitativas para validar suposições e solucionar as dúvidas com as principais pessoas envolvidas;
 > * **Highlights de pesquisa**: um compilado do levantamento realizado por meio das entrevistas.
 
