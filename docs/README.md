@@ -149,24 +149,36 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 | EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`        | PARA ...`MOTIVO/VALOR`               |
 | --------------------- | ------------------------------------------ | -------------------------------------- |
 | Cidadão               | Uma plataforma onde posso registrar uma denúncia com fotos, localização e descrição do problema | que as autoridades ou empresas responsáveis possam identificar e resolver a situação com mais rapidez          |
-| Administrador         | Alterar permissões ⚠️ EXEMPLO ⚠️      | Permitir que possam administrar contas |
+| Cidadão         | Gostaria de acompanhar o status das minhas denúncias em tempo real      | saber se o problema já está sendo resolvido ou concluído, evitando incertezas e falta de informação |
+| Cidadão         | receber notificações sobre problemas no meu bairro e atualizações das denúncias      | me manter informado e poder tomar decisões mais seguras no meu dia a dia |
+| Empresa de Infraestutura         | Uma plataforma única para gerir ordens de serviço, comprovações de campo e prazos contratuais.      | monitorar o cumprimento rigoroso dos prazos contratuais em tempo realcontas |
+| Funcionário de campo da empresa         | uma interface móvel simples para atualizar o status do progresso (0% a 100%) e anexar a foto da obra finalizada      | dar baixa imediata na ordem de serviço sem precisar preencher relatórios manuais ao final do dia|
+| Gerente de operações da empresa         | Um painel de controle de metas e alocação de recursos em tempo real.      | Reduzir custos com retrabalho, protegendo a margem de lucro . |
+| Prefeitura        | Publicar atualizações periódicas sobre problemas relevantes.      | Manter um histórico cronológico disponível para todos |
+| Agente público         | Filtrar denúncias por tipo, status e orgão responsável      | Priorizar o atendimento |
+| Gestor da prefeitura         | Visualizar todas as denúncias em um mapa interativo      | Identificar rapidamente as áreas mais críticas |
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente aqui as histórias de usuário que são relevantes para o projeto de sua solução. As Histórias de Usuário consistem em uma ferramenta poderosa para a compreensão das necessidades de cada persona. Se possível, agrupe as histórias de usuário por contexto, para facilitar consultas recorrentes à essa parte do documento.
->
-> **Orientações**:
->
-> - [Histórias de usuários com exemplos e template](https://www.atlassian.com/br/agile/project-management/user-stories)
-> - [Como escrever boas histórias de usuário (User Stories)](https://medium.com/vertice/como-escrever-boas-users-stories-hist%C3%B3rias-de-usu%C3%A1rios-b29c75043fac)
+
 
 ## Proposta de Valor
 
-**✳️✳️✳️ APRESENTE O DIAGRAMA DA PROPOSTA DE VALOR PARA CADA PERSONA ✳️✳️✳️**
 
 ##### Proposta de valor para Persona XPTO ⚠️ EXEMPLO ⚠️
 
-![Exemplo de proposta de valor](images/exemplo-proposta-valor.png)
+* Proposta de Valor de Luiza:
+![Proposta de valor de Luiza](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20LUIZA.jpg)
+
+* Proposta de Valor de João Pedro:
+![Proposta de valor de João](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20JO%C3%83O.jpg)
+
+* Proposta de Valor de Dona Maria:
+![Proposta de valor de Dona Maria](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20DONA%20MARIA.jpg)
+
+* Proposta de Valor de Ricardo:
+![Proposta de valor de Ricardo](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
+
+* Proposta de Valor de Fernanda:
+![Proposta de valor de Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
 > ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
 >
