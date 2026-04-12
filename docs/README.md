@@ -146,7 +146,7 @@ Nesse momento, vamos transformar os insights e validações obtidos em soluçõe
 
 Com base na análise das personas foram identificadas as seguintes histórias de usuários:
 
-| EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`        | PARA ...`MOTIVO/VALOR`               |
+| EU COMO... | QUERO/PRECISO ...       | PARA ...              |
 | --------------------- | ------------------------------------------ | -------------------------------------- |
 | Cidadão               | Uma plataforma onde posso registrar uma denúncia com fotos, localização e descrição do problema | Que as autoridades ou empresas responsáveis possam identificar e resolver a situação com mais rapidez          |
 | Cidadão         | Gostaria de acompanhar o status das minhas denúncias em tempo real      | Saber se o problema já está sendo resolvido ou concluído, evitando incertezas e falta de informação |
