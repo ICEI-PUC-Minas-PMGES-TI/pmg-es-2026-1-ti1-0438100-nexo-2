@@ -113,8 +113,7 @@ DÚVIDAS:
  * Como integrar a plataforma com sistemas já utilizados por órgãos responsáveis?
  * Como garantir visibilidade as dores dos nossos usuários?
 
-[Mapa de stakeholders](<img width="866" height="561" alt="image" src="https://github.com/user-attachments/assets/134c63ba-ff3e-4fec-920c-72f5fa96b4de" />
-)
+[Mapa de stakeholders]()
 
 > * **Mapa de stakeholders**: ferramenta que nos permite compreender o grupo de pessoas e entidades que devemos estudar e conversar para entender mais sobre o problema
 > * **Entrevistas qualitativas**: série de entrevistas qualitativas para validar suposições e solucionar as dúvidas com as principais pessoas envolvidas;
