@@ -179,9 +179,6 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 ##### Proposta de Valor de Fernanda:
 ![Proposta de valor de Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> O mapa da proposta de valor é uma ferramenta que nos ajuda a definir qual tipo de produto ou serviço melhor atende às personas definidas anteriormente.
 
 ## Requisitos
 
