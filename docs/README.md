@@ -126,7 +126,7 @@ DÚVIDAS:
 
 **✳️✳️✳️ APRESENTE OS DIAGRAMAS DE PERSONAS ✳️✳️✳️**
 
-![Exemplo de proposta de valor](images/exemplo-persona.png)
+![Exemplo de proposta de valor](docs/images/PERSONA LUIZA.jpg)
 
 > ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
 >
