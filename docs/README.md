@@ -84,13 +84,35 @@ Além disso, o sistema também atende às empresas de infraestrutura, que são r
 
 ## Etapa de Entendimento
 
-**✳️✳️✳️ APRESENTE OS ARTEFATOS DA ETAPA  ✳️✳️✳️**
+Durante a etapa de entendimento, foi aplicada a abordagem de Design Thinking, com o objetivo de compreender profundamente o problema relacionado à comunicação entre a população, empresas de infraestrutura e órgãos públicos. 
+*Matriz CSD*
+ CERTEZAS: 
+  * A tecnologia pode facilitar a comunicação entre cidadãos e órgãos públicos.
+  * Falta de manutenção urbana pode causar acidentes e transtornos.
+  * Relatos organizados podem ajudar no planejamento urbano.
+  * Um sistema simples e fácil de usar aumentaria o número de usuários.
+  * Informações com localização e imagens facilitam a resolução do problema.
+  * A organização dos dados permite encontrar regiões com maior necessidade de manutenção.
+  * A divulgação do sistema é essencial para que mais pessoas da comunidade possam divulgar suas dores e para garantir a visibilidade da prefeitura.
+SUPOSIÇÕES:
+ * Centralizar os relatos ajudaria a prefeitura a identificar problemas mais rapidamente.
+ * Um sistema com fotos aumentaria a confiabilidade dos relatos.
+ * O acompanhamento do status do problema incentivaria mais pessoas a participar.
+ * Se os problemas fossem resolvidos rapidamente, mais pessoas passariam a usar a plataforma.
+ * Notificações sobre atualização do problema aumentariam o engajamento.
+ * A categorização dos problemas ajudaria na organização dos relatos.
+DUVIDAS:
+ * Como garantir que os relatos enviados são verdadeiros?
+ * Como evitar relatos duplicados do mesmo problema?
+ * Como manter os usuários informados sobre a resolução do problema?
+ * Como incentivar a população a usar a plataforma?
+ * Como proteger os dados dos usuários?
+ * Como integrar a plataforma com sistemas já utilizados por órgãos responsáveis?
+ * Como garantir visibilidade as dores dos nossos usuários?
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Nessa etapa, vamos trabalhar com a metdologia de Design Thinking para compreender com maior profundidade o problema a ser tratado. Nesse processo, vamos elaborar:
->
-> * **Matriz CSD**: também conhecida por Matriz de Alinhamento, é uma ferramenta utilizada no Design Thinking para organizar informações e facilitar o processo de tomada de decisão e solução de problemas;
+[Mapa de stakeholders](<img width="866" height="561" alt="image" src="https://github.com/user-attachments/assets/134c63ba-ff3e-4fec-920c-72f5fa96b4de" />
+)
+
 > * **Mapa de stakeholders**: ferramenta que nos permite compreender o grupo de pessoas e entidades que devemos estudar e conversar para entender mais sobre o problema
 > * **Entrevistas qualitativas**: série de entrevistas qualitativas para validar suposições e solucionar as dúvidas com as principais pessoas envolvidas;
 > * **Highlights de pesquisa**: um compilado do levantamento realizado por meio das entrevistas.
