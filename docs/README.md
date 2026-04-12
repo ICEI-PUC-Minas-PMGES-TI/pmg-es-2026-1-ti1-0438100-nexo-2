@@ -85,6 +85,7 @@ Além disso, o sistema também atende às empresas de infraestrutura, que são r
 ## Etapa de Entendimento
 
 Durante a etapa de entendimento, foi aplicada a abordagem de Design Thinking, com o objetivo de compreender profundamente o problema relacionado à comunicação entre a população, empresas de infraestrutura e órgãos públicos. 
+
 *Matriz CSD*
 
  CERTEZAS: 
