@@ -124,13 +124,18 @@ DÚVIDAS:
 
 ### Personas
 
-**✳️✳️✳️ APRESENTE OS DIAGRAMAS DE PERSONAS ✳️✳️✳️**
+
 
 [Persona Luiza](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20LUIZA.jpg)
+
 [Persona João](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20JO%C3%83O.jpg)
+
 [Persona Dona Maria](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20DONA%20MARIA.jpg)
+
 [Persona Ricardo](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20RICARDO.jpg)
+
 [Persona Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20FERNANDA.jpg)
+
 
 
 # Product Design
