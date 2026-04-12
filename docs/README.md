@@ -148,11 +148,11 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 
 | EU COMO...`PERSONA` | QUERO/PRECISO ...`FUNCIONALIDADE`        | PARA ...`MOTIVO/VALOR`               |
 | --------------------- | ------------------------------------------ | -------------------------------------- |
-| Cidadão               | Uma plataforma onde posso registrar uma denúncia com fotos, localização e descrição do problema | que as autoridades ou empresas responsáveis possam identificar e resolver a situação com mais rapidez          |
-| Cidadão         | Gostaria de acompanhar o status das minhas denúncias em tempo real      | saber se o problema já está sendo resolvido ou concluído, evitando incertezas e falta de informação |
-| Cidadão         | receber notificações sobre problemas no meu bairro e atualizações das denúncias      | me manter informado e poder tomar decisões mais seguras no meu dia a dia |
-| Empresa de Infraestutura         | Uma plataforma única para gerir ordens de serviço, comprovações de campo e prazos contratuais.      | monitorar o cumprimento rigoroso dos prazos contratuais em tempo realcontas |
-| Funcionário de campo da empresa         | uma interface móvel simples para atualizar o status do progresso (0% a 100%) e anexar a foto da obra finalizada      | dar baixa imediata na ordem de serviço sem precisar preencher relatórios manuais ao final do dia|
+| Cidadão               | Uma plataforma onde posso registrar uma denúncia com fotos, localização e descrição do problema | Que as autoridades ou empresas responsáveis possam identificar e resolver a situação com mais rapidez          |
+| Cidadão         | Gostaria de acompanhar o status das minhas denúncias em tempo real      | Saber se o problema já está sendo resolvido ou concluído, evitando incertezas e falta de informação |
+| Cidadão         | Receber notificações sobre problemas no meu bairro e atualizações das denúncias      | Me manter informado e poder tomar decisões mais seguras no meu dia a dia |
+| Empresa de Infraestutura         | Uma plataforma única para gerir ordens de serviço, comprovações de campo e prazos contratuais.      | Monitorar o cumprimento rigoroso dos prazos contratuais em tempo realcontas |
+| Funcionário de campo da empresa         | Uma interface móvel simples para atualizar o status do progresso (0% a 100%) e anexar a foto da obra finalizada      | Dar baixa imediata na ordem de serviço sem precisar preencher relatórios manuais ao final do dia|
 | Gerente de operações da empresa         | Um painel de controle de metas e alocação de recursos em tempo real.      | Reduzir custos com retrabalho, protegendo a margem de lucro . |
 | Prefeitura        | Publicar atualizações periódicas sobre problemas relevantes.      | Manter um histórico cronológico disponível para todos |
 | Agente público         | Filtrar denúncias por tipo, status e orgão responsável      | Priorizar o atendimento |
@@ -163,21 +163,20 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 ## Proposta de Valor
 
 
-##### Proposta de valor para Persona XPTO ⚠️ EXEMPLO ⚠️
 
-* Proposta de Valor de Luiza:
+##### Proposta de Valor de Luiza:
 ![Proposta de valor de Luiza](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20LUIZA.jpg)
 
-* Proposta de Valor de João Pedro:
+##### Proposta de Valor de João Pedro:
 ![Proposta de valor de João](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20JO%C3%83O.jpg)
 
-* Proposta de Valor de Dona Maria:
+##### Proposta de Valor de Dona Maria:
 ![Proposta de valor de Dona Maria](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20DONA%20MARIA.jpg)
 
-* Proposta de Valor de Ricardo:
+##### Proposta de Valor de Ricardo:
 ![Proposta de valor de Ricardo](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
-* Proposta de Valor de Fernanda:
+##### Proposta de Valor de Fernanda:
 ![Proposta de valor de Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
 > ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
