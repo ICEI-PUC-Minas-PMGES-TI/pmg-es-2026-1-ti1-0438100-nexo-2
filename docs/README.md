@@ -269,7 +269,11 @@ Descrição para a tela XPTO
 
 # Metodologia
 
-Detalhes sobre a organização do grupo e o ferramental empregado.
+O desenvolvimento do projeto foi realizado de forma colaborativa ao longo de várias semanas, por meio de reuniões entre os integrantes do grupo. Durante esses encontros, as ideias foram discutidas em conjunto, permitindo a troca de diferentes pontos de vista e a construção coletiva das soluções propostas.
+A equipe adotou uma abordagem baseada em princípios do Design Thinking, passando por etapas como entendimento do problema, levantamento de hipóteses, validação por meio de entrevistas e organização das informações coletadas. Esse processo contribuiu para uma melhor compreensão das necessidades dos usuários e dos desafios relacionados à infraestrutura urbana.
+De modo geral, não houve uma divisão rígida de tarefas, sendo que todos os integrantes participaram ativamente das diferentes etapas do projeto. No entanto, ocorreu uma divisão pontual das atividades: uma parte da equipe (Gabriel, Giovanna, Gustavo e Warlley) ficou responsável pela elaboração do userflow, estruturando a jornada do usuário dentro do sistema, enquanto outra parte (Bernado, Rafael e Sophia) se dedicou à organização e desenvolvimento da apresentação do projeto.
+Essa dinâmica colaborativa, aliada a uma divisão estratégica em momentos específicos, favoreceu a produtividade da equipe, o alinhamento das ideias e a evolução no projeto.
+
 
 ## Ferramentas
 
@@ -278,10 +282,10 @@ Relação de ferramentas empregadas pelo grupo durante o projeto.
 | Ambiente                    | Plataforma | Link de acesso                                     |
 | --------------------------- | ---------- | -------------------------------------------------- |
 | Processo de Design Thinking | Miro       | https://miro.com/XXXXXXX ⚠️ EXEMPLO ⚠️        |
-| Repositório de código     | GitHub     | https://github.com/XXXXXXX ⚠️ EXEMPLO ⚠️      |
-| Hospedagem do site          | Render     | https://site.render.com/XXXXXXX ⚠️ EXEMPLO ⚠️ |
-| Protótipo Interativo       | MarvelApp  | https://marvelapp.com/XXXXXXX ⚠️ EXEMPLO ⚠️   |
-|                             |            |                                                    |
+| Protótipo Interativo       | Figma  |    |
+|                             |            |                     
+|                             |            |     
+|                             |            |     |
 
 > ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
 >
