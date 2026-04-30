@@ -188,8 +188,11 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 
 | ID     | Descrição do Requisito                                   | Prioridade |
 | ------ | ---------------------------------------------------------- | ---------- |
-| RF-001 | Permitir que o usuário cadastre tarefas ⚠️ EXEMPLO ⚠️ | ALTA       |
-| RF-002 | Emitir um relatório de tarefas no mês ⚠️ EXEMPLO ⚠️ | MÉDIA     |
+| RF-001 | Permitir que o usuário possa fazer cadastro de um perfil | ALTA       |
+| RF-002 | Permitir que o usuário possa fazer login na sua conta | ALTA     |
+| RF-003 | Permitir que o usuário possa criar sua denúncia no sistema | ALTA     |
+| RF-004 | Permitir que o usuário possa acompanhar o andamento da resolução da denúncia | ALTA     |
+| RF-005 | Permitir que o usuário possa | ALTA     |
 
 ### Requisitos não Funcionais
 
