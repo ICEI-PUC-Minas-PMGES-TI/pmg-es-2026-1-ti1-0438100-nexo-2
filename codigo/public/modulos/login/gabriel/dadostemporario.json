@@ -1,0 +1,61 @@
+{
+    "denuncias": [
+        {
+            "id": 1,
+            "status": "resolvida",
+            "categoria": "buraco na via",
+            "descricaoDenuncia": "A avenida tem um movimento muito grande, com o aumento das chuvas...",
+            "titulo": "Buraco na Avenida Firmo de Matos",
+            "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg"],
+            "urgencia": "baixa",
+            "data": "2025-04-26",
+            "entidadeDirecionada": "Todos",
+            "denunciante": {
+                "usuario": "Luisa Souza"
+            },
+            "local": {
+                "cidade": "Contagem",
+                "estado": "MG",
+                "logradouro": "Avenida Firmo de Matos"
+            }
+        },
+        {
+            "id": 2,
+            "status": "andamento",
+            "categoria": "falta de iluminacao",
+            "descricaoDenuncia": "A avenida está completamente sem iluminação...",
+            "titulo": "Falta de Iluminação na Avenida Edmeia",
+            "imagens": ["http://localhost:3000/uploads/foto4.jpg", "http://localhost:3000/uploads/foto5.jpg"],
+            "urgencia": "alta",
+            "data": "2025-04-25",
+            "entidadeDirecionada": "Prefeitura",
+            "denunciante": {
+                "usuario": "Maria"
+            },
+            "local": {
+                "cidade": "Betim",
+                "estado": "MG",
+                "logradouro": "Avenida Edmeia Matos Lazzarotti"
+            }
+        },
+        {
+            "id": 3,
+            "status": "andamento",
+            "categoria": "problema de esgoto",
+            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
+            "titulo": "Vazamento de Esgoto na Avenida Professor Mário",
+            "imagens": ["http://localhost:3000/uploads/foto7.jpg", "http://localhost:3000/uploads/foto8.jpg"],
+            "urgencia": "media",
+            "data": "2025-04-24",
+            "entidadeDirecionada": "Empresas",
+            "denunciante": {
+                "usuario": "João Pedro"
+            },
+            "local": {
+                "cidade": "Belo Horizonte",
+                "estado": "MG",
+                "logradouro": "Avenida Professor Mário Werneck"
+            }
+        }
+    ]
+}
