@@ -1,0 +1,98 @@
+{
+    "denuncias":[
+        {
+            "id": 1,
+            "status": "Andamento",
+            "categoria_id": 1,
+            "descricaoDenuncia": "A avenida tem um movimento muito grande, com o aumento das chuvas...",
+            "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg", "http://localhost:3000/uploads/foto3.jpg"],
+            "urgencia_id": 1,
+            "data": "2025-04-26",
+            "entidades_id": 1,
+            "denunciante_cpf": "ID do usuário",
+            "local": {
+                "cidade": "Contagem",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Firmo de Matos"
+            },
+            "instituicao_id": "Megasafalt",
+            "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
+            "prazo": "2025-07-26",
+            "afetados": 21,
+            "custo": "1250.97",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra."
+        },
+        {
+            "id": 2,
+            "status": "Andamento",
+            "categoria_id": 5,
+            "descricaoDenuncia": "A avenida está completamente sem iluminação...",
+            "imagens": ["http://localhost:3000/uploads/foto4.jpg", "http://localhost:3000/uploads/foto5.jpg", "http://localhost:3000/uploads/foto6.jpg"],
+            "urgencia_id": 3,
+            "data": "2025-04-26",
+            "entidades_id": 2,
+            "denunciante":{
+                "usuario": "Maria"
+            },
+            "local": {
+                "cidade": "Betim",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenina Edmeia Matos Lazzarotti"
+            },
+            "instituicao": "Prefeitura de Betim",
+            "notaOrgao": "",
+            "prazo": "2025-05-05",
+            "afetados": 12,
+            "custo": "2456.35",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra e mão de obra."
+        },
+        {
+            "id": 3,
+            "status": "Andamento",
+            "categoria_id": 2,
+            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
+            "imagens": ["http://localhost:3000/uploads/foto7.jpg", "http://localhost:3000/uploads/foto8.jpg", "http://localhost:3000/uploads/foto9.jpg"],
+            "urgencia_id": 2,
+            "data": "2025-04-26",
+            "entidades_id": 3,
+            "denunciante":{
+                "usuario": "João Pedro"
+            },
+            "local": {
+                "cidade": "Belo Horizonte",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Professor Mário Werneck"
+            },
+            "instituicao": "Megasafalt",
+            "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
+            "prazo": "2025-07-26",
+            "afetados": 34,
+            "custo": "7985.00",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra, mão de obra e documentação junto à prefeitura."
+        }
+    ],
+
+
+    "categorias":[
+        {"id": 1, "nome": "Buraco na via"},
+        {"id": 2, "nome": "Problema de esgoto"},
+        {"id": 3, "nome": "Deslizamento"},
+        {"id": 4, "nome": "Limpeza"},
+        {"id": 5, "nome": "Falta de iluminação"}
+    ],
+
+    "urgencias":[
+        {"id": 1, "tipo": "Baixa"},
+        {"id": 2, "tipo": "Média"},
+        {"id": 3, "tipo": "Alta"}
+    ],
+
+    "entidades":[
+        {"id": 1, "tipo": "Todos"},
+        {"id": 2, "tipo": "Prefeitura"},
+        {"id": 3, "tipo": "Empresa privada"}
+    ]
+}
