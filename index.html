@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Zella - Home</title>
+
+  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+  <link rel="stylesheet" href="style.css">
+
+</head>
+<body>
+
+  <!-- CABEÇALHO -->
+  <header>
+    <h1>Zella</h1>
+    <nav>
+      <a href="#">Início</a>
+      <a href="#">Faça sua denúncia</a>
+      <a href="#">Minhas denúncias</a>
+      <a href="#">Outras denúncias</a>
+    </nav>
+    <div>
+      <input type="text" id="busca" placeholder="Buscar...">
+      <img src="https://i.pravatar.cc/40" alt="Usuário">
+    </div>
+  </header>
+
+  <!-- CONTEÚDO PRINCIPAL -->
+  <main>
+    <!-- MAPA + LISTA -->
+    <section>
+
+      <!-- MAPA -->
+      <div id="mapa" style="height: 500px;"></div>
+
+      <!-- SIDEBAR -->
+      <aside>
+
+        <!-- FILTROS -->
+        <div id="filtros">
+          <button data-filtro="todas">TODAS</button>
+          <button data-filtro="abertas">ABERTAS</button>
+          <button data-filtro="andamento">EM ANDAMENTO</button>
+          <button data-filtro="resolvida">REALIZADAS</button>
+        </div>
+
+        <!-- LISTA -->
+        <div id="lista-denuncias">
+        </div>
+
+      </aside>
+    </section>
+
+    <!-- ESTATÍSTICAS -->
+    <section id="estatisticas">
+      <div><h2>650 DENÚNCIAS REALIZADAS</h2></div>
+      <div><h2>273 EM ANDAMENTO</h2></div>
+      <div><h2>250 RESOLVIDAS</h2></div>
+      <div><h2>2 MIL USUÁRIOS</h2></div>
+    </section>
+
+  </main>
+
+  <!-- FOOTER -->
+  <footer>
+
+    <div>
+      <h3>Zella</h3>
+      <p>Plataforma para registro de denúncias urbanas.</p>
+    </div>
+
+    <div>
+      <h3>Navegação</h3>
+      <p>Início</p>
+      <p>Minhas denúncias</p>
+      <p>Outras denúncias</p>
+    </div>
+
+    <div>
+      <h3>Contato</h3>
+      <p>Email: contato@zella.com</p>
+      <p>Telefone: (31) 3333-4444</p>
+    </div>
+
+  </footer>
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="script.js"></script>
+</body>
+</html>
