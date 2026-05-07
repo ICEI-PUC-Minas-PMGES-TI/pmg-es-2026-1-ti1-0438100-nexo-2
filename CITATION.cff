@@ -1,11 +1,11 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Zella
 authors:
   - family-names: 
     given-names: 
-  - family-names: 
-    given-names: 
+  - family-names: Marques Freire Barbosa
+    given-names: Giovanna
   - family-names: 
     given-names: 
   - family-names: 
@@ -25,7 +25,7 @@ authors:
 keywords:
   - 
   - 
-repository-code: 
+repository-code: https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2.git
 license: CC-BY-4.0
 version: 1.0.0
 date-released: 2022-07-14
