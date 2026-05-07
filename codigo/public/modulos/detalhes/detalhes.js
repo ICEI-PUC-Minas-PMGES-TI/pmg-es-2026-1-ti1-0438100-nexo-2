@@ -5,6 +5,7 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const urgencia = data.urgencias.find(u => u.id === dados.urgencia_id);
     document.getElementById("urgency").textContent = `Urgência: ${urgencia.tipo}`
 
+    document.getElementById("title-details").textContent = `${categoria.nome} na ${dados.local.logradouro}`;
 
 
     const date =  document.getElementById("date");
@@ -12,13 +13,13 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const denunciante = document.getElementById("user");
     denunciante.innerHTML = `Denunciante: ${dados.denunciante_cpf}`
     const localizacao = document.getElementById("location");
-    localizacao.innerHTML = `Localização: ${dados.local.cidade}, ${dados.local.estado}`
+    localizacao.innerHTML = `Localização: ${dados.local.cidade} ${dados.local.estado}`;
     const instituicao = document.getElementById("organ");
-    instituicao.innerHTML = `Órgão resp.: ${dados.instituicao}`
+    instituicao.innerHTML = `Órgão resp.: ${dados.instituicao}`;
     const prazo = document.getElementById("term");
-    prazo.innerHTML = `Prazo estimado: ${dados.prazo}`
+    prazo.innerHTML = `Prazo estimado: ${dados.prazo}`;
     const afetados = document.getElementById("affected");
-    afetados.innerHTML = `Pessoas afetadas: ${dados.afetados}`
-    const custo = document.getElementById("cost")
-    custo.innerHTML = `Custo estimado: R$${dados.custo}`
+    afetados.innerHTML = `Pessoas afetadas: ${dados.afetados}`;
+    const custo = document.getElementById("cost");
+    custo.innerHTML = `Custo estimado: R$${dados.custo}`;
 })
