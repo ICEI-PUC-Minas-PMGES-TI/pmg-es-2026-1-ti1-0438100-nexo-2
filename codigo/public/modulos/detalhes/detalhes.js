@@ -7,7 +7,7 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const usuarioInstituicao = data.usuarioInstituicao.find(ui => ui.cpf === dados.usuarioInstituicao_cpf);
     const instituicao = data.instituicao.find(i => i.id === usuarioInstituicao.instituicao_id);
 
-    const date =  document.getElementById("date");
+    const date = document.getElementById("date");
     const localizacao = document.getElementById("location");
     const prazo = document.getElementById("term");
     const afetados = document.getElementById("affected");
@@ -16,16 +16,16 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const progresso = document.querySelector(".progress-bar");
     const fileInput = document.getElementById("file-input")
 
-//---------------------------------------------------------FUNÇÕES------------------------------------------------------------------------
-    
+    //---------------------------------------------------------FUNÇÕES------------------------------------------------------------------------
+
     //Função para atualizar o menu de informações da denúncia
-    function atualiza_info(){
+    function atualiza_info() {
         document.getElementById("title-details").textContent = `${categoria.nome} na ${dados.local.logradouro}`;
         document.getElementById("category").textContent = `Categoria: ${categoria.nome}`;
         document.getElementById("urgency").textContent = `Urgência: ${urgencia.tipo}`;
         document.getElementById("user").textContent = `Denunciante: ${usuarioMorador.nome_usuario}`
-    
-        if(checkpoints[0].concluida === true){
+
+        if (checkpoints[0].concluida === true) {
             document.getElementById("resp").textContent = `Responsável: ${usuarioInstituicao.nome_usuario}`
             document.getElementById("organ").textContent = `Instituição: ${instituicao.nome}`
             prazo.innerHTML = `Prazo estimado: ${dados.prazo}`;
@@ -38,19 +38,18 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
         }
 
         date.innerHTML = `Data da denúncia: ${dados.data}`;
-        localizacao.innerHTML = `Localização: ${dados.local.cidade} ${dados.local.estado}`;
+        localizacao.innerHTML = `Localização: ${dados.local.cidade}, ${dados.local.estado}`;
         afetados.innerHTML = `Pessoas afetadas: ${dados.afetados}`;
         descricao.innerHTML = `${dados.descricaoDenuncia}`;
     }
 
     //Função para atualizar o status dos checkpoints da denúncia
-    function renderizar_checkpoints(){
-        
-        for(let i = 0; i< (checkpoints.length) ; i++){
-            const checkpoint_atual = document.querySelector(`#check${i+1}`)
-            const proximo_checkpoint = document.querySelector(`#check${i+2}`);
-            if(checkpoints[i].concluida === true){
-                document.querySelector(`#check${i+1} svg circle`).setAttribute("fill", "black")
+    function renderizar_checkpoints() {
+
+        for (let i = 0; i < (checkpoints.length); i++) {
+            const checkpoint_atual = document.querySelector(`#check${i + 1}`)
+            if (checkpoints[i].concluida === true) {
+                document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "black")
                 checkpoint_atual.classList.remove("bg-ff5900")
                 checkpoint_atual.classList.remove("rounded-5")
                 checkpoint_atual.classList.remove("pt-1")
@@ -59,31 +58,45 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
                 checkpoint_atual.classList.remove("me-2")
                 checkpoint_atual.classList.remove("my-2")
                 checkpoint_atual.classList.remove("text-light")
-                document.querySelector(`#check${i+1} svg circle`).setAttribute("stroke", "black")
-                if(proximo_checkpoint){
-                    proximo_checkpoint.classList.add("bg-ff5900")
-                    proximo_checkpoint.classList.add("rounded-5")
-                    proximo_checkpoint.classList.add("pt-1")
-                    proximo_checkpoint.classList.add("pb-2")
-                    proximo_checkpoint.classList.add("px-2")
-                    proximo_checkpoint.classList.add("me-2")
-                    proximo_checkpoint.classList.add("my-2")
-                    proximo_checkpoint.classList.add("text-light")
-                    document.querySelector(`#check${i+2} svg circle`).setAttribute("stroke", "white")
+                document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "black")
+            }
+            if (checkpoints[i].concluida === false) {
+                if ((i > 0)&&(checkpoints[i-1].concluida === true)) {
+                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "white")
+                    checkpoint_atual.classList.add("bg-ff5900")
+                    checkpoint_atual.classList.add("rounded-5")
+                    checkpoint_atual.classList.add("pt-1")
+                    checkpoint_atual.classList.add("pb-2")
+                    checkpoint_atual.classList.add("px-2")
+                    checkpoint_atual.classList.add("me-2")
+                    checkpoint_atual.classList.add("my-2")
+                    checkpoint_atual.classList.add("text-light")
+                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "white")
+                } else {
+                document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "white")
+                checkpoint_atual.classList.remove("bg-ff5900")
+                checkpoint_atual.classList.remove("rounded-5")
+                checkpoint_atual.classList.remove("pt-1")
+                checkpoint_atual.classList.remove("pb-2")
+                checkpoint_atual.classList.remove("px-2")
+                checkpoint_atual.classList.remove("me-2")
+                checkpoint_atual.classList.remove("my-2")
+                checkpoint_atual.classList.remove("text-light")
+                document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "black")
                 }
             }
         }
     }
 
     // Função da lógica da barra de progresso dos checkpoints da denúncia
-    function renderiza_progresso(){
-        let qt_concluidas=0
-        for(let j = 1; j<checkpoints.length; j++){
-            if(checkpoints[j].concluida ==true){
-                qt_concluidas +=1
+    function renderiza_progresso() {
+        let qt_concluidas = 0
+        for (let j = 1; j < checkpoints.length; j++) {
+            if (checkpoints[j].concluida == true) {
+                qt_concluidas += 1
             }
         }
-        let porcentagem = qt_concluidas/(checkpoints.length-1)*100
+        let porcentagem = qt_concluidas / (checkpoints.length - 1) * 100
         progresso.style.width = `${porcentagem}%`
     }
 
@@ -95,31 +108,31 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     renderizar_checkpoints()
     atualiza_info()
 
-//-------------------------------------------------------ANDAMENTO DA DENÚNCIA-----------------------------------------------------
+    //-------------------------------------------------------ANDAMENTO DA DENÚNCIA-----------------------------------------------------
 
-    
+
     // Nomeia os checkpoints
-    for(let i = 0; i< (checkpoints.length) ; i++){
-        document.querySelector(`#check${i+1} span`).textContent = `${checkpoints[i].etapa} | `;
+    for (let i = 0; i < (checkpoints.length); i++) {
+        document.querySelector(`#check${i + 1} span`).textContent = `${checkpoints[i].etapa} | `;
     }
 
     //Lógica do botão de avança checkpoint + anexa arquivo
     document.getElementById("btn-avanca").addEventListener("click", () => {
-        if(checkpoints[0].concluida === true){
+        if (checkpoints[0].concluida === true) {
             fileInput.click()
         }
     })
     fileInput.addEventListener("change", (event) => {
         const arquivo = event.target.files[0]
-        if(!arquivo){
+        if (!arquivo) {
             return
         }
-        for(let i = 0; i<(checkpoints.length); i++){
-            if((checkpoints[i].concluida === false) && (checkpoints[0].concluida === true)){
-                checkpoints[i].concluida=true
+        for (let i = 0; i < (checkpoints.length); i++) {
+            if ((checkpoints[i].concluida === false) && (checkpoints[0].concluida === true)) {
+                checkpoints[i].concluida = true
                 const UrlAqrquivo = URL.createObjectURL(arquivo)
-                const checkpoint = document.querySelector(`#check${i+1}`)
-                const link = document.querySelector(`#check${i+1} a`)
+                const checkpoint = document.querySelector(`#check${i + 1}`)
+                const link = document.querySelector(`#check${i + 1} a`)
                 link.href = UrlAqrquivo
                 link.textContent = arquivo.name
                 link.target = "_blank"
@@ -132,10 +145,28 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
         atualiza_info()
     })
 
+    // Lógica do botão retorna checkpoint + remove arquivo
+    document.getElementById("btn-retorna").addEventListener("click", () => {
+        for (let i = 0; i < (checkpoints.length); i++) {
+            if ((checkpoints[i].concluida === true) && (i===4 || (checkpoints[i + 1].concluida === false)) && (checkpoints[0].concluida === true) && (i!=0)) {
+                checkpoints[i].concluida = false
+                const checkpoint = document.querySelector(`#check${i + 1}`)
+                const link = document.querySelector(`#check${i + 1} a`)
+                link.href = ""
+                link.textContent = ""
+                link.target = ""
+                break
+            }
+        }
+        renderizar_checkpoints()
+        renderiza_progresso()
+        atualiza_info()
+    })
+
     // Lógica do botão de assumir ocorrência
     const btnStart = document.getElementById("btn-start");
     btnStart.addEventListener("click", () => {
-        checkpoints[0].concluida=true;
+        checkpoints[0].concluida = true;
         document.querySelector(`#check1 span`).textContent += `${usuarioInstituicao.nome_usuario}, ${instituicao.nome}`;
         btnStart.classList.add("d-none");
         renderizar_checkpoints();
@@ -143,6 +174,6 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     })
 
 
-    
+
 
 })
