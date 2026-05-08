@@ -14,6 +14,7 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const custo = document.getElementById("cost");
     const descricao = document.getElementById("texto-descricao");
     const progresso = document.querySelector(".progress-bar");
+    const fileInput = document.getElementById("file-input")
 
 //---------------------------------------------------------FUNÇÕES------------------------------------------------------------------------
     
@@ -46,28 +47,28 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     function renderizar_checkpoints(){
         
         for(let i = 0; i< (checkpoints.length) ; i++){
-            const atual = document.querySelector(`#check${i+1}`)
-            const proximo = document.querySelector(`#check${i+2}`);
+            const checkpoint_atual = document.querySelector(`#check${i+1}`)
+            const proximo_checkpoint = document.querySelector(`#check${i+2}`);
             if(checkpoints[i].concluida === true){
                 document.querySelector(`#check${i+1} svg circle`).setAttribute("fill", "black")
-                atual.classList.remove("bg-ff5900")
-                atual.classList.remove("rounded-5")
-                atual.classList.remove("pt-1")
-                atual.classList.remove("pb-2")
-                atual.classList.remove("px-2")
-                atual.classList.remove("me-2")
-                atual.classList.remove("my-2")
-                atual.classList.remove("text-light")
+                checkpoint_atual.classList.remove("bg-ff5900")
+                checkpoint_atual.classList.remove("rounded-5")
+                checkpoint_atual.classList.remove("pt-1")
+                checkpoint_atual.classList.remove("pb-2")
+                checkpoint_atual.classList.remove("px-2")
+                checkpoint_atual.classList.remove("me-2")
+                checkpoint_atual.classList.remove("my-2")
+                checkpoint_atual.classList.remove("text-light")
                 document.querySelector(`#check${i+1} svg circle`).setAttribute("stroke", "black")
-                if(proximo){
-                    proximo.classList.add("bg-ff5900")
-                    proximo.classList.add("rounded-5")
-                    proximo.classList.add("pt-1")
-                    proximo.classList.add("pb-2")
-                    proximo.classList.add("px-2")
-                    proximo.classList.add("me-2")
-                    proximo.classList.add("my-2")
-                    proximo.classList.add("text-light")
+                if(proximo_checkpoint){
+                    proximo_checkpoint.classList.add("bg-ff5900")
+                    proximo_checkpoint.classList.add("rounded-5")
+                    proximo_checkpoint.classList.add("pt-1")
+                    proximo_checkpoint.classList.add("pb-2")
+                    proximo_checkpoint.classList.add("px-2")
+                    proximo_checkpoint.classList.add("me-2")
+                    proximo_checkpoint.classList.add("my-2")
+                    proximo_checkpoint.classList.add("text-light")
                     document.querySelector(`#check${i+2} svg circle`).setAttribute("stroke", "white")
                 }
             }
@@ -99,14 +100,30 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     
     // Nomeia os checkpoints
     for(let i = 0; i< (checkpoints.length) ; i++){
-        document.querySelector(`#check${i+1} span`).textContent = `${checkpoints[i].etapa}`;
+        document.querySelector(`#check${i+1} span`).textContent = `${checkpoints[i].etapa} | `;
     }
 
-    //Lógica do botão de avança checkpoint
+    //Lógica do botão de avança checkpoint + anexa arquivo
     document.getElementById("btn-avanca").addEventListener("click", () => {
+        if(checkpoints[0].concluida === true){
+            fileInput.click()
+        }
+    })
+    fileInput.addEventListener("change", (event) => {
+        const arquivo = event.target.files[0]
+        if(!arquivo){
+            return
+        }
         for(let i = 0; i<(checkpoints.length); i++){
             if((checkpoints[i].concluida === false) && (checkpoints[0].concluida === true)){
                 checkpoints[i].concluida=true
+                const UrlAqrquivo = URL.createObjectURL(arquivo)
+                const checkpoint = document.querySelector(`#check${i+1}`)
+                const link = document.querySelector(`#check${i+1} a`)
+                link.href = UrlAqrquivo
+                link.textContent = arquivo.name
+                link.target = "_blank"
+                checkpoint.appendChild(link)
                 break
             }
         }
@@ -119,6 +136,7 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const btnStart = document.getElementById("btn-start");
     btnStart.addEventListener("click", () => {
         checkpoints[0].concluida=true;
+        document.querySelector(`#check1 span`).textContent += `${usuarioInstituicao.nome_usuario}, ${instituicao.nome}`;
         btnStart.classList.add("d-none");
         renderizar_checkpoints();
         atualiza_info()
