@@ -5,6 +5,10 @@ body{
   background: linear-gradient(to right,     #721B00, #C80F00, #FF5900);
 }
 
+.bg-ff5900{
+    background-color: #FF5900;
+}
+
 .bg-progress{
     background-color: #00aeff;
 }
@@ -45,6 +49,7 @@ p{
 ul>li{
     font-size: 1.2rem;
     line-height: 1.7;
+    transition: 0.7s;
 }
 
 button{

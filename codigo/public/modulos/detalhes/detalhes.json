@@ -4,19 +4,19 @@
             "id": 1,
             "status": "Andamento",
             "categoria_id": 1,
-            "descricaoDenuncia": "A avenida tem um movimento muito grande, com o aumento das chuvas...",
+            "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
             "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg", "http://localhost:3000/uploads/foto3.jpg"],
             "urgencia_id": 1,
             "data": "2025-04-26",
             "entidades_id": 1,
-            "denunciante_cpf": "ID do usuário",
+            "usuarioMorador_cpf": 12345678900,      
             "local": {
                 "cidade": "Contagem",
                 "estado": "MG",
                 "pais": "Brasil",
                 "logradouro": "Avenida Firmo de Matos"
             },
-            "instituicao_id": "Megasafalt",
+            "usuarioInstituicao_cpf": 98723456700,
             "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
             "prazo": "2025-07-26",
             "afetados": 21,
@@ -75,6 +75,49 @@
         }
     ],
 
+    "usuarioMorador":[
+        {
+            "nome_usuario":"Luisa Souza",
+            "nome_completo": "Luisa Souza Bernardes",
+            "email": "souzaluisa@gmail.com",
+            "cpf": 12345678900,
+            "senha": "xyz123!"  
+        }
+    ],
+
+    "usuarioInstituicao":[
+        {
+            "instituicao_id": 2,
+            "nome_usuario": "Fernanda Rocha",
+            "nome_completo": "Fernanda Rocha Ladeira",
+            "email": "fernandaprefcontagem@gmail.com",
+            "cpf": 45687612300,
+            "senha": "def123!"             
+        },
+        {
+            "instituicao_id": 1,
+            "nome_usuario":"Ricardo Alves",
+            "nome_completo": "Ricardo Alves Teixeira",
+            "email":"ricardomegasfalt@gmail.com",
+            "cpf": 98723456700,
+            "senha":"abc123!"
+        }
+    ],
+
+    "instituicao":[
+        {
+            "id": 1,
+            "nome": "Megasfalt"
+        },
+        {
+            "id": 2,
+            "nome": "Prefeitura de Contagem"
+        },
+        {
+            "id": 3,
+            "nome":"Prefeitura de Betim"
+        }
+    ],
 
     "categorias":[
         {"id": 1, "nome": "Buraco"},
@@ -94,5 +137,28 @@
         {"id": 1, "tipo": "Todos"},
         {"id": 2, "tipo": "Prefeitura"},
         {"id": 3, "tipo": "Empresa privada"}
+    ],
+
+    "progresso": [
+        {
+            "etapa": "Denúncia aceita",
+            "concluida": false
+        },
+        {
+            "etapa": "Equipe enviada ao local",
+            "concluida": false
+        },
+        {
+            "etapa": "Planejamento e previsões",
+            "concluida": false
+        },
+        {
+            "etapa": "Manutenção em andamento",
+            "concluida": false
+        },
+        {
+            "etapa": "Obra finalizada",
+            "concluida": false
+        }
     ]
 }

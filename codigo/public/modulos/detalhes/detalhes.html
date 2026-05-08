@@ -39,53 +39,53 @@
                                 <div class="progress-header bg-gradient-custom rounded-top-2 pb-2">
                                     <h3 class="rounded-top-3 p-2 mb-0">Andamento da denúncia</h3>
                                     <div class="progress mx-4 my-1" role="progressbar" aria-label="Example 16px high" aria-valuenow="25" aria-valuemin="0" aria-valuemax="100" style="height: 16px">
-                                        <div class="progress-bar bg-progress" style="width: 25%"></div>
+                                        <div class="progress-bar bg-progress" style="width: 0%"></div>
                                     </div>
                                 </div>
                                 <ul id="lista-checkpoints" class="ms-1 ps-1 mt-2">
-                                    <li>
+                                    <li id="check1">
                                         <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
                                             <circle cx="256" cy="256" r="220" fill="white" stroke="black"
                                                 stroke-width="25px">
                                             </circle>
                                         </svg>
-                                        Denúncia aceita
+                                        <span></span>
                                     </li>
-                                    <li>
+                                    <li id="check2">
                                         <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
                                             <circle cx="256" cy="256" r="220" fill="white" stroke="black"
                                                 stroke-width="25px">
                                             </circle>
                                         </svg>
-                                        Equipe enviada ao local
+                                        <span></span>
                                     </li>
-                                    <li>
+                                    <li id="check3">
                                         <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
                                             <circle cx="256" cy="256" r="220" fill="white" stroke="black"
                                                 stroke-width="25px">
                                             </circle>
                                         </svg>
-                                        Planejamento e previsões
+                                        <span></span>
                                     </li>
-                                    <li>
+                                    <li id="check4">
                                         <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
                                             <circle cx="256" cy="256" r="220" fill="white" stroke="black"
                                                 stroke-width="25px">
                                             </circle>
                                         </svg>
-                                        Manutenção em andamento
+                                        <span></span>
                                     </li>
-                                    <li>
+                                    <li id="check5">
                                         <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
                                             <circle cx="256" cy="256" r="220" fill="white" stroke="black"
                                                 stroke-width="25px">
                                             </circle>
                                         </svg>
-                                        Obra finalizada
+                                        <span></span>
                                     </li>
                                 </ul>
                                 <div class="row g-0 checkpoint-btn justify-content-between">
-                                    <button class=" col-5 btn-previous ms-3 mb-2" type="button">
+                                    <button class=" col-5 btn-previous ms-3 mb-2" type="button" id="btn-retorna">
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                                             viewBox="0 0 640 640" fill="white">
                                             <path
@@ -94,7 +94,7 @@
                                         Retornar
                                     </button>
 
-                                    <button class="btn-next col-5 py-1 me-3 mb-2" type="button">
+                                    <button class="btn-next col-5 py-1 me-3 mb-2" type="button" id="btn-avanca">
                                         Avançar
                                         <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em"
                                             viewBox="0 0 640 640" fill="white">
@@ -104,25 +104,18 @@
                                     </button>
                                 </div>
                             </div>
+                            <div class="text-center">
+                                <button class="p-2 mt-3 w-75" id="btn-start" type="button">
+                                    Assumir ocorrência
+                                </button>
+                            </div>
                         </div>
 
                         <!--Descrição da denúncia-->
                         <div class="col-8">
                             <div id="descricao" class="bg-light rounded-2 p-3">
                                 <h2 class="pb-2 border-bottom border-1 border-dark" style="--bs-border-opacity: .4;">Descrição da denúncia:</h2>
-                                <p>Lorem ipsum dolor sit amet, consectetur adipisicing elit. Asperiores suscipit et,
-                                    molestiae,
-                                    dolorem
-                                    ratione placeat cumque, dolor minus tenetur id quidem. Explicabo optio possimus
-                                    dolorem
-                                    rerum ex
-                                    asperiores voluptates quidem, distinctio provident quis sapiente similique
-                                    exercitationem
-                                    aspernatur?
-                                    Pariatur, autem adipisci, iusto sapiente nulla, magnam optio minus nostrum iure
-                                    provident
-                                    soluta?
-                                </p>
+                                <p id="texto-descricao"></p>
                             </div>
 
                             <!--Comentários-->
@@ -181,7 +174,20 @@
                         <li>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 640 640">
                                 <path
+                                    d="M320 80C377.4 80 424 126.6 424 184C424 241.4 377.4 288 320 288C262.6 288 216 241.4 216 184C216 126.6 262.6 80 320 80zM96 152C135.8 152 168 184.2 168 224C168 263.8 135.8 296 96 296C56.2 296 24 263.8 24 224C24 184.2 56.2 152 96 152zM0 480C0 409.3 57.3 352 128 352C140.8 352 153.2 353.9 164.9 357.4C132 394.2 112 442.8 112 496L112 512C112 523.4 114.4 534.2 118.7 544L32 544C14.3 544 0 529.7 0 512L0 480zM521.3 544C525.6 534.2 528 523.4 528 512L528 496C528 442.8 508 394.2 475.1 357.4C486.8 353.9 499.2 352 512 352C582.7 352 640 409.3 640 480L640 512C640 529.7 625.7 544 608 544L521.3 544zM472 224C472 184.2 504.2 152 544 152C583.8 152 616 184.2 616 224C616 263.8 583.8 296 544 296C504.2 296 472 263.8 472 224zM160 496C160 407.6 231.6 336 320 336C408.4 336 480 407.6 480 496L480 512C480 529.7 465.7 544 448 544L192 544C174.3 544 160 529.7 160 512L160 496z" />
+                            </svg>
+                            <span id="affected"></span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 640 640">
+                                <path
                                     d="M300.9 149.2L184.3 278.8C179.7 283.9 179.9 291.8 184.8 296.7C215.3 327.2 264.8 327.2 295.3 296.7L327.1 264.9C331.3 260.7 336.6 258.4 342 258C348.8 257.4 355.8 259.7 361 264.9L537.6 440L608 384L608 96L496 160L472.2 144.1C456.4 133.6 437.9 128 418.9 128L348.5 128C347.4 128 346.2 128 345.1 128.1C328.2 129 312.3 136.6 300.9 149.2zM148.6 246.7L255.4 128L215.8 128C190.3 128 165.9 138.1 147.9 156.1L144 160L32 96L32 384L188.4 514.3C211.4 533.5 240.4 544 270.3 544L286 544L279 537C269.6 527.6 269.6 512.4 279 503.1C288.4 493.8 303.6 493.7 312.9 503.1L353.9 544.1L362.9 544.1C382 544.1 400.7 539.8 417.7 531.8L391 505C381.6 495.6 381.6 480.4 391 471.1C400.4 461.8 415.6 461.7 424.9 471.1L456.9 503.1L474.4 485.6C483.3 476.7 485.9 463.8 482 452.5L344.1 315.7L329.2 330.6C279.9 379.9 200.1 379.9 150.8 330.6C127.8 307.6 126.9 270.7 148.6 246.6z" />
+                            </svg>
+                            <span id="resp"></span>
+                        </li>
+                        <li>
+                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 512 512">
+                                <path d="M271.9 20.2c-9.8-5.6-21.9-5.6-31.8 0l-224 128c-12.6 7.2-18.8 22-15.1 36S17.5 208 32 208l32 0 0 208 0 0-51.2 38.4C4.7 460.4 0 469.9 0 480 0 497.7 14.3 512 32 512l448 0c17.7 0 32-14.3 32-32 0-10.1-4.7-19.6-12.8-25.6l-51.2-38.4 0-208 32 0c14.5 0 27.2-9.8 30.9-23.8s-2.5-28.8-15.1-36l-224-128zM400 208l0 208-64 0 0-208 64 0zm-112 0l0 208-64 0 0-208 64 0zm-112 0l0 208-64 0 0-208 64 0zM256 96a32 32 0 1 1 0 64 32 32 0 1 1 0-64z"/>
                             </svg>
                             <span id="organ"></span>
                         </li>
@@ -191,13 +197,6 @@
                                     d="M160 64C142.3 64 128 78.3 128 96C128 113.7 142.3 128 160 128L160 139C160 181.4 176.9 222.1 206.9 252.1L274.8 320L206.9 387.9C176.9 417.9 160 458.6 160 501L160 512C142.3 512 128 526.3 128 544C128 561.7 142.3 576 160 576L480 576C497.7 576 512 561.7 512 544C512 526.3 497.7 512 480 512L480 501C480 458.6 463.1 417.9 433.1 387.9L365.2 320L433.1 252.1C463.1 222.1 480 181.4 480 139L480 128C497.7 128 512 113.7 512 96C512 78.3 497.7 64 480 64L160 64zM224 139L224 128L416 128L416 139C416 158 410.4 176.4 400 192L240 192C229.7 176.4 224 158 224 139zM240 448C243.5 442.7 247.6 437.7 252.1 433.1L320 365.2L387.9 433.1C392.5 437.7 396.5 442.7 400.1 448L240 448z" />
                             </svg>
                             <span id="term"></span>
-                        </li>
-                        <li>
-                            <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 640 640">
-                                <path
-                                    d="M320 80C377.4 80 424 126.6 424 184C424 241.4 377.4 288 320 288C262.6 288 216 241.4 216 184C216 126.6 262.6 80 320 80zM96 152C135.8 152 168 184.2 168 224C168 263.8 135.8 296 96 296C56.2 296 24 263.8 24 224C24 184.2 56.2 152 96 152zM0 480C0 409.3 57.3 352 128 352C140.8 352 153.2 353.9 164.9 357.4C132 394.2 112 442.8 112 496L112 512C112 523.4 114.4 534.2 118.7 544L32 544C14.3 544 0 529.7 0 512L0 480zM521.3 544C525.6 534.2 528 523.4 528 512L528 496C528 442.8 508 394.2 475.1 357.4C486.8 353.9 499.2 352 512 352C582.7 352 640 409.3 640 480L640 512C640 529.7 625.7 544 608 544L521.3 544zM472 224C472 184.2 504.2 152 544 152C583.8 152 616 184.2 616 224C616 263.8 583.8 296 544 296C504.2 296 472 263.8 472 224zM160 496C160 407.6 231.6 336 320 336C408.4 336 480 407.6 480 496L480 512C480 529.7 465.7 544 448 544L192 544C174.3 544 160 529.7 160 512L160 496z" />
-                            </svg>
-                            <span id="affected"></span>
                         </li>
                         <li>
                             <svg xmlns="http://www.w3.org/2000/svg" width="1em" height="1em" viewBox="0 0 640 640">
