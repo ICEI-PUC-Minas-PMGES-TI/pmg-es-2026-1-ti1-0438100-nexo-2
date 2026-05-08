@@ -37,7 +37,6 @@
                 const fotosExistentes = track.querySelectorAll('.foto-item');
                 fotosExistentes.forEach(f => f.remove());
                 
-                // Inserir cada foto após o botão
                 fotosBase64.forEach((base64, idx) => {
                     const div = document.createElement('div');
                     div.className = 'foto-item';
