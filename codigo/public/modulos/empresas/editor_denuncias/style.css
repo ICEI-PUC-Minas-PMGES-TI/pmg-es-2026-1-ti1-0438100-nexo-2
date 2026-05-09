@@ -1,3 +1,29 @@
-.sec-cabecalho h3{
-    color: aqua;
+* {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+}
+
+body{
+    font-family: Arial, Helvetica, sans-serif;
+    background-color: #f0f0f0;
+    padding: 30px;
+}
+
+h1{
+    margin-bottom: 20px;
+    font-size: 22px;
+}
+
+.card{
+    background-color: white;
+    border-radius: 6px;
+    overflow: hidden;
+}
+
+.card-titulo{
+    background: linear-gradient(to right, #cc0000, #ff4400);
+    color: white;
+    font-weight: bold;
+    padding: 8px 14px;
 }
