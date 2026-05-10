@@ -4,52 +4,103 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zella - Home</title>
-
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css">
-
 </head>
 <body>
 
   <!-- CABEÇALHO -->
-  <header>
-    <h1>Zella</h1>
-    <nav>
-      <a href="#">Início</a>
-      <a href="#">Faça sua denúncia</a>
-      <a href="#">Minhas denúncias</a>
-      <a href="#">Outras denúncias</a>
-    </nav>
-    <div>
-      <input type="text" id="busca" placeholder="Buscar...">
-      <img src="https://i.pravatar.cc/40" alt="Usuário">
+  <header class="navbar navbar-expand-lg px-4 py-3 text-white" style="background-color: #2b1d1d;">
+  <div class="container-fluid">
+    <a class="navbar-brand text-light fw-bold fs-3" href="#">
+      <i class="bi bi-geo-alt-fill text-warning"></i>
+      Zella
+    </a>
+    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
+      <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <div class="collapse navbar-collapse" id="menu">
+      <ul class="navbar-nav ms-4">
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Início</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Denúncias</a>
+        </li>
+        <li class="nav-item">
+          <a class="nav-link text-light" href="#">Minhas obras</a>
+        </li>
+      </ul>
+
+      <div class="ms-auto d-flex align-items-center gap-3">
+        <div class="position-relative">
+          <input 
+            type="text"
+            id="busca"
+            class="form-control rounded-pill px-4"
+            placeholder="Buscar..."
+          >
+        </div>
+        <img 
+          src="https://i.pravatar.cc/40"
+          class="rounded-circle"
+          width="40"
+          height="40"
+        >
+        </div>
+      </div>
     </div>
   </header>
 
   <!-- CONTEÚDO PRINCIPAL -->
   <main>
     <!-- MAPA + LISTA -->
-    <section>
+    <section class="container-fluid mt-4">
 
-      <!-- MAPA -->
+    <div class="row g-4">
+
+    <!-- MAPA -->
+    <div class="col-lg-8">
+      <div class="bg-white rounded shadow-sm overflow-hidden">
       <div id="mapa" style="height: 500px;"></div>
+      </div>
+    </div>
 
-      <!-- SIDEBAR -->
-      <aside>
-
+    <!-- SIDEBAR -->
+    <div class="col-lg-4">
+      <aside class="sidebar shadow-sm rounded p-3">
+        
         <!-- FILTROS -->
-        <div id="filtros">
-          <button data-filtro="todas">TODAS</button>
-          <button data-filtro="abertas">ABERTAS</button>
-          <button data-filtro="andamento">EM ANDAMENTO</button>
-          <button data-filtro="resolvida">REALIZADAS</button>
+        <div 
+          id="filtros"
+          class="d-flex flex-wrap gap-2 mb-4">
+          <button class="btn btn-dark rounded-pill" data-filtro="todas">
+            TODAS
+          </button>
+          <button class="btn btn-light rounded-pill" data-filtro="abertas">
+            ABERTAS
+          </button>
+          <button class="btn btn-light rounded-pill" data-filtro="andamento">
+            EM ANDAMENTO
+          </button>
+          <button class="btn btn-light rounded-pill" data-filtro="resolvida">
+            REALIZADAS
+          </button>
         </div>
 
-        <!-- LISTA -->
-        <div id="lista-denuncias">
+        <!-- ESPAÇO RESERVADO -->
+        <div 
+          class="placeholder-list d-flex justify-content-center align-items-center">
+          <p class="text-muted">
+            Lista de denúncias será implementada depois
+          </p>
         </div>
-
       </aside>
+      </div>
+    </div>
     </section>
 
     <!-- ESTATÍSTICAS -->
