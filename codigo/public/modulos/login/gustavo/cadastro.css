@@ -1,0 +1,116 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box
+}
+
+.conteudo-site {
+  display: grid;
+  grid-template-columns: 1fr 2fr; 
+}
+
+aside {
+    background-color: #100502;
+    color: white;
+    display: flex;
+    align-items: flex-start;
+    justify-content: center;
+    min-height: 100vh;
+    flex-direction: column;
+    padding: 0 15%;
+    gap: 25px;
+}
+
+.formulario{
+    display: grid;
+    padding: 40px;
+    width: 100%;
+    max-width: 550px;
+    background-color: rgba(209, 209, 209, 0.473);
+    min-height: 60vh;
+    align-items: center;
+    border-radius: 15px;
+}
+
+.formulario h2{
+    text-align: center;
+}
+
+#formCadastro :hover{
+    cursor: pointer;
+
+}
+
+aside h1{
+    font-size: 64px;
+    font-family: serif;
+    line-height: 1.1;
+    padding-bottom: 0;
+}
+
+.main-content {
+    background-color: white;
+    display: flex;
+    flex-direction: column;
+    justify-content: center; 
+    align-items: center; 
+    padding: 40px;
+    position: relative;
+}
+
+.btn-entrar{
+    width: 200px;
+    height: 50px;
+    border-radius: 50px;
+    font-size: medium;
+    text-transform: uppercase;
+    border: none;
+}
+
+.btn-entrar:hover{
+    cursor: pointer;
+}
+
+aside p{
+    font-size: 18px;
+    padding-bottom: 0;
+}
+
+#formCadastro input {
+    width: 95%;       
+    padding: 5px;      
+    font-size: 16px;    
+    box-sizing: border-box;
+    border-radius: 6px; 
+}
+
+#formCadastro button {
+    padding: 15px 30px; 
+    font-size: 18px;    
+    width: 40%; 
+    height: 50px;
+    border-radius: 50px;
+    font-size: medium;
+    text-transform: uppercase;
+    background-color: #c5c5c5;
+    display: block;
+    margin: 30px auto 0 auto;
+}
+
+#formCadastro div {
+    margin-bottom: 20px; 
+}
+
+.trocar-tipo {
+    position: absolute; 
+    top: 20px;
+    right: 20px;    
+    text-align: right;
+    display: flex;
+    flex-direction: column;
+}
+
+a {
+    color: inherit;
+    text-decoration: none;
+}
