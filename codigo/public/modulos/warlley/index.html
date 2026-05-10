@@ -5,6 +5,7 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <title>Zella - Home</title>
   <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.11.0/dist/geosearch.css"/>
   <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
   <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
   <link rel="stylesheet" href="style.css">
@@ -23,7 +24,7 @@
     </button>
 
     <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav ms-4">
+      <ul class="navbar-nav mx-auto">
         <li class="nav-item">
           <a class="nav-link text-light" href="#">Início</a>
         </li>
@@ -227,29 +228,78 @@
   </main>
 
   <!-- FOOTER -->
-  <footer>
+  <footer 
+    class="text-light mt-1 py-3"
+    style="background-color: #2b1d1d;">
 
-    <div>
-      <h3>Zella</h3>
-      <p>Plataforma para registro de denúncias urbanas.</p>
+    <div class="container">
+      <div class="row g-4">
+
+      <!-- LOGO -->
+      <div class="col-md-4">
+        <h3 class="fw-bold">
+          <i class="bi bi-geo-alt-fill text-warning"></i>
+          Zella
+        </h3>
+        <p class="text-light-emphasis">
+          Plataforma para registro de denúncias urbanas e acompanhamento de problemas públicos.
+        </p>
+      </div>
+
+      <!-- NAVEGAÇÃO -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">
+          Navegação
+        </h5>
+        <div class="d-flex flex-column gap-2">
+          <a href="#" class="text-decoration-none text-light">
+            Início
+          </a>
+          <a href="#" class="text-decoration-none text-light">
+            Minhas denúncias
+          </a>
+          <a href="#" class="text-decoration-none text-light">
+            Outras denúncias
+          </a>
+        </div>
+      </div>
+
+      <!-- CONTATO -->
+      <div class="col-md-4">
+        <h5 class="fw-bold mb-3">
+          Contato
+        </h5>
+        <p class="mb-2">
+          <i class="bi bi-envelope-fill text-warning"></i>
+          contato@zella.com
+        </p>
+        <p>
+          <i class="bi bi-telephone-fill text-warning"></i>
+          (31) 3333-4444
+        </p>
+      </div>
     </div>
 
-    <div>
-      <h3>Navegação</h3>
-      <p>Início</p>
-      <p>Minhas denúncias</p>
-      <p>Outras denúncias</p>
+    <!-- LINHA -->
+    <hr class="border-light opacity-25 my-4">
+
+    <!-- COPYRIGHT -->
+    <div class="text-center text-light-emphasis">
+      © 2026 Zella — Todos os direitos reservados
     </div>
 
-    <div>
-      <h3>Contato</h3>
-      <p>Email: contato@zella.com</p>
-      <p>Telefone: (31) 3333-4444</p>
     </div>
-
   </footer>
 
-  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
-  <script src="script.js"></script>
+<link 
+  rel="stylesheet"
+  href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+/>
+
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+<script src="https://unpkg.com/leaflet-geosearch@3.11.0/dist/bundle.min.js"></script>
+<script src="script.js"></script>
 </body>
 </html>
