@@ -1,0 +1,47 @@
+{
+    "denuncias":[
+    {
+        "id": 1,
+        "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
+        "checkpoints": {
+            "denunciaAceita": true,
+            "equipeEnviada": false,
+            "planejamento": false,
+            "manutencaoAndamento": false,
+            "obraFinalizada": false
+        },
+            "custo": "1250.97",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+            "prazo": "2025-07-26"
+    },
+    {
+        "id": 2,
+        "notaOrgao": "xxxxxxx.",
+        "checkpoints": {
+            "denunciaAceita": true,
+            "equipeEnviada": true,
+            "planejamento": false,
+            "manutencaoAndamento": false,
+            "obraFinalizada": false
+        },
+        "custo": "12964.92",
+        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+        "prazo": "2026-02-28"
+
+    },
+    {
+        "id": 3,
+        "notaOrgao": "xxxxxxxxxx.",
+        "checkpoints":{
+            "denunciaAceita": true,
+            "equipeEnviada": true,
+            "planejamento": true,
+            "manutencaoAndamento": false,
+            "obraFinalizada": false
+        },
+        "custo": "8967.54",
+        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+        "prazo":"2026-12-31"
+    }
+    ]
+}
