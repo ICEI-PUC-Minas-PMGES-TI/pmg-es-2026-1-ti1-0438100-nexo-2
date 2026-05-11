@@ -124,6 +124,18 @@
                                 <button class="p-2 mt-3 w-75" id="btn-start" type="button">
                                     Assumir ocorrência
                                 </button>
+                                <div id="fade" class="d-none"></div>
+                                <div id="modal" class="pb-3 rounded-3 bg-light d-none">
+                                    <div id="modal-header" class="bg-gradient-custom mt-0 rounded-top-3">
+                                        <h4 class="text-light p-2">Informações necessárias</h4>
+                                    </div>
+                                    <div id="modal-body">
+                                        <p class="mb-3 mx-3">Para prosseguir, é necessário informar previsões de data e custo para a obra.</p>
+                                        <input type="date">
+                                        <input type="number" placeholder="R$">
+                                        <button id="btn-close-modal">Concluir</button>
+                                    </div>
+                                </div>
                             </div>
                             <input type="file" id="file-input" class="d-none">
                         </div>
@@ -133,6 +145,8 @@
                             <div id="descricao" class="bg-light rounded-2 p-3">
                                 <h2 class="pb-2 border-bottom border-1 border-dark" style="--bs-border-opacity: .4;">Descrição da denúncia:</h2>
                                 <p id="texto-descricao"></p>
+                                <h4 id="nota-descricao" class="pb-2 border-bottom border-1 border-dark d-none">Nota adicionada:</h4>
+                                <p id="texto-nota-descricao" class="d-none"></p>
                             </div>
 
                             <!--Comentários-->

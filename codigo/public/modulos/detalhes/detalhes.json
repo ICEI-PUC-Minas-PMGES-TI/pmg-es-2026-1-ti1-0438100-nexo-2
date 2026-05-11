@@ -18,10 +18,9 @@
             },
             "usuarioInstituicao_cpf": 98723456700,
             "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-            "prazo": "2025-07-26",
+            "prazo": "",
             "afetados": 21,
-            "custo": "1250.97",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra."
+            "custo": ""
         },
         {
             "id": 2,
@@ -45,8 +44,7 @@
             "notaOrgao": "",
             "prazo": "2025-05-05",
             "afetados": 12,
-            "custo": "2456.35",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra e mão de obra."
+            "custo": "2456.35"
         },
         {
             "id": 3,
@@ -70,8 +68,7 @@
             "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
             "prazo": "2025-07-26",
             "afetados": 34,
-            "custo": "7985.00",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra, mão de obra e documentação junto à prefeitura."
+            "custo": "7985.00"
         }
     ],
 
