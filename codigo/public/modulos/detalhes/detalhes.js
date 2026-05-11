@@ -6,6 +6,7 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const usuarioMorador = data.usuarioMorador.find(um => um.cpf === dados.usuarioMorador_cpf);
     const usuarioInstituicao = data.usuarioInstituicao.find(ui => ui.cpf === dados.usuarioInstituicao_cpf);
     const instituicao = data.instituicao.find(i => i.id === usuarioInstituicao.instituicao_id);
+    const imagens = data.denuncias[0].imagens
 
     const date = document.getElementById("date");
     const localizacao = document.getElementById("location");
@@ -15,8 +16,62 @@ fetch("detalhes.json").then(res => res.json()).then((data) => {
     const descricao = document.getElementById("texto-descricao");
     const progresso = document.querySelector(".progress-bar");
     const fileInput = document.getElementById("file-input")
+    const localImg = document.getElementById("local-imagens")
+    const btn_right = document.getElementById("btn-img-right")
+    const btn_left = document.getElementById("btn-img-left")
 
     //---------------------------------------------------------FUNÇÕES------------------------------------------------------------------------
+    // Lógica das imagens da denúncia
+        // Lógica para alocar imagens em suas divs
+    for(let i=0; i<imagens.length; i++){
+        const divImg = document.createElement("div");
+        divImg.id = `img${i+1}`;
+        localImg.appendChild(divImg);
+        const img = document.createElement("img")
+        img.src = imagens[i];
+        img.classList.add("rounded-2")
+        divImg.appendChild(img)  
+    }
+        // Lógica para 5 ou mais imagens (Inclui botões de navegação)
+    if(imagens.length>=5){
+        btn_right.classList.remove("d-none")
+        btn_left.classList.remove("d-none")
+        localImg.classList.remove("mx-3")
+    }
+        // Função para atualizar as imagens visíveis
+    let inicio_img = 1
+    function atualiza_img(){
+        for(let i = 0; i<imagens.length; i++){
+            const divImg_visivel = document.getElementById(`img${i+1}`)
+            divImg_visivel.classList.add("d-none")
+        }
+        if(imagens.length>4){
+            for(let i=inicio_img; i<(inicio_img+4); i++){
+                const div_visivel = document.getElementById(`img${i}`)
+                div_visivel.classList.remove("d-none")
+            }
+        }else{  
+            for(let i=inicio_img; i<(imagens.length+1); i++){
+                const div_visivel = document.getElementById(`img${i}`)
+                div_visivel.classList.remove("d-none")
+            }
+        }
+    }
+    atualiza_img()
+    
+        // Botões de navegação das imagens
+    btn_right.addEventListener("click", () => {
+        if(inicio_img<(imagens.length-3)){
+            inicio_img+=1
+            atualiza_img();
+        }
+    })
+    btn_left.addEventListener("click", () => {
+        if(inicio_img>1){
+            inicio_img-=1;
+            atualiza_img();
+        }
+    })
 
     //Função para atualizar o menu de informações da denúncia
     function atualiza_info() {

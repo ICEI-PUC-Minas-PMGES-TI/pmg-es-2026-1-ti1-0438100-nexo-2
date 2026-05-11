@@ -5,7 +5,7 @@
             "status": "Andamento",
             "categoria_id": 1,
             "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
-            "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg", "http://localhost:3000/uploads/foto3.jpg"],
+            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 1,
             "data": "2025-04-26",
             "entidades_id": 1,

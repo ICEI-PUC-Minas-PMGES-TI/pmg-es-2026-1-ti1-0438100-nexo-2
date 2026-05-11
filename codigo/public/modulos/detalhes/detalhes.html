@@ -16,7 +16,7 @@
 
 <body>
     <div id="header-detalhes" class="d-flex justify-content-start my-3">
-        <button class="btn-back bg-transparent ms-3" type="button">
+        <button id="btn-back" class="bg-transparent ms-3" type="button">
             <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 640 640">
             <path
                 d="M112 320C112 205.1 205.1 112 320 112C434.9 112 528 205.1 528 320C528 434.9 434.9 528 320 528C205.1 528 112 434.9 112 320zM576 320C576 178.6 461.4 64 320 64C178.6 64 64 178.6 64 320C64 461.4 178.6 576 320 576C461.4 576 576 461.4 576 320zM188.7 308.7C182.5 314.9 182.5 325.1 188.7 331.3L292.7 435.3C297.3 439.9 304.2 441.2 310.1 438.8C316 436.4 320 430.5 320 424L320 352L424 352C437.3 352 448 341.3 448 328L448 312C448 298.7 437.3 288 424 288L320 288L320 216C320 209.5 316.1 203.7 310.1 201.2C304.1 198.7 297.2 200.1 292.7 204.7L188.7 308.7z" />
@@ -28,8 +28,19 @@
         <div class="row">
             <div class="col-9">
                 <!--Imagens da denúncia-->
-                <div id="fotos-denuncia" class="bg-light rounded-2 p-5 mb-3">
-                    RESERVADO PARA FOTOS
+                <div id="fotos-denuncia" class="bg-light rounded-2 mb-3 d-flex align-items-center">
+                    <button id="btn-img-left" class="bg-transparent d-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 640 640">
+                            <path d="M199.7 299.8C189.4 312.4 190.2 330.9 201.9 342.6L329.9 470.6C339.1 479.8 352.8 482.5 364.8 477.5C376.8 472.5 384.6 460.9 384.6 447.9L384.6 191.9C384.6 179 376.8 167.3 364.8 162.3C352.8 157.3 339.1 160.1 329.9 169.2L201.9 297.2L199.7 299.6z"/>
+                        </svg>
+                    </button>
+                    <div id="local-imagens" class="bg-light rounded-2 d-flex gap-3 mx-3 my-3">
+                    </div>
+                    <button id="btn-img-right" class="bg-transparent d-none">
+                        <svg xmlns="http://www.w3.org/2000/svg" width="40px" height="40px" viewBox="0 0 640 640">
+                            <path d="M441.3 299.8C451.5 312.4 450.8 330.9 439.1 342.6L311.1 470.6C301.9 479.8 288.2 482.5 276.2 477.5C264.2 472.5 256.5 460.9 256.5 448L256.5 192C256.5 179.1 264.3 167.4 276.3 162.4C288.3 157.4 302 160.2 311.2 169.3L439.2 297.3L441.4 299.7z"/>
+                        </svg>
+                    </button>
                 </div>
                 <div class="container m-0 p-0">
                     <div class="row">
