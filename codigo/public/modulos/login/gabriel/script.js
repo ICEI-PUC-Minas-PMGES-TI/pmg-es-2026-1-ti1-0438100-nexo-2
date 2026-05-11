@@ -128,6 +128,7 @@ function renderCards(list) {
 
 function applyFilters() {
 	const q = document.getElementById('globalSearch').value.trim().toLowerCase();
+	const categoria = document.getElementById('filterCategoria').value;
 	const urgencia = document.getElementById('filterUrgencia').value;
 	const dateOrder = document.getElementById('filterDate').value;
 
@@ -137,8 +138,9 @@ function applyFilters() {
 			const hay = (d.titulo + ' ' + (d.descricao || '') + ' ' + (d.local && d.local.logradouro ? d.local.logradouro : '') + ' ' + (d.local && d.local.cidade ? d.local.cidade : '')).toLowerCase();
 			matchesQuery = hay.includes(q);
 		}
+		let matchesCat = categoria ? d.categoria === categoria : true;
 		let matchesUrg = urgencia ? d.urgencia === urgencia : true;
-		return matchesQuery && matchesUrg;
+		return matchesQuery && matchesCat && matchesUrg;
 	});
 
 	if (dateOrder === 'newest') {
