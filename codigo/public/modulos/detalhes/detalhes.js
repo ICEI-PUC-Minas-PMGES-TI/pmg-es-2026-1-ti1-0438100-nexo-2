@@ -1,13 +1,5 @@
     fetch("detalhes.json").then(res => res.json()).then((data) => {
-        const dados = data.denuncias[0];
-        const categoria = data.categorias.find(c => c.id === dados.categoria_id);
-        const urgencia = data.urgencias.find(u => u.id === dados.urgencia_id);
-        const checkpoints = data.progresso;
-        const usuarioMorador = data.usuarioMorador.find(um => um.cpf === dados.usuarioMorador_cpf);
-        const usuarioInstituicao = data.usuarioInstituicao.find(ui => ui.cpf === dados.usuarioInstituicao_cpf);
-        const instituicao = data.instituicao.find(i => i.id === usuarioInstituicao.instituicao_id);
-        const imagens = data.denuncias[0].imagens;
-
+        //Referência aos elementos HTML
         const date = document.getElementById("date");
         const localizacao = document.getElementById("location");
         const prazo = document.getElementById("term");
@@ -23,11 +15,17 @@
         const modal = document.getElementById("modal");
         const fade = document.getElementById("fade");
         const btn_close_modal = document.getElementById("btn-close-modal");
-        const inputDate = document.querySelector('input[type="date"]');
-        const inputCost = document.querySelector('input[type="number"]');
+        const inputDate = document.getElementById("input-date");
+        const inputCost = document.getElementById("input-cost");
+        const btnStart = document.getElementById("btn-start");
+        const btnExit = document.getElementById("btn-exit");
+        const btn_avanca = document.getElementById("btn-avanca");
+        const btn_retorna = document.getElementById("btn-retorna");
+        const btn_editar = document.getElementById("btn-editar-info");
 
-        //---------------------------------------------------------FUNÇÕES------------------------------------------------------------------------
+//-----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
         // Lógica das imagens da denúncia
+        const imagens = data.denuncias[0].imagens;
             // Lógica para alocar imagens em suas divs
         for(let i=0; i<imagens.length; i++){
             const divImg = document.createElement("div");
@@ -78,6 +76,23 @@
                 atualiza_img();
             };
         });
+//-------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
+        //Referências aos objetos ee chaves estrangeiras do JSON
+        const dados = data.denuncias[0];
+        const checkpoints = data.progresso;
+        const categoria = data.categorias.find(c => c.id === dados.categoria_id);
+        const urgencia = data.urgencias.find(u => u.id === dados.urgencia_id);
+        const status = data.status.find(s => s.id === dados.status_id);
+        const usuarioMorador = data.usuarioMorador.find(um => um.cpf === dados.usuarioMorador_cpf);
+        const usuarioInstituicao = data.usuarioInstituicao.find(ui => ui.cpf === dados.usuarioInstituicao_cpf);
+        const instituicao = data.instituicao.find(i => i.id === usuarioInstituicao.instituicao_id);
+        
+        //Mostra informações fixas (por enquanto)
+        date.innerHTML = `Data da denúncia: ${dados.data}`;
+        localizacao.innerHTML = `Localização: ${dados.local.cidade}, ${dados.local.estado}`;
+        afetados.innerHTML = `Pessoas afetadas: ${dados.afetados}`;
+        descricao.innerHTML = `${dados.descricaoDenuncia}`;
+        nota_descricao.innerHTML = `${dados.notaOrgao}`;
 
         //Função para atualizar o menu de informações da denúncia
         function atualiza_info() {
@@ -89,22 +104,35 @@
             document.getElementById("organ").textContent = `Instituição:`;
             prazo.innerHTML = `Prazo estimado:`;
             custo.innerHTML = `Custo estimado:`;
-                
-
+            //Alterações quando assume denúncia e quando define prazo e custo    
             if (checkpoints[0].concluida === true) {
+                dados.status_id = 2;
                 document.getElementById("resp").textContent = `Responsável: ${usuarioInstituicao.nome_usuario}`;
                 document.getElementById("organ").textContent = `Instituição: ${instituicao.nome}`;
                 if(checkpoints[2].concluida === true){
                     prazo.innerHTML = `Prazo estimado: ${dados.prazo}`;
-                    custo.innerHTML = `Custo estimado: R$${dados.custo}`;
+                    custo.innerHTML = `Custo estimado: ${dados.custo}`;
                 };
+            } else {
+                //Se a denúncia não foi assumida, o status é "Em aberto"
+                dados.status_id = 3;
             };
+            //Atualiza as informações sobre status (chave estrangeira)
+            const status = data.status.find(s => s.id === dados.status_id);
+            document.getElementById("status").textContent = `Status: ${status.status}`;
 
-            date.innerHTML = `Data da denúncia: ${dados.data}`;
-            localizacao.innerHTML = `Localização: ${dados.local.cidade}, ${dados.local.estado}`;
-            afetados.innerHTML = `Pessoas afetadas: ${dados.afetados}`;
-            descricao.innerHTML = `${dados.descricaoDenuncia}`;
-            nota_descricao.innerHTML = `${dados.notaOrgao}`;
+                //Status da denúncia e a implicação nos botões
+            if(dados.status_id === 1){
+                btnExit.classList.add("d-none")
+            } else if(dados.status_id === 2){
+                btn_editar.classList.remove("d-none");
+                btn_avanca.classList.remove("d-none");
+                btn_retorna.classList.remove("d-none");
+            } else {
+                btn_avanca.classList.add("d-none");
+                btn_retorna.classList.add("d-none");
+                btn_editar.classList.add("d-none");
+            };
         };
 
         if(dados.notaOrgao != ""){
@@ -113,6 +141,8 @@
             nota_titulo.classList.remove("d-none");
         ;}
 
+//------------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
+        
         //Função para atualizar o status dos checkpoints da denúncia
         function renderizar_checkpoints() {
 
@@ -170,42 +200,48 @@
             progresso.style.width = `${porcentagem}%`;
         };
 
-
-
-
-
-
         renderizar_checkpoints();
         atualiza_info();
 
-        //-------------------------------------------------------ANDAMENTO DA DENÚNCIA-----------------------------------------------------
-
-
-        // Nomeia os checkpoints
+        //Nomeia os checkpoints
         for (let i = 0; i < (checkpoints.length); i++) {
             document.querySelector(`#check${i + 1} span`).textContent = `${checkpoints[i].etapa} | `;
         };
 
         //Lógica do botão de avança checkpoint + anexa arquivo + modal de custo e prazo
-
         fade.addEventListener("click", () => {
             modal.classList.add("d-none");
             fade.classList.add("d-none");
 
                     });
         document.getElementById("btn-avanca").addEventListener("click", () => {
-            if (checkpoints[0].concluida !== true) {
-                return;
-            }
+            if(checkpoints[4].concluida === false){
+                if (checkpoints[0].concluida === false) {
+                    return;
+                }
 
-            if(checkpoints[1].concluida === true && checkpoints[2].concluida === false){
-                    modal.classList.remove("d-none");
-                    fade.classList.remove("d-none");
-            } else {
-                fileInput.click();
+                if(checkpoints[1].concluida === true && checkpoints[2].concluida === false){
+                        modal.classList.remove("d-none");
+                        fade.classList.remove("d-none");
+                } else {
+                    fileInput.click();
+                };
             };
         });
             
+        inputCost.addEventListener("input", (e) => {
+            let valor = e.target.value.replace(/\D/g, "");
+            if (valor === "") {
+                valor = "0";
+            }
+            valor = (parseInt(valor) / 100);
+            valor = valor.toLocaleString("pt-BR", {
+            style: "currency",
+            currency: "BRL"
+            });
+            e.target.value = valor;
+        });
+
         btn_close_modal.addEventListener("click", () => {
             if(!inputDate.value || !inputCost.value){
                 alert("Preencha todos os campos!");
@@ -215,9 +251,8 @@
             modal.classList.add("d-none");
             fade.classList.add("d-none");
             const dataFormatada = inputDate.value.split("-").reverse().join("/");
-            const custoFormatado = inputCost.value.split(".").join(",");
             dados.prazo = dataFormatada;
-            dados.custo = custoFormatado;
+            dados.custo = inputCost.value;
             fileInput.click();
         });
 
@@ -262,13 +297,28 @@
             atualiza_info();
         });
 
-        // Lógica do botão de assumir ocorrência
-        const btnStart = document.getElementById("btn-start");
+        // Lógica dos botão de assumir e abandonar ocorrência
         btnStart.addEventListener("click", () => {
             checkpoints[0].concluida = true;
             document.querySelector(`#check1 span`).textContent += `${usuarioInstituicao.nome_usuario}, ${instituicao.nome}`;
             btnStart.classList.add("d-none");
+            btnExit.classList.remove("d-none");
             renderizar_checkpoints();
             atualiza_info();
+        });
+        btnExit.addEventListener("click", () => {
+            for(let i = 0; i<checkpoints.length; i++){
+                checkpoints[i].concluida = false;
+                const link = document.querySelector(`#check${i + 1} a`);
+                link.href = "";
+                link.textContent = "";
+                fileInput.value = "";
+            }
+            document.querySelector(`#check1 span`).textContent = "Denúncia aceita | ";
+            btnStart.classList.remove("d-none");
+            btnExit.classList.add("d-none");
+            renderizar_checkpoints();
+            atualiza_info();
+            renderiza_progresso()
         });
     });
