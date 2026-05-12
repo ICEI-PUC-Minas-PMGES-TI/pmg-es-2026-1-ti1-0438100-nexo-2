@@ -149,3 +149,25 @@ main{
   font-size: 16px;
   font-weight: 600;
 }
+
+/* ÁREA MAPA + LISTA */
+
+.mapa-container,
+.sidebar{
+  height: 560px;
+}
+
+/* SIDEBAR */
+
+.sidebar{
+  background: #f5f5f5;
+  border-radius: 20px;
+  padding: 18px;
+  overflow-y: auto;
+}
+
+/* ESPAÇAMENTO */
+
+.row.g-4{
+  align-items: stretch;
+}

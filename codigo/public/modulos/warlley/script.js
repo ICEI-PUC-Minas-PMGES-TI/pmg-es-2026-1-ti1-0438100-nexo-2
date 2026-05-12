@@ -60,13 +60,27 @@ navigator.geolocation.getCurrentPosition(
   }
 );
 
-// MAPA VISUAL
-L.tileLayer(
-  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
+// MAPAS
+
+const mapaPadrao = L.tileLayer(
+  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
   {
-    attribution: "OpenStreetMap"
+    attribution: "&copy; OpenStreetMap &copy; CARTO"
   }
-).addTo(mapa);
+);
+
+const mapaSatelite = L.tileLayer(
+  "https://server.arcgisonline.com/ArcGIS/rest/services/World_Imagery/MapServer/tile/{z}/{y}/{x}",
+  {
+    attribution: "Esri"
+  }
+);
+
+// MAPA INICIAL
+
+mapaPadrao.addTo(mapa);
+
+let mapaAtual = "padrao";
 
 // BARRA PESQUISA
 const provider = new GeoSearch.OpenStreetMapProvider();
@@ -151,6 +165,64 @@ botaoLocalizacao.onAdd = function () {
   return div;
 };
 botaoLocalizacao.addTo(mapa);
+
+// BOTÃO SATÉLITE
+
+const botaoSatelite = L.control({
+  position: "bottomright"
+});
+
+botaoSatelite.onAdd = function () {
+
+  const div = L.DomUtil.create("div", "leaflet-bar");
+
+  div.innerHTML = `
+    <a
+      href="#"
+      title="Alterar mapa"
+      style="
+        background: white;
+        width: 30px;
+        height: 30px;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        text-decoration: none;
+        color: black;
+        font-size: 16px;
+      "
+    >
+      🛰️
+    </a>
+  `;
+
+  div.onclick = function () {
+
+    if(mapaAtual === "padrao"){
+
+      mapa.removeLayer(mapaPadrao);
+
+      mapaSatelite.addTo(mapa);
+
+      mapaAtual = "satelite";
+
+    }else{
+
+      mapa.removeLayer(mapaSatelite);
+
+      mapaPadrao.addTo(mapa);
+
+      mapaAtual = "padrao";
+
+    }
+
+  };
+
+  return div;
+
+};
+
+botaoSatelite.addTo(mapa);
 
 // MARCADORES
 function renderizarMarcadores(lista) {
