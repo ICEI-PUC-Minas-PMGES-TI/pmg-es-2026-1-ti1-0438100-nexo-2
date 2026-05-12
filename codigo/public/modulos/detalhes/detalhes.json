@@ -2,13 +2,13 @@
     "denuncias":[
         {
             "id": 1,
-            "status_id": 3,
+            "status_id": 2,
             "categoria_id": 1,
             "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
             "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 1,
-            "data": "26/04/2026",
-            "entidades_id": 1,
+            "data": "2026-04-26",
+            "entidade_id": 1,
             "usuarioMorador_cpf": 12345678900,      
             "local": {
                 "cidade": "Contagem",
@@ -18,57 +18,74 @@
             },
             "usuarioInstituicao_cpf": 98723456700,
             "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-            "prazo": "",
+            "prazo": "12/05/2026",
             "afetados": 21,
-            "custo": ""
+            "custo": "R$ 987,95",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo1.pptx"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo2.pptx"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo3.pptx"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo4.pptx"}}
+            ]
         },
         {
             "id": 2,
-            "status": "Andamento",
+            "status_id": 2,
             "categoria_id": 5,
             "descricaoDenuncia": "A avenida está completamente sem iluminação...",
-            "imagens": ["http://localhost:3000/uploads/foto4.jpg", "http://localhost:3000/uploads/foto5.jpg", "http://localhost:3000/uploads/foto6.jpg"],
+            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 3,
-            "data": "2025-04-26",
-            "entidades_id": 2,
-            "denunciante":{
-                "usuario": "Maria"
-            },
+            "data": "26/04/2025",
+            "entidade_id": 2,
+            "usuarioMorador_cpf":12345678900,
             "local": {
                 "cidade": "Betim",
                 "estado": "MG",
                 "pais": "Brasil",
                 "logradouro": "Avenina Edmeia Matos Lazzarotti"
             },
-            "instituicao": "Prefeitura de Betim",
+            "usuarioInstituicao_cpf":45687612300,
             "notaOrgao": "",
-            "prazo": "2025-05-05",
+            "prazo": "",
             "afetados": 12,
-            "custo": "2456.35"
+            "custo": "",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false},
+                {"etapa": "Equipe enviada ao local", "concluida": false},
+                {"etapa": "Planejamento e previsões", "concluida": false},
+                {"etapa": "Manutenção em andamento", "concluida": false},
+                {"etapa": "Obra finalizada", "concluida": false}
+            ]            
         },
         {
             "id": 3,
-            "status": "Andamento",
+            "status_id": 2,
             "categoria_id": 2,
             "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
-            "imagens": ["http://localhost:3000/uploads/foto7.jpg", "http://localhost:3000/uploads/foto8.jpg", "http://localhost:3000/uploads/foto9.jpg"],
+            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 2,
-            "data": "2025-04-26",
-            "entidades_id": 3,
-            "denunciante":{
-                "usuario": "João Pedro"
-            },
+            "data": "26/04/2025",
+            "entidade_id": 3,
+            "usuarioMorador_cpf":12345678900,
             "local": {
                 "cidade": "Belo Horizonte",
                 "estado": "MG",
                 "pais": "Brasil",
                 "logradouro": "Avenida Professor Mário Werneck"
             },
-            "instituicao": "Megasafalt",
+            "usuarioInstituicao_cpf":98723456700,
             "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
-            "prazo": "2025-07-26",
+            "prazo": "",
             "afetados": 34,
-            "custo": "7985.00"
+            "custo": "",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false},
+                {"etapa": "Equipe enviada ao local", "concluida": false},
+                {"etapa": "Planejamento e previsões", "concluida": false},
+                {"etapa": "Manutenção em andamento", "concluida": false},
+                {"etapa": "Obra finalizada", "concluida": false}
+            ]
         }
     ],
 
@@ -101,25 +118,59 @@
         }
     ],
 
-    "instituicao":[
+    "usuarioLogado":{
+        "cpf": 12345678900
+    },
+
+
+    "infoPerfilMorador": [
         {
-            "id": 1,
-            "nome": "Megasfalt"
-        },
-        {
-            "id": 2,
-            "nome": "Prefeitura de Contagem"
-        },
-        {
-            "id": 3,
-            "nome":"Prefeitura de Betim"
+            "usuarioMorador_cpf": 12345678900,
+            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+            "estatisticas": {
+                "atendidas": 3,
+                "aberto": 2,
+                "atualizacoes": 2,
+                "pontos": 50
+            },
+            "denuncias_id": [{"id": 1}, {"id": 12}  ]
         }
+    ],
+
+    "infoPerfilInstituicao": [
+        {
+            "usuarioInstituicao_cpf": 45687612300,
+            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+            "estatisticas": {
+                "atendidas": 67,
+                "aberto": 3,
+                "atualizacoes": 15
+            },
+            "obras_id": [{"id": 2}, {"id": 12},{"id": 45}]
+        },
+        {
+            "usuarioInstituicao_cpf": 98723456700,
+            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", 
+            "estatisticas": {
+                "atendidas": 42,
+                "aberto": 4,
+                "atualizacoes": 5
+            },
+            "obras_id": [{"id": 1}, {"id": 3},{"id": 7}, {"id": 21}]
+        }
+    ],
+
+    "instituicao":[
+        {"id": 1, "nome": "Megasfalt"},
+        {"id": 2, "nome": "Prefeitura de Contagem"},
+        {"id": 3, "nome":"Prefeitura de Betim"}
     ],
 
     "status":[
         {"id": 1, "status": "Concluída"},
         {"id": 2, "status": "Em andamento"},
-        {"id": 3, "status": "Em aberto"}
+        {"id": 3, "status": "Em aberto"}, 
+        {"id": 4, "status": "Obra finalizada"}
     ],
 
     "categorias":[
@@ -140,28 +191,5 @@
         {"id": 1, "tipo": "Todos"},
         {"id": 2, "tipo": "Prefeitura"},
         {"id": 3, "tipo": "Empresa privada"}
-    ],
-
-    "progresso": [
-        {
-            "etapa": "Denúncia aceita",
-            "concluida": false
-        },
-        {
-            "etapa": "Equipe enviada ao local",
-            "concluida": false
-        },
-        {
-            "etapa": "Planejamento e previsões",
-            "concluida": false
-        },
-        {
-            "etapa": "Manutenção em andamento",
-            "concluida": false
-        },
-        {
-            "etapa": "Obra finalizada",
-            "concluida": false
-        }
     ]
 }
