@@ -174,33 +174,53 @@ function renderizarMarcadores(lista) {
 // LISTA
 const listaContainer = document.getElementById("lista-denuncias");
 function renderizarLista(lista) {
+
   listaContainer.innerHTML = "";
+
   lista.forEach(d => {
+
     const card = document.createElement("div");
+
+    card.className = "card-denuncia";
+
     card.innerHTML = `
-      <img src="${d.imagem}" />
-      <div>
+      <img src="${d.imagem}">
+
+      <div class="card-info">
+
         <p>${d.endereco}</p>
+
         <h3>${d.titulo}</h3>
-        <span class="${d.status}">
-          ${d.status === "andamento"
+
+        <span class="status ${d.status}">
+          ${
+            d.status === "andamento"
             ? "Em andamento"
-            : "Resolvida"}
+            : "Resolvida"
+          }
         </span>
+
         <a href="#">Ver detalhes</a>
+
       </div>
     `;
 
     card.addEventListener("click", () => {
+
       mapa.setView(d.coords, 15);
+
       const marcador = marcadores.find(
         m => m.id === d.id
       );
-      if (marcador) {
+
+      if(marcador){
         marcador.marker.openPopup();
       }
+
     });
+
     listaContainer.appendChild(card);
+
   });
 
 }
