@@ -1,25 +1,240 @@
 {
-  "usuarios": [
-    {
-      "id": 1,
-      "login": "admin",
-      "senha": "123",
-      "nome": "Administrador do Sistema",
-      "email": "admin@abc.com"
-    },
-    {
-      "id": 2,
-      "login": "user",
-      "senha": "123",
-      "nome": "Usuario Comum",
-      "email": "user@abc.com"
-    },
-    {
-      "login": "rommel",
-      "senha": "123",
-      "nome": "Rommel",
-      "email": "rommel@gmail.com",
-      "id": 3
-    }
-  ]
+    "denuncias":[
+        {
+            "id": 1,
+            "status": "andamento",
+            "categoria": "buraco na via",
+            "descricaoDenuncia": "A avenida tem um movimento muito grande, com o aumento das chuvas...",
+            "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg", "http://localhost:3000/uploads/foto3.jpg"],
+            "urgencia": "baixa",
+            "data": "2025-04-26",
+            "entidadeDirecionada": "Todos",
+            "denunciante":{
+                "usuario": "Luisa Souza"
+            },
+            "local": {
+                "cidade": "Contagem",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Firmo de Matos"
+            },
+            "instituicao": "Megasafalt",
+            "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
+            "prazo": "2025-07-26",
+            "afetados": 21,
+            "custo": "1250.97",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra."
+        },
+        {
+            "id": 2,
+            "status": "andamento",
+            "categoria": "falta de iluminacao",
+            "descricaoDenuncia": "A avenida está completamente sem iluminação...",
+            "imagens": ["http://localhost:3000/uploads/foto4.jpg", "http://localhost:3000/uploads/foto5.jpg", "http://localhost:3000/uploads/foto6.jpg"],
+            "urgencia": "alta",
+            "data": "2025-04-26",
+            "entidadeDirecionada": "Prefeitura",
+            "denunciante":{
+                "usuario": "Maria"
+            },
+            "local": {
+                "cidade": "Betim",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenina Edmeia Matos Lazzarotti"
+            },
+            "instituicao": "Prefeitura de Betim",
+            "notaOrgao": "",
+            "prazo": "2025-05-05",
+            "afetados": 12,
+            "custo": "2456.35",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra e mão de obra."
+        },
+        {
+            "id": 3,
+            "status": "andamento",
+            "categoria": "problema de esgoto",
+            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
+            "imagens": ["http://localhost:3000/uploads/foto7.jpg", "http://localhost:3000/uploads/foto8.jpg", "http://localhost:3000/uploads/foto9.jpg"],
+            "urgencia": "media",
+            "data": "2025-04-26",
+            "entidadeDirecionada": "Empresas",
+            "denunciante":{
+                "usuario": "João Pedro"
+            },
+            "local": {
+                "cidade": "Belo Horizonte",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Professor Mário Werneck"
+            },
+            "instituicao": "Megasafalt",
+            "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
+            "prazo": "2025-07-26",
+            "afetados": 34,
+            "custo": "7985.00",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra, mão de obra e documentação junto à prefeitura."
+        }
+    ],
+
+    "comentario": [
+        {
+            "usuario": "João Pedro",
+            "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os vazamentos estão tão críticos que nem caminhão está conseguindo passar.",
+            "data": "2026-04-26",
+            "hora": "15:47"
+        }
+    ],
+
+    "chat": [
+        {
+            "mensagem": "Precisamos de uma redução no prazo de entrega da obra, o índice de assaltos na região aumentou significativamente.",
+            "data": "2026-04-26",
+            "hora": "16:09",
+            "caminho":{
+                "de":{
+                    "usuario": "Maria"
+                },
+                "para":{
+                    "usuario": "Fernanda Rocha"
+                } 
+            }
+        }
+    ],
+
+    "cadastro": [
+        {
+            "nome": "Luisa Souza Bernardes",
+            "email": "souzaluisa@gmail.com",
+            "tipoUsuario": "Pessoa Física",
+            "cpf": 12345678900,
+            "senha": "xyz123!",
+            "confirmarSenha": "xyz123!"
+        },
+        {
+            "nome": "Fernanda Rocha Ladeira",
+            "email": "fernandaprefcontagem@gmail.com",
+            "tipoUsuario": "Prefeitura",
+            "municipio": "Contagem",
+            "senha": "def123!",
+            "confirmarSenha": "def123!"
+        },
+        {
+            "nome": "Ricardo Alves Silva",
+            "email": "ricardomegasfalt@gmail.com",
+            "tipoUsuario": "Empresa",
+            "cnpj": 12345678000199,
+            "senha": "abc123!",
+            "confirmarSenha": "abc123!"
+        }
+    ],
+
+    "login": [
+        {
+            "tipoUsuario": "Pessoa Física",
+            "email": "souzaluisa@gmail.com",
+            "cpf": 12345678900,
+            "senha": "xyz123!"
+        },
+        {
+            "tipoUsuario": "Prefeitura",
+            "email": "souzaluisa@gmail.com",
+            "municipio": "Contagem",
+            "senha": "def123!"
+        },
+        {
+            "tipoUsuario": "Empresa",
+            "email": "ricardomegasfalt@gmail.com",
+            "cnpj": 12345678000199,
+            "senha": "abc123!"
+        }
+    ],
+
+    "infoPerfilMorador": [
+        {
+            "usuario": "Luisa Souza",
+            "fotoPerfil": "http://localhost:3000/uploads/fotoperfil1.jpg",
+            "estatisticas": {
+                "atendidas": 3,
+                "aberto": 2,
+                "atualizacoes": 2,
+                "pontos": 50
+            },
+            "denunciasPerfil": [{"id": 1}, {"id": 12}]
+        }
+    ],
+
+    "infoPerfilOrgao": [
+        {
+            "usuario": "Fernanda Rocha",
+            "fotoPerfil": "http://localhost:3000/uploads/fotoperfil2.jpg",
+            "instituicao": "Prefeitura de Betim", 
+            "estatisticas": {
+                "atendidas": 67,
+                "aberto": 3,
+                "atualizacoes": 15
+            },
+            "obras": [{"id": 2}, {"id": 12},{"id": 45}]
+        },
+        {
+            "usuario":  "Ricardo Alves",
+            "fotoPerfil": "http://localhost:3000/uploads/fotoperfil3.jpg",
+            "instituicao": "Megasfalt", 
+            "estatisticas": {
+                "atendidas": 42,
+                "aberto": 4,
+                "atualizacoes": 5
+            },
+            "obras": [{"id": 1}, {"id": 3},{"id": 7}, {"id": 21}]
+        }
+    ],
+
+    "progresso": [
+        {
+            "etapa": "Denúncia aceita",
+            "concluida": true
+        },
+        {
+            "etapa": "Equipe enviada ao local",
+            "concluida": true
+        },
+        {
+            "etapa": "Planejamento e previsões",
+            "concluida": true
+        },
+        {
+            "etapa": "Manutenção em andamento",
+            "concluida": false
+        },
+        {
+            "etapa": "Obra finalizada",
+            "concluida": false  
+        }
+    ],
+
+    
+    "mapaCalor": [
+        {
+            "latitude": -18.6473,
+            "longitude": -48.1870,
+            "peso": 10
+        }
+    ],
+    "regioes": [
+        {
+            "nome": "Centro",
+            "totalDenuncias": 120,
+            "maisComum": "infraestrutura"
+        }
+    ],
+    "estatisticas": [
+        {
+            "totalDenuncias": 650,
+            "emAndamento": 273,
+            "resolvidas": 250,
+            "usuarios": 2000
+        }
+    ]
 }
+        
+    
