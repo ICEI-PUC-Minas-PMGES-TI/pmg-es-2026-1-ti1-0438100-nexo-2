@@ -1,301 +1,284 @@
-<!DOCTYPE html>
-<html lang="pt-BR">
-<head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Zella - Home</title>
-  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.11.0/dist/geosearch.css"/>
-  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
-  <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
-  <link rel="stylesheet" href="style.css">
-</head>
-<body>
+  <!DOCTYPE html>
+  <html lang="pt-BR">
+  <head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Zella - Home</title>
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geosearch@3.11.0/dist/geosearch.css"/>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+    <link rel="stylesheet" href="style.css">
+  </head>
+  <body>
 
-  <!-- CABEÇALHO -->
-  <header class="navbar navbar-expand-lg px-4 py-3 text-white" style="background-color: #2b1d1d;">
-  <div class="container-fluid">
-    <a class="navbar-brand text-light fw-bold fs-3" href="#">
-      <i class="bi bi-geo-alt-fill text-warning"></i>
-      Zella
+    <!-- CABEÇALHO -->
+    <header class="navbar navbar-expand-lg px-4 py-3" style="background-color: #2b1d1d;">
+    <div class="container-fluid">
+    
+      <!-- Logo + Links -->
+    <a class="navbar-brand me-4" href="#">
+      <img src="images/logo.png" alt="Logo Zella" height="60">
     </a>
-    <button class="navbar-toggler bg-light" type="button" data-bs-toggle="collapse" data-bs-target="#menu">
-      <span class="navbar-toggler-icon"></span>
-    </button>
 
-    <div class="collapse navbar-collapse" id="menu">
-      <ul class="navbar-nav mx-auto">
-        <li class="nav-item">
-          <a class="nav-link text-light" href="#">Início</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light" href="#">Denúncias</a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link text-light" href="#">Minhas obras</a>
-        </li>
-      </ul>
+    <ul class="navbar-nav d-flex flex-row gap-4">
+      <li class="nav-item"><a class="nav-link text-light fw-semibold" href="#">Início</a></li>
+      <li class="nav-item"><a class="nav-link text-light fw-semibold" href="#">Denúncias</a></li>
+      <li class="nav-item"><a class="nav-link text-light fw-semibold" href="#">Minhas obras</a></li>
+    </ul>
 
-      <div class="ms-auto d-flex align-items-center gap-3">
-        <div class="position-relative">
-          <input 
-            type="text"
-            id="busca"
-            class="form-control rounded-pill px-4"
-            placeholder="Buscar..."
-          >
-        </div>
-        <img 
-          src="https://i.pravatar.cc/40"
-          class="rounded-circle"
-          width="40"
-          height="40"
-        >
-        </div>
+    <!-- Busca + Perfil -->
+    <div class="ms-auto d-flex align-items-center gap-3">
+      <div class="position-relative">
+        <input type="text" id="busca" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar...">
+        <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
       </div>
+      <img src="https://i.pravatar.cc/40" class="rounded-circle border border-light" width="40" height="40">
     </div>
-  </header>
-
-  <!-- CONTEÚDO PRINCIPAL -->
-  <main>
-    <!-- MAPA + LISTA -->
-    <section class="container-fluid mt-4">
-
-    <div class="row g-4">
-
-    <!-- MAPA -->
-    <div class="col-lg-8">
-      <div class="bg-white rounded shadow-sm overflow-hidden">
-      <div id="mapa" style="height: 500px;"></div>
-      </div>
+    
     </div>
+    </header>
 
-    <!-- SIDEBAR -->
-    <div class="col-lg-4">
-      <aside class="sidebar shadow-sm rounded p-3">
-        
-        <!-- FILTROS -->
-        <div 
-          id="filtros"
-          class="d-flex flex-wrap gap-2 mb-4"
-        >
+    <!-- CONTEÚDO PRINCIPAL -->
+    <main>
+      <!-- MAPA + LISTA -->
+      <section class="container-fluid mt-4">
 
-          <button 
-            class="btn text-white rounded-pill px-3"
-            style="background-color: #5c3b3b;"
-            data-filtro="todas"
-          >
-          TODAS
-          </button>
-
-          <button 
-            class="btn btn-warning rounded-pill px-3"
-            data-filtro="abertas"
-          >
-            ABERTAS
-          </button>
-
-          <button 
-            class="btn btn-primary rounded-pill px-3"
-            data-filtro="andamento"
-          >
-            EM ANDAMENTO
-          </button>
-
-          <button 
-            class="btn btn-success rounded-pill px-3"
-            data-filtro="resolvida"
-          >
-            REALIZADAS
-          </button>
-        </div>
-
-        <!-- ESPAÇO RESERVADO -->
-          <div id="lista-denuncias"></div>
-        </div>
-      </aside>
-      </div>
-    </div>
-    </section>
-
-    <!-- ESTATÍSTICAS -->
-    <section id="estatisticas" class="container my-5">
-    <div class="row g-4">
-
-    <!-- CARD 1 -->
-    <div class="col-md-6 col-lg-3">
-      <div 
-        class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
-        style="
-          background-image: url('https://picsum.photos/500/300?1');
-          background-size: cover;
-          background-position: center;
-          min-height: 150px;
-        ">
-          <div class="card-body d-flex flex-column justify-content-end">
-          <p class="mb-2">
-            Denúncias realizadas
-          </p>
-          <h2 class="fw-bold">
-            650
-          </h2>
-          <span class="badge bg-dark w-50">
-            +12%
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 2 -->
-    <div class="col-md-6 col-lg-3">
-      <div 
-        class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
-        style="
-          background-image: url('https://picsum.photos/500/300?2');
-          background-size: cover;
-          background-position: center;
-          min-height: 150px;
-        ">
-        <div class="card-body d-flex flex-column justify-content-end">
-          <p class="mb-2">
-            Em andamento
-          </p>
-          <h2 class="fw-bold">
-            273
-          </h2>
-          <span class="badge bg-warning text-dark w-50">
-            Monitorando
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 3 -->
-    <div class="col-md-6 col-lg-3">
-      <div 
-        class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
-        style="
-          background-image: url('https://picsum.photos/500/300?3');
-          background-size: cover;
-          background-position: center;
-          min-height: 150px;
-        ">
-        <div class="card-body d-flex flex-column justify-content-end">
-          <p class="mb-2">
-            Resolvidas
-          </p>
-          <h2 class="fw-bold">
-            250
-          </h2>
-          <span class="badge bg-primary w-50">
-            Finalizadas
-          </span>
-        </div>
-      </div>
-    </div>
-
-    <!-- CARD 4 -->
-    <div class="col-md-6 col-lg-3">
-      <div 
-        class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
-        style="
-          background-image: url('https://picsum.photos/500/300?4');
-          background-size: cover;
-          background-position: center;
-          min-height: 150px;
-        ">
-
-        <div class="card-body d-flex flex-column justify-content-end">
-          <p class="mb-2">
-            Usuários ativos
-          </p>
-          <h2 class="fw-bold">
-            2 mil
-          </h2>
-          <span class="badge bg-success w-50">
-            Plataforma
-          </span>
-        </div>
-      </div>
-    </div>
-    </div>
-
-    </section>
-  </main>
-
-  <!-- FOOTER -->
-  <footer 
-    class="text-light mt-1 py-3"
-    style="background-color: #2b1d1d;">
-
-    <div class="container">
       <div class="row g-4">
 
-      <!-- LOGO -->
-      <div class="col-md-4">
-        <h3 class="fw-bold">
-          <i class="bi bi-geo-alt-fill text-warning"></i>
-          Zella
-        </h3>
-        <p class="text-light-emphasis">
-          Plataforma para registro de denúncias urbanas e acompanhamento de problemas públicos.
-        </p>
-      </div>
-
-      <!-- NAVEGAÇÃO -->
-      <div class="col-md-4">
-        <h5 class="fw-bold mb-3">
-          Navegação
-        </h5>
-        <div class="d-flex flex-column gap-2">
-          <a href="#" class="text-decoration-none text-light">
-            Início
-          </a>
-          <a href="#" class="text-decoration-none text-light">
-            Minhas denúncias
-          </a>
-          <a href="#" class="text-decoration-none text-light">
-            Outras denúncias
-          </a>
+      <!-- MAPA -->
+      <div class="col-lg-8">
+        <div class="bg-white rounded shadow-sm overflow-hidden">
+        <div id="mapa" style="height: 500px;"></div>
         </div>
       </div>
 
-      <!-- CONTATO -->
-      <div class="col-md-4">
-        <h5 class="fw-bold mb-3">
-          Contato
-        </h5>
-        <p class="mb-2">
-          <i class="bi bi-envelope-fill text-warning"></i>
-          contato@zella.com
-        </p>
-        <p>
-          <i class="bi bi-telephone-fill text-warning"></i>
-          (31) 3333-4444
-        </p>
+      <!-- SIDEBAR -->
+      <div class="col-lg-4">
+        <aside class="sidebar shadow-sm rounded p-3">
+          
+          <!-- FILTROS -->
+          <div 
+            id="filtros"
+            class="d-flex flex-wrap gap-2 mb-4"
+          >
+
+            <button 
+              class="btn text-white rounded-pill px-3"
+              style="background-color: #5c3b3b;"
+              data-filtro="todas"
+            >
+            TODAS
+            </button>
+
+            <button 
+              class="btn btn-warning rounded-pill px-3"
+              data-filtro="abertas"
+            >
+              ABERTAS
+            </button>
+
+            <button 
+              class="btn btn-primary rounded-pill px-3"
+              data-filtro="andamento"
+            >
+              EM ANDAMENTO
+            </button>
+
+            <button 
+              class="btn btn-success rounded-pill px-3"
+              data-filtro="resolvida"
+            >
+              REALIZADAS
+            </button>
+          </div>
+
+          <!-- ESPAÇO RESERVADO -->
+            <div id="lista-denuncias"></div>
+          </div>
+        </aside>
+        </div>
       </div>
-    </div>
+      </section>
 
-    <!-- LINHA -->
-    <hr class="border-light opacity-25 my-4">
+      <!-- ESTATÍSTICAS -->
+      <section id="estatisticas" class="container my-5">
+      <div class="row g-4">
 
-    <!-- COPYRIGHT -->
-    <div class="text-center text-light-emphasis">
-      © 2026 Zella — Todos os direitos reservados
-    </div>
+      <!-- CARD 1 -->
+      <div class="col-md-6 col-lg-3">
+        <div 
+          class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+          style="
+            background-image: url('https://picsum.photos/500/300?1');
+            background-size: cover;
+            background-position: center;
+            min-height: 150px;
+          ">
+            <div class="card-body d-flex flex-column justify-content-end">
+            <p class="mb-2">
+              Denúncias realizadas
+            </p>
+            <h2 class="fw-bold">
+              650
+            </h2>
+            <span class="badge bg-dark w-50">
+              +12%
+            </span>
+          </div>
+        </div>
+      </div>
 
-    </div>
-  </footer>
+      <!-- CARD 2 -->
+      <div class="col-md-6 col-lg-3">
+        <div 
+          class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+          style="
+            background-image: url('https://picsum.photos/500/300?2');
+            background-size: cover;
+            background-position: center;
+            min-height: 150px;
+          ">
+          <div class="card-body d-flex flex-column justify-content-end">
+            <p class="mb-2">
+              Em andamento
+            </p>
+            <h2 class="fw-bold">
+              273
+            </h2>
+            <span class="badge bg-warning text-dark w-50">
+              Monitorando
+            </span>
+          </div>
+        </div>
+      </div>
 
-<link 
-  rel="stylesheet"
-  href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
-/>
+      <!-- CARD 3 -->
+      <div class="col-md-6 col-lg-3">
+        <div 
+          class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+          style="
+            background-image: url('https://picsum.photos/500/300?3');
+            background-size: cover;
+            background-position: center;
+            min-height: 150px;
+          ">
+          <div class="card-body d-flex flex-column justify-content-end">
+            <p class="mb-2">
+              Resolvidas
+            </p>
+            <h2 class="fw-bold">
+              250
+            </h2>
+            <span class="badge bg-primary w-50">
+              Finalizadas
+            </span>
+          </div>
+        </div>
+      </div>
 
-<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+      <!-- CARD 4 -->
+      <div class="col-md-6 col-lg-3">
+        <div 
+          class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+          style="
+            background-image: url('https://picsum.photos/500/300?4');
+            background-size: cover;
+            background-position: center;
+            min-height: 150px;
+          ">
 
-<script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
-<script src="https://unpkg.com/leaflet-geosearch@3.11.0/dist/bundle.min.js"></script>
-<script src="script.js"></script>
-</body>
-</html>
+          <div class="card-body d-flex flex-column justify-content-end">
+            <p class="mb-2">
+              Usuários ativos
+            </p>
+            <h2 class="fw-bold">
+              2 mil
+            </h2>
+            <span class="badge bg-success w-50">
+              Plataforma
+            </span>
+          </div>
+        </div>
+      </div>
+      </div>
+
+      </section>
+    </main>
+
+    <!-- FOOTER -->
+    <footer 
+      class="text-light mt-1 py-3"
+      style="background-color: #2b1d1d;">
+
+      <div class="container">
+        <div class="row g-4">
+
+        <!-- LOGO -->
+        <div class="col-md-4">
+          <h3 class="fw-bold">
+            <i class="bi bi-geo-alt-fill text-warning"></i>
+            Zella
+          </h3>
+          <p class="text-light-emphasis">
+            Plataforma para registro de denúncias urbanas e acompanhamento de problemas públicos.
+          </p>
+        </div>
+
+        <!-- NAVEGAÇÃO -->
+        <div class="col-md-4">
+          <h5 class="fw-bold mb-3">
+            Navegação
+          </h5>
+          <div class="d-flex flex-column gap-2">
+            <a href="#" class="text-decoration-none text-light">
+              Início
+            </a>
+            <a href="#" class="text-decoration-none text-light">
+              Minhas denúncias
+            </a>
+            <a href="#" class="text-decoration-none text-light">
+              Outras denúncias
+            </a>
+          </div>
+        </div>
+
+        <!-- CONTATO -->
+        <div class="col-md-4">
+          <h5 class="fw-bold mb-3">
+            Contato
+          </h5>
+          <p class="mb-2">
+            <i class="bi bi-envelope-fill text-warning"></i>
+            contato@zella.com
+          </p>
+          <p>
+            <i class="bi bi-telephone-fill text-warning"></i>
+            (31) 3333-4444
+          </p>
+        </div>
+      </div>
+
+      <!-- LINHA -->
+      <hr class="border-light opacity-25 my-4">
+
+      <!-- COPYRIGHT -->
+      <div class="text-center text-light-emphasis">
+        © 2026 Zella — Todos os direitos reservados
+      </div>
+
+      </div>
+    </footer>
+
+  <link 
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+  />
+
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet-geosearch@3.11.0/dist/bundle.min.js"></script>
+  <script src="script.js"></script>
+  </body>
+  </html>
