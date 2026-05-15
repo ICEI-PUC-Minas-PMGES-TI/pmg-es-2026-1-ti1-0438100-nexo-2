@@ -63,9 +63,9 @@ navigator.geolocation.getCurrentPosition(
 // MAPAS
 
 const mapaPadrao = L.tileLayer(
-  "https://{s}.basemaps.cartocdn.com/light_all/{z}/{x}/{y}{r}.png",
+  "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
-    attribution: "&copy; OpenStreetMap &copy; CARTO"
+    attribution: "&copy; OpenStreetMap contributors"
   }
 );
 
@@ -82,19 +82,37 @@ mapaPadrao.addTo(mapa);
 
 let mapaAtual = "padrao";
 
-// BARRA PESQUISA
-const provider = new GeoSearch.OpenStreetMapProvider();
+const input = document.getElementById("mapSearch");
 
-const search = new GeoSearch.GeoSearchControl({
-  provider: provider,
-  style: 'bar',
-  autoComplete: true,
-  autoCompleteDelay: 250,
-  searchLabel: 'Buscar endereço...',
-  keepResult: true
+async function buscarEndereco(query) {
+  if (!query) return;
+  const res = await fetch(`https://nominatim.openstreetmap.org/search?format=json&q=${query}`);
+  const data = await res.json();
+
+  if (data.length > 0) {
+    const lat = data[0].lat;
+    const lon = data[0].lon;
+    mapa.setView([lat, lon], 16);
+    L.marker([lat, lon]).addTo(mapa).bindPopup(data[0].display_name).openPopup();
+  }
+}
+
+// Enter dispara a busca
+input.addEventListener("keydown", e => {
+  if (e.key === "Enter") {
+    buscarEndereco(input.value);
+  }
 });
 
-mapa.addControl(search);
+// Clique na lupa (lado direito do input)
+input.addEventListener("click", e => {
+  const rect = input.getBoundingClientRect();
+  const clickX = e.clientX - rect.left;
+  if (clickX > rect.width - 30) {
+    buscarEndereco(input.value);
+  }
+});
+
 
 // ZOOM
 L.control.zoom({

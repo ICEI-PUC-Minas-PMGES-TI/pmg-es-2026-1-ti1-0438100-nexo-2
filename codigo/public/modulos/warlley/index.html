@@ -46,12 +46,19 @@
 
       <div class="row g-4">
 
-      <!-- MAPA -->
-      <div class="col-lg-8">
-        <div class="bg-white rounded shadow-sm overflow-hidden">
-        <div id="mapa" style="height: 500px;"></div>
+    <!-- MAPA -->
+    <div class="col-lg-8">
+      <div class="bg-white rounded shadow-sm overflow-hidden" style="position: relative; height: 500px;">
+        <!-- BARRA DE BUSCA (FORA DO MAPA) -->
+        <div class="map-search">
+          <input type="text" id="mapSearch" placeholder="Buscar endereço...">
         </div>
+        <!-- MAPA -->
+        <div id="mapa" style="height: 100%;"></div>
       </div>
+    </div>
+      
+
 
       <!-- SIDEBAR -->
       <div class="col-lg-4">

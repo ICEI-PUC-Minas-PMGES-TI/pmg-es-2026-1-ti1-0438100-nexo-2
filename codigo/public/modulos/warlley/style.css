@@ -39,12 +39,47 @@ main{
 
 /* MAPA + SIDEBAR */
 
-.mapa-container{
+  /* BARRA DE ENDEREÇO */
+ .map-search {
+  position: absolute;
+  top: 15px;
+  left: 15px;
+  z-index: 1000;
+}
+
+.map-search input {
+  width: 280px;
+  height: 36px;
+  border-radius: 50px;
+  padding: 0 40px 0 16px;
+  border: 1px solid #ccc;
+  font-size: 14px;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 12px center;
+  background-size: 18px;
+}
+
+.map-search input:hover {
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
+}
+
+.map-search input {
+  cursor: text;
+}
+.map-search input:hover {
+  cursor: text;
+}
+.map-search input::after {
+  content: "";
+}
+
+.mapa-container {
+  position: relative;
   height: 560px;
   border-radius: 18px;
   overflow: hidden;
   background: white;
-  position: relative;
 }
 
 #mapa{
