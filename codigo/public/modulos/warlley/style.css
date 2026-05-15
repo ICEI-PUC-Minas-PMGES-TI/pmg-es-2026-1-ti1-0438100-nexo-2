@@ -1,16 +1,9 @@
-/* =========================================================
-   === ÁREA PRINCIPAL ===
-========================================================= */
-
+/* === MAIN === */
 main{
-  background: #efefef;
   padding-bottom: 40px;
 }
 
-/* =========================================================
-   === CABEÇALHO ===
-========================================================= */
-
+/* === CABECALHO === */
 /* LOGO */
 .navbar-brand img{
   height: 40px;
@@ -23,39 +16,46 @@ main{
   font-weight: 600;
   letter-spacing: 0.5px;
   padding: 8px 16px;
-  transition: color 0.3s;
+  transition: 0.3s;
 }
 
 .navbar-nav .nav-link:hover{
   color: #ff8a00;
 }
 
-/* BARRA DE BUSCA */
+/* BUSCA */
 #busca{
   width: 280px;
   height: 36px;
-
   font-size: 14px;
-
-  border-radius: 50px;
-
   padding-left: 16px;
   padding-right: 40px;
 }
 
-/* =========================================================
-   === MAPA ===
-========================================================= */
+/* PERFIL */
+.perfil-link{
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  text-decoration:none;
+}
 
+.foto-perfil{
+  cursor:pointer;
+  transition:0.25s ease;
+}
+
+.foto-perfil:hover{
+  transform:scale(1.08);
+  box-shadow:
+    0 0 12px rgba(255,255,255,0.35);
+}
+
+/* === MAPA === */
 .mapa-container{
   position: relative;
-
   height: 515px;
-
-  border-radius: 18px;
-
   overflow: hidden;
-
   background: white;
 }
 
@@ -64,36 +64,24 @@ main{
   height: 100%;
 }
 
-/* =========================================================
-   === BARRA DE ENDEREÇO ===
-========================================================= */
-
+/* === BUSCA MAPA === */
 .map-search{
   position: absolute;
-
   top: 15px;
   left: 15px;
-
   z-index: 1000;
 }
 
 .map-search input{
   width: 280px;
   height: 36px;
-
   border: 1px solid #ccc;
-  border-radius: 50px;
-
   padding: 0 40px 0 16px;
-
   font-size: 14px;
-
   cursor: text;
-
   background-repeat: no-repeat;
   background-position: right 12px center;
   background-size: 18px;
-
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23999' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
 }
 
@@ -101,50 +89,24 @@ main{
   background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='%23000' viewBox='0 0 16 16'%3E%3Cpath d='M11.742 10.344a6.5 6.5 0 1 0-1.397 1.398h-.001l3.85 3.85a1 1 0 0 0 1.415-1.414l-3.85-3.85zm-5.242.656a5.5 5.5 0 1 1 0-11 5.5 5.5 0 0 1 0 11z'/%3E%3C/svg%3E");
 }
 
-/* =========================================================
-   === SIDEBAR ===
-========================================================= */
-
+/* === SIDEBAR === */
 .sidebar{
   background: #f5f5f5;
-
   height: 515px;
-
-  border-radius: 18px;
-
-  padding: 10px;
-
   overflow: hidden;
 }
 
-/* =========================================================
-   === FILTROS ===
-========================================================= */
-
+/* === FILTROS === */
 #filtros{
   margin-bottom: 20px;
 }
 
-#filtros button{
-  border: none;
-
-  font-size: 11px;
-  font-weight: 600;
-
-  padding: 7px 14px;
-}
-
-/* BOTÕES */
-
 .btn-filtro{
+  border: none;
   background: #d9d9d9;
   color: black;
-
-  border: none;
-
   font-size: 11px;
   font-weight: 700;
-
   transition: 0.3s;
 }
 
@@ -152,38 +114,21 @@ main{
   transform: scale(1.03);
 }
 
-/* BOTÃO ATIVO */
-
 .btn-filtro.ativo{
-  background: linear-gradient(
-    90deg,
-    #3b2416 0%,
-    #7a3b00 45%,
-    #ff5a00 100%
-  );
-
   color: white;
 }
 
-/* =========================================================
-   === LISTA DENÚNCIAS ===
-========================================================= */
-
+/* === LISTA DENUNCIAS === */
 #lista-denuncias{
   display: flex;
   flex-direction: column;
-
   gap: 18px;
-
   height: 400px;
-
   overflow-y: auto;
-
   padding-right: 5px;
 }
 
 /* SCROLL */
-
 #lista-denuncias::-webkit-scrollbar{
   width: 6px;
 }
@@ -201,25 +146,15 @@ main{
   background: #a8a8a8;
 }
 
-/* =========================================================
-   === CARD DENÚNCIA ===
-========================================================= */
-
+/* === CARD DENUNCIA === */
 .card-denuncia{
   background: white;
-
   border-radius: 16px;
-
   padding: 10px;
-
   display: flex;
-
   gap: 12px;
-
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
-
   cursor: pointer;
-
   transition: 0.2s;
 }
 
@@ -228,21 +163,16 @@ main{
 }
 
 /* IMAGEM */
-
 .card-denuncia img{
   width: 120px;
   height: 85px;
-
   object-fit: cover;
-
   border-radius: 12px;
 }
 
-/* INFORMAÇÕES */
-
+/* INFORMACOES */
 .card-info{
   flex: 1;
-
   display: flex;
   flex-direction: column;
   justify-content: space-between;
@@ -250,30 +180,18 @@ main{
 
 .card-info p{
   margin: 0;
-
   font-size: 11px;
-
   color: #666;
 }
 
 .card-info h3{
   margin: 5px 0;
-
   font-size: 17px;
   font-weight: 700;
 }
 
-.card-info a{
-  text-decoration: none;
-
-  font-size: 12px;
-
-  color: black;
-
-  align-self: flex-end;
-}
-
-/* STATUS */
+/* === STATUS ===
+========================================================= */
 
 .status{
   width: fit-content;
@@ -288,6 +206,10 @@ main{
   color: white;
 }
 
+.aberta{
+  background:#dc3545;
+}
+
 .andamento{
   background: #ff8a00;
 }
@@ -296,13 +218,48 @@ main{
   background: #42c59a;
 }
 
-/* =========================================================
-   === ESTATÍSTICAS ===
-========================================================= */
+/* === ACOES CARD === */
+.card-footer-acoes{
+  display:flex;
+  align-items:center;
+  justify-content:space-between;
+  margin-top:10px;
+}
 
+.acoes-card{
+  display:flex;
+  gap:8px;
+  margin-top:12px;
+}
+
+/* BOTOES */
+.btn-detalhes,
+.btn-mapa{
+  border:none;
+  height:28px;
+  padding:0 12px;
+  border-radius:50px;
+  font-size:11px;
+  font-weight:700;
+  text-decoration:none;
+  color:white !important;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.25s ease;
+}
+
+.btn-detalhes:hover,
+.btn-mapa:hover{
+  transform:translateY(-2px);
+  box-shadow:
+    0 5px 12px rgba(255,90,0,0.25);
+}
+
+/* === ESTATISTICAS === */
 #estatisticas{
   width: 100%;
-
   margin-top: 35px !important;
 }
 
@@ -316,16 +273,10 @@ main{
 }
 
 /* CARDS */
-
 #estatisticas .card{
   height: 140px;
-
-  border-radius: 14px !important;
-
   overflow: hidden;
-
   cursor: pointer;
-
   transition: 0.3s;
 }
 
@@ -334,74 +285,46 @@ main{
 }
 
 /* OVERLAY */
-
 #estatisticas .card-body{
   background: linear-gradient(
     to top,
     rgba(0,0,0,0.78),
     rgba(0,0,0,0.15)
   );
-
   padding: 18px;
-
   display: flex;
   flex-direction: column;
   justify-content: flex-end;
 }
 
 /* TEXTOS */
-
 #estatisticas p{
   margin-bottom: 4px;
-
   font-size: 14px;
   font-weight: 700;
-
   color: white;
 }
 
 #estatisticas h2{
   margin: 0;
-
   font-size: 34px;
   font-weight: 800;
-
   color: white;
 }
 
-/* BADGE */
-
 #estatisticas .badge{
   width: fit-content;
-
   margin-top: 8px;
-
   padding: 6px 12px;
-
   border-radius: 20px;
-
   font-size: 11px;
 }
 
-/* =========================================================
-   === ESPAÇAMENTO ===
-========================================================= */
-
-.row.g-4{
-  align-items: stretch;
-}
-
-/* =========================================================
-   === FOOTER ===
-========================================================= */
-
+/* === FOOTER === */
 footer{
   background: #2b1d1d;
-
   padding: 55px 0 20px 0 !important;
 }
-
-/* CONTAINER */
 
 footer .container-fluid{
   padding-left: 60px;
@@ -409,66 +332,41 @@ footer .container-fluid{
 }
 
 /* LOGO */
-
 .footer-logo{
   width: 170px;
   height: auto;
-
   margin-bottom: 15px;
 }
 
-/* TÍTULOS */
-
+/* TITULOS */
 footer h5{
   margin-bottom: 20px !important;
-
   font-size: 17px;
   font-weight: 700;
-
   color: white;
 }
 
 /* TEXTOS */
-
 footer p{
   font-size: 14px;
   line-height: 1.7;
-
   color: rgba(255,255,255,0.72);
 }
 
 /* LINKS */
-
 footer a{
   text-decoration: none;
-
   font-size: 14px;
-
   color: rgba(255,255,255,0.72) !important;
-
   transition: 0.25s;
 }
 
 footer a:hover{
   color: #ff8a00 !important;
-
   transform: translateX(3px);
 }
 
-/* LISTA */
-
-footer .d-flex.flex-column{
-  gap: 12px !important;
-}
-
-/* ÍCONES */
-
-footer i{
-  color: #ff8a00;
-}
-
-/* === CONTATO FOOTER === */
-
+/* CONTATO */
 .footer-contato{
   display: flex;
   flex-direction: column;
@@ -479,27 +377,25 @@ footer i{
   display: flex;
   align-items: center;
   gap: 12px;
-
   padding: 10px 14px;
-
   background: rgba(255,255,255,0.04);
-
   border: 1px solid rgba(255,255,255,0.06);
-
   border-radius: 12px;
-
   transition: 0.25s;
 }
 
 .footer-contato-item:hover{
   background: rgba(255,255,255,0.07);
-
   transform: translateX(3px);
 }
 
+.footer-contato-item i,
+.footer-contato-item span{
+  transition: 0.25s;
+}
+
 .footer-contato-item i{
-  font-size: 16px;
-  color: #ff8a00;
+  color: rgba(255,255,255,0.78);
 }
 
 .footer-contato-item span{
@@ -507,30 +403,16 @@ footer i{
   color: rgba(255,255,255,0.78);
 }
 
-/* LINHA */
-
-footer hr{
-  border-color: rgba(255,255,255,0.12);
-
-  margin-top: 40px !important;
-  margin-bottom: 25px !important;
+.footer-contato-item:hover i,
+.footer-contato-item:hover span{
+  color: #ff8a00;
 }
 
-/* COPYRIGHT */
-
-footer .text-center{
-  font-size: 13px;
-
-  color: rgba(255,255,255,0.55) !important;
-}
-
-/* === NAVEGAÇÃO FOOTER === */
-
+/* NAVEGACAO */
 .footer-nav{
   display: flex;
   flex-direction: column;
   gap: 10px;
-
   margin-bottom: 25px;
 }
 
@@ -538,40 +420,15 @@ footer .text-center{
   display: flex;
   align-items: center;
   gap: 10px;
-
   width: fit-content;
-
   padding: 8px 12px;
-
   background: rgba(255,255,255,0.04);
-
   border: 1px solid rgba(255,255,255,0.06);
-
   border-radius: 10px;
-
-  text-decoration: none;
-
   transition: 0.25s;
 }
 
-.footer-link:hover{
-  background: rgba(255,255,255,0.08);
-
-  transform: translateX(3px);
-}
-
-.footer-link i{
-  font-size: 14px;
-  color: #ff8a00;
-}
-
-.footer-link span{
-  font-size: 13px;
-  color: rgba(255,255,255,0.78);
-}
-
-/* === REDES SOCIAIS FOOTER === */
-
+/* REDES */
 .footer-social-vertical{
   display: flex;
   flex-direction: column;
@@ -582,34 +439,36 @@ footer .text-center{
   display: flex;
   align-items: center;
   gap: 12px;
-
   width: fit-content;
-
   padding: 8px 12px;
-
   border-radius: 10px;
-
   background: rgba(255,255,255,0.04);
-
   border: 1px solid rgba(255,255,255,0.06);
-
-  text-decoration: none;
-
   transition: 0.25s;
 }
 
-.footer-social-vertical a:hover{
-  background: rgba(255,255,255,0.08);
-
-  transform: translateX(3px);
+/* === BOTOES MAPA === */
+.leaflet-bar{
+  border: none !important;
+  border-radius: 16px !important;
+  overflow: hidden;
+  box-shadow:
+    0 6px 18px rgba(0,0,0,0.12) !important;
 }
 
-.footer-social-vertical i{
-  font-size: 17px;
-  color: #ff8a00;
+.leaflet-bar a{
+  width: 38px !important;
+  height: 38px !important;
+  border: none !important;
+  background: white !important;
+  display: flex !important;
+  align-items: center !important;
+  justify-content: center !important;
+  font-size: 15px;
+  transition: 0.25s ease;
 }
 
-.footer-social-vertical span{
-  font-size: 13px;
-  color: rgba(255,255,255,0.78);
+.leaflet-bar a:hover{
+  background: #f3f3f3 !important;
+  transform: scale(1.03);
 }
