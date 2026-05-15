@@ -22,6 +22,22 @@ const denuncias = [
     status: "resolvida",
     imagem: "https://picsum.photos/100?3",
     coords: [-19.93, -43.95]
+  },
+  {
+    id: 4,
+    titulo: "Buracos na Rua Silvino Santos",
+    endereco: "Belo Horizonte",
+    status: "resolvida",
+    imagem: "https://picsum.photos/100?3",
+    coords: [-19.93, -43.95]
+  },
+  {
+    id: 5,
+    titulo: "Buracos na Rua Silvino Santos",
+    endereco: "Belo Horizonte",
+    status: "resolvida",
+    imagem: "https://picsum.photos/100?3",
+    coords: [-19.93, -43.95]
   }
 ];
 
@@ -82,6 +98,7 @@ mapaPadrao.addTo(mapa);
 
 let mapaAtual = "padrao";
 
+// BARRA DE BUSCA DE ENDEREÇO
 const input = document.getElementById("mapSearch");
 
 async function buscarEndereco(query) {
@@ -355,3 +372,43 @@ function atualizarTela(lista) {
 
 // INICIALIZAÇÃO
 atualizarTela(denuncias);
+
+// FILTROS
+const botoesFiltro = document.querySelectorAll(".btn-filtro");
+
+botoesFiltro.forEach(btn => {
+
+  btn.addEventListener("click", () => {
+
+    // REMOVE O ATIVO DE TODOS
+    botoesFiltro.forEach(b => {
+      b.classList.remove("ativo");
+    });
+
+    // ADICIONA NO CLICADO
+    btn.classList.add("ativo");
+
+    // FILTRO
+    const filtro = btn.dataset.filtro;
+
+    let filtradas = denuncias;
+
+    if (filtro === "abertas") {
+
+      filtradas = denuncias.filter(
+        d => d.status === "andamento"
+      );
+
+    } else if (filtro !== "todas") {
+
+      filtradas = denuncias.filter(
+        d => d.status === filtro
+      );
+
+    }
+
+    atualizarTela(filtradas);
+
+  });
+
+});

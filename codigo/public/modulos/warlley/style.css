@@ -74,9 +74,9 @@ main{
   content: "";
 }
 
-.mapa-container {
+.mapa-container{
   position: relative;
-  height: 560px;
+  height: 515px;
   border-radius: 18px;
   overflow: hidden;
   background: white;
@@ -91,10 +91,10 @@ main{
 
 .sidebar{
   background: #f5f5f5;
-  height: 560px;
+  height: 515px;
   border-radius: 18px;
-  overflow-y: auto;
-  padding: 20px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 /* FILTROS */
@@ -217,24 +217,87 @@ main{
   font-weight: 600;
 }
 
-/* ÁREA MAPA + LISTA */
 
-.mapa-container,
-.sidebar{
-  height: 560px;
-}
 
 /* SIDEBAR */
 
 .sidebar{
   background: #f5f5f5;
-  border-radius: 20px;
-  padding: 18px;
-  overflow-y: auto;
+  height: 515px;
+  border-radius: 18px;
+  padding: 10px;
+  overflow: hidden;
 }
 
 /* ESPAÇAMENTO */
 
 .row.g-4{
   align-items: stretch;
+}
+
+/* === BOTÕES FILTRO ===*/
+
+.btn-filtro{
+  background: #d9d9d9;
+  color: black;
+  border: none;
+  font-size: 11px;
+  font-weight: 700;
+  transition: 0.3s;
+}
+
+.btn-filtro:hover{
+  transform: scale(1.03);
+}
+
+/* BOTÃO SELECIONADO */
+.btn-filtro.ativo{
+  background: linear-gradient(
+    90deg,
+    #3b2416 0%,
+    #7a3b00 45%,
+    #ff5a00 100%
+  );
+  color: white;
+}
+
+/* === SIDEBAR === */
+
+.sidebar{
+  background: #f5f5f5;
+  height: 515px;
+  border-radius: 18px;
+  padding: 10px;
+  overflow: hidden;
+}
+
+/* === LISTA DENÚNCIAS === */
+
+#lista-denuncias{
+  display: flex;
+  flex-direction: column;
+  gap: 18px;
+
+  height: 400px;
+  overflow-y: auto;
+  padding-right: 5px;
+}
+
+/* === SCROLL PERSONALIZADO === */
+
+#lista-denuncias::-webkit-scrollbar{
+  width: 6px;
+}
+
+#lista-denuncias::-webkit-scrollbar-track{
+  background: transparent;
+}
+
+#lista-denuncias::-webkit-scrollbar-thumb{
+  background: #c7c7c7;
+  border-radius: 20px;
+}
+
+#lista-denuncias::-webkit-scrollbar-thumb:hover{
+  background: #a8a8a8;
 }
