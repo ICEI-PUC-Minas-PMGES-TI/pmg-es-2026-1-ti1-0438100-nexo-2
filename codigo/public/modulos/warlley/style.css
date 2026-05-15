@@ -301,3 +301,84 @@ main{
 #lista-denuncias::-webkit-scrollbar-thumb:hover{
   background: #a8a8a8;
 }
+
+/* === CARDS ESTATÍSTICAS === */
+
+#estatisticas .card{
+  height: 140px;
+  border-radius: 14px !important;
+  overflow: hidden;
+
+  transition: 0.3s;
+  cursor: pointer;
+}
+
+#estatisticas .card:hover{
+  transform: translateY(-4px);
+}
+
+/* OVERLAY ESCURO */
+
+#estatisticas .card-body{
+  background: linear-gradient(
+    to top,
+    rgba(0,0,0,0.78),
+    rgba(0,0,0,0.15)
+  );
+
+  padding: 18px;
+
+  display: flex;
+  flex-direction: column;
+  justify-content: flex-end;
+}
+
+/* TEXTO PEQUENO */
+
+#estatisticas p{
+  font-size: 14px;
+  font-weight: 700;
+  margin-bottom: 4px;
+
+  color: white;
+}
+
+/* NÚMERO */
+
+#estatisticas h2{
+  font-size: 34px;
+  font-weight: 800;
+
+  margin: 0;
+
+  color: white;
+}
+
+/* BADGE */
+
+#estatisticas .badge{
+  margin-top: 8px;
+
+  width: fit-content;
+
+  padding: 6px 12px;
+
+  border-radius: 20px;
+
+  font-size: 11px;
+}
+
+/* === ESTATÍSTICAS === */
+
+#estatisticas{
+  width: 100%;
+}
+
+#estatisticas .row{
+  margin: 0;
+}
+
+#estatisticas .col-lg-3{
+  padding-left: 8px;
+  padding-right: 8px;
+}
