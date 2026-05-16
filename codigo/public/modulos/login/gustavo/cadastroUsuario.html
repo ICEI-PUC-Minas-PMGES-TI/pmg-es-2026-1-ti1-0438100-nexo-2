@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="cadastro.css">
+    <link rel="stylesheet" href="geral.css">
     <title>Document</title>
 </head>
 
@@ -13,12 +14,12 @@
         <aside class="boas-vindas">
             <h1>Seja <br> Bem-Vindo.</h1>
             <p>Acesse o site com sua conta cadastrada</p>
-            <button class="btn-entrar">Entrar</button>
+            <button id="entrarUsuario" class="btn-entrar">Entrar</button>
         </aside>
         <section class="main-content">
             <div class="trocar-tipo">
-                <p><a href="#">Mudar para versao empresarial</a></p>
-                <p><a href="#">Mudar para versao prefeitura</a></p>
+                <p><a href="cadastroEmpresa.html">Mudar para versão empresarial</a></p>
+                <p><a href="cadastroPrefeitura.html">Mudar para versão da prefeitura</a></p>
             </div>
             <div class="formulario">
                 <h2>Crie sua conta</h2>
@@ -33,7 +34,7 @@
                     </div>
                     <div>
                         <label for="cpf">CPF:</label> <br>
-                        <input type="text" id="cpf" name="cpf" placeholder="000.000.000-00" required>
+                        <input type="text" id="cpf" name="cpf" placeholder="12345678901" required>
                     </div>
                     <div>
                         <label for="senha">Senha:</label> <br>
@@ -41,13 +42,14 @@
                     </div>
                     <div>
                         <label for="senha">Confirme sua senha:</label> <br>
-                        <input type="password" id="senha" name="senha" placeholder="Confirme sua senha" required>
+                        <input type="password" id="confirmarSenha" name="confirmeSenha" placeholder="Confirme sua senha" required>
                     </div>
-                    <button>Cadastrar</button>
+                    <button id="cadastroUsuario">Cadastrar</button>
                 </form>
             </div>
         </section>
     </main>
+    <script src="cadastro.js"></script>
 </body>
 
 </html>
