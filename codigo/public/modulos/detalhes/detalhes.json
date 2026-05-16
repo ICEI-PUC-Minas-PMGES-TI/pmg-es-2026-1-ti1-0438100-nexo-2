@@ -14,7 +14,8 @@
                 "cidade": "Contagem",
                 "estado": "MG",
                 "pais": "Brasil",
-                "logradouro": "Avenida Firmo de Matos"
+                "logradouro": "Avenida Firmo de Matos",
+                "numero": 148
             },
             "usuarioInstituicao_cpf": 98723456700,
             "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
@@ -36,14 +37,15 @@
             "descricaoDenuncia": "A avenida está completamente sem iluminação...",
             "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 3,
-            "data": "26/04/2025",
+            "data": "26-04-2025",
             "entidade_id": 2,
             "usuarioMorador_cpf":12345678900,
             "local": {
                 "cidade": "Betim",
                 "estado": "MG",
                 "pais": "Brasil",
-                "logradouro": "Avenina Edmeia Matos Lazzarotti"
+                "logradouro": "Avenida Edmeia Matos Lazzarotti",
+                "numero": 4100
             },
             "usuarioInstituicao_cpf":45687612300,
             "notaOrgao": "",
@@ -51,12 +53,12 @@
             "afetados": 12,
             "custo": "",
             "progresso": [
-                {"etapa": "Denúncia aceita", "concluida": false},
-                {"etapa": "Equipe enviada ao local", "concluida": false},
-                {"etapa": "Planejamento e previsões", "concluida": false},
-                {"etapa": "Manutenção em andamento", "concluida": false},
-                {"etapa": "Obra finalizada", "concluida": false}
-            ]            
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo1.pptx"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo2.pptx"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo3.pptx"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo4.pptx"}}
+            ]           
         },
         {
             "id": 3,
@@ -72,7 +74,8 @@
                 "cidade": "Belo Horizonte",
                 "estado": "MG",
                 "pais": "Brasil",
-                "logradouro": "Avenida Professor Mário Werneck"
+                "logradouro": "Avenida Professor Mário Werneck",
+                "numero": 21
             },
             "usuarioInstituicao_cpf":98723456700,
             "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
@@ -80,11 +83,11 @@
             "afetados": 34,
             "custo": "",
             "progresso": [
-                {"etapa": "Denúncia aceita", "concluida": false},
-                {"etapa": "Equipe enviada ao local", "concluida": false},
-                {"etapa": "Planejamento e previsões", "concluida": false},
-                {"etapa": "Manutenção em andamento", "concluida": false},
-                {"etapa": "Obra finalizada", "concluida": false}
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo1.pptx"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo2.pptx"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo3.pptx"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo4.pptx"}}
             ]
         }
     ],
@@ -119,7 +122,7 @@
     ],
 
     "usuarioLogado":{
-        "cpf": 12345678900
+        "cpf": 98723456700
     },
 
 

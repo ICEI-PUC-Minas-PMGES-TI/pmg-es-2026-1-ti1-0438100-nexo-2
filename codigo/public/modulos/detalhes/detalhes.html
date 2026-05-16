@@ -140,11 +140,21 @@
                                     </div>
                                     <div id="modal-body">
                                         <p class="mb-3 mx-3">Para prosseguir, é necessário informar previsões de data e custo para a obra.</p>
-                                        <input type="date" id="input-date">
-                                        <input type="text" id="input-cost" placeholder="R$ 0,00">
-                                        <button id="btn-close-modal">Concluir</button>
+                                        <form id="formPrev">
+                                            <input type="date" id="input-date">
+                                            <input type="text" id="input-cost" placeholder="R$ 0,00">
+                                            <button type="submit" id="btn-close-modal">Concluir</button>
+                                        </form>
                                     </div>
                                 </div>
+                            </div>
+                            <!--Mapa da localização exata da denúncia-->
+                            <div class="mt-3 rounded-3 mapa-container">
+                                <iframe
+                                    id="mapa"
+                                    class="rounded-3"
+                                    src="https://www.google.com/maps?q=Contagem,MG&output=embed" width="100%" height="300" style="border:0;" allowfullscreen="" loading="lazy">
+                                </iframe>
                             </div>
                             <input type="file" id="file-input" class="d-none">
                         </div>

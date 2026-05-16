@@ -24,8 +24,9 @@
         const btn_editar = document.getElementById("btn-editar-info");
         const btn_confirma = document.getElementById("btn-confirm");
         const btn_acompanha = document.getElementById("btn-follow");
+        const form = document.getElementById("formPrev");
 
-//-----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
+//----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
         // Lógica das imagens da denúncia
         const imagens = data.denuncias[0].imagens;
             // Lógica para alocar imagens em suas divs
@@ -66,7 +67,7 @@
         };
         atualiza_img();
 
-            // Botões de navegação das imagens
+            // Botões de navegação das imagens e setas do teclado
         btn_right.addEventListener("click", () => {
             if(inicio_img<(imagens.length-3)){
                 inicio_img+=1;
@@ -79,7 +80,17 @@
                 atualiza_img();
             };
         });
-//-------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
+
+        document.addEventListener("keydown", (event) => {
+        if(event.key === "ArrowRight"){
+            btn_right.click();
+        }
+        if(event.key === "ArrowLeft"){
+            btn_left.click();
+        }
+
+});
+//------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
         //Referências aos objetos ee chaves estrangeiras do JSON
         const dados = data.denuncias[0];
         const checkpoints = dados.progresso;
@@ -96,11 +107,16 @@
         descricao.innerHTML = `${dados.descricaoDenuncia}`;
         nota_descricao.innerHTML = `${dados.notaOrgao}`;
 
+        const mapa = document.getElementById("mapa");
+        const endereco = `${dados.local.logradouro}, ${dados.local.numero}, ${dados.local.cidade}, ${dados.local.estado}, ${dados.local.pais}`;
+
+        mapa.src = `https://www.google.com/maps?q=${encodeURIComponent(endereco)}&output=embed`;
+
         //Função para atualizar o menu de informações da denúncia
         function atualiza_info() {
             const usuarioInstituicao = data.usuarioInstituicao.find(ui => ui.cpf === dados.usuarioInstituicao_cpf);
             const instituicao = data.instituicao.find(i => i.id === usuarioInstituicao.instituicao_id);
-            document.getElementById("title-details").textContent = `${categoria.nome} na ${dados.local.logradouro}`;
+            document.getElementById("title-details").textContent = `${categoria.nome} na ${dados.local.logradouro}, ${dados.local.numero}`;
             document.getElementById("category").textContent = `Categoria: ${categoria.nome}`;
             document.getElementById("urgency").textContent = `Urgência: ${urgencia.tipo}`;
             document.getElementById("user").textContent = `Denunciante: ${usuarioMorador.nome_usuario}`
@@ -167,7 +183,7 @@
             };
         }
 
-//------------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
+//-----------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
         
         //Função para atualizar o status dos checkpoints da denúncia
         function renderizar_checkpoints() {
@@ -285,7 +301,8 @@
             e.target.value = valor;
         });
 
-        btn_close_modal.addEventListener("click", () => {
+        form.addEventListener("submit", (event) => {
+            event.preventDefault();
             if(!inputDate.value || !inputCost.value){
                 alert("Preencha todos os campos!");
                 return;
