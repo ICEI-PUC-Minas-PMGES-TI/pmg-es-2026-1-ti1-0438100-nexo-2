@@ -1,0 +1,52 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+
+<body>
+    <main class="conteudo-site">
+        <aside class="boas-vindas">
+            <h1>Seja <br> Bem-Vindo.</h1>
+            <p>Acesse o site com sua conta cadastrada</p>
+            <button id="entrar" class="btn-entrar">Entrar</button>
+        </aside>
+        <section class="main-content">
+            <div class="trocar-tipo">
+                <p><a href="cadastroUsuario.html">Mudar para versão do usuário</a></p>
+                <p><a href="cadastroPrefeitura.html">Mudar para versão da prefeitura</a></p>
+            </div>
+            <div class="formulario">
+                <h2>Crie sua conta</h2>
+                <form id="formCadastro">
+                    <div>
+                        <label for="nome">Nome Completo:</label> <br>
+                        <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required>
+                    </div>
+                    <div>
+                        <label for="email">Email:</label> <br>
+                        <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+                    </div>
+                    <div>
+                        <label for="cpf">CNPJ:</label> <br>
+                        <input type="text" id="cnpj" name="cnpj" placeholder="00.000.000/0000-00 " required>
+                    </div>
+                    <div>
+                        <label for="senha">Senha:</label> <br>
+                        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    </div>
+                    <div>
+                        <label for="senha">Confirme sua senha:</label> <br>
+                        <input type="password" id="senha" name="senha" placeholder="Confirme sua senha" required>
+                    </div>
+                    <button id="cadastro">Cadastrar</button>
+                </form>
+            </div>
+        </section>
+    </main>
+</body>
+
+</html>
