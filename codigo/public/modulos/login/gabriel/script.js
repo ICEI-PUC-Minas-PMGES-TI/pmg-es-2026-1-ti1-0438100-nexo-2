@@ -30,6 +30,8 @@ function renderCards(list) {
 		const card = document.createElement('div');
 		card.className = 'card h-100 shadow-sm border-0';
 		card.style.backgroundColor = '#eaeaea';
+		card.style.borderRadius = '18px';
+		card.style.boxShadow = '0 22px 40px rgba(0, 0, 0, 0.5)';
 
 		const cardBody = document.createElement('div');
 		cardBody.className = 'card-body d-flex gap-3';
@@ -38,16 +40,17 @@ function renderCards(list) {
 		// imagem
 		const imgDiv = document.createElement('div');
 		imgDiv.className = 'flex-shrink-0';
-		imgDiv.style.width = '70px';
-		imgDiv.style.height = '45px';
+		imgDiv.style.width = '190px';
+		imgDiv.style.height = '110px';
 		if (item.imagens && item.imagens[0]) {
 			const img = document.createElement('img');
 			img.src = item.imagens[0];
 			img.alt = (item.titulo || item.descricaoDenuncia) || 'imagem denúncia';
 			img.className = 'rounded';
-			img.style.width = '70px';
-			img.style.height = '45px';
+			img.style.width = '190px';
+			img.style.height = '110px';
 			img.style.objectFit = 'cover';
+			img.style.borderRadius = '12px';
 			imgDiv.appendChild(img);
 		}
 
@@ -63,7 +66,13 @@ function renderCards(list) {
 
 		const locationText = document.createElement('span');
 		locationText.className = 'badge bg-light text-dark border border-light-subtle';
-		locationText.textContent = (item.local && item.local.logradouro) ? item.local.logradouro : 'Local';
+		const locationIcon = document.createElement('span');
+		locationIcon.style.display = 'inline-flex';
+		locationIcon.style.alignItems = 'center';
+		locationIcon.style.marginRight = '6px';
+		locationIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 384 512" width="12" height="12" aria-hidden="true" focusable="false"><path fill="currentColor" d="M215.7 499.2C267 435 384 279.4 384 192C384 86 298 0 192 0S0 86 0 192c0 87.4 117 243 168.3 307.2c12.3 15.3 35.1 15.3 47.4 0zM192 272a80 80 0 1 1 0-160 80 80 0 1 1 0 160z"/></svg>';
+		locationText.appendChild(locationIcon);
+		locationText.appendChild(document.createTextNode((item.local && item.local.logradouro) ? item.local.logradouro : 'Local'));
 
 		const badge = document.createElement('span');
 		const statusValue = (item.status === 'andamento' || item.status === 'em andamento') ? 'Em andamento' : 'Resolvida';
@@ -75,6 +84,8 @@ function renderCards(list) {
 		}
 		badge.style.fontSize = '14px';
 		badge.style.padding = '0.5rem 0.75rem';
+		badge.style.border = '1px solid rgba(0, 0, 0, 0.15)';
+		badge.style.boxShadow = '0 6px 12px rgba(0, 0, 0, 0.25)';
 		badge.textContent = statusValue;
 
 		headerDiv.appendChild(locationText);
@@ -95,7 +106,13 @@ function renderCards(list) {
 
 		const chipDate = document.createElement('span');
 		chipDate.className = 'badge bg-light text-dark border border-light-subtle';
-		chipDate.textContent = formatDate(item.data);
+		const dateIcon = document.createElement('span');
+		dateIcon.style.display = 'inline-flex';
+		dateIcon.style.alignItems = 'center';
+		dateIcon.style.marginRight = '6px';
+		dateIcon.innerHTML = '<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 448 512" width="12" height="12" aria-hidden="true" focusable="false"><path fill="currentColor" d="M128 0c17.7 0 32 14.3 32 32l0 32 128 0 0-32c0-17.7 14.3-32 32-32s32 14.3 32 32l0 32 32 0c35.3 0 64 28.7 64 64l0 288c0 35.3-28.7 64-64 64l-320 0c-35.3 0-64-28.7-64-64l0-288c0-35.3 28.7-64 64-64l32 0 0-32c0-17.7 14.3-32 32-32zM64 192l0 224 320 0 0-224-320 0z"/></svg>';
+		chipDate.appendChild(dateIcon);
+		chipDate.appendChild(document.createTextNode(formatDate(item.data)));
 
 		const chipUrg = document.createElement('span');
 		chipUrg.className = 'badge bg-light text-dark border border-light-subtle';
