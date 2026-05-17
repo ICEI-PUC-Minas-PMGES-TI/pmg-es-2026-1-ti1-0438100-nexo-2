@@ -1,164 +1,182 @@
 {
-    "denuncias":[
+  "usuarioMorador": [
+    {
+      "nome_usuario": "Luisa Souza",
+      "nome_completo": "Luisa Souza Bernardes",
+      "email": "souzaluisa@gmail.com",
+      "cpf": 12345678900,
+      "senha": "xyz123!",
+      "id": "gqvqMcbhUG8"
+    }
+  ],
+  "usuarioInstituicao": [
+    {
+      "instituicao_id": 2,
+      "nome_usuario": "Fernanda Rocha",
+      "nome_completo": "Fernanda Rocha Ladeira",
+      "email": "fernandaprefcontagem@gmail.com",
+      "cpf": 45687612300,
+      "senha": "def123!",
+      "id": "izNGY5zhu2g"
+    },
+    {
+      "instituicao_id": 1,
+      "nome_usuario": "Ricardo Alves",
+      "nome_completo": "Ricardo Alves Teixeira",
+      "email": "ricardomegasfalt@gmail.com",
+      "cpf": 98723456700,
+      "senha": "abc123!",
+      "id": "OmDlndhxQ7U"
+    }
+  ],
+  "usuarioLogado": {
+    "cpf": 98723456700
+  },
+  "infoPerfilMorador": [
+    {
+      "usuarioMorador_cpf": 12345678900,
+      "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_id": [
         {
-            "id": 1,
-            "status": "Andamento",
-            "categoria_id": 1,
-            "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
-            "imagens": ["http://localhost:3000/uploads/foto1.jpg", "http://localhost:3000/uploads/foto2.jpg", "http://localhost:3000/uploads/foto3.jpg"],
-            "urgencia_id": 1,
-            "data": "2025-04-26",
-            "entidades_id": 1,
-            "usuarioMorador_cpf": 12345678900,      
-            "local": {
-                "cidade": "Contagem",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenida Firmo de Matos"
-            },
-            "usuarioInstituicao_cpf": 98723456700,
-            "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-            "prazo": "2025-07-26",
-            "afetados": 21,
-            "custo": "1250.97",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra."
+          "id": 1
         },
         {
-            "id": 2,
-            "status": "Andamento",
-            "categoria_id": 5,
-            "descricaoDenuncia": "A avenida está completamente sem iluminação...",
-            "imagens": ["http://localhost:3000/uploads/foto4.jpg", "http://localhost:3000/uploads/foto5.jpg", "http://localhost:3000/uploads/foto6.jpg"],
-            "urgencia_id": 3,
-            "data": "2025-04-26",
-            "entidades_id": 2,
-            "denunciante":{
-                "usuario": "Maria"
-            },
-            "local": {
-                "cidade": "Betim",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenina Edmeia Matos Lazzarotti"
-            },
-            "instituicao": "Prefeitura de Betim",
-            "notaOrgao": "",
-            "prazo": "2025-05-05",
-            "afetados": 12,
-            "custo": "2456.35",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra e mão de obra."
-        },
-        {
-            "id": 3,
-            "status": "Andamento",
-            "categoria_id": 2,
-            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
-            "imagens": ["http://localhost:3000/uploads/foto7.jpg", "http://localhost:3000/uploads/foto8.jpg", "http://localhost:3000/uploads/foto9.jpg"],
-            "urgencia_id": 2,
-            "data": "2025-04-26",
-            "entidades_id": 3,
-            "denunciante":{
-                "usuario": "João Pedro"
-            },
-            "local": {
-                "cidade": "Belo Horizonte",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenida Professor Mário Werneck"
-            },
-            "instituicao": "Megasafalt",
-            "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
-            "prazo": "2025-07-26",
-            "afetados": 34,
-            "custo": "7985.00",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra, mão de obra e documentação junto à prefeitura."
+          "id": 12
         }
-    ],
-
-    "usuarioMorador":[
+      ],
+      "id": "rk_ubYNaZMg"
+    }
+  ],
+  "infoPerfilInstituicao": [
+    {
+      "usuarioInstituicao_cpf": 45687612300,
+      "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+      "estatisticas": {
+        "atendidas": 67,
+        "aberto": 3,
+        "atualizacoes": 15
+      },
+      "obras_id": [
         {
-            "nome_usuario":"Luisa Souza",
-            "nome_completo": "Luisa Souza Bernardes",
-            "email": "souzaluisa@gmail.com",
-            "cpf": 12345678900,
-            "senha": "xyz123!"  
+          "id": 2
+        },
+        {
+          "id": 12
+        },
+        {
+          "id": 45
         }
-    ],
-
-    "usuarioInstituicao":[
+      ],
+      "id": "RhWpzX6JFtM"
+    },
+    {
+      "usuarioInstituicao_cpf": 98723456700,
+      "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+      "estatisticas": {
+        "atendidas": 42,
+        "aberto": 4,
+        "atualizacoes": 5
+      },
+      "obras_id": [
         {
-            "instituicao_id": 2,
-            "nome_usuario": "Fernanda Rocha",
-            "nome_completo": "Fernanda Rocha Ladeira",
-            "email": "fernandaprefcontagem@gmail.com",
-            "cpf": 45687612300,
-            "senha": "def123!"             
+          "id": 1
         },
         {
-            "instituicao_id": 1,
-            "nome_usuario":"Ricardo Alves",
-            "nome_completo": "Ricardo Alves Teixeira",
-            "email":"ricardomegasfalt@gmail.com",
-            "cpf": 98723456700,
-            "senha":"abc123!"
+          "id": 3
+        },
+        {
+          "id": 7
+        },
+        {
+          "id": 21
         }
-    ],
-
-    "instituicao":[
-        {
-            "id": 1,
-            "nome": "Megasfalt"
-        },
-        {
-            "id": 2,
-            "nome": "Prefeitura de Contagem"
-        },
-        {
-            "id": 3,
-            "nome":"Prefeitura de Betim"
-        }
-    ],
-
-    "categorias":[
-        {"id": 1, "nome": "Buraco"},
-        {"id": 2, "nome": "Problema de esgoto"},
-        {"id": 3, "nome": "Deslizamento"},
-        {"id": 4, "nome": "Falta de limpeza"},
-        {"id": 5, "nome": "Falta de iluminação"}
-    ],
-
-    "urgencias":[
-        {"id": 1, "tipo": "Baixa"},
-        {"id": 2, "tipo": "Média"},
-        {"id": 3, "tipo": "Alta"}
-    ],
-
-    "entidades":[
-        {"id": 1, "tipo": "Todos"},
-        {"id": 2, "tipo": "Prefeitura"},
-        {"id": 3, "tipo": "Empresa privada"}
-    ],
-
-    "progresso": [
-        {
-            "etapa": "Denúncia aceita",
-            "concluida": false
-        },
-        {
-            "etapa": "Equipe enviada ao local",
-            "concluida": false
-        },
-        {
-            "etapa": "Planejamento e previsões",
-            "concluida": false
-        },
-        {
-            "etapa": "Manutenção em andamento",
-            "concluida": false
-        },
-        {
-            "etapa": "Obra finalizada",
-            "concluida": false
-        }
-    ]
+      ],
+      "id": "xwBKjHZz6Nw"
+    }
+  ],
+  "instituicao": [
+    {
+      "id": "1",
+      "nome": "Megasfalt"
+    },
+    {
+      "id": "2",
+      "nome": "Prefeitura de Contagem"
+    },
+    {
+      "id": "3",
+      "nome": "Prefeitura de Betim"
+    }
+  ],
+  "status": [
+    {
+      "id": "1",
+      "status": "Concluída"
+    },
+    {
+      "id": "2",
+      "status": "Em andamento"
+    },
+    {
+      "id": "3",
+      "status": "Em aberto"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Buraco"
+    },
+    {
+      "id": "2",
+      "nome": "Problema de esgoto"
+    },
+    {
+      "id": "3",
+      "nome": "Deslizamento"
+    },
+    {
+      "id": "4",
+      "nome": "Falta de limpeza"
+    },
+    {
+      "id": "5",
+      "nome": "Falta de iluminação"
+    }
+  ],
+  "urgencias": [
+    {
+      "id": "1",
+      "tipo": "Baixa"
+    },
+    {
+      "id": "2",
+      "tipo": "Média"
+    },
+    {
+      "id": "3",
+      "tipo": "Alta"
+    }
+  ],
+  "entidades": [
+    {
+      "id": "1",
+      "tipo": "Todos"
+    },
+    {
+      "id": "2",
+      "tipo": "Prefeitura"
+    },
+    {
+      "id": "3",
+      "tipo": "Empresa privada"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

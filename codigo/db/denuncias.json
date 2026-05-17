@@ -1,0 +1,48 @@
+{
+  "denuncias": [
+    {
+      "status_id": 3,
+      "categoria_id": 5,
+      "descricaoDenuncia": "Postes de luz sem funcionar.",
+      "urgencia_id": 3,
+      "data": "2026-05-16",
+      "entidade_id": 1,
+      "usuarioMorador_cpf": 12345678900,
+      "local": {
+        "pais": "Brasil",
+        "logradouro": "Rua Santa Rita, 561-501 - Pari",
+        "cidade": "Não informada",
+        "estado": "XX"
+      },
+      "usuarioInstituicao_cpf": null,
+      "notaOrgao": "",
+      "prazo": "",
+      "afetados": 0,
+      "custo": "",
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false
+        }
+      ],
+      "id": "cpSPl9BKsqQ"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
