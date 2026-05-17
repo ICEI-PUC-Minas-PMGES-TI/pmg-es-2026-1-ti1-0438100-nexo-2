@@ -1,0 +1,3 @@
+Saudações!
+Este arquivo de texto serve para fins de teste da funcionalidade da página de detalhes!
+Obrigado!!

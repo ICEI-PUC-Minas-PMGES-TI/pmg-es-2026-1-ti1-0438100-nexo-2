@@ -24,6 +24,7 @@
         const btn_editar = document.getElementById("btn-editar-info");
         const btn_confirma = document.getElementById("btn-confirm");
         const btn_acompanha = document.getElementById("btn-follow");
+        const btn_desacompanha = document.getElementById("btn-unfollow");
         const form = document.getElementById("formPrev");
 
 //----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
@@ -382,5 +383,13 @@
             dados.afetados+=1;
             atualiza_info();
             btn_acompanha.classList.add("d-none");
+            btn_desacompanha.classList.remove("d-none");
+        })
+
+        btn_desacompanha.addEventListener("click", () => {
+            dados.afetados-=1;
+            atualiza_info();
+            btn_acompanha.classList.remove("d-none");
+            btn_desacompanha.classList.add("d-none");
         })
     });
