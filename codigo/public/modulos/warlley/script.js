@@ -147,7 +147,7 @@ const botaoMapaCalor = L.control({
 botaoMapaCalor.onAdd = function () {
   const div = L.DomUtil.create("div", "leaflet-bar");
   div.innerHTML = `
-    <a href="#"
+    <a href="homepage-mapacalor.html"
       title="Mapa de calor"
       class="map-btn">
       🔥
