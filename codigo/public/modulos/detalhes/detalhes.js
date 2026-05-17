@@ -28,7 +28,8 @@
 
 //----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
         // Lógica das imagens da denúncia
-        const imagens = data.denuncias[0].imagens;
+        const dados = data.denuncias[0];
+        const imagens = dados.imagens;
             // Lógica para alocar imagens em suas divs
         for(let i=0; i<imagens.length; i++){
             const divImg = document.createElement("div");
@@ -92,7 +93,6 @@
 });
 //------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
         //Referências aos objetos ee chaves estrangeiras do JSON
-        const dados = data.denuncias[0];
         const checkpoints = dados.progresso;
         const categoria = data.categorias.find(c => c.id === dados.categoria_id);
         const urgencia = data.urgencias.find(u => u.id === dados.urgencia_id);
@@ -107,7 +107,7 @@
         descricao.innerHTML = `${dados.descricaoDenuncia}`;
         nota_descricao.innerHTML = `${dados.notaOrgao}`;
 
-        const mapa = document.getElementById("mapa");
+        const mapa = document.getElementById("mapa-detalhes");
         const endereco = `${dados.local.logradouro}, ${dados.local.numero}, ${dados.local.cidade}, ${dados.local.estado}, ${dados.local.pais}`;
 
         mapa.src = `https://www.google.com/maps?q=${encodeURIComponent(endereco)}&output=embed`;

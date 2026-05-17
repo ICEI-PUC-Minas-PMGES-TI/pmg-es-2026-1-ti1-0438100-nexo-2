@@ -5,7 +5,7 @@
             "status_id": 2,
             "categoria_id": 1,
             "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
-            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
+            "imagens": ["imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg", "imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg"],
             "urgencia_id": 1,
             "data": "2026-04-26",
             "entidade_id": 1,
@@ -34,8 +34,8 @@
             "id": 2,
             "status_id": 2,
             "categoria_id": 5,
-            "descricaoDenuncia": "A avenida está completamente sem iluminação...",
-            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
+            "descricaoDenuncia": "Há várias semanas a avenida permanece com diversos postes de iluminação apagados em praticamente toda a sua extensão, causando insegurança constante para motoristas, motociclistas, ciclistas e pedestres que transitam pelo local diariamente. Durante a noite, a falta de iluminação reduz drasticamente a visibilidade da via, dificultando a identificação de obstáculos, animais na pista e até mesmo outros veículos, aumentando significativamente o risco de acidentes. Além disso, moradores e comerciantes da região relatam crescimento da sensação de insegurança, principalmente em horários de menor movimento, devido à escuridão intensa em determinados trechos da avenida.",
+            "imagens": ["imgs/ilum1.jpg", "imgs/ilum2.jpg", "imgs/ilum3.jpg", "imgs/ilum4.jpg"],
             "urgencia_id": 3,
             "data": "26-04-2025",
             "entidade_id": 2,
@@ -48,7 +48,7 @@
                 "numero": 4100
             },
             "usuarioInstituicao_cpf":45687612300,
-            "notaOrgao": "",
+            "notaOrgao": "A equipe responsável identificou falhas em parte da rede elétrica e em alguns postes da região. Já foi solicitada a substituição dos equipamentos danificados e os reparos serão iniciados nos próximos dias para restabelecer totalmente a iluminação da avenida.",
             "prazo": "",
             "afetados": 12,
             "custo": "",
@@ -64,8 +64,8 @@
             "id": 3,
             "status_id": 2,
             "categoria_id": 2,
-            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
-            "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
+            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto em diversos pontos ao longo de toda a via, gerando forte mau cheiro e causando grande desconforto para moradores, comerciantes e pessoas que transitam pela região diariamente. Em alguns trechos, o esgoto está acumulado próximo às calçadas, dificultando a passagem de pedestres e aumentando o risco de contaminação e proliferação de insetos.",
+            "imagens": ["imgs/esg1.jpg", "imgs/esg2.jpg", "imgs/esg3.jpg", "imgs/esg4.jpg"],
             "urgencia_id": 2,
             "data": "26/04/2025",
             "entidade_id": 3,
@@ -78,7 +78,7 @@
                 "numero": 21
             },
             "usuarioInstituicao_cpf":98723456700,
-            "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
+            "notaOrgao": "Após vistoria técnica no local, foi identificado que o vazamento está relacionado ao desgaste da tubulação e ao aumento do fluxo de água durante períodos chuvosos. A equipe de manutenção já iniciou o planejamento para realizar os reparos necessários e minimizar os impactos para a população da região.",
             "prazo": "",
             "afetados": 34,
             "custo": "",
@@ -122,14 +122,14 @@
     ],
 
     "usuarioLogado":{
-        "cpf": 98723456700
+        "cpf": 12345678900
     },
 
 
     "infoPerfilMorador": [
         {
             "usuarioMorador_cpf": 12345678900,
-            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+            "fotoPerfil": "imgs/img1.jpg",
             "estatisticas": {
                 "atendidas": 3,
                 "aberto": 2,
@@ -143,7 +143,7 @@
     "infoPerfilInstituicao": [
         {
             "usuarioInstituicao_cpf": 45687612300,
-            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg",
+            "fotoPerfil": "imgs/img1.jpg",
             "estatisticas": {
                 "atendidas": 67,
                 "aberto": 3,
@@ -153,7 +153,7 @@
         },
         {
             "usuarioInstituicao_cpf": 98723456700,
-            "fotoPerfil": "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", 
+            "fotoPerfil": "imgs/img1.jpg", 
             "estatisticas": {
                 "atendidas": 42,
                 "aberto": 4,
