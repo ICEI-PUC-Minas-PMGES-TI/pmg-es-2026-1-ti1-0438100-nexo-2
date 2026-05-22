@@ -1,18 +1,4 @@
-const denuncias = [
-  /*
-  MODELO DE DENUCIA::
-
-  {
-    id: 1,
-    titulo: "Título da denúncia",
-    endereco: "Cidade / Bairro",
-    status: "aberta",
-    imagem: "images/foto.jpg",
-    coords: [-19.92, -43.94]
-  }
-  */
-
-];
+let denuncias = [];
 
 /* === MAPA === */
 const mapa = L.map("mapa", {
@@ -341,5 +327,73 @@ function atualizarTela(lista) {
   renderizarMarcadores(lista);
 }
 
+/* === CARREGAR JSON === */
+async function carregarDenuncias() {
+
+  try {
+
+    const resposta = await fetch("detalhes.json");
+
+    const dados = await resposta.json();
+
+    denuncias = dados.denuncias.map(d => {
+
+      /* BUSCA STATUS */
+      const statusEncontrado = dados.status.find(
+        s => s.id === d.status_id
+      );
+
+      /* DEFINE STATUS PARA O SISTEMA */
+      let statusFormatado = "andamento";
+
+      if (statusEncontrado) {
+
+        if (statusEncontrado.status === "Em aberto") {
+          statusFormatado = "aberta";
+        }
+
+        else if (
+          statusEncontrado.status === "Concluída"
+        ) {
+          statusFormatado = "resolvida";
+        }
+
+      }
+
+      return {
+
+        id: d.id,
+
+        titulo: d.descricaoDenuncia.substring(0, 40) + "...",
+
+        endereco:
+          `${d.local.logradouro}, ${d.local.cidade}`,
+
+        status: statusFormatado,
+
+        imagem: d.imagens[0],
+
+        coords: [
+          d.latitude,
+          d.longitude
+        ]
+
+      };
+
+    });
+
+    atualizarTela(denuncias);
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao carregar denúncias:",
+      erro
+    );
+
+  }
+
+}
+
 /* === INICIALIZAÇÃO === */
-atualizarTela(denuncias);
+carregarDenuncias();

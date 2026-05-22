@@ -16,6 +16,10 @@
                 "pais": "Brasil",
                 "logradouro": "Avenida Firmo de Matos"
             },
+            "coords": {
+            "latitude": -19.9167,
+            "longitude": -44.0536
+            },
             "usuarioInstituicao_cpf": 98723456700,
             "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
             "prazo": "",
@@ -45,6 +49,10 @@
                 "pais": "Brasil",
                 "logradouro": "Avenina Edmeia Matos Lazzarotti"
             },
+            "coords": {
+            "latitude": -19.9640,
+            "longitude": -44.1987
+            },
             "usuarioInstituicao_cpf":45687612300,
             "notaOrgao": "",
             "prazo": "",
@@ -73,6 +81,10 @@
                 "estado": "MG",
                 "pais": "Brasil",
                 "logradouro": "Avenida Professor Mário Werneck"
+            },
+            "coords": {
+            "lat": -19.9732,
+            "lng": -43.9585
             },
             "usuarioInstituicao_cpf":98723456700,
             "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",
