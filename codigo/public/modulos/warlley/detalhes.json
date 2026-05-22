@@ -83,8 +83,8 @@
                 "logradouro": "Avenida Professor Mário Werneck"
             },
             "coords": {
-            "lat": -19.9732,
-            "lng": -43.9585
+            "latitude": -19.9732,
+            "longitude": -43.9585
             },
             "usuarioInstituicao_cpf":98723456700,
             "notaOrgao": "O vazamento é proveniente do excesso de chuvas que evidenciou a falta de preparação da estrutura de canalização de esgoto",

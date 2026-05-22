@@ -8,6 +8,66 @@ const mapa = L.map("mapa", {
 let marcadores = [];
 let localUsuario = null;
 
+/* === ICONES CATEGORIAS === */
+const iconesCategorias = {
+
+  Buraco:
+    "images/icons/buraco.png",
+
+  "Problema de esgoto":
+    "images/icons/esgoto.png",
+
+  "Falta de iluminação":
+    "images/icons/luz.png",
+
+  Deslizamento:
+    "images/icons/deslizamento.png",
+
+  default:
+    "images/icons/default.png"
+
+};
+
+/* === ICONES DENUNCIAS === */
+const iconesDenuncia = {
+
+  Buraco: L.icon({
+    iconUrl: "images/icons/buraco.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  }),
+
+  "Problema de esgoto": L.icon({
+    iconUrl: "images/icons/esgoto.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  }),
+
+  "Falta de iluminação": L.icon({
+    iconUrl: "images/icons/luz.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  }),
+
+  Deslizamento: L.icon({
+    iconUrl: "images/icons/deslizamento.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  }),
+
+  default: L.icon({
+    iconUrl: "images/icons/default.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  })
+
+};
+
 /* === LOCALIZAÇÃO === */
 navigator.geolocation.getCurrentPosition(
   (posicao) => {
@@ -177,26 +237,71 @@ botaoSatelite.addTo(mapa);
 
 /* === MARCADORES === */
 function renderizarMarcadores(lista) {
+
   marcadores.forEach((m) => {
     mapa.removeLayer(m);
   });
-  
+
   marcadores = [];
 
   lista.forEach((d) => {
 
-    const marker = L.marker(d.coords)
-      .addTo(mapa)
-      .bindPopup(`
-        <strong>${d.titulo}</strong><br>
-        ${d.endereco}
-      `);
+    /* CLASSE URGENCIA */
+    let classeUrgencia = "urgencia-baixa";
+
+    if (d.urgencia === 2) {
+      classeUrgencia = "urgencia-media";
+    }
+
+    else if (d.urgencia === 3) {
+      classeUrgencia = "urgencia-alta";
+    }
+
+    /* ICONE */
+    const iconeCategoria =
+      iconesCategorias[d.categoria]
+      || iconesCategorias.default;
+
+    /* HTML DO MARCADOR */
+    const htmlIcon = L.divIcon({
+
+      className: "",
+
+      html: `
+        <div class="
+          marker-container
+          ${classeUrgencia}
+        ">
+          <img src="${iconeCategoria}">
+        </div>
+      `,
+
+      iconSize: [44, 44],
+      iconAnchor: [22, 22]
+
+    });
+
+    /* MARCADOR */
+    const marker = L.marker(
+      d.coords,
+      {
+        icon: htmlIcon
+      }
+    )
+    .addTo(mapa)
+    .bindPopup(`
+      <strong>${d.titulo}</strong><br>
+      ${d.endereco}<br>
+      Categoria: ${d.categoria}
+    `);
 
     marcadores.push({
       id: d.id,
       marker
     });
+
   });
+
 }
 
 /* === VER NO MAPA === */
@@ -329,71 +434,64 @@ function atualizarTela(lista) {
 
 /* === CARREGAR JSON === */
 async function carregarDenuncias() {
-
   try {
-
     const resposta = await fetch("detalhes.json");
-
     const dados = await resposta.json();
-
     denuncias = dados.denuncias.map(d => {
 
-      /* BUSCA STATUS */
+      /* STATUS */
       const statusEncontrado = dados.status.find(
         s => s.id === d.status_id
       );
 
-      /* DEFINE STATUS PARA O SISTEMA */
       let statusFormatado = "andamento";
-
       if (statusEncontrado) {
-
         if (statusEncontrado.status === "Em aberto") {
           statusFormatado = "aberta";
         }
-
         else if (
           statusEncontrado.status === "Concluída"
         ) {
           statusFormatado = "resolvida";
         }
-
       }
 
+      /* CATEGORIA */
+      const categoriaEncontrada = dados.categorias.find(
+      c => c.id === d.categoria_id
+      );
+
       return {
-
         id: d.id,
-
-        titulo: d.descricaoDenuncia.substring(0, 40) + "...",
-
+        titulo:
+          d.descricaoDenuncia.substring(0, 40) + "...",
         endereco:
           `${d.local.logradouro}, ${d.local.cidade}`,
-
         status: statusFormatado,
-
         imagem: d.imagens[0],
-
+        categoria: categoriaEncontrada
+          ? categoriaEncontrada.nome
+          : "default",
+        urgencia: d.urgencia_id,
         coords: [
-          d.latitude,
-          d.longitude
+          d.coords.latitude,
+          d.coords.longitude
         ]
-
       };
-
     });
 
+    console.log(denuncias);
     atualizarTela(denuncias);
 
-  } catch (erro) {
+  }
 
+  catch (erro) {
     console.error(
       "Erro ao carregar denúncias:",
       erro
     );
-
   }
 
 }
-
 /* === INICIALIZAÇÃO === */
 carregarDenuncias();
