@@ -3,7 +3,7 @@
 Informações básicas do projeto.
 
 * **Projeto:** Zella
-* **Repositório GitHub:** [LINK PARA O REPOSITÓRIO NO GITHUB]
+* **Repositório GitHub:** https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2
 * **Membros da equipe:**
 
   * [Bernardo Guedes da Silveira](https://github.com/Bernardo-Guedes) 

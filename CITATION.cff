@@ -1,31 +1,43 @@
 cff-version: 1.0.1
 message: Please cite this software using these metadata.
-title: 
+title: Zella
 authors:
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names: 
-  - family-names: 
-    given-names:
+  - family-names: Guedes da Silveira
+    given-names: Bernardo 
+  - family-names: Moreira Bonifácio de Azevedo
+    given-names: Gabriel 
+  - family-names: Marques Freire Barbosa
+    given-names: Giovanna 
+  - family-names: Ryan Gomes Guedes
+    given-names: Gustavo 
+  - family-names: Felipe Oliveira do Espirito Santo
+    given-names: Rafael 
+  - family-names: de Fatima Simoes Almeida
+    given-names: Sophia
+  - family-names: Silva Baião Braga
+    given-names: Warlley
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Soares de Paiva Lacerda
+    given-names: Lucca 
   - name-suffix: Professor
     affiliation: PUC Minas
-    family-names: 
-    given-names: 
+    family-names: Almeida Louzada
+    given-names: Henrique 
+  - name-suffix: Professor
+    affiliation: PUC Minas
+    family-names: Augusto de Faria Barros
+    given-names: Diego 
 keywords:
-  - 
-  - 
-repository-code: 
+  - infraestrutura
+  - denúncia
+  - cidadania digital
+  - acessibilidade urbana
+  - atendimento público
+  - problemas urbanos
+  - gestão urbana
+  - serviços públicos
+repository-code: https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2
 license: CC-BY-4.0
 version: 1.0.0
 date-released: 2022-07-14
