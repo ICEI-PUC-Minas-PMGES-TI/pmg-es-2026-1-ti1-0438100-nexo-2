@@ -1,25 +1,204 @@
 {
-  "usuarios": [
-    {
-      "id": 1,
-      "login": "admin",
-      "senha": "123",
-      "nome": "Administrador do Sistema",
-      "email": "admin@abc.com"
+    "denuncias":[
+        {
+            "id": 1,
+            "status_id": 2,
+            "categoria_id": 1,
+            "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
+            "imagens": ["imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg", "imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg"],
+            "urgencia_id": 1,
+            "data": "2026-04-26",
+            "entidade_id": 1,
+            "usuarioMorador_cpf": 12345678900,      
+            "local": {
+                "cidade": "Contagem",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Firmo de Matos",
+                "numero": 148,
+                "latitude": -19.9316,
+                "longitude": -44.0539
+            },
+            "usuarioInstituicao_cpf": 98723456700,
+            "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
+            "prazo": "12/05/2026",
+            "afetados": 21,
+            "custo": "R$ 987,95",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
+            ]
+        },
+        {
+            "id": 2,
+            "status_id": 2,
+            "categoria_id": 5,
+            "descricaoDenuncia": "Há várias semanas a avenida permanece com diversos postes de iluminação apagados em praticamente toda a sua extensão, causando insegurança constante para motoristas, motociclistas, ciclistas e pedestres que transitam pelo local diariamente. Durante a noite, a falta de iluminação reduz drasticamente a visibilidade da via, dificultando a identificação de obstáculos, animais na pista e até mesmo outros veículos, aumentando significativamente o risco de acidentes. Além disso, moradores e comerciantes da região relatam crescimento da sensação de insegurança, principalmente em horários de menor movimento, devido à escuridão intensa em determinados trechos da avenida.",
+            "imagens": ["imgs/ilum1.jpg", "imgs/ilum2.jpg", "imgs/ilum3.jpg", "imgs/ilum4.jpg"],
+            "urgencia_id": 3,
+            "data": "26-04-2025",
+            "entidade_id": 2,
+            "usuarioMorador_cpf":12345678900,
+            "local": {
+                "cidade": "Betim",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Edmeia Matos Lazzarotti",
+                "numero": 4100,
+                "latitude": -19.9489,
+                "longitude": -44.1907
+            },
+            "usuarioInstituicao_cpf":45687612300,
+            "notaOrgao": "A equipe responsável identificou falhas em parte da rede elétrica e em alguns postes da região. Já foi solicitada a substituição dos equipamentos danificados e os reparos serão iniciados nos próximos dias para restabelecer totalmente a iluminação da avenida.",
+            "prazo": "",
+            "afetados": 12,
+            "custo": "",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
+            ]           
+        },
+        {
+            "id": 3,
+            "status_id": 2,
+            "categoria_id": 2,
+            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto em diversos pontos ao longo de toda a via, gerando forte mau cheiro e causando grande desconforto para moradores, comerciantes e pessoas que transitam pela região diariamente. Em alguns trechos, o esgoto está acumulado próximo às calçadas, dificultando a passagem de pedestres e aumentando o risco de contaminação e proliferação de insetos.",
+            "imagens": ["imgs/esg1.jpg", "imgs/esg2.jpg", "imgs/esg3.jpg", "imgs/esg4.jpg"],
+            "urgencia_id": 2,
+            "data": "26/04/2025",
+            "entidade_id": 3,
+            "usuarioMorador_cpf":12345678900,
+            "local": {
+                "cidade": "Belo Horizonte",
+                "estado": "MG",
+                "pais": "Brasil",
+                "logradouro": "Avenida Professor Mário Werneck",
+                "numero": 21,
+                "latitude": -19.9102,
+                "longitude": -43.9266
+            },
+            "usuarioInstituicao_cpf":98723456700,
+            "notaOrgao": "Após vistoria técnica no local, foi identificado que o vazamento está relacionado ao desgaste da tubulação e ao aumento do fluxo de água durante períodos chuvosos. A equipe de manutenção já iniciou o planejamento para realizar os reparos necessários e minimizar os impactos para a população da região.",
+            "prazo": "",
+            "afetados": 34,
+            "custo": "",
+            "progresso": [
+                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
+                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
+                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
+            ]
+        }
+    ],
+
+    "usuarioMorador":[
+        {
+            "nome_usuario":"Luisa Souza",
+            "nome_completo": "Luisa Souza Bernardes",
+            "email": "souzaluisa@gmail.com",
+            "cpf": 12345678900,
+            "senha": "xyz123!"  
+        }
+    ],
+
+    "usuarioInstituicao":[
+        {
+            "instituicao_id": 2,
+            "nome_usuario": "Fernanda Rocha",
+            "nome_completo": "Fernanda Rocha Ladeira",
+            "email": "fernandaprefcontagem@gmail.com",
+            "cpf": 45687612300,
+            "senha": "def123!"             
+        },
+        {
+            "instituicao_id": 1,
+            "nome_usuario":"Ricardo Alves",
+            "nome_completo": "Ricardo Alves Teixeira",
+            "email":"ricardomegasfalt@gmail.com",
+            "cpf": 98723456700,
+            "senha":"abc123!"
+        }
+    ],
+
+    "usuarioLogado":{
+        "cpf": 98723456700
     },
-    {
-      "id": 2,
-      "login": "user",
-      "senha": "123",
-      "nome": "Usuario Comum",
-      "email": "user@abc.com"
-    },
-    {
-      "login": "rommel",
-      "senha": "123",
-      "nome": "Rommel",
-      "email": "rommel@gmail.com",
-      "id": 3
-    }
-  ]
+
+
+    "infoPerfilMorador": [
+        {
+            "usuarioMorador_cpf": 12345678900,
+            "fotoPerfil": "imgs/img1.jpg",
+            "estatisticas": {
+                "atendidas": 3,
+                "aberto": 2,
+                "atualizacoes": 2,
+                "pontos": 50
+            },
+            "denuncias_id": [{"id": 1}, {"id": 12}  ]
+        }
+    ],
+
+    "infoPerfilInstituicao": [
+        {
+            "usuarioInstituicao_cpf": 45687612300,
+            "fotoPerfil": "imgs/img1.jpg",
+            "estatisticas": {
+                "atendidas": 67,
+                "aberto": 3,
+                "atualizacoes": 15
+            },
+            "obras_id": [{"id": 2}, {"id": 12},{"id": 45}]
+        },
+        {
+            "usuarioInstituicao_cpf": 98723456700,
+            "fotoPerfil": "imgs/img1.jpg", 
+            "estatisticas": {
+                "atendidas": 42,
+                "aberto": 4,
+                "atualizacoes": 5
+            },
+            "obras_id": [{"id": 1}, {"id": 3},{"id": 7}, {"id": 21}]
+        }
+    ],
+
+    "instituicao":[
+        {"id": 1, "nome": "Megasfalt"},
+        {"id": 2, "nome": "Prefeitura de Contagem"},
+        {"id": 3, "nome":"Prefeitura de Betim"}
+    ],
+
+    "status":[
+        {"id": 1, "status": "Concluída"},
+        {"id": 2, "status": "Em andamento"},
+        {"id": 3, "status": "Em aberto"}, 
+        {"id": 4, "status": "Obra finalizada"}
+    ],
+
+    "categorias":[
+        {"id": 1, "nome": "Buraco"},
+        {"id": 2, "nome": "Problema de esgoto"},
+        {"id": 3, "nome": "Deslizamento"},
+        {"id": 4, "nome": "Falta de limpeza"},
+        {"id": 5, "nome": "Falta de iluminação"}
+    ],
+
+    "urgencias":[
+        {"id": 1, "tipo": "Baixa"},
+        {"id": 2, "tipo": "Média"},
+        {"id": 3, "tipo": "Alta"}
+    ],
+
+    "entidades":[
+        {"id": 1, "tipo": "Todos"},
+        {"id": 2, "tipo": "Prefeitura"},
+        {"id": 3, "tipo": "Empresa privada"}
+    ]
 }
