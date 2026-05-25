@@ -1,46 +1,47 @@
 {
-  "denuncias": [
+    "denuncias":[
     {
-      "id": "1",
-      "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
-      "checkpoints": {
-        "denunciaAceita": true,
-        "equipeEnviada": false,
-        "planejamento": false,
-        "manutencaoAndamento": false,
-        "obraFinalizada": false
-      },
-      "custo": "1250.97",
-      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
-      "prazo": "2025-07-26"
+        "id": 1,
+        "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
+        "checkpoints": [
+            {"nome": "Denúncia aceita", "descricao": "", "concluido": true},
+            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": false},
+            {"nome": "Planejamento e previsões", "descricao": "", "concluido": false},
+            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false},
+            {"nome": "Obra finalizada", "descricao": "", "concluido": false}
+        ],
+            "custo": "1250.97",
+            "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+            "prazo": "2025-07-26"
     },
     {
-      "id": "2",
-      "notaOrgao": "Local de difícil acesso, o que impede que a obra seja executada com velocidade. Pedimos a paciência e a colaboração de todos. Obrigado.",
-      "checkpoints": {
-        "denunciaAceita": true,
-        "equipeEnviada": true,
-        "planejamento": false,
-        "manutencaoAndamento": false,
-        "obraFinalizada": false
-      },
-      "custo": "14000.0",
-      "descricaoCusto": "Aumento de pouco mais de R$1000,00 em função do aumento do número da mão de obra.",
-      "prazo": "2026-02-28"
+        "id": 2,
+        "notaOrgao": "xxxxxxx.",
+        "checkpoints": [
+            {"nome": "Denúncia aceita", "descricao": "", "concluido": true},
+            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true},
+            {"nome": "Planejamento e previsões", "descricao": "", "concluido": false},
+            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false},
+            {"nome": "Obra finalizada", "descricao": "", "concluido": false}
+        ],
+        "custo": "12964.92",
+        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+        "prazo": "2026-02-28"
+
     },
     {
-      "id": "3",
-      "notaOrgao": "O apanhador no campo de centeio.",
-      "checkpoints": {
-        "denunciaAceita": true,
-        "equipeEnviada": true,
-        "planejamento": true,
-        "manutencaoAndamento": false,
-        "obraFinalizada": false
-      },
-      "custo": "8967.54",
-      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
-      "prazo": "2026-12-31"
+        "id": 3,
+        "notaOrgao": "xxxxxxxxxx.",
+        "checkpoints": [
+            {"nome": "Denúncia aceita", "descricao": "", "concluido": true},
+            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true},
+            {"nome": "Planejamento e previsões", "descricao": "", "concluido": true},
+            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false},
+            {"nome": "Obra finalizada", "descricao": "", "concluido": false}
+        ],
+        "custo": "8967.54",
+        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+        "prazo":"2026-12-31"
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"
