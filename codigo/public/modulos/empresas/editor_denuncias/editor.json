@@ -16,7 +16,7 @@
     },
     {
       "id": "2",
-      "notaOrgao": "galo",
+      "notaOrgao": "Local de difícil acesso, o que impede que a obra seja executada com velocidade. Pedimos a paciência e a colaboração de todos. Obrigado.",
       "checkpoints": {
         "denunciaAceita": true,
         "equipeEnviada": true,
@@ -24,8 +24,8 @@
         "manutencaoAndamento": false,
         "obraFinalizada": false
       },
-      "custo": "12964.92",
-      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+      "custo": "14000.0",
+      "descricaoCusto": "Aumento de pouco mais de R$1000,00 em função do aumento do número da mão de obra.",
       "prazo": "2026-02-28"
     },
     {
