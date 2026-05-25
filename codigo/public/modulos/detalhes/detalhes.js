@@ -263,20 +263,30 @@ async function init() {
 
         //Status da denúncia e a implicação nos botões
         if (dados_denuncia.status_id === 1) {
-            btnExit.classList.add("d-none")
             btnStart.classList.add("d-none")
-        } else if (dados_denuncia.status_id !== 3 && tipoUsuario === "instituicao") {
-            btn_editar.classList.remove("d-none");
-            btn_avanca.classList.remove("d-none");
-            btn_retorna.classList.remove("d-none");
-        } else {
+            btnExit.classList.add("d-none")
             btn_avanca.classList.add("d-none");
             btn_retorna.classList.add("d-none");
-            btn_editar.classList.add("d-none");
-        };
-        if (dados_denuncia.status_id === 2) {
-            btnStart.classList.add("d-none");
-        };
+            btn_editar.classList.add("d-none")
+        } else if (dados_denuncia.status_id === 2 && tipoUsuario === "instituicao") {
+            btnStart.classList.add("d-none")
+            btnExit.classList.remove("d-none")
+            btn_avanca.classList.remove("d-none");
+            btn_retorna.classList.remove("d-none");
+            btn_editar.classList.remove("d-none")
+        } else if (dados_denuncia.status_id === 4 && tipoUsuario === "instituicao"){
+            btnStart.classList.add("d-none")
+            btnExit.classList.add("d-none")
+            btn_avanca.classList.add("d-none");
+            btn_retorna.classList.remove("d-none");
+            btn_editar.classList.add("d-none")
+        } else if (dados_denuncia.status_id === 3 && tipoUsuario === "instituicao"){
+            btnStart.classList.remove("d-none")
+            btnExit.classList.add("d-none")
+            btn_avanca.classList.add("d-none");
+            btn_retorna.classList.add("d-none");
+            btn_editar.classList.add("d-none")
+        }
     };
 
     if (dados_denuncia.notaOrgao != "") {
@@ -290,10 +300,20 @@ async function init() {
         btnStart.classList.add("d-none");
         btn_avanca.classList.add("d-none");
         btn_retorna.classList.add("d-none");
-        btn_acompanha.classList.remove("d-none");
+        const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
+        if(usuario.denuncias_acompanhadas.includes(dados_denuncia.id)){
+            btn_acompanha.classList.add("d-none")
+            btn_desacompanha.classList.remove("d-none")
+        }else{
+            btn_acompanha.classList.remove("d-none")
+            btn_desacompanha.classList.add("d-none")
+        }
         if (checkpoints_denuncia[4].concluida === true && cpfLogado === dados_denuncia.usuarioMorador_cpf) {
             btn_confirma.classList.remove("d-none");
         };
+    }else{
+        btn_acompanha.classList.add("d-none")
+        btn_desacompanha.classList.add("d-none")
     }
 
     //-----------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
@@ -496,20 +516,34 @@ async function init() {
         btn_confirma.classList.add("d-none");
     })
 
+    async function salvarUsuario(usuario) {
+        await fetch(`http://localhost:3000/usuariosMoradores/${usuario.id}`, {
+            method: "PATCH",
+            headers: {
+                "Content-Type": "application/json"
+            },
+            body: JSON.stringify(usuario)
+        });
+    }
+
     btn_acompanha.addEventListener("click", async () => {
         dados_denuncia.afetados += 1;
-        await salvarDenuncia();
+        const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
+        if(!usuario.denuncias_acompanhadas.includes(dados_denuncia.id)){
+            usuario.denuncias_acompanhadas.push(dados_denuncia.id)
+        }
         atualiza_info();
-        btn_acompanha.classList.add("d-none");
-        btn_desacompanha.classList.remove("d-none");
+        await salvarDenuncia();
+        await salvarUsuario(usuario)
     })
 
     btn_desacompanha.addEventListener("click", async () => {
+        const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
         dados_denuncia.afetados -= 1;
-        await salvarDenuncia();
+        usuario.denuncias_acompanhadas = usuario.denuncias_acompanhadas.filter(id => id !== dados_denuncia.id);
         atualiza_info();
-        btn_acompanha.classList.remove("d-none");
-        btn_desacompanha.classList.add("d-none");
+        await salvarDenuncia();
+        await salvarUsuario(usuario)
     })
 
     btn_comentario.addEventListener("click", async() =>{

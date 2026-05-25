@@ -2,7 +2,7 @@
   "denuncias": [
     {
       "id": "1",
-      "status_id": 3,
+      "status_id": 2,
       "categoria_id": 1,
       "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
       "imagens": [
@@ -30,9 +30,9 @@
       },
       "usuarioInstituicao_cpf": 98723456700,
       "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-      "prazo": "12/05/2026",
-      "afetados": 23,
-      "custo": "R$ 987,95",
+      "prazo": "11/11/1111",
+      "afetados": 30,
+      "custo": "R$ 10.111,11",
       "progresso": [
         {
           "etapa": "Denúncia aceita",
@@ -46,32 +46,32 @@
           "etapa": "Equipe enviada ao local",
           "concluida": false,
           "arquivo": {
-            "nome": "teste",
-            "url": "files/arquivo_teste.txt"
+            "nome": "",
+            "url": ""
           }
         },
         {
           "etapa": "Planejamento e previsões",
           "concluida": false,
           "arquivo": {
-            "nome": "teste",
-            "url": "files/arquivo_teste.txt"
+            "nome": "",
+            "url": ""
           }
         },
         {
           "etapa": "Manutenção em andamento",
           "concluida": false,
           "arquivo": {
-            "nome": "teste",
-            "url": "files/arquivo_teste.txt"
+            "nome": "",
+            "url": ""
           }
         },
         {
           "etapa": "Obra finalizada",
           "concluida": false,
           "arquivo": {
-            "nome": "teste",
-            "url": "files/arquivo_teste.txt"
+            "nome": "",
+            "url": ""
           }
         }
       ]
@@ -228,7 +228,8 @@
       "email": "souzaluisa@gmail.com",
       "cpf": 12345678900,
       "senha": "xyz123!",
-      "id": "2WVdbTc4oaM"
+      "id": "2WVdbTc4oaM",
+      "denuncias_acompanhadas": []
     }
   ],
   "usuariosInstituicoes": [
@@ -329,20 +330,6 @@
       "data": "2025-05-07",
       "hora": "15:47",
       "id": "1r3xGDB9qgU"
-    },
-    {
-      "usuario": 98723456700,
-      "mensagem": "Tem anos que a prefeitura não recapia aquela rua. Os remendos já não estão aguentando mais o fluxo",
-      "data": "2026-04-12",
-      "hora": "14:51",
-      "id": "J0Z3F8nX-Hc"
-    },
-    {
-      "usuario": 98723456700,
-      "mensagem": "Teste de comentário 1",
-      "data": "25/05/2026",
-      "hora": "19:29",
-      "id": "w8jxHLF1JEI"
     }
   ],
   "chat": [
