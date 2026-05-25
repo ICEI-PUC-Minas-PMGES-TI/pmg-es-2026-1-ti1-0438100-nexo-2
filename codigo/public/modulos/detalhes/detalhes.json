@@ -132,10 +132,10 @@
     },
 
 
-    "infoPerfilMorador": [
+    "infoPerfilMoradores": [
         {
             "usuarioMorador_cpf": 12345678900,
-            "fotoPerfil": "imgs/img1.jpg",
+            "fotoPerfil": "imgs/foto_perfil.jpg",
             "estatisticas": {
                 "atendidas": 3,
                 "aberto": 2,
@@ -146,10 +146,10 @@
         }
     ],
 
-    "infoPerfilInstituicao": [
+    "infoPerfilInstituicoes": [
         {
             "usuarioInstituicao_cpf": 45687612300,
-            "fotoPerfil": "imgs/img1.jpg",
+            "fotoPerfil": "imgs/foto_perfil.jpg",
             "estatisticas": {
                 "atendidas": 67,
                 "aberto": 3,
@@ -159,7 +159,7 @@
         },
         {
             "usuarioInstituicao_cpf": 98723456700,
-            "fotoPerfil": "imgs/img1.jpg", 
+            "fotoPerfil": "imgs/foto_perfil.jpg", 
             "estatisticas": {
                 "atendidas": 42,
                 "aberto": 4,

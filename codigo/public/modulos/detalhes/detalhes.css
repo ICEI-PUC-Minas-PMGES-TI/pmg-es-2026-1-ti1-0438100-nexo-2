@@ -8,6 +8,11 @@
 body{
     background-color: rgb(224, 224, 224);
 }
+
+.bg-comments {
+background-color: #cdcdcd;
+}
+
 .bg-gradient-custom {
   background: linear-gradient(to right, #721B00, #C80F00, #FF5900);
 }
@@ -240,7 +245,6 @@ button:hover{
     width: 44px;
     height: 44px;
     border-radius: 50%;
-    background-image: url('imgs/imagePerfil.png');
     background-size: cover;
     background-position: center;
     transition: transform 0.2s;

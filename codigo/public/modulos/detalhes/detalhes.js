@@ -2,7 +2,7 @@ const BASE_URL = "http://localhost:3000";
  
 async function init() {
     // Busca todos os objetos
-    const [denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado] = await Promise.all([
+    const [denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes] = await Promise.all([
         fetch(`${BASE_URL}/denuncias`).then(res => res.json()),
         fetch(`${BASE_URL}/categorias`).then(res => res.json()),
         fetch(`${BASE_URL}/urgencias`).then(res => res.json()),
@@ -11,8 +11,10 @@ async function init() {
         fetch(`${BASE_URL}/usuariosInstituicoes`).then(res => res.json()),
         fetch(`${BASE_URL}/instituicao`).then(res => res.json()),
         fetch(`${BASE_URL}/usuarioLogado`).then(res => res.json()),
+        fetch(`${BASE_URL}/infoPerfilMoradores`).then(res => res.json()),
+        fetch(`${BASE_URL}/infoPerfilInstituicoes`).then(res => res.json()),
     ]);
-    const data = { denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado };
+    const data = { denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes };
     
 
     //Referência aos elementos HTML
@@ -42,6 +44,7 @@ async function init() {
     const btn_acompanha = document.getElementById("btn-follow");
     const btn_desacompanha = document.getElementById("btn-unfollow");
     const form = document.getElementById("formPrev");
+    const avatars = document.querySelectorAll(".avatar")
 
     // Função auxiliar para persistir alterações na denúncia
     async function salvarDenuncia() {
@@ -133,9 +136,22 @@ async function init() {
     descricao.innerHTML = `${dados_denuncia.descricaoDenuncia}`;
     nota_descricao.innerHTML = `${dados_denuncia.notaOrgao}`;
 
+    //Mostra a imagem de perfil dependendo do usuário
+    caminho_fotoPerfil = ""
+    if(tipoUsuario==="morador"){
+        const perfilMorador = data.infoPerfilMoradores.find(p => Number(p.usuarioMorador_cpf) === Number(cpfLogado));
+        caminho_fotoPerfil = perfilMorador.fotoPerfil;
+    }else{
+        const perfilInstituicao = data.infoPerfilInstituicoes.find(p => Number(p.usuarioInstituicao_cpf) === Number(cpfLogado));
+        caminho_fotoPerfil = perfilInstituicao.fotoPerfil;
+    }
+    avatars.forEach(avatar => {
+        avatar.style.backgroundImage = `url(${caminho_fotoPerfil})`
+    });
+
+    //Mostra a localização exata da denúncia no mapa
     const mapa = document.getElementById("mapa-detalhes");
     const endereco_denuncia = `${dados_denuncia.local.logradouro}, ${dados_denuncia.local.numero}, ${dados_denuncia.local.cidade}, ${dados_denuncia.local.estado}, ${dados_denuncia.local.pais}`;
-
     mapa.src = `https://www.google.com/maps?q=${encodeURIComponent(endereco_denuncia)}&output=embed`;
 
     //Função para atualizar o menu de informações da denúncia
