@@ -127,26 +127,18 @@ button:hover{
     display: flex;
     flex-direction: column;
     gap: 10px;
-
     background-color: #ffffff;
-
     padding: 18px;
-
     border-radius: 14px;
-
     border: 1px solid #dcdcdc;
-
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
 }
 
 .foto-perfil{
     width: 52px;
     height: 52px;
-
     border-radius: 50%;
-
     object-fit: cover;
-
     border: 2px solid #ff5900;
 }
 
