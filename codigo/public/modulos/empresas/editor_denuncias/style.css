@@ -94,6 +94,42 @@ label{
     cursor: pointer;
 }
 
+.modal{
+    display: none;
+    position: fixed;
+    inset: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    justify-content: center;
+    align-self: center;
+    z-index: 1000;
+}
+
+.modal-caixa{
+    background-color: wheat;
+    border-radius: 8px;
+    padding: 24px;
+    width: 90%;
+    max-width: 480px;
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.modal-caixa h2{
+    font-size: 18px;
+    font-weight: bold;
+}
+
+.btn-cancelar{
+    background-color: #ccc;
+    color: #111;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-weight: bold;
+    cursor: pointer;
+}
+
 @media(max-width: 992px){
     body {
         padding: 16px;
