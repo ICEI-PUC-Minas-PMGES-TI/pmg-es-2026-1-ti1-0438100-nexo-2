@@ -80,6 +80,23 @@
             </div>
         </div>
     </main>
+    <div class="modal" id="modal-checkpoint">
+        <div class="modal-caixa">
+            <h2>Novo Checkpoint</h2>
+            <div class="mb-3">
+                <label for="checkpoint-nome">Nome: </label>
+                <input type="text" id="checkpoint-nome" placeholder=""Nome do checkpoint...">
+            </div>
+            <div class="mb-3">
+                <label for="checkpoint-descricao">Descrição: </label>
+                <textarea id="checkpoint-descricao" placeholder="Descrição..."></textarea>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+                <button type="button" class="btn-checkpoint" id="btn-confirmar-checkpoint">Salvar</button>
+            </div>
+        </div>
+    </div>
     <script src="editor.js"></script>
 </body>
 </html>
