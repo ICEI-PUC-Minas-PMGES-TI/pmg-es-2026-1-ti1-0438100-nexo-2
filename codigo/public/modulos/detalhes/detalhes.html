@@ -230,9 +230,9 @@
                                     <section id="comentarios" class="bg-light rounded-2 pt-3 mt-2 mb-5 shadow">
                                         <div id="header-comentarios" class="px-3">
                                             <h2 class="pb-2 border-bottom border-1 border-dark"
-                                                style="--bs-border-opacity: .4;">Comentários (2):</h2>
+                                                style="--bs-border-opacity: .4;">Comentários:</h2>
                                         </div>
-                                        <div id="conteudo-comentarios" class="px-3 overflow-auto    ">    
+                                        <div id="conteudo-comentarios" class="px-3 overflow-auto">    
                                         </div>
                                         <div id="novo-comentario" class="d-flex gap-3 p-3 mt-4 bg-comments rounded-bottom-2">
                                             <div class="avatar" role="img" aria-label="Avatar do usuário"></div>
@@ -337,9 +337,17 @@
                         </section>
 
                         <!--Chat Porta-Voz-->
-                        <section id="chat" class="bg-light rounded-3 shadow">
+                        <section id="chat-porta-voz" class="bg-light rounded-3 shadow">
                             <h3 class="rounded-top-3 p-1 bg-gradient-custom text-light text-center">Chat Porta-Voz</h3>
-                            RESERVADO PARA O CHAT
+                            <div id="chat">
+                                <div id="area-msg" class="overflow-auto">
+
+                                </div>
+                                <div id="send-msg" class="d-flex gap-3 p-3 mt-4 bg-comments rounded-bottom-2">
+                                    <input id="text" class="form-control w-75" placeholder="Escreva uma mensagem...">
+                                    <button id="btn-send-msg" class="px-3">Enviar</button>
+                                </div>
+                            </div>
                         </section>
                     </aside>
                 </div>

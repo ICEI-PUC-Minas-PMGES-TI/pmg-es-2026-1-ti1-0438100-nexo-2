@@ -1,4 +1,6 @@
 const BASE_URL = "http://localhost:3000";
+const params = new URLSearchParams(window.location.search);
+const denunciaId = Number(params.get("id"));
 
 async function init() {
     // Busca todos os objetos
@@ -16,7 +18,7 @@ async function init() {
         fetch(`${BASE_URL}/comentarios`).then(res => res.json()),
     ]);
     const data = { denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes, comentarios };
-
+    const url_DataMsg = "http://localhost:3000/mensagensChat";
 
     //Referência aos elementos HTML
     const date = document.getElementById("date");
@@ -62,7 +64,8 @@ async function init() {
 
     //----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
     // Lógica das imagens da denúncia
-    const dados_denuncia = data.denuncias[0];
+    const dados_denuncia = data.denuncias.find(d => Number(d.id) === denunciaId);
+    const cpfLogado = data.usuarioLogado.cpf;
     const imagens_denuncia = dados_denuncia.imagens;
     // Lógica para alocar imagens em suas divs
     for (let i = 0; i < imagens_denuncia.length; i++) {
@@ -190,6 +193,66 @@ async function init() {
     }
     carregaComentarios()
 
+    //-----------------------------------------------CHAT PORTA-VOZ-----------------------------------------------------------------//
+    async function loadMessages() {
+        const res = await fetch(url_DataMsg);
+        const messages = await res.json();
+        const areaMsg = document.getElementById("area-msg");
+        areaMsg.innerHTML = "";
+         messages.forEach(msg => {
+            if(Number(msg.denunciaId) === Number(denunciaId)){
+                let user = usuariosMoradores.find(u => Number(u.cpf) === Number(msg.user));
+                if(!user){
+                    user = usuariosInstituicoes.find(u=> Number(u.cpf) === Number(msg.user));
+                };
+            let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
+            if (!infoPerfil) {
+                infoPerfil = infoPerfilInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(user.cpf));
+            }
+                const div = document.createElement("div")
+                div.classList.add("d-flex", "gap-2", "ps-2", "mb-3")
+                const foto_mensagem = document.createElement("img")
+                const headerMsg = document.createElement("div");
+                headerMsg.classList.add("d-flex", "justify-content-between", "align-items-center", "px-1");
+                const msgContent = document.createElement("div");
+                msgContent.classList.add("msg");
+                const spanName = document.createElement("span")
+                const spanTime = document.createElement("span")
+                const textMsg = document.createElement("div")
+                if(user.cpf === cpfLogado){
+                    textMsg.classList.add("msg-send")
+                    div.classList.add("flex-row-reverse")
+                    headerMsg.classList.add("flex-row-reverse")
+                }else{
+                    textMsg.classList.add("msg-receive")
+                }
+                spanName.textContent = user.nome_usuario;
+                spanName.classList.add("fw-bold")
+                spanTime.textContent = `${msg.data} às ${msg.hora}`
+                spanTime.setAttribute("style", "font-size: 75%")
+                textMsg.textContent = msg.mensagem
+                headerMsg.appendChild(spanName)
+                headerMsg.appendChild(spanTime)
+                msgContent.appendChild(headerMsg)
+                msgContent.appendChild(textMsg)
+                msgContent.setAttribute("style", "max-width: 75%")
+                foto_mensagem.classList.add("foto-perfil", "mt-auto");
+                foto_mensagem.src = ` ${infoPerfil.fotoPerfil}`;
+                div.appendChild(foto_mensagem)
+                div.appendChild(msgContent)
+                areaMsg.appendChild(div);
+            }   
+        });
+        //areaMsg.scrollTop = areaMsg.scrollHeight;
+    }
+    setInterval(loadMessages, 2000);
+    loadMessages();
+
+
+
+
+
+
     //------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
     //Referências aos objetos e chaves estrangeiras do JSON
     const checkpoints_denuncia = dados_denuncia.progresso;
@@ -197,7 +260,6 @@ async function init() {
     const urgencia_denuncia = data.urgencias.find(u => Number(u.id) === Number(dados_denuncia.urgencia_id));
     const status_denuncia = data.status.find(s => Number(s.id) === Number(dados_denuncia.status_id));
     const denunciante = data.usuariosMoradores.find(um => Number(um.cpf) === Number(dados_denuncia.denunciante));
-    const cpfLogado = data.usuarioLogado.cpf;
     const tipoUsuario = data.usuariosInstituicoes.find(u => Number(u.cpf) === Number(cpfLogado)) ? "instituicao" : "morador";
 
     //Mostra informações fixas (por enquanto)

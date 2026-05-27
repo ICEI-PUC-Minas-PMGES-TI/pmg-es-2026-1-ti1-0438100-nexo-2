@@ -330,18 +330,39 @@
       "data": "2025-05-07",
       "hora": "15:47",
       "id": "1r3xGDB9qgU"
+    },
+    {
+      "usuario": 98723456700,
+      "mensagem": "Teste de comentário",
+      "data": "27/05/2026",
+      "hora": "11:50",
+      "id": "Z6_jNeSuR1Q"
     }
   ],
-  "chat": [
+  "mensagensChat": [
     {
+      "id": "1",
+      "denunciaId": 1,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
-      "data": "2026-04-11",
+      "data": "27/05/2026",
       "hora": "16:09",
-      "caminho": {
-        "de": 12345678900,
-        "para": 45687612300
-      },
-      "id": "XfHY-tHdMRI"
+      "user": 12345678900
+    },
+    {
+      "id": "2",
+      "denunciaId": 1,
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
+      "data": "27/05/2026",
+      "hora": "16:09",
+      "user": 98723456700
+    },
+    {
+      "id": "3",
+      "denunciaId": 1,
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
+      "data": "27/05/2026",
+      "hora": "16:17",
+      "user": 12345678900
     }
   ],
   "instituicao": [
@@ -425,6 +446,5 @@
       "id": "3",
       "tipo": "Empresa privada"
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }

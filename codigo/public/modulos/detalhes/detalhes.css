@@ -10,7 +10,7 @@ body{
 }
 
 .bg-comments {
-background-color: #cdcdcd;
+background-color: #bbbbbb;
 }
 
 .bg-gradient-custom {
@@ -172,7 +172,25 @@ button:hover{
     border: 2px solid #ff5900;
 }
 
-/*-----------------------------------------EXCLUSIVO DO CABEÇALHO E RODAPÉ------------------------------------------------------*/
+#area-msg{
+    max-height: 500px;
+}
+
+.msg-send{
+    background-color: #FF5900;
+    color: black;
+    border-radius: 5px;
+    padding: 8px;
+    
+}
+.msg-receive{
+    background-color: #C80F00;
+    color: white;
+    border-radius: 5px;
+    padding: 8px;
+}
+
+/*-------------------------------------------EXCLUSIVO DO CABEÇALHO E RODAPÉ------------------------------------------------------*/
 .navbar-custom {
     background-color: #100502e7;
     padding: 1rem 1rem;
