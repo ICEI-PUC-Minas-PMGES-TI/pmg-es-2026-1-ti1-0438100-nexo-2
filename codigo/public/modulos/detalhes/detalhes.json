@@ -30,9 +30,9 @@
       },
       "usuarioInstituicao_cpf": 98723456700,
       "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-      "prazo": "11/11/1111",
+      "prazo": "05/05/5555",
       "afetados": 30,
-      "custo": "R$ 10.111,11",
+      "custo": "R$ 0,00",
       "progresso": [
         {
           "etapa": "Denúncia aceita",
@@ -330,39 +330,48 @@
       "data": "2025-05-07",
       "hora": "15:47",
       "id": "1r3xGDB9qgU"
-    },
-    {
-      "usuario": 98723456700,
-      "mensagem": "Teste de comentário",
-      "data": "27/05/2026",
-      "hora": "11:50",
-      "id": "Z6_jNeSuR1Q"
     }
   ],
   "mensagensChat": [
     {
       "id": "1",
       "denunciaId": 1,
+      "usuario": 12345678900,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "27/05/2026",
-      "hora": "16:09",
-      "user": 12345678900
+      "hora": "16:09"
     },
     {
       "id": "2",
       "denunciaId": 1,
+      "usuario": 98723456700,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "27/05/2026",
-      "hora": "16:09",
-      "user": 98723456700
+      "hora": "16:09"
     },
     {
       "id": "3",
       "denunciaId": 1,
+      "usuario": 12345678900,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "27/05/2026",
-      "hora": "16:17",
-      "user": 12345678900
+      "hora": "16:17"
+    },
+    {
+      "denunciaId": 1,
+      "usuario": 98723456700,
+      "mensagem": "Teste de chat",
+      "data": "27/05/2026",
+      "hora": "13:13",
+      "id": "uKQquKGljag"
+    },
+    {
+      "denunciaId": 1,
+      "usuario": 98723456700,
+      "mensagem": "Teste de chat 2",
+      "data": "27/05/2026",
+      "hora": "15:50",
+      "id": "EYbcwiuWQVQ"
     }
   ],
   "instituicao": [
@@ -446,5 +455,6 @@
       "id": "3",
       "tipo": "Empresa privada"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

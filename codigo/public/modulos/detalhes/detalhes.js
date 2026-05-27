@@ -51,6 +51,8 @@ async function init() {
     const conteudo_comentarios = document.getElementById("conteudo-comentarios");
     const inputComentarios = document.getElementById("input-comentario");
     const btn_comentario = document.getElementById("btn-comentario");
+    const inputChat = document.getElementById("input-chat");
+    const btn_chat = document.getElementById("btn-chat");
     const lixeiras = document.querySelectorAll("trash")
 
     // Função auxiliar para persistir alterações na denúncia
@@ -201,9 +203,9 @@ async function init() {
         areaMsg.innerHTML = "";
          messages.forEach(msg => {
             if(Number(msg.denunciaId) === Number(denunciaId)){
-                let user = usuariosMoradores.find(u => Number(u.cpf) === Number(msg.user));
+                let user = usuariosMoradores.find(u => Number(u.cpf) === Number(msg.usuario));
                 if(!user){
-                    user = usuariosInstituicoes.find(u=> Number(u.cpf) === Number(msg.user));
+                    user = usuariosInstituicoes.find(u=> Number(u.cpf) === Number(msg.usuario));
                 };
             let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
             if (!infoPerfil) {
@@ -235,7 +237,7 @@ async function init() {
                 headerMsg.appendChild(spanTime)
                 msgContent.appendChild(headerMsg)
                 msgContent.appendChild(textMsg)
-                msgContent.setAttribute("style", "max-width: 75%")
+                msgContent.setAttribute("style", "width: 75%")
                 foto_mensagem.classList.add("foto-perfil", "mt-auto");
                 foto_mensagem.src = ` ${infoPerfil.fotoPerfil}`;
                 div.appendChild(foto_mensagem)
@@ -632,6 +634,33 @@ async function init() {
         });
         inputComentarios.value = "";
         carregaComentarios();
+    })
+    
+    btn_chat.addEventListener("click", async() =>{
+        const textoChat = inputChat.value.trim();
+        if(textoChat === ""){
+            return;
+        }
+        const agora = new Date();
+        const dataAtual = agora.toLocaleDateString("pt-BR");
+        const horaAtual = agora.toLocaleTimeString("pt-BR", {
+            hour: "2-digit",
+            minute: "2-digit"
+        });
+        const novaMensagem = {
+            denunciaId: denunciaId,
+            usuario: cpfLogado,
+            mensagem: textoChat,
+            data: dataAtual,
+            hora: horaAtual
+        };
+        await fetch(`${BASE_URL}/mensagensChat`, {
+            method: "POST",
+            headers: { "Content-Type": "application/json" },
+            body: JSON.stringify(novaMensagem)
+        });
+        inputChat.value = "";
+        loadMessages();
     })
 }
 init();

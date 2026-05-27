@@ -389,6 +389,11 @@ footer {
 
 .footer-col a {
     transition: color 0.3s;
+}           
+
+.footer-col:nth-of-type(2) ul:first-of-type a{
+    text-decoration: underline;
+    text-underline-offset: 3px;
 }
 
 .footer-col a:hover {
