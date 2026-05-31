@@ -1,5 +1,9 @@
 const params = new URLSearchParams(window.location.search);
 const id = parseInt(params.get('id'));
+if (!id || isNaN(id)) {
+    document.querySelector('main').innerHTML = '<p>Denúncia não encontrada. Verifique o link e tente novamente.</p>';
+    throw new Error('ID inválido');
+}
 
 fetch(`http://localhost:3000/denuncias/${id}`,{
     headers: {
@@ -13,7 +17,7 @@ fetch(`http://localhost:3000/denuncias/${id}`,{
 
 function preencherModal(denuncia){
     document.getElementById('nota').value = denuncia.notaOrgao;
-    document.getElementById('valor').value = `R$ ${denuncia.custo}`;
+    document.getElementById('valor').value = denuncia.custo;
     document.getElementById('descricao-custo').value = denuncia.descricaoCusto;
     document.getElementById('prazo').value = denuncia.prazo;
     const lista = document.querySelector('.lista-checkpoints');
@@ -30,6 +34,29 @@ function preencherModal(denuncia){
 }
 
 document.querySelector('.btn-salvar').addEventListener('click', function(){
+    const botao = this;
+    botao.disabled = true;
+
+    const nota = document.getElementById('nota').value.trim();
+    const custo = document.getElementById('valor').value;
+    const prazo = document.getElementById('prazo').value;
+    if (!nota){
+        alert('Por favor, preencha o campo de nota.');
+        botao.disabled = false;
+        return;
+    }
+
+    if(!custo || custo <= 0){
+        alert('Por favor, insira um custo válido.');
+        botao.disabled = false;
+        return;
+    }
+
+    if (!prazo){
+        alert('Por favor, selecione um prazo.');
+        botao.disabled = false;
+        return;
+    }
     const checkpoints = [];
     document.querySelectorAll('.lista-checkpoints li').forEach((item,indice) => {
         const input = item.querySelector('input[type="checkbox"]');
@@ -43,7 +70,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     const dadosAtualizados = {
         notaOrgao: document.getElementById('nota').value,
         checkpoints: checkpoints,
-        custo: document.getElementById('valor').value.replace('R$ ', ''),
+        custo: document.getElementById('valor').value,
         descricaoCusto: document.getElementById('descricao-custo').value,
         prazo: document.getElementById('prazo').value
     };
@@ -55,6 +82,9 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     .then(response => response.json())
     .then(() => {
         alert('Denúncia atualizada com sucesso!');
+    })
+    .finally(() =>{
+        botao.disabled = false;
     });
 });
 
