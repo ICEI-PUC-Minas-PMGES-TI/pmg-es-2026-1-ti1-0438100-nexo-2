@@ -13,37 +13,43 @@ fetch(`http://localhost:3000/denuncias/${id}`,{
 
 function preencherModal(denuncia){
     document.getElementById('nota').value = denuncia.notaOrgao;
-
-    document.getElementById('checkpoint-1').checked = denuncia.checkpoints.denunciaAceita;
-    document.getElementById('checkpoint-2').checked = denuncia.checkpoints.equipeEnviada;
-    document.getElementById('checkpoint-3').checked = denuncia.checkpoints.planejamento;
-    document.getElementById('checkpoint-4').checked = denuncia.checkpoints.manutencaoAndamento;
-    document.getElementById('checkpoint-5').checked = denuncia.checkpoints.obraFinalizada;
-
     document.getElementById('valor').value = `R$ ${denuncia.custo}`;
     document.getElementById('descricao-custo').value = denuncia.descricaoCusto;
     document.getElementById('prazo').value = denuncia.prazo;
+    const lista = document.querySelector('.lista-checkpoints');
+    lista.innerHTML = '';
+
+    denuncia.checkpoints.forEach((checkpoint, indice) =>{
+        const item = document.createElement('li');
+        item.innerHTML = `
+            <input type="checkbox" id="checkpoint-${indice}" ${checkpoint.concluido ? 'checked': ''}>
+            <label for="checkpoint-${indice}">${checkpoint.nome}</label>
+            `;
+            lista.appendChild(item)
+    });
 }
 
 document.querySelector('.btn-salvar').addEventListener('click', function(){
+    const checkpoints = [];
+    document.querySelectorAll('.lista-checkpoints li').forEach((item,indice) => {
+        const input = item.querySelector('input[type="checkbox"]');
+        const label = item.querySelector('label');
+        checkpoints.push({
+            nome: label.textContent,
+            descricao: '',
+            concluido: input.checked
+        });
+    });
     const dadosAtualizados = {
         notaOrgao: document.getElementById('nota').value,
-        checkpoints: {
-            denunciaAceita: document.getElementById('checkpoint-1').checked,
-            equipeEnviada: document.getElementById('checkpoint-2').checked,
-            planejamento: document.getElementById('checkpoint-3').checked,
-            manutencaoAndamento: document.getElementById('checkpoint-4').checked,
-            obraFinalizada: document.getElementById('checkpoint-5').checked,
-        },
+        checkpoints: checkpoints,
         custo: document.getElementById('valor').value.replace('R$ ', ''),
         descricaoCusto: document.getElementById('descricao-custo').value,
         prazo: document.getElementById('prazo').value
     };
-    fetch(`http://localhost:3000/denuncias/${id}`,{
+    fetch(`http://localhost:3000/denuncias/${id}`, {
         method: 'PATCH',
-        headers: {
-            'Content-Type': 'application/json'
-        },
+        headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dadosAtualizados)
     })
     .then(response => response.json())
@@ -83,7 +89,7 @@ document.getElementById('btn-confirmar-checkpoint').addEventListener('click', fu
         .then(denuncia => {
             const checkpointsAtualizados = [...denuncia.checkpoints, novoCheckpoint];
 
-            return fetch(`http://localhost:3000/denuncias/{id}`, {
+            return fetch(`http://localhost:3000/denuncias/${id}`, {
                 method: 'PATCH',
                 headers: {'Content-Type': 'application/json'},
                 body: JSON.stringify({checkpoints: checkpointsAtualizados})
