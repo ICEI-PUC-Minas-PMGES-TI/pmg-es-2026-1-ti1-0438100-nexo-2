@@ -123,7 +123,6 @@ button:hover{
 #conteudo-comentarios{
     display: flex;
     flex-direction: column;
-    gap: 18px;
     margin-top: 20px;
     max-height: 350px;
 }
@@ -138,6 +137,7 @@ button:hover{
     border-radius: 14px;
     border: 1px solid #dcdcdc;
     box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+    margin-bottom: 10px;
 }
 
 .comentario h4{
@@ -154,13 +154,13 @@ button:hover{
     width: 100%;
 }
 
-.comentario svg{
+.comentario svg, .divEd-msg svg{
     margin-left: auto;
     cursor: pointer;
     transition: 0.3s;
 }
 
-.comentario svg:hover{
+.comentario svg:hover, .divEd-msg svg:hover{
     transform: scale(1.05);
 }
 

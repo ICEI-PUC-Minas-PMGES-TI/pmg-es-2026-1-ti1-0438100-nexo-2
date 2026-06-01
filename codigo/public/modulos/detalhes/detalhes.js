@@ -53,7 +53,9 @@ async function init() {
     const btn_comentario = document.getElementById("btn-comentario");
     const inputChat = document.getElementById("input-chat");
     const btn_chat = document.getElementById("btn-chat");
-    const lixeiras = document.querySelectorAll("trash")
+    const lixeiras = document.querySelectorAll("trash");
+    const sendMsg = document.getElementById("send-msg")
+    const sendCom = document.getElementById("novo-comentario")
 
     // Função auxiliar para persistir alterações na denúncia
     async function salvarDenuncia() {
@@ -64,11 +66,20 @@ async function init() {
         });
     }
 
-    //----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
-    // Lógica das imagens da denúncia
+    //Referências aos objetos e chaves estrangeiras do JSON
     const dados_denuncia = data.denuncias.find(d => Number(d.id) === denunciaId);
     const cpfLogado = data.usuarioLogado.cpf;
     const imagens_denuncia = dados_denuncia.imagens;
+    const checkpoints_denuncia = dados_denuncia.progresso;
+    const categoria_denuncia = data.categorias.find(c => Number(c.id) === Number(dados_denuncia.categoria_id));
+    const urgencia_denuncia = data.urgencias.find(u => Number(u.id) === Number(dados_denuncia.urgencia_id));
+    const status_denuncia = data.status.find(s => Number(s.id) === Number(dados_denuncia.status_id));
+    const denunciante = data.usuariosMoradores.find(um => Number(um.cpf) === Number(dados_denuncia.denunciante));
+    const tipoUsuario = data.usuariosInstituicoes.find(u => Number(u.cpf) === Number(cpfLogado)) ? "instituicao" : "morador";
+
+    //----------------------------------------------------IMAGENS DA DENÚNCIA-------------------------------------------------------//
+    // Lógica das imagens da denúncia
+
     // Lógica para alocar imagens em suas divs
     for (let i = 0; i < imagens_denuncia.length; i++) {
         const divImg = document.createElement("div");
@@ -131,9 +142,24 @@ async function init() {
     });
 
     //-----------------------------------------------------COMENTÁRIOS---------------------------------------------------------------//
+    if (tipoUsuario === 'morador'){
+        const moradorLogado = usuariosMoradores.find(u => Number(u.cpf) === Number(cpfLogado));
+        if (!moradorLogado.denuncias_acompanhadas.includes(String(denunciaId))){
+            sendMsg.classList.add("d-none")
+            sendCom.classList.add("d-none")
+        }
+    } else if (Number(cpfLogado) !== Number(dados_denuncia.usuarioInstituicao_cpf)){
+        sendMsg.classList.add("d-none")
+        sendCom.classList.add("d-none")
+    } else {
+        sendMsg.classList.remove("d-none")
+        sendCom.classList.remove("d-none")
+    }
+
+    let editingComId = null;
     async function carregaComentarios() {
         data.comentarios = await fetch(`${BASE_URL}/comentarios`)
-        .then(res => res.json());
+            .then(res => res.json());
         conteudo_comentarios.innerHTML = ""
         data.comentarios.forEach(comentario => {
             let usuario = usuariosMoradores.find(u => Number(u.cpf) === Number(comentario.usuario));
@@ -155,62 +181,81 @@ async function init() {
             mensagem.textContent = comentario.mensagem;
             const data = document.createElement("span");
             data.textContent = `${comentario.data} às ${comentario.hora}`;
-            const trash = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "svg"
-            );
-            trash.setAttribute("xmlns", "http://www.w3.org/2000/svg");
-            trash.setAttribute("viewBox", "0 0 640 640");
-            trash.setAttribute("width", "20px");
-            trash.setAttribute("height", "20px");
-            trash.setAttribute("id", `${comentario.id}`)
-            trash.classList.add("trash");
-            const path = document.createElementNS(
-                "http://www.w3.org/2000/svg",
-                "path"
-            );
-            path.setAttribute(
-                "d",
-                "M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z"
-            );
-            if(usuario.cpf!==cpfLogado){
-                trash.classList.add("d-none")
-            }else{
-                trash.classList.remove("d-none")
+            if (comentario.editado === true){
+                data.textContent += ` - Editado`
             }
-            trash.appendChild(path);
+            const trashCom = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            trashCom.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            trashCom.setAttribute("viewBox", "0 0 640 640");
+            trashCom.setAttribute("width", "20px");
+            trashCom.setAttribute("height", "20px");
+            trashCom.setAttribute("id", `trashCom-${comentario.id}`)
+            trashCom.classList.add("trashCom");
+            const pathTrash = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            pathTrash.setAttribute("d", "M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z");
+            trashCom.appendChild(pathTrash);
+
+            const editCom = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            editCom.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+            editCom.setAttribute("viewBox", "0 0 640 640");
+            editCom.setAttribute("width", "20px");
+            editCom.setAttribute("height", "20px");
+            editCom.setAttribute("id", `editCom-${comentario.id}`);
+            editCom.classList.add("editCom");
+            const pathEdit = document.createElementNS("http://www.w3.org/2000/svg", "path");
+            pathEdit.setAttribute("d", "M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z");
+            editCom.appendChild(pathEdit);
+
+            if (usuario.cpf !== cpfLogado) {
+                trashCom.classList.add("d-none")
+                editCom.classList.add("d-none")
+            } else {
+                trashCom.classList.remove("d-none")
+                editCom.classList.remove("d-none")
+            }
+
+            const divEd = document.createElement("div")
+            divEd.classList.add("d-flex", "flex-column", "ms-auto")
+            divEd.appendChild(trashCom)
+            divEd.appendChild(editCom)
             card_comentario.appendChild(foto_comentario);
             card_comentario.appendChild(nome);
             card_comentario.appendChild(data);
-            card_comentario.appendChild(trash);
+            card_comentario.appendChild(divEd);
             card_comentario.appendChild(mensagem);
             conteudo_comentarios.appendChild(card_comentario);
-            
-            trash.addEventListener("click", async () => {
+
+            trashCom.addEventListener("click", async () => {
                 await fetch(`${BASE_URL}/comentarios/${comentario.id}`, {
                     method: "DELETE"
-                }) 
-            })   
+                })
+            })
+            editCom.addEventListener("click", () => {
+                inputComentarios.value = comentario.mensagem;
+                inputComentarios.focus();
+                editingComId = comentario.id;
+            })
         })
     }
     carregaComentarios()
 
     //-----------------------------------------------CHAT PORTA-VOZ-----------------------------------------------------------------//
+    let editingMsgId = null;
     async function loadMessages() {
         const res = await fetch(url_DataMsg);
         const messages = await res.json();
         const areaMsg = document.getElementById("area-msg");
         areaMsg.innerHTML = "";
-         messages.forEach(msg => {
-            if(Number(msg.denunciaId) === Number(denunciaId)){
+        messages.forEach(msg => {
+            if (Number(msg.denunciaId) === Number(denunciaId)) {
                 let user = usuariosMoradores.find(u => Number(u.cpf) === Number(msg.usuario));
-                if(!user){
-                    user = usuariosInstituicoes.find(u=> Number(u.cpf) === Number(msg.usuario));
+                if (!user) {
+                    user = usuariosInstituicoes.find(u => Number(u.cpf) === Number(msg.usuario));
                 };
-            let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
-            if (!infoPerfil) {
-                infoPerfil = infoPerfilInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(user.cpf));
-            }
+                let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
+                if (!infoPerfil) {
+                    infoPerfil = infoPerfilInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(user.cpf));
+                }
                 const div = document.createElement("div")
                 div.classList.add("d-flex", "gap-2", "ps-2", "mb-3")
                 const foto_mensagem = document.createElement("img")
@@ -221,12 +266,49 @@ async function init() {
                 const spanName = document.createElement("span")
                 const spanTime = document.createElement("span")
                 const textMsg = document.createElement("div")
-                if(user.cpf === cpfLogado){
+                const textEdit = document.createElement("small")
+                const divEd = document.createElement("div")
+                textEdit.textContent = "Editado"
+                const trashMsg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                trashMsg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                trashMsg.setAttribute("viewBox", "0 0 640 640");
+                trashMsg.setAttribute("width", "20px");
+                trashMsg.setAttribute("height", "20px");
+                trashMsg.setAttribute("id", `trashMsg-${msg.id}`)
+                trashMsg.classList.add("trashMsg");
+                const pathTrash = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathTrash.setAttribute("d", "M232.7 69.9C237.1 56.8 249.3 48 263.1 48L377 48C390.8 48 403 56.8 407.4 69.9L416 96L512 96C529.7 96 544 110.3 544 128C544 145.7 529.7 160 512 160L128 160C110.3 160 96 145.7 96 128C96 110.3 110.3 96 128 96L224 96L232.7 69.9zM128 208L512 208L512 512C512 547.3 483.3 576 448 576L192 576C156.7 576 128 547.3 128 512L128 208zM216 272C202.7 272 192 282.7 192 296L192 488C192 501.3 202.7 512 216 512C229.3 512 240 501.3 240 488L240 296C240 282.7 229.3 272 216 272zM320 272C306.7 272 296 282.7 296 296L296 488C296 501.3 306.7 512 320 512C333.3 512 344 501.3 344 488L344 296C344 282.7 333.3 272 320 272zM424 272C410.7 272 400 282.7 400 296L400 488C400 501.3 410.7 512 424 512C437.3 512 448 501.3 448 488L448 296C448 282.7 437.3 272 424 272z");
+                trashMsg.appendChild(pathTrash);
+
+                const editMsg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+                editMsg.setAttribute("xmlns", "http://www.w3.org/2000/svg");
+                editMsg.setAttribute("viewBox", "0 0 640 640");
+                editMsg.setAttribute("width", "20px");
+                editMsg.setAttribute("height", "20px");
+                editMsg.setAttribute("id", `editMsg-${msg.id}`);
+                editMsg.classList.add("editMsg");
+                const pathEdit = document.createElementNS("http://www.w3.org/2000/svg", "path");
+                pathEdit.setAttribute("d", "M535.6 85.7C513.7 63.8 478.3 63.8 456.4 85.7L432 110.1L529.9 208L554.3 183.6C576.2 161.7 576.2 126.3 554.3 104.4L535.6 85.7zM236.4 305.7C230.3 311.8 225.6 319.3 222.9 327.6L193.3 416.4C190.4 425 192.7 434.5 199.1 441C205.5 447.5 215 449.7 223.7 446.8L312.5 417.2C320.7 414.5 328.2 409.8 334.4 403.7L496 241.9L398.1 144L236.4 305.7zM160 128C107 128 64 171 64 224L64 480C64 533 107 576 160 576L416 576C469 576 512 533 512 480L512 384C512 366.3 497.7 352 480 352C462.3 352 448 366.3 448 384L448 480C448 497.7 433.7 512 416 512L160 512C142.3 512 128 497.7 128 480L128 224C128 206.3 142.3 192 160 192L256 192C273.7 192 288 177.7 288 160C288 142.3 273.7 128 256 128L160 128z");
+                editMsg.appendChild(pathEdit);
+
+                if (user.cpf === cpfLogado) {
                     textMsg.classList.add("msg-send")
                     div.classList.add("flex-row-reverse")
                     headerMsg.classList.add("flex-row-reverse")
-                }else{
+                    trashMsg.classList.remove("d-none")
+                    editMsg.classList.remove("d-none")
+                } else {
                     textMsg.classList.add("msg-receive")
+                    trashMsg.classList.add("d-none")
+                    editMsg.classList.add("d-none")
+                }
+
+                if(msg.editada === true){
+                    textEdit.classList.remove("d-none")
+                    foto_mensagem.classList.add("mb-4")
+                    divEd.classList.add("mb-4")
+                } else {
+                    textEdit.classList.add("d-none")
                 }
                 spanName.textContent = user.nome_usuario;
                 spanName.classList.add("fw-bold")
@@ -237,13 +319,29 @@ async function init() {
                 headerMsg.appendChild(spanTime)
                 msgContent.appendChild(headerMsg)
                 msgContent.appendChild(textMsg)
+                msgContent.appendChild(textEdit)
                 msgContent.setAttribute("style", "width: 75%")
                 foto_mensagem.classList.add("foto-perfil", "mt-auto");
                 foto_mensagem.src = ` ${infoPerfil.fotoPerfil}`;
                 div.appendChild(foto_mensagem)
                 div.appendChild(msgContent)
+                divEd.classList.add("d-flex", "flex-column", "align-self-end", "divEd-msg")
+                divEd.appendChild(trashMsg)
+                divEd.appendChild(editMsg)
+                div.appendChild(divEd)
                 areaMsg.appendChild(div);
-            }   
+
+                trashMsg.addEventListener("click", async () => {
+                    await fetch(`${url_DataMsg}/${msg.id}`, {
+                        method: "DELETE"
+                    })
+                })
+                editMsg.addEventListener("click", () => {
+                    inputChat.value = msg.mensagem;
+                    inputChat.focus();
+                    editingMsgId = msg.id;
+                })
+            }
         });
         //areaMsg.scrollTop = areaMsg.scrollHeight;
     }
@@ -252,17 +350,7 @@ async function init() {
 
 
 
-
-
-
     //------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
-    //Referências aos objetos e chaves estrangeiras do JSON
-    const checkpoints_denuncia = dados_denuncia.progresso;
-    const categoria_denuncia = data.categorias.find(c => Number(c.id) === Number(dados_denuncia.categoria_id));
-    const urgencia_denuncia = data.urgencias.find(u => Number(u.id) === Number(dados_denuncia.urgencia_id));
-    const status_denuncia = data.status.find(s => Number(s.id) === Number(dados_denuncia.status_id));
-    const denunciante = data.usuariosMoradores.find(um => Number(um.cpf) === Number(dados_denuncia.denunciante));
-    const tipoUsuario = data.usuariosInstituicoes.find(u => Number(u.cpf) === Number(cpfLogado)) ? "instituicao" : "morador";
 
     //Mostra informações fixas (por enquanto)
     date.innerHTML = `Data da denúncia: ${dados_denuncia.data}`;
@@ -338,13 +426,13 @@ async function init() {
             btn_avanca.classList.remove("d-none");
             btn_retorna.classList.remove("d-none");
             btn_editar.classList.remove("d-none")
-        } else if (dados_denuncia.status_id === 4 && tipoUsuario === "instituicao"){
+        } else if (dados_denuncia.status_id === 4 && tipoUsuario === "instituicao") {
             btnStart.classList.add("d-none")
             btnExit.classList.add("d-none")
             btn_avanca.classList.add("d-none");
             btn_retorna.classList.remove("d-none");
             btn_editar.classList.add("d-none")
-        } else if (dados_denuncia.status_id === 3 && tipoUsuario === "instituicao"){
+        } else if (dados_denuncia.status_id === 3 && tipoUsuario === "instituicao") {
             btnStart.classList.remove("d-none")
             btnExit.classList.add("d-none")
             btn_avanca.classList.add("d-none");
@@ -365,17 +453,17 @@ async function init() {
         btn_avanca.classList.add("d-none");
         btn_retorna.classList.add("d-none");
         const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
-        if(usuario.denuncias_acompanhadas.includes(dados_denuncia.id)){
+        if (usuario.denuncias_acompanhadas.includes(dados_denuncia.id)) {
             btn_acompanha.classList.add("d-none")
             btn_desacompanha.classList.remove("d-none")
-        }else{
+        } else {
             btn_acompanha.classList.remove("d-none")
             btn_desacompanha.classList.add("d-none")
         }
         if (checkpoints_denuncia[4].concluida === true && cpfLogado === dados_denuncia.usuarioMorador_cpf) {
             btn_confirma.classList.remove("d-none");
         };
-    }else{
+    } else {
         btn_acompanha.classList.add("d-none")
         btn_desacompanha.classList.add("d-none")
     }
@@ -593,7 +681,7 @@ async function init() {
     btn_acompanha.addEventListener("click", async () => {
         dados_denuncia.afetados += 1;
         const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
-        if(!usuario.denuncias_acompanhadas.includes(dados_denuncia.id)){
+        if (!usuario.denuncias_acompanhadas.includes(dados_denuncia.id)) {
             usuario.denuncias_acompanhadas.push(dados_denuncia.id)
         }
         atualiza_info();
@@ -610,9 +698,9 @@ async function init() {
         await salvarUsuario(usuario)
     })
 
-    btn_comentario.addEventListener("click", async() =>{
+    btn_comentario.addEventListener("click", async () => {
         const textoComentario = inputComentarios.value.trim();
-        if(textoComentario === ""){
+        if (textoComentario === "") {
             return;
         }
         const agora = new Date();
@@ -621,24 +709,33 @@ async function init() {
             hour: "2-digit",
             minute: "2-digit"
         });
-        const novoComentario = {
-            usuario: cpfLogado,
-            mensagem: textoComentario,
-            data: dataAtual,
-            hora: horaAtual
-        };
-        await fetch(`${BASE_URL}/comentarios`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(novoComentario)
-        });
+        if(editingComId){
+            await fetch(`${BASE_URL}/comentarios/${editingComId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ mensagem: textoComentario, data: dataAtual, hora: horaAtual, editado: true })
+            })
+        } else {
+            const novoComentario = {
+                usuario: cpfLogado,
+                mensagem: textoComentario,
+                data: dataAtual,
+                hora: horaAtual
+            };
+            await fetch(`${BASE_URL}/comentarios`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(novoComentario)
+            });
+        }
+        editingComId = null
         inputComentarios.value = "";
         carregaComentarios();
     })
-    
-    btn_chat.addEventListener("click", async() =>{
+
+    btn_chat.addEventListener("click", async () => {
         const textoChat = inputChat.value.trim();
-        if(textoChat === ""){
+        if (textoChat === "") {
             return;
         }
         const agora = new Date();
@@ -647,18 +744,28 @@ async function init() {
             hour: "2-digit",
             minute: "2-digit"
         });
-        const novaMensagem = {
-            denunciaId: denunciaId,
-            usuario: cpfLogado,
-            mensagem: textoChat,
-            data: dataAtual,
-            hora: horaAtual
-        };
-        await fetch(`${BASE_URL}/mensagensChat`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(novaMensagem)
-        });
+        if(editingMsgId){
+            await fetch(`${BASE_URL}/mensagensChat/${editingMsgId}`, {
+                method: "PATCH",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ mensagem: textoChat, data: dataAtual, hora: horaAtual, editada: true })
+            })
+        } else {
+            const novaMensagem = {
+                denunciaId: denunciaId,
+                usuario: cpfLogado,
+                mensagem: textoChat,
+                data: dataAtual,
+                hora: horaAtual,
+                editada: false
+            };
+            await fetch(`${BASE_URL}/mensagensChat`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(novaMensagem)
+            });
+        }
+        editingMsgId = null;
         inputChat.value = "";
         loadMessages();
     })

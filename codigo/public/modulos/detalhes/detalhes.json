@@ -2,7 +2,7 @@
   "denuncias": [
     {
       "id": "1",
-      "status_id": 2,
+      "status_id": 3,
       "categoria_id": 1,
       "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
       "imagens": [
@@ -31,7 +31,7 @@
       "usuarioInstituicao_cpf": 98723456700,
       "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
       "prazo": "05/05/5555",
-      "afetados": 30,
+      "afetados": 31,
       "custo": "R$ 0,00",
       "progresso": [
         {
@@ -228,8 +228,28 @@
       "email": "souzaluisa@gmail.com",
       "cpf": 12345678900,
       "senha": "xyz123!",
-      "id": "2WVdbTc4oaM",
-      "denuncias_acompanhadas": []
+      "denuncias_acompanhadas": [
+        "1"
+      ],
+      "id": "2WVdbTc4oaM"
+    },
+    {
+      "nome_usuario": "João Pedro",
+      "nome_completo": "João Pedro Silva",
+      "email": "pedrojoao@gmail.com",
+      "cpf": 12345678901,
+      "senha": "xyz456!",
+      "denuncias_acompanhadas": [],
+      "id": "aQAmlDN0tws"
+    },
+    {
+      "nome_usuario": "Maria Amélia",
+      "nome_completo": "Maria Amélia de Castro",
+      "email": "mariamelia@gmail.com",
+      "cpf": 12345678902,
+      "senha": "xyz789!",
+      "denuncias_acompanhadas": [],
+      "id": "baA6eNcavEI"
     }
   ],
   "usuariosInstituicoes": [
@@ -253,33 +273,50 @@
     }
   ],
   "usuarioLogado": {
-    "cpf": 98723456700
+    "cpf": 12345678900
   },
   "infoPerfilMoradores": [
     {
       "usuarioMorador_cpf": 12345678900,
-      "fotoPerfil": "imgs/foto_perfil.jpg",
+      "fotoPerfil": "imgs/imgPerfil/perfil_luisasouza.png",
       "estatisticas": {
         "atendidas": 3,
         "aberto": 2,
         "atualizacoes": 2,
         "pontos": 50
       },
-      "denuncias_id": [
-        {
-          "id": 1
-        },
-        {
-          "id": 12
-        }
-      ],
+      "denuncias_id": [],
+      "id": "ZBjuTX0Duqo"
+    },
+    {
+      "usuarioMorador_cpf": 12345678901,
+      "fotoPerfil": "imgs/imgPerfil/perfil_joaopedro.png",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_id": [],
+      "id": "ZBjuTX0Duqo"
+    },
+    {
+      "usuarioMorador_cpf": 12345678902,
+      "fotoPerfil": "imgs/imgPerfil/perfil_mariaamelia.png",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_id": [],
       "id": "ZBjuTX0Duqo"
     }
   ],
   "infoPerfilInstituicoes": [
     {
       "usuarioInstituicao_cpf": 45687612300,
-      "fotoPerfil": "imgs/foto_perfil.jpg",
+      "fotoPerfil": "imgs/imgPerfil/perfil_fernandarocha.png",
       "estatisticas": {
         "atendidas": 67,
         "aberto": 3,
@@ -300,7 +337,7 @@
     },
     {
       "usuarioInstituicao_cpf": 98723456700,
-      "fotoPerfil": "imgs/foto_perfil.jpg",
+      "fotoPerfil": "imgs/imgPerfil/perfil_ricardoalves.png",
       "estatisticas": {
         "atendidas": 42,
         "aberto": 4,
@@ -329,7 +366,15 @@
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "2025-05-07",
       "hora": "15:47",
-      "id": "1r3xGDB9qgU"
+      "id": "1r3xGDB9qgU",
+      "editado": false
+    },
+    {
+      "usuario": 98723456700,
+      "mensagem": "teste de comentário",
+      "data": "01/06/2026",
+      "hora": "11:55",
+      "id": "VpVIX3kZzkY"
     }
   ],
   "mensagensChat": [
@@ -339,15 +384,17 @@
       "usuario": 12345678900,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "27/05/2026",
-      "hora": "16:09"
+      "hora": "16:09",
+      "editada": false
     },
     {
       "id": "2",
       "denunciaId": 1,
       "usuario": 98723456700,
-      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
-      "data": "27/05/2026",
-      "hora": "16:09"
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar ali.",
+      "data": "01/06/2026",
+      "hora": "11:41",
+      "editada": true
     },
     {
       "id": "3",
@@ -355,23 +402,8 @@
       "usuario": 12345678900,
       "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
       "data": "27/05/2026",
-      "hora": "16:17"
-    },
-    {
-      "denunciaId": 1,
-      "usuario": 98723456700,
-      "mensagem": "Teste de chat",
-      "data": "27/05/2026",
-      "hora": "13:13",
-      "id": "uKQquKGljag"
-    },
-    {
-      "denunciaId": 1,
-      "usuario": 98723456700,
-      "mensagem": "Teste de chat 2",
-      "data": "27/05/2026",
-      "hora": "15:50",
-      "id": "EYbcwiuWQVQ"
+      "hora": "16:17",
+      "editada": false
     }
   ],
   "instituicao": [
