@@ -20,6 +20,9 @@ const iconesCategorias = {
   "Falta de iluminação":
     "images/icons/luz.png",
 
+  "Falta de limpeza":
+    "images/icons/limpeza.png",
+
   Deslizamento:
     "images/icons/deslizamento.png",
 
@@ -47,6 +50,13 @@ const iconesDenuncia = {
 
   "Falta de iluminação": L.icon({
     iconUrl: "images/icons/luz.png",
+    iconSize: [38, 38],
+    iconAnchor: [19, 38],
+    popupAnchor: [0, -38]
+  }),
+
+  "Falta de limpeza": L.icon({
+    iconUrl: "images/icons/limpeza.png",
     iconSize: [38, 38],
     iconAnchor: [19, 38],
     popupAnchor: [0, -38]
@@ -482,7 +492,7 @@ async function carregarDenuncias() {
 
     console.log(denuncias);
     atualizarTela(denuncias);
-
+    atualizarEstatisticas(denuncias);
   }
 
   catch (erro) {
@@ -493,5 +503,28 @@ async function carregarDenuncias() {
   }
 
 }
+
+/* === ESTATÍSTICAS === */
+function atualizarEstatisticas(lista) {
+  const abertas = lista.filter(
+    d => d.status === "aberta"
+  ).length;
+  const andamento = lista.filter(
+    d => d.status === "andamento"
+  ).length;
+  const resolvidas = lista.filter(
+    d => d.status === "resolvida"
+  ).length;
+  const total = lista.length;
+  document.getElementById("estat-realizadas").textContent =
+    total;
+  document.getElementById("estat-andamento").textContent =
+    andamento;
+  document.getElementById("estat-resolvidas").textContent =
+    resolvidas;
+  document.getElementById("estat-usuarios").textContent =
+    "2000";
+}
+
 /* === INICIALIZAÇÃO === */
 carregarDenuncias();
