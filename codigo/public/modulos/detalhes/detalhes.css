@@ -190,6 +190,46 @@ button:hover{
     padding: 8px;
 }
 
+.resp-info, .resp-chat{
+    max-width: 500px;
+}
+
+@media (min-width: 992px){
+    .resp-check, .resp-mapa{
+        width: 50%;
+    }
+}
+
+@media (min-width: 1400px){
+    .resp-info, .resp-chat{
+        min-width: 100%;
+    }
+
+    .resp-check, .resp-mapa{
+        width: 100%;
+    }
+}
+
+@media (min-width: 768px) and (max-width: 1399px){
+    .resp-info, .resp-chat{
+        width: 50%;
+    }
+}
+
+@media (max-width: 767px){
+    h1 {
+        font-size: 1.8rem;
+    }
+
+    h2{
+        font-size: 1.2rem;
+    }
+
+    .resp-info, .resp-chat{
+        min-width: 80%;
+    }
+}
+
 /*-------------------------------------------EXCLUSIVO DO CABEÇALHO E RODAPÉ------------------------------------------------------*/
 .navbar-custom {
     background-color: #100502e7;

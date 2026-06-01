@@ -98,25 +98,45 @@ async function init() {
         localImg.classList.remove("mx-3");
     };
     // Função para atualizar as imagens visíveis
+    const mediaQuery992 = window.matchMedia("(min-width: 992px)");
+    const mediaQuery768 = window.matchMedia("(min-width: 768px)");
+    const mediaQuery576 = window.matchMedia("(min-width: 576px)");
     let inicio_img = 1;
+
+    function getQtdImgs() {
+        if (mediaQuery992.matches) {
+            return 4;
+        }
+        if (mediaQuery768.matches) {
+            return 3;
+        }
+        if (mediaQuery576.matches) {
+            return 2;
+        }
+        return 1;
+    }
+
     function atualiza_img() {
         for (let i = 0; i < imagens_denuncia.length; i++) {
             const divImg_visivel = document.getElementById(`img${i + 1}`);
-            divImg_visivel.classList.add("d-none");
-        };
-        if (imagens_denuncia.length > 4) {
-            for (let i = inicio_img; i < (inicio_img + 4); i++) {
-                const div_visivel = document.getElementById(`img${i}`);
-                div_visivel.classList.remove("d-none");
+            if(divImg_visivel){
+                divImg_visivel.classList.add("d-none");
             }
-        } else {
-            for (let i = inicio_img; i < (imagens_denuncia.length + 1); i++) {
-                const div_visivel = document.getElementById(`img${i}`);
-                div_visivel.classList.remove("d-none");
-            };
         };
+        const qtd = getQtdImgs();
+        const maxInicio = imagens_denuncia.length - qtd + 1;
+        if (inicio_img > maxInicio){
+            inicio_img = Math.max(1, maxInicio)
+        }
+        for (let i = inicio_img; i < (inicio_img + qtd); i++){
+            const div_visivel = document.getElementById(`img${i}`);
+            div_visivel.classList.remove("d-none");
+        }
     };
     atualiza_img();
+    mediaQuery992.addEventListener("change", () => {atualiza_img();});
+    mediaQuery768.addEventListener("change", () => {atualiza_img();});
+    mediaQuery576.addEventListener("change", () => {atualiza_img();});
 
     // Botões de navegação das imagens e setas do teclado
     btn_right.addEventListener("click", () => {
