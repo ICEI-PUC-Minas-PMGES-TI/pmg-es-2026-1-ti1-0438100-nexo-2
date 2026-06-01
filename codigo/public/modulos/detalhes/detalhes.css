@@ -440,30 +440,22 @@ footer {
     color: #b4b4b4 !important;
 }
 
-.footer-col svg {
-    width: 20px;
-    height: 20px;
-    fill: currentColor;
-}
-
 .redessociais {
     display: flex;
     gap: 20px;
     margin-top: 10px;
 }
 
-.redessociais svg {
-    width: 40px;
-    height: 40px;
-    padding: 4px;
+.redessociais i {
+    padding: 8px;
     border-radius: 50%;
     transition: 0.3s;
     fill: currentColor;
 }
 
-.redessociais svg:hover {
+.redessociais i:hover {
     background-color: #4b2e17;
-    color: #100502;
+    cursor: pointer;
 }
 
 .direitos {
