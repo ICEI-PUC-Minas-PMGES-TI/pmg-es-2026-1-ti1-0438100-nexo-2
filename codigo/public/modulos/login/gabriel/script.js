@@ -1,11 +1,16 @@
+const PAGE_SIZE = 30;
 let denuncias = [];
+let filteredDenuncias = [];
+let visibleCount = PAGE_SIZE;
 
 async function loadDenuncias() {
 	try {
 		const res = await fetch('dadostemporario.json');
 		const data = await res.json();
 		denuncias = data.denuncias || [];
-		renderCards(denuncias);
+		filteredDenuncias = denuncias;
+		visibleCount = PAGE_SIZE;
+		renderCards(filteredDenuncias);
 	} catch (err) {
 		console.error('Erro ao carregar denúncias', err);
 	}
@@ -15,15 +20,36 @@ function formatDate(d) {
 	return new Date(d).toLocaleDateString();
 }
 
+function updateLoadMore(total) {
+	const wrapper = document.getElementById('loadMoreWrapper');
+	const text = document.getElementById('loadMoreText');
+	const button = document.getElementById('loadMoreBtn');
+	if (!wrapper || !text || !button) {
+		return;
+	}
+
+	if (total > PAGE_SIZE && total > visibleCount) {
+		const remaining = total - visibleCount;
+		text.textContent = `Existem mais ${remaining} denúncia${remaining === 1 ? '' : 's'}. Clique em carregar mais.`;
+		wrapper.hidden = false;
+		button.disabled = false;
+		return;
+	}
+
+	wrapper.hidden = true;
+}
+
 function renderCards(list) {
 	const grid = document.getElementById('cardsGrid');
 	grid.innerHTML = '';
 	if (!list.length) {
 		grid.innerHTML = '<div class="col-12"><p class="text-center text-muted">Nenhuma denúncia encontrada.</p></div>';
+		updateLoadMore(0);
 		return;
 	}
 
-	list.forEach(item => {
+	const visibleList = list.slice(0, visibleCount);
+	visibleList.forEach(item => {
 		const col = document.createElement('div');
 		col.className = 'col-lg-6 col-md-12';
 
@@ -141,6 +167,8 @@ function renderCards(list) {
 		col.appendChild(card);
 		grid.appendChild(col);
 	});
+
+	updateLoadMore(list.length);
 }
 
 function applyFilters() {
@@ -166,7 +194,9 @@ function applyFilters() {
 		filtered.sort((a, b) => new Date(a.data) - new Date(b.data));
 	}
 
-	renderCards(filtered);
+	filteredDenuncias = filtered;
+	visibleCount = PAGE_SIZE;
+	renderCards(filteredDenuncias);
 }
 
 function debounce(fn, wait = 250) {
@@ -179,7 +209,14 @@ document.addEventListener('DOMContentLoaded', () => {
 
 	const searchInput = document.getElementById('globalSearch');
 	const selects = Array.from(document.querySelectorAll('.filter-select'));
+	const loadMoreBtn = document.getElementById('loadMoreBtn');
 
 	searchInput.addEventListener('input', debounce(() => applyFilters(), 250));
 	selects.forEach(s => s.addEventListener('change', applyFilters));
+	if (loadMoreBtn) {
+		loadMoreBtn.addEventListener('click', () => {
+			visibleCount = Math.min(visibleCount + PAGE_SIZE, filteredDenuncias.length);
+			renderCards(filteredDenuncias);
+		});
+	}
 });
