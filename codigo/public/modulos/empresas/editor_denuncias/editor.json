@@ -4,36 +4,11 @@
       "id": "1",
       "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
       "checkpoints": [
-        {
-          "nome": "Denúncia aceita",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Equipe enviada ao local",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Planejamento e previsões",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Manutenção em andamento",
-          "descricao": "",
-          "concluido": false
-        },
-        {
-          "nome": "Obra finalizada",
-          "descricao": "",
-          "concluido": false
-        },
-        {
-          "nome": "Vai ser grande o chororô",
-          "descricao": "",
-          "concluido": false
-        }
+        {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Planejamento e previsões", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo": "fixo"},
+        {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo": "fixo"}
       ],
       "custo": "2000",
       "descricaoCusto": "Valor referente aos materiais necessários para obra.",
@@ -43,31 +18,11 @@
       "id": "2",
       "notaOrgao": "galoucura é rei.",
       "checkpoints": [
-        {
-          "nome": "Denúncia aceita",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Equipe enviada ao local",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Planejamento e previsões",
-          "descricao": "",
-          "concluido": false
-        },
-        {
-          "nome": "Manutenção em andamento",
-          "descricao": "",
-          "concluido": false
-        },
-        {
-          "nome": "Obra finalizada",
-          "descricao": "",
-          "concluido": false
-        }
+        {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Planejamento e previsões", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo": "fixo"},
+        {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo": "fixo"}
       ],
       "custo": "12964.92",
       "descricaoCusto": "Valor referente aos materiais necessários para obra.",
@@ -77,31 +32,11 @@
       "id": "3",
       "notaOrgao": "xxxxxxxxxx.",
       "checkpoints": [
-        {
-          "nome": "Denúncia aceita",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Equipe enviada ao local",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Planejamento e previsões",
-          "descricao": "",
-          "concluido": true
-        },
-        {
-          "nome": "Manutenção em andamento",
-          "descricao": "",
-          "concluido": false
-        },
-        {
-          "nome": "Obra finalizada",
-          "descricao": "",
-          "concluido": false
-        }
+        {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Planejamento e previsões", "descricao": "", "concluido": true, "tipo": "fixo"},
+        {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo": "fixo"},
+        {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo": "fixo"}
       ],
       "custo": "8967.54",
       "descricaoCusto": "Valor referente aos materiais necessários para obra.",

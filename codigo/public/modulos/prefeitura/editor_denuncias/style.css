@@ -9,7 +9,13 @@ body {
     background-color: rgb(224, 224, 224);
     padding: 30px;
 }
-
+select {
+    width: 100%;
+    background-color: #e8e8e8;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    padding: 8px 10px;
+}
 h1 {
     font-size: 2.8rem;
     margin-bottom: 20px;
