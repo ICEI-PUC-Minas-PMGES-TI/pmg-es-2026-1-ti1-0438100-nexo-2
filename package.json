@@ -1,0 +1,12 @@
+{
+  "devDependencies": {
+    "json-server": "^1.0.0-beta.15",
+    "npm-run-all": "^4.1.5",
+    "serve": "^14.2.6"
+  },
+  "scripts": {
+  "api": "json-server --watch codigo/public/modulos/warlley/detalhes.json --port 3000",
+  "web": "serve codigo/public/modulos/warlley -l 5000",
+  "start": "npm-run-all --parallel api web"
+  }
+}
