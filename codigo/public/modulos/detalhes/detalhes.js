@@ -177,6 +177,7 @@ async function init() {
     }
 
     let editingComId = null;
+    let editingCom = false
     async function carregaComentarios() {
         data.comentarios = await fetch(`${BASE_URL}/comentarios`)
             .then(res => res.json());
@@ -251,9 +252,15 @@ async function init() {
                 })
             })
             editCom.addEventListener("click", () => {
-                inputComentarios.value = comentario.mensagem;
-                inputComentarios.focus();
-                editingComId = comentario.id;
+                if (editingCom === false){
+                    inputComentarios.value = comentario.mensagem;
+                    inputComentarios.focus();
+                    editingComId = comentario.id;
+                } else {
+                    inputComentarios.value = "";
+                    editingComId = null;
+                }
+                editingCom = !editingCom
             })
         })
     }
@@ -261,6 +268,7 @@ async function init() {
 
     //-----------------------------------------------CHAT PORTA-VOZ-----------------------------------------------------------------//
     let editingMsgId = null;
+    let editingMsg = false
     async function loadMessages() {
         const res = await fetch(url_DataMsg);
         const messages = await res.json();
@@ -357,9 +365,15 @@ async function init() {
                     })
                 })
                 editMsg.addEventListener("click", () => {
-                    inputChat.value = msg.mensagem;
-                    inputChat.focus();
-                    editingMsgId = msg.id;
+                    if(editingMsg === false){
+                        inputChat.value = msg.mensagem;
+                        inputChat.focus();
+                        editingMsgId = msg.id;
+                    } else {
+                        inputChat.value = "";
+                        editingMsgId = null;
+                    }
+                    editingMsg = !editingMsg
                 })
             }
         });
