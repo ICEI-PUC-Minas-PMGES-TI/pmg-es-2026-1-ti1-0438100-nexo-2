@@ -294,3 +294,48 @@ button:hover{
     color: #000000;
 }
 
+/* ==============================================================================================================================
+   --- NOVOS ESTILOS COMPARTILHADOS (PERFIL CORPORATIVO, EMPRESARIAL E PREFEITURA) ---
+   ============================================================================================================================= */
+
+/* Container Base do Painel de Avaliações */
+.main-container .card-avaliacoes-zella {
+    border-radius: 16px;
+    background-color: #ffffff;
+}
+
+/* Título Interno da Seção de Avaliações/Feedback */
+.main-container .title-secao-zella {
+    font-size: 1.4rem;
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* Elemento do Bloco de Comentário Único */
+.main-container .item-comentario-zella {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+/* Avatar do Usuário Avaliador */
+.main-container .avatar-comentario-zella {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+/* Data e Hora do Comentário */
+.main-container .data-comentario-zella {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* Texto do Feedback / Avaliação Corporativa */
+.main-container .texto-comentario-zella {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: #495057;
+}
