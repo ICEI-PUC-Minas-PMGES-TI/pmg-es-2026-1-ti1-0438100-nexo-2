@@ -140,7 +140,7 @@ async function init() {
 
     // Botões de navegação das imagens e setas do teclado
     btn_right.addEventListener("click", () => {
-        if (inicio_img < (imagens_denuncia.length - 3)) {
+        if (inicio_img < (imagens_denuncia.length - getQtdImgs() + 1)) {
             inicio_img += 1;
             atualiza_img();
         };
@@ -247,6 +247,10 @@ async function init() {
             conteudo_comentarios.appendChild(card_comentario);
 
             trashCom.addEventListener("click", async () => {
+                const confirmar = confirm("Deseja realmente excluir este comentário?");
+                if (!confirmar) {
+                    return;
+                }
                 await fetch(`${BASE_URL}/comentarios/${comentario.id}`, {
                     method: "DELETE"
                 })
@@ -360,6 +364,10 @@ async function init() {
                 areaMsg.appendChild(div);
 
                 trashMsg.addEventListener("click", async () => {
+                const confirmar = confirm("Deseja realmente excluir esta mensagem?");
+                if (!confirmar) {
+                    return;
+                }
                     await fetch(`${url_DataMsg}/${msg.id}`, {
                         method: "DELETE"
                     })
