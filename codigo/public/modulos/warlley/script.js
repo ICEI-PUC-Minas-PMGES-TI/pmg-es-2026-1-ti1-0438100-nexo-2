@@ -341,56 +341,91 @@ const listaContainer = document.getElementById(
 function renderizarLista(lista) {
   listaContainer.innerHTML = "";
   lista.forEach((d) => {
+    let textoTempo;
+
+    if (
+      d.status === "resolvida" &&
+      d.dataResolucao
+    ) {
+      textoTempo =
+        `Resolvida ${tempoDecorrido(
+          d.dataResolucao
+        )}`;
+
+    } else {
+      textoTempo =
+        `Publicada ${tempoDecorrido(
+          d.dataPublicacao
+        )}`;
+    }
+
+    let textoUrgencia = "Baixa";
+    let classeUrgencia = "urgencia-texto-baixa";
+
+    if (d.urgencia === 2) {
+      textoUrgencia = "Média";
+      classeUrgencia = "urgencia-texto-media";
+    }
+
+    if (d.urgencia === 3) {
+      textoUrgencia = "Alta";
+      classeUrgencia = "urgencia-texto-alta";
+    }
+
     const card = document.createElement("div");
     card.className = "card-denuncia";
     card.innerHTML = `
-  <div class="card-topo">
+      <div class="card-topo">
 
-    <img src="${d.imagem}">
-
-    <div class="card-info">
-      <p>${d.endereco}</p>
-
-      <h3>${d.titulo}</h3>
+      <img src="${d.imagem}">
+      
+      <div class="card-info">
+      
+        <p>${d.endereco}</p>
+      
+        <span class="urgencia-texto ${classeUrgencia}">
+          Urgência ${textoUrgencia}
+        </span>
+      
+        <h3>${d.titulo}</h3>
+      
+        <p class="tempo-denuncia">
+          ${textoTempo}
+        </p>
+      
+      </div>
+      
     </div>
 
-  </div>
+      <div class="card-rodape">
+        <span class="status ${d.status}">
+          ${
+            d.status === "aberta"
+              ? "Aberta"
+              : d.status === "andamento"
+              ? "Em andamento"
+              : "Resolvida"
+          }
+        </span>
 
-  <div class="card-rodape">
-
-    <span class="status ${d.status}">
-      ${
-        d.status === "aberta"
-          ? "Aberta"
-          : d.status === "andamento"
-          ? "Em andamento"
-          : "Resolvida"
-      }
-    </span>
-
-    <div class="acoes-card">
-
-      <a
-        href="detalhes.html?id=${d.id}"
-        class="btn-detalhes"
-      >
-        Detalhes
-      </a>
-
-      <button
-        class="btn-mapa"
-        onclick="verNoMapa(${d.id})"
-      >
-        Mapa
-      </button>
-
-    </div>
-
-  </div>
-`;
+        <div class="acoes-card">
+          <a
+            href="detalhes.html?id=${d.id}"
+            class="btn-detalhes"
+          >
+            Detalhes
+          </a>
+          <button
+            class="btn-mapa"
+            onclick="verNoMapa(${d.id})"
+          >
+            Mapa
+          </button>
+        </div>
+      </div>
+    `;
 
     listaContainer.appendChild(card);
-
   });
 }
 
@@ -487,21 +522,31 @@ async function carregarDenuncias() {
         id: d.id,
         titulo:
           d.descricaoDenuncia.substring(0, 40) + "...",
+
         endereco:
           `${d.local.logradouro}, ${d.local.cidade}`,
+
         status: statusFormatado,
+
         imagem: d.imagens[0],
+
         categoria: categoriaEncontrada
           ? categoriaEncontrada.nome
           : "default",
+
         urgencia: d.urgencia_id,
+
+        dataPublicacao: d.data,
+
+        dataResolucao: d.dataResolucao || null,
+
         coords: [
           d.coords.latitude,
           d.coords.longitude
         ]
       };
     });
-
+    
     console.log(denuncias);
     atualizarTela(denuncias);
     atualizarEstatisticas(denuncias);
@@ -540,3 +585,31 @@ function atualizarEstatisticas(lista) {
 
 /* === INICIALIZAÇÃO === */
 carregarDenuncias();
+
+function tempoDecorrido(dataString) {
+
+  const agora = new Date();
+  const data = new Date(dataString);
+
+  const diferenca =
+    Math.floor((agora - data) / 1000);
+
+  const minutos = Math.floor(diferenca / 60);
+  const horas = Math.floor(minutos / 60);
+  const dias = Math.floor(horas / 24);
+  const meses = Math.floor(dias / 30);
+
+  if (minutos < 60) {
+    return `há ${minutos} min`;
+  }
+
+  if (horas < 24) {
+    return `há ${horas} h`;
+  }
+
+  if (dias < 30) {
+    return `há ${dias} dias`;
+  }
+
+  return `há ${meses} meses`;
+}

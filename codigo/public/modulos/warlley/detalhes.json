@@ -8,6 +8,7 @@
             "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 1,
             "data": "2026-04-26",
+            "dataResolucao": "2026-05-15",
             "entidade_id": 1,
             "usuarioMorador_cpf": 12345678900,      
             "local": {
@@ -40,7 +41,8 @@
             "descricaoDenuncia": "A avenida está completamente sem iluminação...",
             "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 3,
-            "data": "26/04/2025",
+            "data": "2026-04-26",
+            "dataResolucao": "2026-05-15",
             "entidade_id": 2,
             "usuarioMorador_cpf":12345678900,
             "local": {
@@ -73,7 +75,8 @@
             "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto ao longo de todo o seu percurso...",
             "imagens": ["http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img1.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img2.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img3.jpg", "http://127.0.0.1:5501/codigo/public/modulos/detalhes/imgs/img4.jpg"],
             "urgencia_id": 2,
-            "data": "26/04/2025",
+            "data": "2026-04-26",
+            "dataResolucao": "",
             "entidade_id": 3,
             "usuarioMorador_cpf":12345678900,
             "local": {
