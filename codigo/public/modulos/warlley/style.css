@@ -152,12 +152,11 @@ main{
 }
 
 /* === CARD DENUNCIA === */
+
 .card-denuncia{
   background: white;
   border-radius: 16px;
   padding: 10px;
-  display: flex;
-  gap: 12px;
   box-shadow: 0 2px 8px rgba(0,0,0,0.08);
   cursor: pointer;
   transition: 0.2s;
@@ -167,48 +166,61 @@ main{
   transform: translateY(-2px);
 }
 
+/* TOPO */
+
+.card-topo{
+  display:flex;
+  gap:12px;
+}
+
 /* IMAGEM */
-.card-denuncia img{
-  width: 120px;
-  height: 85px;
-  object-fit: cover;
-  border-radius: 12px;
+
+.card-topo img{
+  width:120px;
+  height:85px;
+  object-fit:cover;
+  border-radius:12px;
+  flex-shrink:0;
 }
 
 /* INFORMACOES */
+
 .card-info{
-  flex: 1;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
+  flex:1;
+  min-width:0;
 }
 
 .card-info p{
-  margin: 0;
-  font-size: 11px;
-  color: #666;
+  margin:0;
+  font-size:11px;
+  color:#666;
 }
 
 .card-info h3{
-  margin: 5px 0;
-  font-size: 17px;
-  font-weight: 700;
+  margin:5px 0 0;
+  font-size:17px;
+  font-weight:700;
+  line-height:1.25;
 }
 
-/* === STATUS ===
-========================================================= */
+/* RODAPE */
+
+.card-rodape{
+  display:flex;
+  justify-content:space-between;
+  align-items:center;
+  margin-top:10px;
+}
+
+/* STATUS */
 
 .status{
-  width: fit-content;
-
-  padding: 5px 14px;
-
-  border-radius: 30px;
-
-  font-size: 11px;
-  font-weight: bold;
-
-  color: white;
+  width:fit-content;
+  padding:5px 14px;
+  border-radius:30px;
+  font-size:11px;
+  font-weight:bold;
+  color:white;
 }
 
 .aberta{
@@ -216,44 +228,39 @@ main{
 }
 
 .andamento{
-  background: #ff8a00;
+  background:#ff8a00;
 }
 
 .resolvida{
-  background: #42c59a;
+  background:#42c59a;
 }
 
-/* === ACOES CARD === */
-.card-footer-acoes{
-  display:flex;
-  align-items:center;
-  justify-content:space-between;
-  margin-top:10px;
-}
+/* ACOES */
 
 .acoes-card{
   display:flex;
   gap:8px;
-  margin-top:12px;
 }
 
 /* BOTOES */
+
 .btn-detalhes,
 .btn-mapa{
-  border: none;
-  height: 28px;
-  padding: 0 12px;
-  border-radius: 50px;
-  font-size: 11px;
-  font-weight: 700;
-  text-decoration: none;
-  color: white !important;
-  cursor: pointer;
-  display: flex;
-  align-items: center;
-  justify-content: center;
-  transition: 0.25s ease;
-  background: linear-gradient(
+  border:none;
+  height:28px;
+  padding:0 12px;
+  border-radius:50px;
+  font-size:11px;
+  font-weight:700;
+  text-decoration:none;
+  color:white !important;
+  cursor:pointer;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  transition:0.25s ease;
+
+  background:linear-gradient(
     135deg,
     #ff8a00,
     #ff5e00
@@ -262,10 +269,11 @@ main{
 
 .btn-detalhes:hover,
 .btn-mapa:hover{
-  transform: translateY(-2px);
+  transform:translateY(-2px);
   box-shadow:
     0 5px 12px rgba(255,90,0,0.25);
-  color: white !important;
+
+  color:white !important;
 }
 
 /* === ESTATISTICAS === */
@@ -519,4 +527,36 @@ footer a:hover{
 
 .urgencia-alta{
   border: 4px solid #dc3545;
+}
+
+/* Ícone do menu hambúrguer branco */
+.navbar-toggler {
+    border-color: rgba(255,255,255,0.5);
+}
+
+.navbar-toggler:focus {
+    box-shadow: none;
+}
+
+.navbar-toggler-icon {
+    filter: invert(1);
+}
+
+/* Mobile */
+@media (max-width: 991px) {
+
+    .navbar-nav {
+        gap: 10px !important;
+        margin-top: 20px;
+        text-align: center;
+    }
+
+    #busca {
+        width: 100%;
+    }
+
+    .perfil-link {
+        display: flex;
+        justify-content: center;
+    }
 }

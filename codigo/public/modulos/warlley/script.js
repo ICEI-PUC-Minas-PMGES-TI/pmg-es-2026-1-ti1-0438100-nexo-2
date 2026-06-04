@@ -344,38 +344,50 @@ function renderizarLista(lista) {
     const card = document.createElement("div");
     card.className = "card-denuncia";
     card.innerHTML = `
-      <img src="${d.imagem}">
-      <div class="card-info">
-        <p>${d.endereco}</p>
-        <h3>${d.titulo}</h3>
-        <div class="card-footer-acoes">
-          <span class="status ${d.status}">
-            ${
-              d.status === "aberta"
-              ? "Aberta"
-              : d.status === "andamento"
-              ? "Em andamento"
-              : "Resolvida"
-            }
-          </span>
-          <div class="acoes-card">
-            <!-- AQUI VAI LINK PARA DETALHES -->
-            <a
-              href="detalhes.html?id=${d.id}"
-              class="btn-detalhes"
-            >
-              Detalhes
-            </a>
-            <button
-              class="btn-mapa"
-              onclick="verNoMapa(${d.id})"
-            >
-              Mapa
-            </button>
-          </div>
-        </div>
-      </div>
-    `;
+  <div class="card-topo">
+
+    <img src="${d.imagem}">
+
+    <div class="card-info">
+      <p>${d.endereco}</p>
+
+      <h3>${d.titulo}</h3>
+    </div>
+
+  </div>
+
+  <div class="card-rodape">
+
+    <span class="status ${d.status}">
+      ${
+        d.status === "aberta"
+          ? "Aberta"
+          : d.status === "andamento"
+          ? "Em andamento"
+          : "Resolvida"
+      }
+    </span>
+
+    <div class="acoes-card">
+
+      <a
+        href="detalhes.html?id=${d.id}"
+        class="btn-detalhes"
+      >
+        Detalhes
+      </a>
+
+      <button
+        class="btn-mapa"
+        onclick="verNoMapa(${d.id})"
+      >
+        Mapa
+      </button>
+
+    </div>
+
+  </div>
+`;
 
     listaContainer.appendChild(card);
 
