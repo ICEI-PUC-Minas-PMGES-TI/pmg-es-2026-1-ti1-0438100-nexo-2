@@ -1,14 +1,33 @@
+/* === VARIÁVEIS GLOBAIS === */
+/* Dados */
 let denuncias = [];
 
-/* === MAPA === */
+/* Mapa */
 const mapa = L.map("mapa", {
   zoomControl: false
 });
 
-let marcadores = [];
+let mapaAtual = "padrao";
 let localUsuario = null;
+let marcadores = [];
 
-/* === ICONES CATEGORIAS === */
+/* Busca de endereço */
+const inputMapa = document.getElementById("mapSearch");
+const sugestoes = document.getElementById("sugestoes");
+
+/* Lista de denúncias */
+const listaContainer =
+  document.getElementById("lista-denuncias");
+
+/* Busca da sidebar */
+const inputBusca =
+  document.getElementById("busca");
+
+/* Botões de filtro */
+const botoesFiltro =
+  document.querySelectorAll(".btn-filtro");
+
+/* ÍCONES DAS CATEGORIAS  */
 const iconesCategorias = {
 
   Buraco:
@@ -29,83 +48,9 @@ const iconesCategorias = {
   default:
     "images/icons/default.png"
 
-};
+};  
 
-/* === ICONES DENUNCIAS === */
-const iconesDenuncia = {
-
-  Buraco: L.icon({
-    iconUrl: "images/icons/buraco.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  }),
-
-  "Problema de esgoto": L.icon({
-    iconUrl: "images/icons/esgoto.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  }),
-
-  "Falta de iluminação": L.icon({
-    iconUrl: "images/icons/luz.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  }),
-
-  "Falta de limpeza": L.icon({
-    iconUrl: "images/icons/limpeza.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  }),
-
-  Deslizamento: L.icon({
-    iconUrl: "images/icons/deslizamento.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  }),
-
-  default: L.icon({
-    iconUrl: "images/icons/default.png",
-    iconSize: [38, 38],
-    iconAnchor: [19, 38],
-    popupAnchor: [0, -38]
-  })
-
-};
-
-/* === LOCALIZAÇÃO === */
-navigator.geolocation.getCurrentPosition(
-  (posicao) => {
-    const latitude = posicao.coords.latitude;
-    const longitude = posicao.coords.longitude;
-
-    localUsuario = [latitude, longitude];
-
-    mapa.setView(localUsuario, 15);
-
-    L.circleMarker(localUsuario, {
-      radius: 10,
-      fillColor: "#0d6efd",
-      color: "#ffffff",
-      weight: 3,
-      opacity: 1,
-      fillOpacity: 1
-    })
-    .addTo(mapa)
-    .bindPopup("Você está aqui");
-  },
-
-  () => {
-    mapa.setView([-19.9167, -43.9345], 12);
-  }
-);
-
-/* === TIPOS DE MAPA === */
+/* === CONFIGURAÇÃO DO MAPA === */
 const mapaPadrao = L.tileLayer(
   "https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png",
   {
@@ -121,91 +66,293 @@ const mapaSatelite = L.tileLayer(
 );
 
 mapaPadrao.addTo(mapa);
-let mapaAtual = "padrao";
+
+/* === GEOLOCALIZAÇÃO === */
+navigator.geolocation.getCurrentPosition(
+
+  (posicao) => {
+
+    const latitude =
+      posicao.coords.latitude;
+
+    const longitude =
+      posicao.coords.longitude;
+
+    localUsuario = [
+      latitude,
+      longitude
+    ];
+
+    mapa.setView(
+      localUsuario,
+      15
+    );
+
+    L.circleMarker(localUsuario, {
+
+      radius: 10,
+      fillColor: "#0d6efd",
+      color: "#ffffff",
+      weight: 3,
+      opacity: 1,
+      fillOpacity: 1
+
+    })
+    .addTo(mapa)
+    .bindPopup("Você está aqui");
+
+  },
+
+  () => {
+
+    mapa.setView(
+      [-19.9167, -43.9345],
+      12
+    );
+  }
+);
 
 /* === BUSCA DE ENDEREÇO === */
-const inputMapa = document.getElementById("mapSearch");
 async function buscarEndereco(query) {
+
   if (!query) return;
 
-  const resposta = await fetch(
-    `https://nominatim.openstreetmap.org/search?format=json&q=${query}`
-  );
+  try {
 
-  const dados = await resposta.json();
-  
-  if (dados.length > 0) {
-    const lat = dados[0].lat;
-    const lon = dados[0].lon;
-    mapa.setView([lat, lon], 16);
+    const resposta = await fetch(
+      `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(query)}&countrycodes=br&addressdetails=1&limit=5`
+    );
 
-    L.marker([lat, lon])
-      .addTo(mapa)
-      .bindPopup(dados[0].display_name)
-      .openPopup();
+    const dados = await resposta.json();
 
+    if (dados.length > 0) {
+
+      const lat = parseFloat(dados[0].lat);
+      const lon = parseFloat(dados[0].lon);
+
+      mapa.setView(
+        [lat, lon],
+        16
+      );
+
+      L.marker([lat, lon])
+        .addTo(mapa)
+        .bindPopup(dados[0].display_name)
+        .openPopup();
+    }
+
+  } catch (erro) {
+
+    console.error(
+      "Erro ao buscar endereço:",
+      erro
+    );
   }
 }
 
-/* === FUNCIONALIDADE DO ENTER === */
-inputMapa.addEventListener("keydown", (e) => {
+/* AUTOCOMPLETE */
+inputMapa.addEventListener(
+  "input",
+  async () => {
 
-  if (e.key === "Enter") {
-    buscarEndereco(inputMapa.value);
+    const texto =
+      inputMapa.value.trim();
+
+    if (texto.length < 3) {
+
+      sugestoes.innerHTML = "";
+      return;
+
+    }
+
+    try {
+
+      const resposta = await fetch(
+        `https://nominatim.openstreetmap.org/search?format=json&q=${encodeURIComponent(texto)}&countrycodes=br&addressdetails=1&limit=5`
+      );
+
+      const dados =
+        await resposta.json();
+
+      sugestoes.innerHTML = "";
+
+      dados.forEach(local => {
+
+        const item =
+          document.createElement("div");
+
+        item.className =
+          "sugestao";
+
+        const endereco =
+          local.address?.road ||
+          local.address?.suburb ||
+          local.address?.city ||
+          "";
+
+        const cidade =
+          local.address?.city ||
+          local.address?.town ||
+          local.address?.village ||
+          "";
+
+        const estado =
+          local.address?.state ||
+          "";
+
+        item.textContent =
+          `${endereco} - ${cidade}/${estado}`;
+
+        item.onclick = () => {
+
+          inputMapa.value =
+            item.textContent;
+
+          mapa.setView(
+            [
+              parseFloat(local.lat),
+              parseFloat(local.lon)
+            ],
+            16
+          );
+
+          sugestoes.innerHTML = "";
+
+        };
+
+        sugestoes.appendChild(item);
+
+      });
+
+    } catch (erro) {
+
+      console.error(
+        "Erro ao carregar sugestões:",
+        erro
+      );
+
+    }
+
   }
-});
+);
 
-/* === CLIQUE NA LUPA === */
-inputMapa.addEventListener("click", (e) => {
-  const rect = inputMapa.getBoundingClientRect();
-  const clickX = e.clientX - rect.left;
+/* ENTER */
+inputMapa.addEventListener(
+  "keydown",
+  (e) => {
 
-  if (clickX > rect.width - 30) {
-    buscarEndereco(inputMapa.value);
+    if (e.key === "Enter") {
+
+      buscarEndereco(
+        inputMapa.value
+      );
+
+    }
+
   }
-});
+);
 
-/* === CONTROLES MAPA === */
+/* CLIQUE NA LUPA */
+inputMapa.addEventListener(
+  "click",
+  (e) => {
+
+    const rect =
+      inputMapa.getBoundingClientRect();
+
+    const clickX =
+      e.clientX - rect.left;
+
+    if (clickX > rect.width - 30) {
+
+      buscarEndereco(
+        inputMapa.value
+      );
+
+    }
+
+  }
+);
+
+/* FECHAR SUGESTÕES */
+document.addEventListener(
+  "click",
+  (e) => {
+
+    if (
+      !e.target.closest(".map-search")
+    ) {
+
+      sugestoes.innerHTML = "";
+
+    }
+
+  }
+);
+
+//* === CONTROLES DO MAPA === */
 /* ZOOM */
+L.control({
+  position: "bottomright"
+});
+
 L.control.zoom({
   position: "bottomright"
 }).addTo(mapa);
 
-/* BOTÃO LOCALIZAÇÃO */
+/* LOCALIZAÇÃO */
 const botaoLocalizacao = L.control({
   position: "bottomright"
 });
 
 botaoLocalizacao.onAdd = function () {
-  const div = L.DomUtil.create("div", "leaflet-bar");
+  const div = L.DomUtil.create(
+    "div",
+    "leaflet-bar"
+  );
+
   div.innerHTML = `
-    <a href="#"
+    <a
+      href="#"
+      class="map-btn"
       title="Minha localização"
-      class="map-btn">
+    >
       📍
     </a>
   `;
 
   div.onclick = function () {
+
     if (localUsuario) {
-      mapa.setView(localUsuario, 15);
+
+      mapa.setView(
+        localUsuario,
+        15
+      );
     }
   };
+
   return div;
 };
-
 botaoLocalizacao.addTo(mapa);
 
-/* BOTÃO MAPA DE CALOR */
+/* MAPA DE CALOR */
 const botaoMapaCalor = L.control({
   position: "bottomright"
 });
+
 botaoMapaCalor.onAdd = function () {
-  const div = L.DomUtil.create("div", "leaflet-bar");
+  const div = L.DomUtil.create(
+    "div",
+    "leaflet-bar"
+  );
+
   div.innerHTML = `
-    <a href="homepage-mapacalor.html"
+    <a
+      href="homepage-mapacalor.html"
+      class="map-btn"
       title="Mapa de calor"
-      class="map-btn">
+    >
       🔥
     </a>
   `;
@@ -214,116 +361,138 @@ botaoMapaCalor.onAdd = function () {
 
 botaoMapaCalor.addTo(mapa);
 
-/* BOTÃO SATÉLITE */
+/* SATÉLITE */
 const botaoSatelite = L.control({
   position: "bottomright"
 });
 
 botaoSatelite.onAdd = function () {
-  const div = L.DomUtil.create("div", "leaflet-bar");
+  const div = L.DomUtil.create(
+    "div",
+    "leaflet-bar"
+  );
+
   div.innerHTML = `
-    <a href="#"
+    <a
+      href="#"
+      class="map-btn"
       title="Alterar mapa"
-      class="map-btn">
+    >
       🛰️
     </a>
   `;
 
   div.onclick = function () {
     if (mapaAtual === "padrao") {
-      mapa.removeLayer(mapaPadrao);
-      mapaSatelite.addTo(mapa);
-      mapaAtual = "satelite";
+
+      mapa.removeLayer(
+        mapaPadrao
+      );
+
+      mapaSatelite.addTo(
+        mapa
+      );
+
+      mapaAtual =
+        "satelite";
+
     } else {
-      mapa.removeLayer(mapaSatelite);
-      mapaPadrao.addTo(mapa);
-      mapaAtual = "padrao";
+      mapa.removeLayer(
+        mapaSatelite
+      );
+
+      mapaPadrao.addTo(
+        mapa
+      );
+
+      mapaAtual =
+        "padrao";
     }
   };
   return div;
 };
-
 botaoSatelite.addTo(mapa);
+
 
 /* === MARCADORES === */
 function renderizarMarcadores(lista) {
 
+  /* REMOVE MARCADORES ANTIGOS DO MAPA */
   marcadores.forEach((m) => {
     mapa.removeLayer(m);
   });
 
   marcadores = [];
 
-  lista.forEach((d) => {
+  /* FILTRA APENAS DENÚNCIAS ATIVAS */
+  lista
+    .filter((d) => d.status !== "resolvida")
+    .forEach((d) => {
 
-    /* CLASSE URGENCIA */
-    let classeUrgencia = "urgencia-baixa";
+      /* CLASSE DE URGÊNCIA */
+      let classeUrgencia = "urgencia-baixa";
 
-    if (d.urgencia === 2) {
-      classeUrgencia = "urgencia-media";
-    }
-
-    else if (d.urgencia === 3) {
-      classeUrgencia = "urgencia-alta";
-    }
-
-    /* ICONE */
-    const iconeCategoria =
-      iconesCategorias[d.categoria]
-      || iconesCategorias.default;
-
-    /* HTML DO MARCADOR */
-    const htmlIcon = L.divIcon({
-
-      className: "",
-
-      html: `
-        <div class="
-          marker-container
-          ${classeUrgencia}
-        ">
-          <img src="${iconeCategoria}">
-        </div>
-      `,
-
-      iconSize: [44, 44],
-      iconAnchor: [22, 22]
-
-    });
-
-    /* MARCADOR */
-    const marker = L.marker(
-      d.coords,
-      {
-        icon: htmlIcon
+      if (d.urgencia === 2) {
+        classeUrgencia = "urgencia-media";
+      } 
+      
+      else if (d.urgencia === 3) {
+        classeUrgencia = "urgencia-alta";
       }
-    )
-    .addTo(mapa)
-    .bindPopup(`
-      <strong>${d.titulo}</strong><br>
-      ${d.endereco}<br>
-      Categoria: ${d.categoria}
-    `);
 
-    marcadores.push({
-      id: d.id,
-      marker
+      /* ÍCONE DA CATEGORIA */
+      const iconeCategoria =
+        iconesCategorias[d.categoria] ||
+        iconesCategorias.default;
+
+      /* MARCADOR PERSONALIZADO */
+      const htmlIcon = L.divIcon({
+        className: "",
+        html: `
+          <div class="
+            marker-container
+            ${classeUrgencia}
+          ">
+            <img src="${iconeCategoria}">
+          </div>
+        `,
+        iconSize: [44, 44],
+        iconAnchor: [22, 22]
+      });
+
+      /* CRIAÇÃO DO MARKER */
+      const marker = L.marker(d.coords, {
+        icon: htmlIcon
+      })
+      .addTo(mapa)
+      .bindPopup(`
+        <strong>${d.titulo}</strong><br>
+        ${d.endereco}<br>
+        Categoria: ${d.categoria}
+      `);
+
+      /* ARMAZENAMENTO PARA CONTROLE FUTURO */
+      marcadores.push({
+        id: d.id,
+        marker
+      });
+
     });
-
-  });
-
 }
 
-/* === VER NO MAPA === */
+/* VER DENÚNCIA NO MAPA */
 function verNoMapa(id) {
+
   const denuncia = denuncias.find(
     (d) => d.id === id
   );
 
   if (!denuncia) return;
 
+  /* CENTRALIZA NO MAPA */
   mapa.setView(denuncia.coords, 17);
 
+  /* ABRE POPUP DO MARCADOR CORRESPONDENTE */
   const marcador = marcadores.find(
     (m) => m.id === id
   );
@@ -333,32 +502,21 @@ function verNoMapa(id) {
   }
 }
 
-/* === LISTA CARDS === */
-const listaContainer = document.getElementById(
-  "lista-denuncias"
-);
-
+/* === LISTA DE DENÚNCIAS === */
 function renderizarLista(lista) {
   listaContainer.innerHTML = "";
   lista.forEach((d) => {
+
+    /* TEMPO */
     let textoTempo;
 
-    if (
-      d.status === "resolvida" &&
-      d.dataResolucao
-    ) {
-      textoTempo =
-        `Resolvida ${tempoDecorrido(
-          d.dataResolucao
-        )}`;
-
+    if (d.status === "resolvida" && d.dataResolucao) {
+      textoTempo = `Resolvida ${tempoDecorrido(d.dataResolucao)}`;
     } else {
-      textoTempo =
-        `Publicada ${tempoDecorrido(
-          d.dataPublicacao
-        )}`;
+      textoTempo = `Publicada ${tempoDecorrido(d.dataPublicacao)}`;
     }
 
+    /* URGÊNCIA TEXTO */
     let textoUrgencia = "Baixa";
     let classeUrgencia = "urgencia-texto-baixa";
 
@@ -372,32 +530,29 @@ function renderizarLista(lista) {
       classeUrgencia = "urgencia-texto-alta";
     }
 
+    /* CARD */
     const card = document.createElement("div");
     card.className = "card-denuncia";
     card.innerHTML = `
       <div class="card-topo">
+        <img src="${d.imagem}">
+        <div class="card-info">
 
-      <img src="${d.imagem}">
-      
-      <div class="card-info">
-      
-        <p>${d.endereco}</p>
-      
-        <span class="urgencia-texto ${classeUrgencia}">
-          Urgência ${textoUrgencia}
-        </span>
-      
-        <h3>${d.titulo}</h3>
-      
-        <p class="tempo-denuncia">
-          ${textoTempo}
-        </p>
-      
+          <p>${d.endereco}</p>
+
+          <span class="urgencia-texto ${classeUrgencia}">
+            Urgência ${textoUrgencia}
+          </span>
+
+          <h3>${d.titulo}</h3>
+
+          <p class="tempo-denuncia">
+            ${textoTempo}
+          </p>
+        </div>
       </div>
-      
-    </div>
-
       <div class="card-rodape">
+
         <span class="status ${d.status}">
           ${
             d.status === "aberta"
@@ -415,12 +570,19 @@ function renderizarLista(lista) {
           >
             Detalhes
           </a>
-          <button
-            class="btn-mapa"
-            onclick="verNoMapa(${d.id})"
-          >
-            Mapa
-          </button>
+
+          ${
+            d.status !== "resolvida"
+              ? `<button
+                  class="btn-mapa"
+                  onclick="verNoMapa(${d.id})"
+                >
+                  Mapa
+                </button>`
+              : `<button class="btn-mapa desativado" disabled>
+                  Concluída
+                </button>`
+          }
         </div>
       </div>
     `;
@@ -428,163 +590,6 @@ function renderizarLista(lista) {
     listaContainer.appendChild(card);
   });
 }
-
-/* === FILTROS === */
-const botoesFiltro = document.querySelectorAll(
-  ".btn-filtro"
-);
-
-botoesFiltro.forEach((btn) => {
-  btn.addEventListener("click", () => {
-
-    /* REMOVE ATIVO */
-    botoesFiltro.forEach(b => {
-    b.classList.remove(
-    "ativo",
-    "bg-gradient-custom"
-    );
-    });
-
-    btn.classList.add(
-    "ativo",
-    "bg-gradient-custom"
-    );
-
-    /* ADICIONA ATIVO */
-    btn.classList.add("ativo");
-    const filtro = btn.dataset.filtro;
-    let filtradas = denuncias;
-
-    /* ABERTAS */
-    if (filtro === "abertas") {
-      filtradas = denuncias.filter(
-        (d) => d.status === "aberta"
-      );
-    }
-
-    /* OUTROS STATUS */
-    else if (filtro !== "todas") {
-      filtradas = denuncias.filter(
-        (d) => d.status === filtro
-      );
-    }
-    atualizarTela(filtradas);
-  });
-});
-
-/* === BUSCA === */
-const inputBusca = document.getElementById("busca");
-inputBusca.addEventListener("input", () => {
-  const valor = inputBusca.value.toLowerCase();
-  const filtradas = denuncias.filter((d) =>
-    d.titulo.toLowerCase().includes(valor) ||
-    d.endereco.toLowerCase().includes(valor)
-  );
-  atualizarTela(filtradas);
-});
-
-/* === ATUALIZAR TELA === */
-function atualizarTela(lista) {
-  renderizarLista(lista);
-  renderizarMarcadores(lista);
-}
-
-/* === CARREGAR JSON === */
-async function carregarDenuncias() {
-  try {
-    const resposta = await fetch("detalhes.json");
-    const dados = await resposta.json();
-    denuncias = dados.denuncias.map(d => {
-
-      /* STATUS */
-      const statusEncontrado = dados.status.find(
-        s => s.id === d.status_id
-      );
-
-      let statusFormatado = "andamento";
-      if (statusEncontrado) {
-        if (statusEncontrado.status === "Em aberto") {
-          statusFormatado = "aberta";
-        }
-        else if (
-          statusEncontrado.status === "Concluída"
-        ) {
-          statusFormatado = "resolvida";
-        }
-      }
-
-      /* CATEGORIA */
-      const categoriaEncontrada = dados.categorias.find(
-      c => c.id === d.categoria_id
-      );
-
-      return {
-        id: d.id,
-        titulo:
-          d.descricaoDenuncia.substring(0, 40) + "...",
-
-        endereco:
-          `${d.local.logradouro}, ${d.local.cidade}`,
-
-        status: statusFormatado,
-
-        imagem: d.imagens[0],
-
-        categoria: categoriaEncontrada
-          ? categoriaEncontrada.nome
-          : "default",
-
-        urgencia: d.urgencia_id,
-
-        dataPublicacao: d.data,
-
-        dataResolucao: d.dataResolucao || null,
-
-        coords: [
-          d.coords.latitude,
-          d.coords.longitude
-        ]
-      };
-    });
-    
-    console.log(denuncias);
-    atualizarTela(denuncias);
-    atualizarEstatisticas(denuncias);
-  }
-
-  catch (erro) {
-    console.error(
-      "Erro ao carregar denúncias:",
-      erro
-    );
-  }
-
-}
-
-/* === ESTATÍSTICAS === */
-function atualizarEstatisticas(lista) {
-  const abertas = lista.filter(
-    d => d.status === "aberta"
-  ).length;
-  const andamento = lista.filter(
-    d => d.status === "andamento"
-  ).length;
-  const resolvidas = lista.filter(
-    d => d.status === "resolvida"
-  ).length;
-  const total = lista.length;
-  document.getElementById("estat-realizadas").textContent =
-    total;
-  document.getElementById("estat-andamento").textContent =
-    andamento;
-  document.getElementById("estat-resolvidas").textContent =
-    resolvidas;
-  document.getElementById("estat-usuarios").textContent =
-    "2000";
-}
-
-/* === INICIALIZAÇÃO === */
-carregarDenuncias();
 
 function tempoDecorrido(dataString) {
 
@@ -613,3 +618,161 @@ function tempoDecorrido(dataString) {
 
   return `há ${meses} meses`;
 }
+
+//* === FILTROS === */
+function atualizarTela(lista) {
+  renderizarLista(lista);
+  renderizarMarcadores(lista);
+}
+
+botoesFiltro.forEach((btn) => {
+
+  btn.addEventListener("click", () => {
+
+    /* REMOVE ESTADO ATIVO */
+    botoesFiltro.forEach(b => {
+      b.classList.remove("ativo", "bg-gradient-custom");
+    });
+
+    /* ATIVA BOTÃO CLICADO */
+    btn.classList.add("ativo", "bg-gradient-custom");
+
+    const filtro = btn.dataset.filtro;
+    let filtradas = denuncias;
+
+    /* FILTRO: ABERTAS */
+    if (filtro === "abertas") {
+      filtradas = denuncias.filter(
+        (d) => d.status === "aberta"
+      );
+    }
+
+    /* FILTRO: OUTROS STATUS */
+    else if (filtro !== "todas") {
+      filtradas = denuncias.filter(
+        (d) => d.status === filtro
+      );
+    }
+
+    atualizarTela(filtradas);
+  });
+
+});
+
+inputBusca.addEventListener("input", () => {
+
+  const valor = inputBusca.value.toLowerCase();
+
+  const filtradas = denuncias.filter((d) =>
+    d.titulo.toLowerCase().includes(valor) ||
+    d.endereco.toLowerCase().includes(valor)
+  );
+
+  atualizarTela(filtradas);
+});
+
+/* === BUSCA DE DENÚNCIAS === */
+
+/* === ESTATÍSTICAS === */
+function atualizarEstatisticas(lista) {
+
+  const abertas = lista.filter(
+    d => d.status === "aberta"
+  ).length;
+
+  const andamento = lista.filter(
+    d => d.status === "andamento"
+  ).length;
+
+  const resolvidas = lista.filter(
+    d => d.status === "resolvida"
+  ).length;
+
+  const total = lista.length;
+
+  document.getElementById("estat-realizadas").textContent =
+    total;
+
+  document.getElementById("estat-andamento").textContent =
+    andamento;
+
+  document.getElementById("estat-resolvidas").textContent =
+    resolvidas;
+
+  document.getElementById("estat-usuarios").textContent =
+    "2000";
+}
+
+/* === CARREGAMENTO DOS DADOS === */
+async function carregarDenuncias() {
+  try {
+    const resposta = await fetch("detalhes.json");
+    const dados = await resposta.json();
+    denuncias = dados.denuncias.map(d => {
+
+      /* STATUS */
+      const statusEncontrado = dados.status.find(
+        s => s.id === d.status_id
+      );
+
+      let statusFormatado = "andamento";
+      if (statusEncontrado) {
+        if (statusEncontrado.status === "Em aberto") {
+          statusFormatado = "aberta";
+        } 
+        else if (statusEncontrado.status === "Concluída") {
+          statusFormatado = "resolvida";
+        }
+      }
+
+      /* CATEGORIA */
+      const categoriaEncontrada = dados.categorias.find(
+        c => c.id === d.categoria_id
+      );
+
+      /* OBJETO FINAL DA DENÚNCIA */
+      return {
+        id: d.id,
+        titulo:
+          d.descricaoDenuncia.substring(0, 40) + "...",
+        endereco:
+          `${d.local.logradouro}, ${d.local.cidade}`,
+        status: statusFormatado,
+        imagem: d.imagens[0],
+        categoria: categoriaEncontrada
+          ? categoriaEncontrada.nome
+          : "default",
+        urgencia: d.urgencia_id,
+        dataPublicacao: d.data,
+        dataResolucao: d.dataResolucao || null,
+        coords: [
+          d.coords.latitude,
+          d.coords.longitude
+        ]
+      };
+    });
+    console.log(denuncias);
+
+    /* PRIMEIRA RENDERIZAÇÃO */
+    atualizarTela(denuncias);
+
+    /* ESTATÍSTICAS */
+    atualizarEstatisticas(denuncias);
+
+  } catch (erro) {
+    console.error(
+      "Erro ao carregar denúncias:",
+      erro
+    );
+  }
+}
+
+//* === INICIALIZAÇÃO === */
+function inicializarSistema() {
+
+  /* CARREGA DADOS PRINCIPAIS */
+  carregarDenuncias();
+
+}
+
+carregarDenuncias();
