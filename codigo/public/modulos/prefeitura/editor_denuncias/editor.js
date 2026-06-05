@@ -14,6 +14,14 @@ fetch(`http://localhost:3000/denuncias/${id}`,{
     .then(denuncia => {
         preencherModal(denuncia);
     })
+const flatpickrPrazo = flatpickr('#prazo', {
+    locale: 'pt',
+    dateFormat: 'Y-m-d',
+    altInput: true,
+    altFormat: 'd/m/Y',
+    minDate: 'today',
+    allowInput: false
+});
 
 function preencherModal(denuncia){
     document.getElementById('nota').value = denuncia.notaOrgao;
@@ -23,7 +31,7 @@ function preencherModal(denuncia){
     });
     document.getElementById('valor').value = custoFormatado;
     document.getElementById('descricao-custo').value = denuncia.descricaoCusto;
-    document.getElementById('prazo').value = denuncia.prazo;
+    flatpickrPrazo.setDate(denuncia.prazo);
     const lista = document.querySelector('.lista-checkpoints');
     lista.innerHTML = '';
 
