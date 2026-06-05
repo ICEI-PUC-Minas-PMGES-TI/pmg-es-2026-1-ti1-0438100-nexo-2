@@ -1,46 +1,122 @@
 {
-    "denuncias":[
+  "denuncias": [
     {
-        "id": 1,
-        "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
-        "checkpoints": [
-            {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Planejamento e previsões", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo" : "fixo"}
-        ],
-            "custo": "1250.97",
-            "descricaoCusto": "Valor referente aos materiais necessários para obra.",
-            "prazo": "2025-07-26"
+      "id": "1",
+      "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
+      "checkpoints": [
+        {
+          "nome": "Denúncia aceita",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Equipe enviada ao local",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Planejamento e previsões",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Manutenção em andamento",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Obra finalizada",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        }
+      ],
+      "custo": "1250.97",
+      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+      "prazo": "2025-07-26"
     },
     {
-        "id": 2,
-        "notaOrgao": "xxxxxxx.",
-        "checkpoints": [
-            {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Planejamento e previsões", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo" : "fixo"}
-        ],
-        "custo": "12964.92",
-        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
-        "prazo": "2026-02-28"
+      "id": "2",
+      "notaOrgao": "xxxxxxx.",
+      "checkpoints": [
+        {
+          "nome": "Denúncia aceita",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Equipe enviada ao local",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Planejamento e previsões",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Manutenção em andamento",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Obra finalizada",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        }
+      ],
+      "custo": "12964.92",
+      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+      "prazo": "2026-02-28"
     },
     {
-        "id": 3,
-        "notaOrgao": "xxxxxxxxxx.",
-        "checkpoints": [
-            {"nome": "Denúncia aceita", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Equipe enviada ao local", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Planejamento e previsões", "descricao": "", "concluido": true, "tipo" : "fixo"},
-            {"nome": "Manutenção em andamento", "descricao": "", "concluido": false, "tipo" : "fixo"},
-            {"nome": "Obra finalizada", "descricao": "", "concluido": false, "tipo" : "fixo"}
-        ],
-        "custo": "8967.54",
-        "descricaoCusto": "Valor referente aos materiais necessários para obra.",
-        "prazo":"2026-12-31"
+      "id": "3",
+      "notaOrgao": "xxxxxxxxxx.",
+      "checkpoints": [
+        {
+          "nome": "Denúncia aceita",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Equipe enviada ao local",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Planejamento e previsões",
+          "descricao": "",
+          "concluido": true,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Manutenção em andamento",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        },
+        {
+          "nome": "Obra finalizada",
+          "descricao": "",
+          "concluido": false,
+          "tipo": "fixo"
+        }
+      ],
+      "custo": "8967.54",
+      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
+      "prazo": "2026-12-31"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

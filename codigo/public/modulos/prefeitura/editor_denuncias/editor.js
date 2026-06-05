@@ -24,15 +24,38 @@ function preencherModal(denuncia){
     lista.innerHTML = '';
 
     denuncia.checkpoints.forEach((checkpoint, indice) =>{
-        const item = document.createElement('li');
-        item.innerHTML = `
-            <input type="checkbox" id="checkpoint-${indice}" ${checkpoint.concluido ? 'checked': ''}>
-            <label for="checkpoint-${indice}">${checkpoint.nome}</label>
-            `;
-            lista.appendChild(item)
+        lista.appendChild(criarItemCheckpoint(checkpoint, indice));
     });
 }
+function criarItemCheckpoint(checkpoint, indice){
+    const item = document.createElement('li');
+    item.innerHTML= `
+        <input type="checkbox" id="checkpoint-${indice}" ${checkpoint.concluido ? 'checked' : ''}>
+        <label for="checkpoint-${indice}">${checkpoint.nome}</label>
+    `;
+    return item;
+}
 
+function popularSelectPosicao(){
+    const select = document.getElementById('checkpoint-posicao');
+    select.innerHTML = '';
+
+    const opcaoInicio = document.createElement('option');
+    opcaoInicio.value = '-1';
+    opcaoInicio.textContent = 'No início da lista';
+    select.appendChild(opcaoInicio);
+
+    const itens = document.querySelectorAll('.lista-checkpoints li');
+    itens.forEach((item, indice) => {
+        const label = item.querySelector('label').textContent;
+        const opcao = document.createElement('option');
+        opcao.value = indice;
+        opcao.textContent = `Após: ${label}`;
+        select.appendChild(opcao);
+    });
+
+    select.value = itens.length - 1;
+}
 document.querySelector('.btn-salvar').addEventListener('click', function(){
     const botao = this;
     botao.disabled = true;
@@ -58,7 +81,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
         return;
     }
     const checkpoints = [];
-    document.querySelectorAll('.lista-checkpoints li').forEach((item,indice) => {
+    document.querySelectorAll('.lista-checkpoints li').forEach((item) => {
         const input = item.querySelector('input[type="checkbox"]');
         const label = item.querySelector('label');
         checkpoints.push({
@@ -79,18 +102,18 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(dadosAtualizados)
     })
-    .then(response => response.json())
-    .then(() => {
-        alert('Denúncia atualizada com sucesso!');
-    })
-    .finally(() =>{
-        botao.disabled = false;
-    });
+        .then(response => response.json())
+        .then(() => {
+            alert('Denúncia atualizada com sucesso!');
+        })
+        .finally(() =>{
+            botao.disabled = false;
+        });
 });
 
-document.querySelector('.btn-checkpoint').addEventListener('click', function(){
-    const modal = document.getElementById('modal-checkpoint');
-    modal.style.display = 'flex';
+document.querySelector('main .btn-checkpoint').addEventListener('click', function(){
+    popularSelectPosicao();
+    document.getElementById('modal-checkpoint').style.display = 'flex';
 });
 
 document.getElementById('btn-cancelar').addEventListener('click', function(){
@@ -112,12 +135,16 @@ document.getElementById('btn-confirmar-checkpoint').addEventListener('click', fu
         return;
     }
 
-    const novoCheckpoint = {nome, descricao, concluido: false};
+    const posicaoSelecionada = parseInt(document.getElementById('checkpoint-posicao').value);
+    const novoCheckpoint = {nome, descricao, concluido: false, tipo : 'customizado'};
 
     fetch(`http://localhost:3000/denuncias/${id}`)
         .then(response => response.json())
         .then(denuncia => {
-            const checkpointsAtualizados = [...denuncia.checkpoints, novoCheckpoint];
+            const checkpointsAtualizados = [...denuncia.checkpoints];
+
+            const indiceInsercao = posicaoSelecionada + 1;
+            checkpointsAtualizados.splice(indiceInsercao, 0, novoCheckpoint);
 
             return fetch(`http://localhost:3000/denuncias/${id}`, {
                 method: 'PATCH',
@@ -126,19 +153,18 @@ document.getElementById('btn-confirmar-checkpoint').addEventListener('click', fu
             });
         })
         .then(() => {
-            adicionarCheckpointNaLista(novoCheckpoint);
+            adicionarCheckpointNaLista(novoCheckpoint, posicaoSelecionada);
             fecharModalCheckpoint();
         });
 });
 
-function adicionarCheckpointNaLista(checkpoint){
+function adicionarCheckpointNaLista(checkpoint, posicaoSelecionada){
     const lista = document.querySelector('.lista-checkpoints');
-    const novoItem = document.createElement('li');
-    const indice = lista.children.length + 1;
-
-    novoItem.innerHTML = `
-        <input type="checkbox" id="checkpoint-${indice}">
-        <label for="checkpoint-${indice}">${checkpoint.nome}</label>
-    `;
-    lista.appendChild(novoItem);
+    const novoItem = criarItemCheckpoint(checkpoint, lista.children.length);
+    if (posicaoSelecionada === -1){
+        lista.insertBefore(novoItem, lista.firstChild);
+    } else {
+        const itemReferencia = lista.children[posicaoSelecionada];
+        itemReferencia.insertAdjacentElement('afterend', novoItem);
+    }
 }
