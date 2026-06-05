@@ -7,35 +7,30 @@
         {
           "nome": "Denúncia aceita",
           "descricao": "",
-          "concluido": true,
-          "tipo": "fixo"
+          "concluido": true
         },
         {
           "nome": "Equipe enviada ao local",
           "descricao": "",
-          "concluido": true,
-          "tipo": "fixo"
+          "concluido": true
         },
         {
           "nome": "Planejamento e previsões",
           "descricao": "",
-          "concluido": true,
-          "tipo": "fixo"
+          "concluido": true
         },
         {
           "nome": "Manutenção em andamento",
           "descricao": "",
-          "concluido": false,
-          "tipo": "fixo"
+          "concluido": false
         },
         {
           "nome": "Obra finalizada",
           "descricao": "",
-          "concluido": false,
-          "tipo": "fixo"
+          "concluido": false
         }
       ],
-      "custo": "2000",
+      "custo": 12000,
       "descricaoCusto": "Valor referente aos materiais necessários para obra.",
       "prazo": "2025-05-06"
     },

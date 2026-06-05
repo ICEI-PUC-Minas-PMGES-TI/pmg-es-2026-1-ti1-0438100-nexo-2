@@ -17,7 +17,11 @@ fetch(`http://localhost:3000/denuncias/${id}`,{
 
 function preencherModal(denuncia){
     document.getElementById('nota').value = denuncia.notaOrgao;
-    document.getElementById('valor').value = denuncia.custo;
+    const custoFormatado = parseFloat(denuncia.custo).toLocaleString('pt-BR', {
+        style: 'currency',
+        currency: 'BRL'
+    });
+    document.getElementById('valor').value = custoFormatado;
     document.getElementById('descricao-custo').value = denuncia.descricaoCusto;
     document.getElementById('prazo').value = denuncia.prazo;
     const lista = document.querySelector('.lista-checkpoints');
@@ -56,20 +60,36 @@ function popularSelectPosicao(){
 
     select.value = itens.length - 1;
 }
+
+document.getElementById('valor').addEventListener('input', (e) =>{
+    let valor = e.target.value.replace(/\D/g, '');
+    if (valor === ''){
+        valor = 0;
+    }
+    valor = (parseInt(valor) / 100);
+    valor = valor.toLocaleString('pt-BR', {
+        style : 'currency',
+        currency: 'BRL'
+    });
+    e.target.value = valor;
+});
+
 document.querySelector('.btn-salvar').addEventListener('click', function(){
     const botao = this;
     botao.disabled = true;
 
     const nota = document.getElementById('nota').value.trim();
     const custo = document.getElementById('valor').value;
+    const custoLimpo = parseFloat(custo.replace(/[R$\u00a0\s.]/g, '').replace(',', '.'));
     const prazo = document.getElementById('prazo').value;
+
     if (!nota){
         alert('Por favor, preencha o campo de nota.');
         botao.disabled = false;
         return;
     }
 
-    if(!custo || custo <= 0){
+    if(!custo || custoLimpo <= 0 || isNaN(custoLimpo)){
         alert('Por favor, insira um custo válido.');
         botao.disabled = false;
         return;
@@ -93,7 +113,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     const dadosAtualizados = {
         notaOrgao: document.getElementById('nota').value,
         checkpoints: checkpoints,
-        custo: document.getElementById('valor').value,
+        custo: custoLimpo,
         descricaoCusto: document.getElementById('descricao-custo').value,
         prazo: document.getElementById('prazo').value
     };
