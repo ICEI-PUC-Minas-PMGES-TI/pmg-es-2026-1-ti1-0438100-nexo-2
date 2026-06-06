@@ -10,7 +10,13 @@ fetch(`http://localhost:3000/denuncias/${id}`,{
         "Accept": "application/json"
     }
 })
-    .then(response => response.json())
+    .then(response => {
+        if (!response.ok){
+            document.querySelector('main').innerHTML = '<p>Denúncia não encontrada. Verifique o link e tente novamente.</p>';
+            throw new Error('Denúncia não encontrada');
+        }
+        return response.json();
+    })
     .then(denuncia => {
         preencherModal(denuncia);
     })
