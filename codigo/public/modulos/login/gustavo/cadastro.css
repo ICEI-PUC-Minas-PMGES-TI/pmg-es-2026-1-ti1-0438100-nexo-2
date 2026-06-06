@@ -234,3 +234,137 @@ a {
     background-color: #bd2130;
     transform: translateY(-1px);
 }
+/* ==========================================================================
+   1. AJUSTES PARA NOTEBOOKS E TELAS MÉDIAS (Até 1200px)
+   ========================================================================== */
+@media (max-width: 1200px) {
+    .conteudo-site {
+        max-width: 95% !important;
+        margin: 20px auto !important;
+        gap: 20px !important;
+    }
+    
+    .boas-vindas, .main-content {
+        padding: 30px !important;
+    }
+
+    .trocar-tipo {
+        display: flex !important;
+        flex-direction: row !important;
+        justify-content: center !important;
+        gap: 10px !important;
+        margin-bottom: 25px !important;
+    }
+
+    .trocar-tipo p {
+        margin: 0 !important;
+    }
+
+    .trocar-tipo a {
+        display: inline-block !important;
+        padding: 10px 16px !important;
+        background: #f8f9fa !important;
+        color: #212529 !important;
+        text-decoration: none !important;
+        border: 1px solid #dee2e6 !important;
+        border-radius: 6px !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+    }
+}
+
+/* ==========================================================================
+   2. AJUSTES PARA CELULARES (EM PÉ OU DEITADO - Até 932px)
+   ========================================================================== */
+@media (max-width: 932px) {
+    .conteudo-site {
+        display: flex !important;
+        flex-direction: column !important;
+        width: 100% !important;
+        max-width: 100% !important;
+        margin: 0 !important;
+        padding: 0 !important;
+        gap: 0 !important;
+    }
+
+    .boas-vindas {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 30px 20px !important;
+        text-align: center !important;
+        border-radius: 0 !important;
+    }
+
+    .boas-vindas br {
+        display: none !important;
+    }
+
+    .btn-entrar {
+        display: inline-block !important;
+        margin-top: 15px !important;
+        min-height: 44px !important;
+    }
+
+    .main-content {
+        width: 100% !important;
+        max-width: 100% !important;
+        padding: 20px 15px !important;
+        border-radius: 0 !important;
+        box-shadow: none !important;
+    }
+
+    .trocar-tipo {
+        position: static !important;
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 10px !important;
+        margin: 0 0 25px 0 !important;
+        width: 100% !important;
+    }
+
+    .trocar-tipo p {
+        margin: 0 !important;
+        width: 100% !important;
+    }
+
+    .trocar-tipo a {
+        display: flex !important;
+        align-items: center !important;
+        justify-content: center !important;
+        min-height: 46px !important;
+        width: 100% !important;
+        box-sizing: border-box !important;
+        background: #f8f9fa !important;
+        color: #212529 !important;
+        border: 1px solid #ced4da !important;
+        text-decoration: none !important;
+        border-radius: 8px !important;
+        font-weight: 600 !important;
+        font-size: 0.9rem !important;
+        padding: 10px !important;
+    }
+
+    #formCadastro {
+        display: flex !important;
+        flex-direction: column !important;
+        gap: 15px !important;
+        width: 100% !important;
+    }
+
+    #formCadastro div {
+        width: 100% !important;
+    }
+
+    #formCadastro input {
+        width: 100% !important;
+        max-width: 100% !important;
+        box-sizing: border-box !important;
+        min-height: 44px !important;
+    }
+
+    .tabela-container {
+        width: 100% !important;
+        overflow-x: auto !important;
+        margin-top: 15px !important;
+    }
+}
