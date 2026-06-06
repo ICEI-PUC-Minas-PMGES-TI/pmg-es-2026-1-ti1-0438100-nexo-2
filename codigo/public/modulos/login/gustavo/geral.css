@@ -39,6 +39,7 @@ body{
     width: 500px;
 }
 
+/* --- PADRONIZAÇÃO DE TÍTULOS E TEXTOS GLOBAIS --- */
 h1{
     font-size: 2.8rem;
 }
@@ -53,15 +54,22 @@ h3{
 
 h4{
     font-size: 1.4rem;
-
 }
 
-ul{
-    list-style-type: none;
+h5{
+    font-size: 1.2rem;
+}
+
+h6{
+    font-size: 1.0rem;
 }
 
 p{
     font-size: 1.2rem;
+}
+
+ul{
+    list-style-type: none;
 }
 
 ul>li{
@@ -93,8 +101,8 @@ button:hover{
     max-height: 250px;
     max-width: 300px;
     object-fit: cover;
-
 }
+
 /* ---------- EXCLUSIVO TELAS DE PERFIL (CIDADÃO, EMPRESA E PREFEITURA) ---------- */
 
 /* Limpeza de transições para os elementos de perfil */
@@ -160,11 +168,6 @@ button:hover{
 .main-container .btn-nova-denuncia-zella:hover {
     transform: translateY(-2px);
     opacity: 0.95;
-}
-
-/* Título e Abas de Filtros */
-.main-container .title-historico-zella {
-    font-size: 1.65rem;
 }
 
 .main-container .filter-group-zella .btn-filter-zella {
@@ -249,8 +252,9 @@ button:hover{
     background-color: #00be83;
 }
 
+/* Título interno da Obra (Herdando h5 padrão global) */
 .main-container .card-title-zella {
-    font-size: 0.95rem;
+    /* font-size removido para herdar h5 padrão */
     line-height: 1.3;
 }
 
@@ -305,9 +309,9 @@ button:hover{
     background-color: #ffffff;
 }
 
-/* Título Interno da Seção de Avaliações/Feedback */
+/* Título Interno da Seção de Avaliações/Feedback (Herdando h3 padrão global) */
 .main-container .title-secao-zella {
-    font-size: 1.4rem;
+    /* font-size removido para herdar h3 padrão */
     font-weight: 700;
     letter-spacing: -0.01em;
 }
