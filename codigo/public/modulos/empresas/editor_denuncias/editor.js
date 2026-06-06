@@ -22,6 +22,7 @@ const flatpickrPrazo = flatpickr('#prazo', {
     minDate: 'today',
     allowInput: false
 });
+
 function preencherModal(denuncia){
     document.getElementById('nota').value = denuncia.notaOrgao;
     const custoFormatado = parseFloat(denuncia.custo).toLocaleString('pt-BR', {
@@ -89,7 +90,6 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     const custo = document.getElementById('valor').value;
     const custoLimpo = parseFloat(custo.replace(/[R$\u00a0\s.]/g, '').replace(',', '.'));
     const prazo = document.getElementById('prazo').value;
-
     if (!nota){
         alert('Por favor, preencha o campo de nota.');
         botao.disabled = false;
