@@ -30,6 +30,10 @@
                         <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required>
                     </div>
                     <div>
+                        <label for="nomeExibicao">Nome de Exibição (Como os outros te verão):</label> <br>
+                        <input type="text" id="nomeExibicao" name="nomeExibicao" placeholder="Ex: JoãoSilva99" required>
+                    </div>
+                    <div>
                         <label for="email">Email:</label> <br>
                         <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
                     </div>
@@ -45,7 +49,7 @@
                         <label for="confirmarSenha">Confirme sua senha:</label> <br>
                         <input type="password" id="confirmarSenha" name="confirmeSenha" placeholder="Confirme sua senha" required>
                     </div>
-                    <button id="cadastroUsuario">Cadastrar</button>
+                    <button type="submit">Cadastrar</button>
                 </form>
             </div>
 
@@ -61,7 +65,7 @@
                             </tr>
                         </thead>
                         <tbody id="listaContas">
-                            </tbody>
+                        </tbody>
                     </table>
                 </div>
                 <button onclick="restaurarPadrao()" style="margin-top: 20px; background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">

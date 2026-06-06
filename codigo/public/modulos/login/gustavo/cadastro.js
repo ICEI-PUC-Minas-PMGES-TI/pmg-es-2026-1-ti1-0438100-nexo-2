@@ -3,14 +3,15 @@ let tipoCadastro = 'morador';
 
 const campoIdEdicao = document.getElementById('idEdicao');
 const campoNome = document.getElementById('nome');
+const campoNomeExibicao = document.getElementById('nomeExibicao'); 
 const campoEmail = document.getElementById('email');
-const campoIdentificador = document.getElementById('cpf') || document.getElementById('identificador');
+const campoIdentificador = document.getElementById('identificador') || document.getElementById('cpf');
+const campoCpfResponsavel = document.getElementById('cpfResponsavel'); 
 const camposSenha = document.querySelectorAll('input[type="password"]');
-const btnCadastro = document.getElementById('cadastroUsuario');
+const formCadastro = document.getElementById('formCadastro');
 const tituloFormulario = document.getElementById('tituloFormulario');
 const containerLista = document.getElementById('listaContas');
 
-// Descobrir qual página o usuário está acessando
 function definirTipoCadastro() {
     const url = window.location.pathname;
     if (url.includes('cadastroEmpresa')) {
@@ -22,7 +23,6 @@ function definirTipoCadastro() {
     }
 }
 
-// Pegar as chaves certas do banco para cada tipo de conta
 function obterChaves() {
     const chaves = {
         morador: { storage: 'banco_moradores_local', json: 'usuarioMorador', campoId: 'cpf', campoNome: 'nome_completo' },
@@ -32,7 +32,6 @@ function obterChaves() {
     return chaves[tipoCadastro];
 }
 
-// Carregar os dados iniciais do sistema
 async function carregarBanco() {
     definirTipoCadastro();
     const chaves = obterChaves();
@@ -56,13 +55,16 @@ async function carregarBanco() {
     }
 }
 
-// Salvar as alterações atuais no navegador
 function salvarDadosLocal() {
     const chaves = obterChaves();
     localStorage.setItem(chaves.storage, JSON.stringify(db));
 }
 
-// Atualizar a tabela de contas na tela
+function normalizarId(id) {
+    if (!id) return '';
+    return tipoCadastro === 'prefeitura' ? String(id).trim() : String(id).replace(/\D/g, '');
+}
+
 function renderizarLista() {
     if (!containerLista) return;
     containerLista.innerHTML = '';
@@ -71,36 +73,42 @@ function renderizarLista() {
     if (!db[chaves.json]) db[chaves.json] = [];
 
     db[chaves.json].forEach(usuario => {
-        const idVisual = usuario[chaves.campoId] || usuario.cpf || usuario.cnpj || usuario.identificador;
-        const nomeVisual = usuario[chaves.campoNome] || usuario.nome_usuario || usuario.nome;
+        const idOriginal = usuario[chaves.campoId] || usuario.cpf || usuario.cnpj || usuario.identificador;
+        const nomeVisual = usuario.nome_exibicao || usuario[chaves.campoNome] || usuario.nome;
         
         const line = document.createElement('tr');
         line.innerHTML = `
             <td>${nomeVisual}</td>
-            <td>${idVisual}</td>
+            <td>${idOriginal}</td>
             <td>
-                <button class="btn-acao-editar" onclick="prepararEdicao('${idVisual}')">Editar</button>
-                <button class="btn-acao-excluir" onclick="deletarConta('${idVisual}')">Excluir</button>
+                <button class="btn-acao-editar me-1" onclick="prepararEdicao('${idOriginal}')">Editar</button>
+                <button class="btn-acao-excluir" onclick="deletarConta('${idOriginal}')">Excluir</button>
             </td>
         `;
         containerLista.appendChild(line);
     });
 }
 
-// Processar o clique no botão de cadastrar ou salvar alterações
-if (btnCadastro) {
-    btnCadastro.addEventListener('click', function(event) {
+if (formCadastro) {
+    formCadastro.addEventListener('submit', function(event) {
         event.preventDefault();
 
         const chaves = obterChaves();
         const nome = campoNome.value.trim();
+        const nomeExibicao = campoNomeExibicao.value.trim();
         const email = campoEmail.value.trim();
-        const idDigitado = tipoCadastro === 'prefeitura' ? campoIdentificador.value.trim() : campoIdentificador.value.replace(/\D/g, '');
+        const idDigitado = normalizarId(campoIdentificador.value);
+        const cpfResponsavelDigitado = campoCpfResponsavel ? campoCpfResponsavel.value.replace(/\D/g, '') : '';
         const senha = camposSenha[0].value;
         const confirmaSenha = camposSenha[1].value;
 
-        if (!nome || nome === "" || !idDigitado || idDigitado === "" || !senha || senha === "") {
+        if (!nome || !nomeExibicao || !idDigitado || !senha) {
             alert("Preencha todos os campos corretamente. Dados em branco não são permitidos.");
+            return;
+        }
+
+        if (campoCpfResponsavel && !cpfResponsavelDigitado) {
+            alert("O preenchimento do CPF de acesso é obrigatório.");
             return;
         }
 
@@ -112,13 +120,20 @@ if (btnCadastro) {
         const idEmEdicao = campoIdEdicao.value;
 
         if (idEmEdicao) {
-            const indice = db[chaves.json].findIndex(u => (u[chaves.campoId] || u.cpf || u.cnpj || u.identificador) == idEmEdicao);
+            const indice = db[chaves.json].findIndex(u => {
+                const idItem = u[chaves.campoId] || u.cpf || u.cnpj || u.identificador;
+                return normalizarId(idItem) === normalizarId(idEmEdicao);
+            });
+
             if (indice !== -1) {
                 db[chaves.json][indice] = { 
+                    ...db[chaves.json][indice],
                     [chaves.campoNome]: nome,
                     "nome_usuario": nome, 
+                    "nome_exibicao": nomeExibicao,
                     email, 
-                    [chaves.campoId]: idDigitado,
+                    [chaves.campoId]: campoIdentificador.value.trim(),
+                    "cpf_responsavel": cpfResponsavelDigitado,
                     senha 
                 };
                 salvarDadosLocal();
@@ -127,10 +142,13 @@ if (btnCadastro) {
                 alert("Conta atualizada com sucesso!");
             }
         } else {
-            const moradorEncontrado = db[chaves.json].find(u => (u[chaves.campoId] || u.cpf || u.cnpj || u.identificador) == idDigitado);
+            const usuarioEncontrado = db[chaves.json].find(u => {
+                const idItem = u[chaves.campoId] || u.cpf || u.cnpj || u.identificador;
+                return normalizarId(idItem) === idDigitado;
+            });
 
-            if (moradorEncontrado) {
-                if (moradorEncontrado.senha === senha) {
+            if (usuarioEncontrado) {
+                if (usuarioEncontrado.senha === senha) {
                     alert("Sucesso! Login realizado (simulação).");
                 } else {
                     alert("Senha incorreta para as credenciais informadas.");
@@ -139,8 +157,10 @@ if (btnCadastro) {
                 const novoUsuario = { 
                     [chaves.campoNome]: nome,
                     "nome_usuario": nome,
+                    "nome_exibicao": nomeExibicao,
                     email, 
-                    [chaves.campoId]: idDigitado, 
+                    [chaves.campoId]: campoIdentificador.value.trim(), 
+                    "cpf_responsavel": cpfResponsavelDigitado,
                     senha 
                 };
                 db[chaves.json].push(novoUsuario);
@@ -153,11 +173,13 @@ if (btnCadastro) {
     });
 }
 
-// Apagar uma conta do sistema
 window.deletarConta = function(idParaDeletar) {
     const chaves = obterChaves();
     if (confirm("Tem certeza que deseja excluir esta conta?")) {
-        db[chaves.json] = db[chaves.json].filter(u => (u[chaves.campoId] || u.cpf || u.cnpj || u.identificador) != idParaDeletar);
+        db[chaves.json] = db[chaves.json].filter(u => {
+            const idItem = u[chaves.campoId] || u.cpf || u.cnpj || u.identificador;
+            return normalizarId(idItem) !== normalizarId(idParaDeletar);
+        });
         salvarDadosLocal();
         renderizarLista();
         
@@ -167,33 +189,39 @@ window.deletarConta = function(idParaDeletar) {
     }
 };
 
-// Jogar as informações da tabela de voltar para o formulário
 window.prepararEdicao = function(idParaEditar) {
     const chaves = obterChaves();
-    const usuario = db[chaves.json].find(u => (u[chaves.campoId] || u.cpf || u.cnpj || u.identificador) == idParaEditar);
+    const usuario = db[chaves.json].find(u => {
+        const idItem = u[chaves.campoId] || u.cpf || u.cnpj || u.identificador;
+        return normalizarId(idItem) === normalizarId(idParaEditar);
+    });
 
     if (usuario) {
         campoIdEdicao.value = idParaEditar;
         campoNome.value = usuario[chaves.campoNome] || usuario.nome_usuario || usuario.nome;
+        campoNomeExibicao.value = usuario.nome_exibicao || '';
         campoEmail.value = usuario.email || '';
         campoIdentificador.value = idParaEditar;
+        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpf_responsavel || '';
         camposSenha[0].value = usuario.senha;
         camposSenha[1].value = usuario.senha;
 
         tituloFormulario.textContent = "Editar Informações da Conta";
-        btnCadastro.textContent = "Salvar Alterações";
+        
+        const btnSubmit = formCadastro.querySelector('button[type="submit"]') || formCadastro.querySelector('button');
+        if (btnSubmit) btnSubmit.textContent = "Salvar Alterações";
     }
 };
 
-// Limpar os campos do formulário para deixá-lo em branco
 function resetarFormulario() {
-    document.getElementById('formCadastro').reset();
-    campoIdEdicao.value = '';
-    tituloFormulario.textContent = "Crie sua conta";
-    btnCadastro.textContent = "Cadastrar";
+    if (formCadastro) formCadastro.reset();
+    if (campoIdEdicao) campoIdEdicao.value = '';
+    if (tituloFormulario) tituloFormulario.textContent = "Crie sua conta";
+    
+    const btnSubmit = formCadastro ? (formCadastro.querySelector('button[type="submit"]') || formCadastro.querySelector('button')) : null;
+    if (btnSubmit) btnSubmit.textContent = "Cadastrar";
 }
 
-// Desfazer as modificações e voltar a tabela para o estado original
 window.restaurarPadrao = function() {
     const chaves = obterChaves();
     if (confirm("Deseja apagar as alterações desta página e voltar ao original?")) {

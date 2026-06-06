@@ -137,11 +137,13 @@ a {
 }
 
 #formCadastro button {
-    padding: 15px 30px; 
-    width: 40%; 
-    height: 50px;
+    padding: 12px 24px;
+    width: auto;
+    min-width: 180px;
+    min-height: 48px;
+    height: auto;
     border-radius: 50px;
-    font-size: medium;
+    font-size: 0.95rem;
     text-transform: uppercase;
     background-color: #c5c5c5;
     color: black;
@@ -151,6 +153,8 @@ a {
     cursor: pointer;
     font-weight: 700;
     transition: background-color 0.2s ease;
+    line-height: 1.2;
+    white-space: normal;
 }
 
 #formCadastro button:hover {
