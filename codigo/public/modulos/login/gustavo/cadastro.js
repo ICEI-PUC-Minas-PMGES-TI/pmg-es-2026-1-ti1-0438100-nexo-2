@@ -23,11 +23,12 @@ function definirTipoCadastro() {
     }
 }
 
+// CORREÇÃO: Nomes das propriedades ajustados para bater perfeitamente com o seu db.json
 function obterChaves() {
     const chaves = {
-        morador: { storage: 'banco_moradores_local', json: 'usuarioMorador', campoId: 'cpf', campoNome: 'nome_completo' },
-        empresa: { storage: 'banco_empresas_local', json: 'usuarioEmpresa', campoId: 'cnpj', campoNome: 'nome' },
-        prefeitura: { storage: 'banco_prefeituras_local', json: 'usuarioPrefeitura', campoId: 'identificador', campoNome: 'nome' }
+        morador: { storage: 'banco_moradores_local', json: 'usuariosMoradores', campoId: 'cpf', campoNome: 'nome_completo' },
+        empresa: { storage: 'banco_empresas_local', json: 'usuariosInstituicoes', campoId: 'cnpj', campoNome: 'nome' },
+        prefeitura: { storage: 'banco_prefeituras_local', json: 'usuariosInstituicoes', campoId: 'identificador', campoNome: 'nome' }
     };
     return chaves[tipoCadastro];
 }
@@ -43,7 +44,8 @@ async function carregarBanco() {
             db = JSON.parse(dadosLocais);
             console.log(`Dados de ${tipoCadastro} carregados localmente.`);
         } else {
-            const resposta = await fetch('./geral.json');
+            // CORREÇÃO: Apontando para db.json que armazena sua estrutura atual
+            const resposta = await fetch('./db.json');
             db = await resposta.json();
             salvarDadosLocal();
             console.log("Banco de dados original pronto para consulta.");
@@ -60,9 +62,11 @@ function salvarDadosLocal() {
     localStorage.setItem(chaves.storage, JSON.stringify(db));
 }
 
+// CORREÇÃO: Conversão para String pura ou Número puro para bater com a busca do JSON
 function normalizarId(id) {
     if (!id) return '';
-    return tipoCadastro === 'prefeitura' ? String(id).trim() : String(id).replace(/\D/g, '');
+    const limpo = String(id).replace(/\D/g, '');
+    return limpo ? Number(limpo) : String(id).trim();
 }
 
 function renderizarLista() {
@@ -72,9 +76,17 @@ function renderizarLista() {
     
     if (!db[chaves.json]) db[chaves.json] = [];
 
-    db[chaves.json].forEach(usuario => {
+    // Filtro para separar Empresa e Prefeitura que compartilham a mesma lista de 'usuariosInstituicoes'
+    let listaFiltrada = db[chaves.json];
+    if (tipoCadastro === 'empresa') {
+        listaFiltrada = listaFiltrada.filter(u => u.cnpj || u.instituicao_id === 1); 
+    } else if (tipoCadastro === 'prefeitura') {
+        listaFiltrada = listaFiltrada.filter(u => u.Município || u.instituicao_id === 2 || u.instituicao_id === 3);
+    }
+
+    listaFiltrada.forEach(usuario => {
         const idOriginal = usuario[chaves.campoId] || usuario.cpf || usuario.cnpj || usuario.identificador;
-        const nomeVisual = usuario.nome_exibicao || usuario[chaves.campoNome] || usuario.nome;
+        const nomeVisual = usuario.nome_usuario || usuario[chaves.campoNome] || usuario.nome;
         
         const line = document.createElement('tr');
         line.innerHTML = `
@@ -98,7 +110,7 @@ if (formCadastro) {
         const nomeExibicao = campoNomeExibicao.value.trim();
         const email = campoEmail.value.trim();
         const idDigitado = normalizarId(campoIdentificador.value);
-        const cpfResponsavelDigitado = campoCpfResponsavel ? campoCpfResponsavel.value.replace(/\D/g, '') : '';
+        const cpfResponsavelDigitado = campoCpfResponsavel ? Number(campoCpfResponsavel.value.replace(/\D/g, '')) : '';
         const senha = camposSenha[0].value;
         const confirmaSenha = camposSenha[1].value;
 
@@ -129,10 +141,11 @@ if (formCadastro) {
                 db[chaves.json][indice] = { 
                     ...db[chaves.json][indice],
                     [chaves.campoNome]: nome,
-                    "nome_usuario": nome, 
-                    "nome_exibicao": nomeExibicao,
+                    "nome_usuario": nomeExibicao, // Ajustado para salvar o nome curto/exibição aqui
+                    "nome_completo": nome,
                     email, 
-                    [chaves.campoId]: campoIdentificador.value.trim(),
+                    [chaves.campoId]: idDigitado,
+                    "cpf": tipoCadastro === 'morador' ? idDigitado : undefined,
                     "cpf_responsavel": cpfResponsavelDigitado,
                     senha 
                 };
@@ -154,15 +167,23 @@ if (formCadastro) {
                     alert("Senha incorreta para as credenciais informadas.");
                 }
             } else {
+                // Criando IDs aleatórios no mesmo formato do seu db.json original
+                const idGeradoAleatorio = Math.random().toString(36).substring(2, 13);
+
                 const novoUsuario = { 
+                    "id": idGeradoAleatorio,
                     [chaves.campoNome]: nome,
-                    "nome_usuario": nome,
-                    "nome_exibicao": nomeExibicao,
+                    "nome_usuario": nomeExibicao,
+                    "nome_completo": nome,
                     email, 
-                    [chaves.campoId]: campoIdentificador.value.trim(), 
+                    [chaves.campoId]: idDigitado,
+                    "cpf": tipoCadastro === 'morador' ? idDigitado : undefined,
                     "cpf_responsavel": cpfResponsavelDigitado,
-                    senha 
+                    "senha": senha,
+                    "denuncias_acompanhadas": tipoCadastro === 'morador' ? [] : undefined,
+                    "instituicao_id": tipoCadastro === 'empresa' ? 1 : (tipoCadastro === 'prefeitura' ? 2 : undefined)
                 };
+
                 db[chaves.json].push(novoUsuario);
                 salvarDadosLocal();
                 renderizarLista();
@@ -183,7 +204,7 @@ window.deletarConta = function(idParaDeletar) {
         salvarDadosLocal();
         renderizarLista();
         
-        if (campoIdEdicao.value === idParaDeletar) {
+        if (campoIdEdicao.value === String(idParaDeletar)) {
             resetarFormulario();
         }
     }
@@ -198,11 +219,11 @@ window.prepararEdicao = function(idParaEditar) {
 
     if (usuario) {
         campoIdEdicao.value = idParaEditar;
-        campoNome.value = usuario[chaves.campoNome] || usuario.nome_usuario || usuario.nome;
-        campoNomeExibicao.value = usuario.nome_exibicao || '';
+        campoNome.value = usuario[chaves.campoNome] || usuario.nome_completo || usuario.nome;
+        campoNomeExibicao.value = usuario.nome_usuario || '';
         campoEmail.value = usuario.email || '';
         campoIdentificador.value = idParaEditar;
-        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpf_responsavel || '';
+        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpf_responsavel || usuario.cpf || '';
         camposSenha[0].value = usuario.senha;
         camposSenha[1].value = usuario.senha;
 
