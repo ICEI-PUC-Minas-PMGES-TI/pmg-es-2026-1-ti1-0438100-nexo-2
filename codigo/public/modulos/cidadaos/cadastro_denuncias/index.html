@@ -19,16 +19,16 @@
 
             <div class="row g-4">
 
-                <div class="col-lg-8">
+                <div class="col-lg-8 ">
 
-                    <div class="card shadow-sm">
-                        <div class="card-header bg-gradient text-white">
+                    <div class="card shadow-sm" style="height: 300px;">
+                        <div class="card-header bg-gradient text-white fw-bold fs-5">
                             1 - Fotos do problema
                         </div>
 
-                        <div class="card-body">
+                        <div class="card-body p-4">
 
-                            <div class="d-flex align-items-center gap-2">
+                            <div class="d-flex align-items-center gap-2 mt-4">
 
                                 <button type="button" class="btn btn-dark btn-sm" id="setaEsq">◀</button>
 
@@ -54,14 +54,14 @@
                         </div>
                     </div>
 
-                    <div class="card shadow-sm mt-4">
-                        <div class="card-header bg-gradient text-white">
+                    <div class="card shadow-sm mt-4" style="height: 450px;">
+                        <div class="card-header bg-gradient text-white fw-bold fs-5">
                             2 - Descrição da denúncia
                         </div>
 
-                        <div class="card-body">
-                            <textarea id="descricao" class="form-control" rows="4"
-                                placeholder="Descreva o problema..."></textarea>
+                        <div class="card-body p-4">
+                            <textarea id="descricao" class="form-control fs-5" rows="11"
+                                placeholder="Descreva o problema..." style=" overflow: auto;"></textarea>
                         </div>
                     </div>
 
@@ -70,7 +70,7 @@
                 <div class="col-lg-4">
 
                     <div class="card shadow-sm">
-                        <div class="card-header bg-gradient text-white">
+                        <div class="card-header bg-gradient text-white fw-bold fs-5">
                             3 - Informações
                         </div>
 
@@ -82,7 +82,7 @@
                             </select>
 
                             <label class="form-label">Localização no mapa</label>
-                            <div id="mapa" style="height: 300px; margin-bottom: 12px; border-radius: 8px;"></div>
+                            <div id="mapa" style="height: 140px; margin-bottom: 12px; border-radius: 8px;"></div>
 
                             <div class="input-group mb-3">
                                 <input type="text" id="searchEndereco" class="form-control"
