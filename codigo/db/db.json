@@ -2,7 +2,7 @@
   "denuncias": [
     {
       "id": "1",
-      "status_id": 3,
+      "status_id": 2,
       "categoria_id": 1,
       "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
       "imagens": [
@@ -40,6 +40,14 @@
           "mensagem": "Teste de comentário editado",
           "data": "05/06/2026",
           "hora": "13:01",
+          "editado": true
+        },
+        {
+          "id": 1780680607556,
+          "usuario": 98723456700,
+          "mensagem": "Teste de comentário editado",
+          "data": "05/06/2026",
+          "hora": "15:09",
           "editado": true
         }
       ],
@@ -195,7 +203,7 @@
       "usuarioInstituicao_cpf": "",
       "notaOrgao": "Após vistoria técnica no local, foi identificado que o vazamento está relacionado ao desgaste da tubulação e ao aumento do fluxo de água durante períodos chuvosos. A equipe de manutenção já iniciou o planejamento para realizar os reparos necessários e minimizar os impactos para a população da região.",
       "prazo": "26/08/2026",
-      "afetados": 35,
+      "afetados": 34,
       "custo": "R$ 998,90",
       "comentarios": [
         {

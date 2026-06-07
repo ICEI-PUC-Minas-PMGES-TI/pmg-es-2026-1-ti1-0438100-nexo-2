@@ -1,20 +1,19 @@
-# Zella — Plataforma de Denúncias de Infraestrutura Urbana
+# Zella — Tela de detalhes
 
-## Como rodar o projeto
+## Como rodar o projeto para avaliação
 
 ### Pré-requisitos
 
 - Node.js instalado
+- JSON Server instalado
 
 ### Passo a passo
 
 1. Clone o repositório ou extraia os arquivos do projeto
 
-2. Abra o terminal na raiz do repositório e navegue até a pasta do projeto (pasta `pmg-es-2026-1-ti1-0438100-nexo-2\codigo`):
+2. Navegue até a pasta do projeto no terminal (pasta `\codigo`):
 
-```bash
-cd codigo
-```
+> Clique com o botão direito na pasta e selecione "Open in Integrated Terminal" (ou "Abrir no Terminal Integrado"). O caminho exibido no terminal deve terminar com `\codigo`.
 
 3. Instale as dependências:
 

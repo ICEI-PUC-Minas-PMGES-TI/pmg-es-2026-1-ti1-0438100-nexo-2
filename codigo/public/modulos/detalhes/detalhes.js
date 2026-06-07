@@ -210,16 +210,22 @@ async function init() {
     });
 
     //-----------------------------------------------------COMENTÁRIOS---------------------------------------------------------------//
-    if (tipoUsuario === 'morador'){
-        const moradorLogado = usuariosMoradores.find(u => Number(u.cpf) === Number(cpfLogado));
-        if (!moradorLogado.denuncias_acompanhadas.includes(String(denunciaId))){
+    function visibilidade_comentario(){    
+        if (tipoUsuario === 'morador'){
+            const moradorLogado = usuariosMoradores.find(u => Number(u.cpf) === Number(cpfLogado));
+            if (!moradorLogado.denuncias_acompanhadas.includes(String(denunciaId))){
+                sendCom.classList.add("d-none")
+            } else {
+                sendCom.classList.remove("d-none")
+            }
+        } else if (Number(cpfLogado) !== Number(dados_denuncia.usuarioInstituicao_cpf)){
             sendCom.classList.add("d-none")
+        } else {
+            sendCom.classList.remove("d-none")
         }
-    } else if (Number(cpfLogado) !== Number(dados_denuncia.usuarioInstituicao_cpf)){
-        sendCom.classList.add("d-none")
-    } else {
-        sendCom.classList.remove("d-none")
     }
+
+    visibilidade_comentario()
 
     let editingComId = null;
     let editingCom = false
@@ -824,6 +830,8 @@ async function init() {
         checkpoints_denuncia[0].concluida = true;
         btnStart.classList.add("d-none");
         btnExit.classList.remove("d-none");
+        sendMsg.classList.remove("d-none");
+        sendCom.classList.remove("d-none");
         await salvarDenuncia();
         renderizar_checkpoints();
         atualiza_info();
@@ -837,6 +845,8 @@ async function init() {
         dados_denuncia.usuarioInstituicao_cpf = "";
         btnStart.classList.remove("d-none");
         btnExit.classList.add("d-none");
+        sendMsg.classList.add("d-none");
+        sendCom.classList.add("d-none");
         await salvarDenuncia();
         renderizar_checkpoints();
         atualiza_info();
@@ -875,7 +885,11 @@ async function init() {
         if (!usuario.denuncias_acompanhadas.includes(dados_denuncia.id)) {
             usuario.denuncias_acompanhadas.push(dados_denuncia.id)
         }
+
+        btn_acompanha.classList.add("d-none");
+        btn_desacompanha.classList.remove("d-none");
         atualiza_info();
+        visibilidade_comentario();
         await salvarDenuncia();
         await salvarUsuario(usuario)
     })
@@ -884,7 +898,11 @@ async function init() {
         const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
         dados_denuncia.afetados -= 1;
         usuario.denuncias_acompanhadas = usuario.denuncias_acompanhadas.filter(id => id !== dados_denuncia.id);
+
+        btn_desacompanha.classList.add("d-none");
+        btn_acompanha.classList.remove("d-none");
         atualiza_info();
+        visibilidade_comentario();
         await salvarDenuncia();
         await salvarUsuario(usuario)
     })
