@@ -158,7 +158,63 @@ button:hover,
     font-weight: bold;
 }
 
-/* Responsividade */
+@media (max-width: 1536px) {
+    .card-body.d-flex {
+        align-items: flex-start;
+    }
+
+    .lista-checkpoints {
+        margin-bottom: 0;
+    }
+}
+
+@media (max-width: 1366px){
+    h1 {
+        font-size: 2rem;
+    }
+     
+    h2 {
+        font-size: 1.4rem;
+    }
+
+    body {
+        padding: 20px;
+    }
+
+    textarea {
+        font-size: 1rem;
+        min-height: 120px;
+    }
+
+    input[type="text"],
+    input[type="date"] {
+        font-size: 1rem;
+    }
+
+    .lista-checkpoints li {
+        font-size: 1rem;
+    }
+
+    button,
+    .btn-checkpoint,
+    .btn-salvar,
+    .btn-cancelar{
+        font-size: 1rem;
+    }
+
+    .btn-salvar{
+        padding: 10px 40px;
+    }
+
+        .btn-checkpoint {
+        padding: 8px 16px;
+    }
+
+    .modal-caixa h2 {
+        font-size: 1.4rem;
+    }
+}
+
 @media (max-width: 992px) {
     body {
         padding: 16px;
