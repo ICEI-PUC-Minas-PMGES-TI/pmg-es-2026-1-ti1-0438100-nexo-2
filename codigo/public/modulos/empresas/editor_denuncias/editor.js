@@ -47,6 +47,8 @@ function preencherModal(denuncia){
 }
 function criarItemCheckpoint(checkpoint, indice){
     const item = document.createElement('li');
+    item.dataset.descricao = checkpoint.descricao || '';
+    item.dataset.tipo = checkpoint.tipo || 'fixo';
     item.innerHTML= `
         <input type="checkbox" id="checkpoint-${indice}" ${checkpoint.concluido ? 'checked' : ''}>
         <label for="checkpoint-${indice}">${checkpoint.nome}</label>
@@ -119,7 +121,8 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
         const label = item.querySelector('label');
         checkpoints.push({
             nome: label.textContent,
-            descricao: '',
+            descricao: item.dataset.descricao = checkpoint.descricao || '',
+            tipo: item.dataset.tipo = checkpoint.tipo || 'fixo',
             concluido: input.checked
         });
     });
@@ -137,6 +140,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     })
         .then(response => response.json())
         .then(() => {
+            alteracoesPendentes = false;
             alert('Denúncia atualizada com sucesso!');
         })
         .finally(() =>{
@@ -201,3 +205,16 @@ function adicionarCheckpointNaLista(checkpoint, posicaoSelecionada){
         itemReferencia.insertAdjacentElement('afterend', novoItem);
     }
 }
+
+let alteracoesPendentes = false;
+
+document.getElementById('nota').addEventListener('input', () => alteracoesPendentes = true);
+document.getElementById('valor').addEventListener('input', () => alteracoesPendentes = true);
+document.getElementById('descricao-custo').addEventListener('input', () => alteracoesPendentes = true);
+document.getElementById('prazo').addEventListener('change', () => alteracoesPendentes = true);
+
+window.addEventListener('beforeunload', (e) =>{
+    if (alteracoesPendentes){
+        e.preventDefault();
+    }
+})
