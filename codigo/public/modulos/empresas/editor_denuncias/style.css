@@ -158,6 +158,26 @@ button:hover,
     font-weight: bold;
 }
 
+#checkpoint-posicao {
+    width: 100%;
+    background-color: #e8e8e8;
+    border: 1px solid #ccc;
+    border-radius: 5px;
+    padding: 8px 10px;
+    font-family: "Inter", sans-serif;
+    font-size: 1rem;
+    cursor: pointer;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='12' viewBox='0 0 12 12'%3E%3Cpath fill='%23333' d='M6 8L1 3h10z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 12px center;
+}
+
+#checkpoint-posicao:focus {
+    outline: none;
+    border-color: #C80F00;
+}
+
 @media (max-width: 1536px) {
     .card-body.d-flex {
         align-items: flex-start;
