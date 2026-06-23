@@ -5,8 +5,8 @@
   "main": "index.js",
   "scripts": {
   "start": "npm-run-all --parallel api web",
-  "api": "json-server --watch detalhes.json --port 3000",
-  "web": "serve public -l 5000"
+  "api": "json-server --watch ../codigo/db/db.json --port 3000",
+  "web": "serve codigo/public -l 5000"
   },
   "keywords": [],
   "author": "Rommel Vieira Carneiro",

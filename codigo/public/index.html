@@ -1,78 +1,604 @@
 <!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Document</title>
-    <link rel="stylesheet" href="./assets/css/styles.css" />
-    <script src="./assets/js/login.js"></script>
-  </head>
-  <body>
-    <header>
-      <div class="banner">
-        <img src="./assets/images/banner_ti.png" alt="" />
-      </div>
-      <div class="barra-info">
-        <nav class="menu">
-          <ul>
-            <li><a href="index.html">Home</a></li>
-            <li><a href="about.html">Sobre nós</a></li>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  >
+  <title>Zella - Home</title>
+  <link
+    href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/css/bootstrap.min.css"
+    rel="stylesheet"
+  >
+  <link
+    rel="stylesheet"
+    href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.13.1/font/bootstrap-icons.min.css"
+  >
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet/dist/leaflet.css"
+  >
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet-geosearch@3.11.0/dist/geosearch.css"
+  >
+  <link
+    rel="stylesheet"
+    href="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.css"
+  >
+  <link
+    rel="stylesheet"
+    href="/modulos/homepage/style.css"
+  >
+  <link
+    rel="stylesheet"
+    href="/modulos/homepage/detalhes.css"
+  >
+</head>
+<body>
+
+  <!-- ===CABEÇALHO=== -->
+  <header id="cabecalho">
+    <nav
+      class="navbar navbar-expand-lg px-4 py-3"
+      style="background-color: #2b1d1d;"
+    >
+      <div class="container-fluid">
+
+        <!-- Logo -->
+        <a
+          class="navbar-brand me-4"
+          href="/"
+          aria-label="Ir para a página inicial"
+        >
+          <img
+            src="/assets/images/logo.png"
+            alt="Logo Zella"
+            class="img-fluid"
+            style="max-height: 60px;"
+          >
+        </a>
+
+        <!-- Menu desktop -->
+        <div class="collapse navbar-collapse d-none d-lg-flex">
+          <ul class="navbar-nav">
+            <li class="nav-item">
+              <a
+                class="nav-link text-light fw-semibold"
+                href="/"
+              >
+                Início
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link text-light fw-semibold"
+                href="/modulos/cidadaos/cadastro_denuncias/index.html"
+              >
+                Faça sua denúncia
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link text-light fw-semibold"
+                href="/modulos/cidadaos/perfil/index.html"
+              >
+                Minhas denúncias
+              </a>
+            </li>
+
+            <li class="nav-item">
+              <a
+                class="nav-link text-light fw-semibold"
+                href="/modulos/cidadaos/outras_denuncias/index.html"
+              >
+                Outras denúncias
+              </a>
+            </li>
           </ul>
-        </nav>
-        <div class="dados-usuario">
-          <span id="userInfo"></span>
+
+          <!-- Área direita do cabeçalho desktop -->
+          <div class="ms-auto d-flex align-items-center gap-3">
+            <div class="position-relative">
+              <input
+                type="text"
+                id="busca"
+                class="form-control rounded-pill ps-4 pe-5"
+                placeholder="Buscar denúncia..."
+                aria-label="Buscar denúncia"
+              >
+
+              <i
+                class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"
+                aria-hidden="true"
+              ></i>
+            </div>
+
+            <!-- A foto é atualizada pelo JavaScript -->
+            <a
+              href="/modulos/cidadaos/perfil/index.html"
+              data-tipo="perfil"
+              aria-label="Abrir perfil"
+            >
+              <img
+                src="/assets/images/foto_perfil_padrao.png"
+                alt="Foto de perfil"
+                class="rounded-circle border border-light"
+                width="40"
+                height="40"
+                style="object-fit: cover;"
+              >
+            </a>
+          </div>
+        </div>
+
+        <!-- Área direita do cabeçalho mobile -->
+        <div class="d-flex d-lg-none align-items-center gap-3 ms-auto">
+          <!-- A foto é atualizada pelo JavaScript -->
+          <a
+            href="/modulos/cidadaos/perfil/index.html"
+            data-tipo="perfil"
+            aria-label="Abrir perfil"
+          >
+            <img
+              src="/assets/images/foto_perfil_padrao.png"
+              alt="Foto de perfil"
+              class="rounded-circle border border-light"
+              width="40"
+              height="40"
+              style="object-fit: cover;"
+            >
+          </a>
+
+          <button
+            class="navbar-toggler border-0 shadow-none"
+            type="button"
+            data-bs-toggle="collapse"
+            data-bs-target="#menuMobile"
+            aria-controls="menuMobile"
+            aria-expanded="false"
+            aria-label="Abrir menu"
+          >
+            <i
+              class="bi bi-list text-white fs-2"
+              aria-hidden="true"
+            ></i>
+          </button>
+        </div>
+
+      </div>
+    </nav>
+
+    <!-- Menu mobile -->
+    <div
+      class="collapse d-lg-none px-4 pb-3"
+      id="menuMobile"
+      style="background-color: #2b1d1d;"
+    >
+      <input
+        type="text"
+        id="busca-mobile"
+        class="form-control rounded-pill mb-3"
+        placeholder="Buscar denúncia..."
+        aria-label="Buscar denúncia"
+      >
+
+      <a
+        class="d-block text-light text-decoration-none py-2"
+        href="/"
+      >
+        Início
+      </a>
+
+      <a
+        class="d-block text-light text-decoration-none py-2"
+        href="/modulos/cidadaos/cadastro_denuncias/index.html"
+      >
+        Faça sua denúncia
+      </a>
+
+      <a
+        class="d-block text-light text-decoration-none py-2"
+        href="/modulos/cidadaos/perfil/index.html"
+      >
+        Minhas denúncias
+      </a>
+
+      <a
+        class="d-block text-light text-decoration-none py-2"
+        href="/modulos/cidadaos/outras_denuncias/index.html"
+      >
+        Outras denúncias
+      </a>
+    </div>
+  </header>
+
+  <!-- ===CONTEÚDO PRINCIPAL=== -->
+  <main class="pb-5">
+
+    <!-- Mapa e lista de denúncias -->
+    <section
+      class="container-fluid mt-4"
+      aria-label="Mapa e denúncias"
+    >
+      <div class="row g-4">
+
+        <!-- Mapa -->
+        <div class="col-12 col-lg-8">
+          <div class="mapa-container shadow rounded-5">
+            <div id="mapa"></div>
+
+            <!-- Busca de endereço no mapa -->
+            <div class="map-search">
+              <input
+                type="text"
+                id="mapSearch"
+                placeholder="Buscar local no mapa..."
+                aria-label="Buscar local no mapa"
+                autocomplete="off"
+              >
+
+              <div id="sugestoes"></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Lista lateral -->
+        <div class="col-12 col-lg-4">
+          <aside class="sidebar shadow rounded-5 p-3">
+
+            <!-- Filtros -->
+            <div
+              id="filtros"
+              class="d-flex justify-content-between gap-1 mb-4"
+            >
+              <button
+                type="button"
+                class="btn btn-filtro bg-gradient-custom ativo rounded-pill px-3"
+                data-filtro="todas"
+              >
+                TODAS
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-filtro rounded-pill px-3"
+                data-filtro="abertas"
+              >
+                ABERTAS
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-filtro rounded-pill px-3"
+                data-filtro="andamento"
+              >
+                EM ANDAMENTO
+              </button>
+
+              <button
+                type="button"
+                class="btn btn-filtro rounded-pill px-3"
+                data-filtro="resolvida"
+              >
+                REALIZADAS
+              </button>
+            </div>
+
+            <!-- Lista gerada pelo JavaScript -->
+            <div id="lista-denuncias"></div>
+          </aside>
+        </div>
+
+      </div>
+    </section>
+
+
+    <!-- Estatísticas -->
+    <section
+      id="estatisticas"
+      class="container-fluid my-5 px-4"
+      aria-label="Estatísticas da plataforma"
+    >
+      <div class="row g-4">
+
+        <!-- Card: denúncias realizadas -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div
+            class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+            style="
+              background-image: url('/assets/images/card1.png');
+              background-size: cover;
+              background-position: center;
+              min-height: 150px;
+            "
+          >
+            <div class="card-body d-flex flex-column justify-content-end">
+              <p class="mb-2">
+                Denúncias realizadas
+              </p>
+
+              <h2
+                class="fw-bold"
+                id="estat-realizadas"
+              >
+                0
+              </h2>
+
+              <span
+                class="badge bg-dark w-50"
+                id="estat-porcentagem-realizadas"
+              >
+                0%
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: em andamento -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div
+            class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+            style="
+              background-image: url('/assets/images/card2.jpg');
+              background-size: cover;
+              background-position: center;
+              min-height: 150px;
+            "
+          >
+            <div class="card-body d-flex flex-column justify-content-end">
+              <p class="mb-2">
+                Em andamento
+              </p>
+
+              <h2
+                class="fw-bold"
+                id="estat-andamento"
+              >
+                0
+              </h2>
+
+              <span class="badge bg-warning text-dark w-50">
+                Monitorando
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: resolvidas -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div
+            class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+            style="
+              background-image: url('/assets/images/card3.jpg');
+              background-size: cover;
+              background-position: center;
+              min-height: 150px;
+            "
+          >
+            <div class="card-body d-flex flex-column justify-content-end">
+              <p class="mb-2">
+                Resolvidas
+              </p>
+
+              <h2
+                class="fw-bold"
+                id="estat-resolvidas"
+              >
+                0
+              </h2>
+
+              <span class="badge bg-primary w-50">
+                Finalizadas
+              </span>
+            </div>
+          </div>
+        </div>
+
+        <!-- Card: usuários -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <div
+            class="card text-white border-0 shadow-sm rounded-4 overflow-hidden"
+            style="
+              background-image: url('/assets/images/card4.jpg');
+              background-size: cover;
+              background-position: center;
+              min-height: 150px;
+            "
+          >
+            <div class="card-body d-flex flex-column justify-content-end">
+              <p class="mb-2">
+                Usuários ativos
+              </p>
+
+              <h2
+                class="fw-bold"
+                id="estat-usuarios"
+              >
+                0
+              </h2>
+
+              <span class="badge bg-success w-50">
+                Plataforma
+              </span>
+            </div>
+          </div>
         </div>
       </div>
-    </header>
-    <main>
-        <h3>Boas vindas</h3>
-        <p>Sejam bem-vindos à home-page do projeto de TI 1 - Trabalho
-        Interdisciplinar</p>
-        <p>Esse conteúdo que você está lendo foi criado para exemplificar como
-        criar o seu site integrado com o ambiente de login e o back end que
-        utiliza o JSON Server.</p>
-        <p>Ao criar o seu site, você deve adaptar esse código para sua neessidade ou começar do zero, excluindo todo esse conteúdo.
-        </p>
+    </section>
+  </main>
 
-        <h3>Arquivos do site (Front End)</h3>
-        <p>Para montar seu site, edite os arquivos existentes e crie novos arquivos na pasta <code>public</code> que mantem todos os arquivos da parte de Front End do site, a interface que é vista pelo usuário no navegador.</p>
+  <!-- ===RODAPÉ=== -->
+  <footer
+    id="rodape"
+    class="text-light py-3"
+    style="background-color: #2b1d1d;"
+  >
+    <div class="container-fluid px-5">
+      <div class="row g-4 align-items-start">
 
-        <p>Nesta pasta <code>public</code>, sugerimos que você organize os arquivos do seu site da seguinte maneira:</p>
-        <ul>
-            <li><strong>Pasta <code>assets</code></strong>: os arquivos de formatação (CSS), os scripts (JS), as imagens utilizadas no site (JPG, PNG, GIF, SVG, etc), fontes (TTF) e outros arquivos gerais utilizados por todo o site.</li>
-            <li><strong>Pasta <code>modulos</code></strong>: os arquivos utilizados na implementação das funcionalidades do site. Separe uma sub-pasta para cada novo módulo ou funcionalidade. Pode também ser utilizado para dividir o trabalho de cada membro do grupo.</li>
-            <li><strong>Arquivo <code>index.html</code></strong>: arquivo que representa a "home page" do site.</li>
-        </ul>
+        <!-- Logo e descrição -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <a
+            href="/"
+            aria-label="Ir para a página inicial"
+          >
+            <img
+              src="/assets/images/logo.png"
+              alt="Logo Zella"
+              class="footer-logo"
+            >
+          </a>
 
-        <h3>Módulo de Login</h3>
-        <p>O módulo de login de usuário traz uma funcionalidade completa de registro de usuários e validação de login e senha.</p>
-        <h4>Integração do site com módulo de Login</h4>
-        <p>Para utilizar o módulo de login, basta incluir o script na sua página colocando a seguinte tag no HEAD</p>
-        <pre>&lt;script src="./assets/js/login.js"&gt&lt;script&gt;</pre>
-        <p>Ao incluir o script de login na sua página, caso o usuário ainda não tenha efetuado login, ao acessar a home-page do site, o navegador será direcionado para o formulário de <strong>Identificação de Usuário</strong>. Se o usuário informar corretamente o login e a senha, o navegador será direcionado para a Home-Page.</p>
-        <h4>Sessão do usuário logado</h4>
-        <p>Assim que o usuário se identifica e acessa a parte privada do site, o módulo de login cria uma chave do sessionStorage do navegador com o título <strong>usuarioCorrente</strong> e cujo conteúdo é um objeto com os atributos: id, nome, login, senha e email. </p>
-        <h4>Base de dados de usuários</h4>
-        <p>Inicialmente o módulo de login é configurado com dois usuários: </p>
-        <ul>
-            <li>admin - Senha: 123</li>
-            <li>user - Senha: 123</li>
-        </ul>
+          <p class="mt-3">
+            Nós temos como objetivo facilitar o registro de denúncias
+            relacionadas a problemas de infraestrutura urbana. As
+            informações enviadas são tratadas com sigilo e
+            responsabilidade.
+          </p>
+        </div>
 
-        <h3>Servidor Web e API baseada no JSON Server (Back end)</h3>
-        <p>O ambiente de trabalho disponibilizado para suportar o Trabalho Interdisciplinar 1 é baseado no Node.js. A aplicação de back end utiliza o módulo JSON Server para criar um Servidor Web que prove duas estruturas separadas:
-        <ul>
-            <li><strong>Arquivos estáticos (Pasta <code>public</code>)</strong>: da acesso aos arquivos utilizados no front end (HTML, CSS e JavaScript).</li>
-            <li><strong>API RESTful (pasta <code>db</code>)</strong>: uma interface para acesso aos dados definidos no arquivo db.json.</li>
-        </ul></p>
+        <!-- Navegação -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <h5 class="fw-bold mb-3">
+            Navegação
+          </h5>
 
-        <h4>Arquitetura do site</h4>
-        <p>A imagem que se segue apresenta a arquitetura desse ambiente, mostrando as duas refletindo as pastas desse ambiente.</p>
-        <p><img class="img-fluid d-block w-75 m-auto" src="./assets/images/servidor.png" alt=""></p>
+          <nav
+            class="footer-nav"
+            aria-label="Navegação do rodapé"
+          >
+            <a
+              href="/"
+              class="footer-link"
+            >
+              <i
+                class="bi bi-house-fill"
+                aria-hidden="true"
+              ></i>
+              <span>Início</span>
+            </a>
 
-        <h4>Arquivo db.json</h4>
-        <p>O arquivo JSON utilizado para definição das estruturas dos dados providos pela aplicação é localizado na pasta db e tem um formato como o mostrado no exemplo da figura a seguir. Esse arquivo define uma estrutura hipotética de contatos que descreve itens com os seguintes atributos: <code>id</code>, <code>nome</code> e <code>cidade</code>. para o JSON Server, é fundamental que toda estrutura tenha um atributo de identificador de nome <code>id</code>.</p>
-        <p><img class="img-fluid d-block w-50 m-auto" src="./assets/images/arquivo_json.png" alt=""></p>
-    </main>
-  </body>
+            <a
+              href="/modulos/cidadaos/perfil/index.html"
+              class="footer-link"
+            >
+              <i
+                class="bi bi-clipboard-data-fill"
+                aria-hidden="true"
+              ></i>
+              <span>Minhas denúncias</span>
+            </a>
+
+            <a
+              href="/modulos/cidadaos/outras_denuncias/index.html"
+              class="footer-link"
+            >
+              <i
+                class="bi bi-buildings-fill"
+                aria-hidden="true"
+              ></i>
+              <span>Outras denúncias</span>
+            </a>
+          </nav>
+        </div>
+
+        <!-- Redes sociais -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <h5 class="fw-bold mb-3">
+            Redes sociais
+          </h5>
+
+          <div class="footer-social-vertical">
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i
+                class="bi bi-instagram"
+                aria-hidden="true"
+              ></i>
+              <span>Instagram</span>
+            </a>
+
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i
+                class="bi bi-linkedin"
+                aria-hidden="true"
+              ></i>
+              <span>LinkedIn</span>
+            </a>
+
+            <a
+              href="#"
+              target="_blank"
+              rel="noopener noreferrer"
+            >
+              <i
+                class="bi bi-whatsapp"
+                aria-hidden="true"
+              ></i>
+              <span>WhatsApp</span>
+            </a>
+          </div>
+        </div>
+
+        <!-- Contato -->
+        <div class="col-12 col-md-6 col-lg-3">
+          <h5 class="fw-bold mb-3">
+            Contato
+          </h5>
+
+          <div class="footer-contato">
+            <div class="footer-contato-item">
+              <i
+                class="bi bi-envelope-fill"
+                aria-hidden="true"
+              ></i>
+              <span>contato@zella.com</span>
+            </div>
+
+            <div class="footer-contato-item">
+              <i
+                class="bi bi-telephone-fill"
+                aria-hidden="true"
+              ></i>
+              <span>(31) 12345-6789</span>
+            </div>
+
+            <div class="footer-contato-item">
+              <i
+                class="bi bi-geo-alt-fill"
+                aria-hidden="true"
+              ></i>
+              <span>Contagem - MG</span>
+            </div>
+          
+          </div>
+        </div>
+      </div>
+
+      <hr class="border-light opacity-25 my-4">
+
+      <div class="text-center text-light-emphasis">
+        © 2026 Zella — Todos os direitos reservados
+      </div>
+    </div>
+  </footer>
+
+  <!-- ===SCRIPTS=== -->
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.7/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+  <script src="https://unpkg.com/leaflet-control-geocoder/dist/Control.Geocoder.js"></script>
+  <script src="https://unpkg.com/leaflet-geosearch@3.11.0/dist/bundle.min.js"></script>
+  <script src="/modulos/homepage/script.js"></script>
+</body>
 </html>

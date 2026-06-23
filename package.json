@@ -5,8 +5,8 @@
     "serve": "^14.2.6"
   },
   "scripts": {
-  "api": "json-server --watch codigo/public/modulos/warlley/detalhes.json --port 3000",
-  "web": "serve codigo/public/modulos/warlley -l 5000",
-  "start": "npm-run-all --parallel api web"
+    "api": "json-server --watch codigo/db/db.json --port 3000",
+    "web": "serve codigo/public -l 5000",
+    "start": "npm-run-all --parallel api web"
   }
 }
