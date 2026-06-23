@@ -299,7 +299,7 @@ function renderizarFotos() {
     atualizarSetas();
 }
 
-// ===================== 5. CRIAR / EDITAR =====================
+// ===================== 5. CRIAR =====================
 async function criarDenuncia(evento) {
     evento.preventDefault();
     const descricao = document.getElementById('descricao').value.trim();
@@ -351,98 +351,6 @@ async function criarDenuncia(evento) {
         mostrarMensagem('Denúncia salva com sucesso!');
     } catch (err) { mostrarMensagem(err); mostrarMensagem('Erro ao salvar. Verifique json-server na porta 3000.'); }
 }
-
-async function atualizarDenuncia(id, data) {
-    const res = await fetch(`http://localhost:3000/denuncias/${id}`, {
-        method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ ...data, id: parseInt(id) })
-    });
-    if (!res.ok) throw new Error(`HTTP ${res.status}`);
-}
-
-// ===================== 6. TABELA =====================
-async function carregarDenuncias() {
-    try {
-        const res = await fetch('http://localhost:3000/denuncias');
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const denuncias = await res.json();
-        const tbody = document.getElementById('tabelaDenuncias');
-        if (!tbody) return;
-        tbody.innerHTML = '';
-        for (let d of denuncias) {
-            let localStr = 'Sem local';
-            if (d.local) {
-                if (d.local.logradouro) {
-                    localStr = d.local.logradouro;
-                    if (d.local.numero) localStr += `, ${d.local.numero}`;
-                } else if (d.local.cidade && d.local.cidade !== 'Não informada') localStr = d.local.cidade;
-            }
-            const catNome = getCategoriaNome(d.categoria_id);
-            const entNome = getEntidadeNome(d.entidade_id);
-            const dataFormatada = formatarData(d.data);
-            tbody.innerHTML += `
-                    <tr>
-                        <td>${catNome}</td>
-                        <td>${localStr}</td>
-                        <td>${entNome}</td>
-                        <td>${dataFormatada}</td>
-                        <td>
-                            <button class="btn btn-warning btn-sm" onclick="editarDenuncia('${d.id}')">Editar</button>
-                            <button class="btn btn-danger btn-sm" onclick="excluirDenuncia('${d.id}')">Excluir</button>
-                        </td>
-                    </tr>
-                `;
-        }
-    } catch (err) { mostrarMensagem('Erro ao carregar denúncias:', err); }
-}
-
-async function excluirDenuncia(id) {
-    if (!id || !confirm('Excluir esta denúncia?')) return;
-    try {
-        await fetch(`http://localhost:3000/denuncias/${id}`, { method: 'DELETE' });
-        if (denunciaEditando == id) {
-            denunciaEditando = null;
-            document.getElementById('formDenuncia').reset();
-            fotosBase64 = [];
-            renderizarFotos();
-            localTemp = null;
-        }
-        await carregarDenuncias();
-    } catch (err) { mostrarMensagem('Erro ao excluir denúncia:', err); }
-}
-
-window.editarDenuncia = async function (id) {
-    try {
-        const res = await fetch(`http://localhost:3000/denuncias/${id}`);
-        if (!res.ok) throw new Error(`HTTP ${res.status}`);
-        const d = await res.json();
-        denunciaEditando = id;
-        document.getElementById('descricao').value = d.descricaoDenuncia || '';
-        document.getElementById('categoria').value = d.categoria_id || '';
-        document.getElementById('urgencia').value = d.urgencia_id || '';
-        document.getElementById('entidade').value = d.entidade_id || '';
-        const imagens = d.imagens || [];
-        fotosBase64 = imagens;
-        renderizarFotos();
-        if (d.local) {
-            localTemp = { ...d.local };
-            if (mapaInicializado && d.local.latitude && d.local.longitude) {
-                await atualizarLocalSelecionado(d.local.latitude, d.local.longitude);
-                let end = d.local.logradouro || '';
-                if (d.local.numero) end += `, ${d.local.numero}`;
-                if (d.local.cidade && d.local.cidade !== 'Não informada') end += ` - ${d.local.cidade}/${d.local.estado}`;
-                document.getElementById('localizacao').value = end;
-            } else if (mapaInicializado && d.local.logradouro) {
-                document.getElementById('searchEndereco').value = d.local.logradouro;
-                await buscarEndereco();
-            } else {
-                document.getElementById('localizacao').value = d.local.logradouro || '';
-            }
-        } else { localTemp = null; document.getElementById('localizacao').value = ''; }
-    } catch (err) { mostrarMensagem(err); mostrarMensagem('Erro ao carregar dados para edição.'); }
-};
-
-window.excluirDenuncia = excluirDenuncia;
-
 
 
 // ===================== 7. INICIALIZAÇÃO =====================
