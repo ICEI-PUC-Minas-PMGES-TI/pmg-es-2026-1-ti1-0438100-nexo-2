@@ -4,19 +4,19 @@ const denunciaId = params.get("id");
 
 async function init() {
     // Busca todos os objetos
-    const [denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes] = await Promise.all([
+    const [denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicoes, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes] = await Promise.all([
         fetch(`${BASE_URL}/denuncias`).then(res => res.json()),
         fetch(`${BASE_URL}/categorias`).then(res => res.json()),
         fetch(`${BASE_URL}/urgencias`).then(res => res.json()),
         fetch(`${BASE_URL}/status`).then(res => res.json()),
         fetch(`${BASE_URL}/usuariosMoradores`).then(res => res.json()),
         fetch(`${BASE_URL}/usuariosInstituicoes`).then(res => res.json()),
-        fetch(`${BASE_URL}/instituicao`).then(res => res.json()),
+        fetch(`${BASE_URL}/instituicoes`).then(res => res.json()),
         fetch(`${BASE_URL}/usuarioLogado`).then(res => res.json()),
         fetch(`${BASE_URL}/infoPerfilMoradores`).then(res => res.json()),
         fetch(`${BASE_URL}/infoPerfilInstituicoes`).then(res => res.json()),
     ]);
-    const data = { denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicao, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes };
+    const data = { denuncias, categorias, urgencias, status, usuariosMoradores, usuariosInstituicoes, instituicoes, usuarioLogado, infoPerfilMoradores, infoPerfilInstituicoes };
     const url_DataMsg = "http://localhost:3000/mensagensChat";
 
     //Referência aos elementos HTML
@@ -495,7 +495,7 @@ async function init() {
     //------------------------------------------------INFORMAÇÕES DA DENÚNCIA-------------------------------------------------------//
 
     //Mostra informações fixas (por enquanto)
-    date.innerHTML = `Data da denúncia: ${dados_denuncia.data}`;
+    date.innerHTML = `Data da denúncia: ${dados_denuncia.dataPublicacao}`;
     localizacao.innerHTML = `Localização: ${dados_denuncia.local.cidade}, ${dados_denuncia.local.estado}`;
     descricao.innerHTML = `${dados_denuncia.descricaoDenuncia}`;
     nota_descricao.innerHTML = `${dados_denuncia.notaOrgao}`;
@@ -522,7 +522,7 @@ async function init() {
     function atualiza_info() {
         const usuarioInstituicao = data.usuariosInstituicoes.find(ui => Number(ui.cpf) === Number(dados_denuncia.usuarioInstituicao_cpf));
         const instituicao = usuarioInstituicao
-            ? data.instituicao.find(i => Number(i.id) === Number(usuarioInstituicao.instituicao_id))
+            ? data.instituicoes.find(i => String(i.id) === String(usuarioInstituicao.instituicao_id))
             : null;
 
         document.getElementById("title-details").textContent = `${categoria_denuncia.nome} na ${dados_denuncia.local.logradouro}, ${dados_denuncia.local.numero}`;
@@ -689,7 +689,7 @@ async function init() {
     function renderizar_checkpoints() {
         const usuarioInstituicao = data.usuariosInstituicoes.find(ui => Number(ui.cpf) === Number(dados_denuncia.usuarioInstituicao_cpf));
         const instituicao = usuarioInstituicao
-            ? data.instituicao.find(i => Number(i.id) === Number(usuarioInstituicao.instituicao_id))
+            ? data.instituicoes.find(i => Number(i.id) === Number(usuarioInstituicao.instituicao_id))
             : null;
 
         const lista = document.getElementById("lista-checkpoints");
