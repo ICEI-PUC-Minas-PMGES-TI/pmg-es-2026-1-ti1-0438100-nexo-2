@@ -12,7 +12,7 @@
 // Página inicial de Login
 const LOGIN_URL = "/modulos/login/login.html";
 let RETURN_URL = "/modulos/login/index.html";
-const API_URL = '/usuarios';
+const API_URL = '/usuarios'; // ======== Alterar com o que for necessário para o backend ========
 
 // Objeto para o banco de dados de usuários baseado em JSON
 var db_usuarios = {};
@@ -50,7 +50,6 @@ function initLoginApp() {
     let pagina = window.location.pathname;
 
     if (pagina != LOGIN_URL) {
-        // ================== PÁGINA PROTEGIDA ==================
         // Salva a URL atual para redirecionar após login
         sessionStorage.setItem('returnURL', pagina);
         RETURN_URL = pagina;
@@ -68,7 +67,6 @@ function initLoginApp() {
             window.location.href = LOGIN_URL;
         }
     } else {
-        // ================== PÁGINA DE LOGIN ==================
         // Define a URL de retorno (página que o usuário tentou acessar)
         let returnURL = sessionStorage.getItem('returnURL');
         RETURN_URL = returnURL || RETURN_URL;
@@ -101,6 +99,7 @@ function carregarUsuarios(callback) {
 function loginUser(login, senha) {
     for (var i = 0; i < db_usuarios.length; i++) {
         var usuario = db_usuarios[i];
+        // ======== Alterar com o que for necessário para o backend ========
         if (login == usuario.login && senha == usuario.senha) {
             usuarioCorrente.id = usuario.id;
             usuarioCorrente.login = usuario.login;
@@ -117,6 +116,7 @@ function loginUser(login, senha) {
 function processaFormLogin(event) {
     event.preventDefault(); // Evita o reload da página
 
+    // ======== Alterar com o que for necessário para o backend ========
     const login = document.getElementById('username').value.trim();
     const senha = document.getElementById('password').value.trim();
 
@@ -139,6 +139,7 @@ function logoutUser() {
 }
 
 function addUser(nome, login, senha, email) {
+    // ======== Alterar com o que for necessário para o backend ========// ======== Alterar com o que for necessário para o backend ========
     let usuario = { "login": login, "senha": senha, "nome": nome, "email": email };
 
     fetch(API_URL, {
