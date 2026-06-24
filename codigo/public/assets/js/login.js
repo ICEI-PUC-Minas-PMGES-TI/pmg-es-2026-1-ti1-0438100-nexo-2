@@ -7,8 +7,7 @@
 // Autor: Rommel Vieira Carneiro (rommelcarneiro@gmail.com)
 // Data: 09/09/2024
 //
-// Código LoginApp  
-
+// Código LoginApp
 
 // Página inicial de Login
 const LOGIN_URL = "/modulos/login/login.html";
@@ -21,92 +20,148 @@ var db_usuarios = {};
 // Objeto para o usuário corrente
 var usuarioCorrente = {};
 
-// Inicializa a aplicação de Login
-function initLoginApp () {
+// ============================================================
+// FUNÇÃO PARA EXIBIR MENSAGENS (simples)
+// ============================================================
+function displayMessage(msg, tipo = 'info') {
+    const div = document.getElementById('mensagem');
+    if (!div) return;
+
+    // Remove classes anteriores (Bootstrap)
+    div.classList.remove('alert-success', 'alert-danger', 'alert-warning', 'alert-info', 'd-none');
+
+    // Mapeia o tipo para a classe do Bootstrap
+    const classes = {
+        success: 'alert-success',
+        error: 'alert-danger',
+        warning: 'alert-warning',
+        info: 'alert-info'
+    };
+    div.classList.add('alert', classes[tipo] || 'alert-info');
+
+    // Insere a mensagem
+    div.textContent = msg;
+
+    // Opcional: oculta automaticamente após 5 segundos
+    clearTimeout(div._timeout);
+    div._timeout = setTimeout(() => {
+        div.classList.add('d-none');
+    }, 5000);
+}
+
+// ============================================================
+// INICIALIZAÇÃO DA APLICAÇÃO
+// ============================================================
+function initLoginApp() {
     let pagina = window.location.pathname;
+
     if (pagina != LOGIN_URL) {
-        // CONFIGURA A URLS DE RETORNO COMO A PÁGINA ATUAL
+        // ================== PÁGINA PROTEGIDA ==================
+        // Salva a URL atual para redirecionar após login
         sessionStorage.setItem('returnURL', pagina);
         RETURN_URL = pagina;
 
-        // INICIALIZA USUARIOCORRENTE A PARTIR DE DADOS NO LOCAL STORAGE, CASO EXISTA
-        usuarioCorrenteJSON = sessionStorage.getItem('usuarioCorrente');
+        // Verifica se o usuário está logado
+        const usuarioCorrenteJSON = sessionStorage.getItem('usuarioCorrente');
         if (usuarioCorrenteJSON) {
-            usuarioCorrente = JSON.parse (usuarioCorrenteJSON);
+            usuarioCorrente = JSON.parse(usuarioCorrenteJSON);
+            // Atualiza informações do usuário na página (se houver)
+            document.addEventListener('DOMContentLoaded', function () {
+                showUserInfo('userInfo');
+            });
         } else {
+            // Não está logado → redireciona para o login
             window.location.href = LOGIN_URL;
         }
-
-        // REGISTRA LISTENER PARA O EVENTO DE CARREGAMENTO DA PÁGINA PARA ATUALIZAR INFORMAÇÕES DO USUÁRIO
-        document.addEventListener('DOMContentLoaded', function () {
-            showUserInfo ('userInfo');
-        });
-    }
-    else {
-        // VERIFICA SE A URL DE RETORNO ESTÁ DEFINIDA NO SESSION STORAGE, CASO CONTRARIO USA A PÁGINA INICIAL
+    } else {
+        // ================== PÁGINA DE LOGIN ==================
+        // Define a URL de retorno (página que o usuário tentou acessar)
         let returnURL = sessionStorage.getItem('returnURL');
-        RETURN_URL = returnURL || RETURN_URL
-        
-        // INICIALIZA BANCO DE DADOS DE USUÁRIOS
+        RETURN_URL = returnURL || RETURN_URL;
+
+        // Carrega os usuários do backend
         carregarUsuarios(() => {
             console.log('Usuários carregados...');
         });
+
+        // Configura a troca de versão (CPF/CNPJ/Município) após o DOM carregar
+        document.addEventListener('DOMContentLoaded', function () {
+            setupVersionToggle();
+        });
     }
-};
-
-
-function carregarUsuarios(callback) {
-    fetch(API_URL)
-    .then(response => response.json())
-    .then(data => {
-        db_usuarios = data;
-        callback ()
-    })
-    .catch(error => {
-        console.error('Erro ao ler usuários via API JSONServer:', error);
-        displayMessage("Erro ao ler usuários");
-    });
 }
 
-// Verifica se o login do usuário está ok e, se positivo, direciona para a página inicial
-function loginUser (login, senha) {
+// ============================================================
+// CARREGA USUÁRIOS DA API
+// ============================================================
+function carregarUsuarios(callback) {
+    fetch(API_URL)
+        .then(response => response.json())
+        .then(data => {
+            db_usuarios = data;
+            if (callback) callback();
+        })
+        .catch(error => {
+            console.error('Erro ao ler usuários via API JSONServer:', error);
+            displayMessage("Erro ao ler usuários", "error");
+        });
+}
 
-    // Verifica todos os itens do banco de dados de usuarios 
-    // para localizar o usuário informado no formulario de login
+// ============================================================
+// LOGIN
+// ============================================================
+function loginUser(login, senha) {
     for (var i = 0; i < db_usuarios.length; i++) {
         var usuario = db_usuarios[i];
-
-        // Se encontrou login, carrega usuário corrente e salva no Session Storage
         if (login == usuario.login && senha == usuario.senha) {
             usuarioCorrente.id = usuario.id;
             usuarioCorrente.login = usuario.login;
             usuarioCorrente.email = usuario.email;
             usuarioCorrente.nome = usuario.nome;
 
-            // Salva os dados do usuário corrente no Session Storage, mas antes converte para string
-            sessionStorage.setItem ('usuarioCorrente', JSON.stringify (usuarioCorrente));
-
-            // Retorna true para usuário encontrado
+            sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
             return true;
         }
     }
-
-    // Se chegou até aqui é por que não encontrou o usuário e retorna falso
     return false;
 }
 
-// Apaga os dados do usuário corrente no sessionStorage
-function logoutUser () {
-    sessionStorage.removeItem ('usuarioCorrente');
+// ============================================================
+// PROCESSADOR DO FORMULÁRIO DE LOGIN (chamado pelo onsubmit)
+// ============================================================
+function processaFormLogin(event) {
+    event.preventDefault(); // Evita o reload da página
+
+    const login = document.getElementById('username').value.trim();
+    const senha = document.getElementById('password').value.trim();
+
+    if (!login || !senha) {
+        displayMessage("Preencha todos os campos.", "warning");
+        return;
+    }
+
+    if (loginUser(login, senha)) {
+        // Login bem-sucedido → redireciona para a página inicial
+        window.location.href = RETURN_URL;
+    } else {
+        displayMessage("Usuário ou senha inválidos.", "error");
+    }
+}
+
+// ============================================================
+// LOGOUT
+// ============================================================
+function logoutUser() {
+    sessionStorage.removeItem('usuarioCorrente');
     window.location = LOGIN_URL;
 }
 
-function addUser (nome, login, senha, email) {
-
-    // Cria um objeto de usuario para o novo usuario 
+// ============================================================
+// REGISTRO DE NOVO USUÁRIO
+// ============================================================
+function addUser(nome, login, senha, email) {
     let usuario = { "login": login, "senha": senha, "nome": nome, "email": email };
 
-    // Envia dados do novo usuário para ser inserido no JSON Server
     fetch(API_URL, {
         method: 'POST',
         headers: {
@@ -116,17 +171,19 @@ function addUser (nome, login, senha, email) {
     })
         .then(response => response.json())
         .then(data => {
-            // Adiciona o novo usuário na variável db_usuarios em memória
-            db_usuarios.push (usuario);
-            displayMessage("Usuário inserido com sucesso");
+            db_usuarios.push(usuario);
+            displayMessage("Usuário inserido com sucesso", "success");
         })
         .catch(error => {
             console.error('Erro ao inserir usuário via API JSONServer:', error);
-            displayMessage("Erro ao inserir usuário");
+            displayMessage("Erro ao inserir usuário", "error");
         });
 }
 
-function showUserInfo (element) {
+// ============================================================
+// EXIBE INFORMAÇÕES DO USUÁRIO NA PÁGINA
+// ============================================================
+function showUserInfo(element) {
     var elemUser = document.getElementById(element);
     if (elemUser) {
         elemUser.innerHTML = `${usuarioCorrente.nome} (${usuarioCorrente.login}) 
@@ -134,5 +191,66 @@ function showUserInfo (element) {
     }
 }
 
-// Inicializa as estruturas utilizadas pelo LoginApp
-initLoginApp ();
+// ============================================================
+// CONTROLE DE VERSÃO (pessoal / empresa / prefeitura)
+// ============================================================
+const VERSION_CONFIG = {
+    pessoal: {
+        label: 'CPF:',
+        placeholder: 'Digite seu CPF'
+    },
+    empresa: {
+        label: 'CNPJ:',
+        placeholder: 'Digite seu CNPJ'
+    },
+    prefeitura: {
+        label: 'Município:',
+        placeholder: 'Digite o município'
+    }
+};
+
+const DEFAULT_VERSION = 'empresa';
+
+function setLoginVersion(version) {
+    const label = document.querySelector('label[for="username"]');
+    const input = document.getElementById('username');
+    if (!label || !input) return;
+
+    const config = VERSION_CONFIG[version];
+    if (config) {
+        label.textContent = config.label;
+        input.placeholder = config.placeholder;
+    } else {
+        label.textContent = 'Login:';
+        input.placeholder = '';
+    }
+    sessionStorage.setItem('versaoLogin', version);
+}
+
+function setupVersionToggle() {
+    const links = document.querySelectorAll('.top-links a');
+    if (!links.length) return;
+
+    links.forEach(link => {
+        link.addEventListener('click', function (e) {
+            e.preventDefault();
+            const texto = this.textContent.trim().toLowerCase();
+
+            if (texto.includes('pessoal')) {
+                setLoginVersion('pessoal');
+            } else if (texto.includes('empresa')) {
+                setLoginVersion('empresa');
+            } else if (texto.includes('prefeitura')) {
+                setLoginVersion('prefeitura');
+            }
+        });
+    });
+
+    const storedVersion = sessionStorage.getItem('versaoLogin') || DEFAULT_VERSION;
+    setLoginVersion(storedVersion);
+}
+
+// ============================================================
+// INICIALIZA
+// ============================================================
+initLoginApp();
