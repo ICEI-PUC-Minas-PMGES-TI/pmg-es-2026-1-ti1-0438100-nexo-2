@@ -2008,11 +2008,13 @@ function converterDenuncia(
       denuncia.local?.longitude
     );
 
-  const titulo =
-    denuncia.titulo ||
-    denuncia.descricaoDenuncia
-      ?.substring(0, 40) ||
-    "Denúncia";
+  const nomeCategoria = categoriaEncontrada?.nome || "Denúncia";
+    const logradouro = denuncia.local?.logradouro || "";
+    const numero = denuncia.local?.numero || "";
+
+    const titulo = logradouro
+        ? `${nomeCategoria} na ${logradouro}${numero ? ", " + numero : ""}`
+        : nomeCategoria;
 
   return {
     id:

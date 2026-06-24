@@ -41,8 +41,8 @@
       "progresso": [
         {
           "etapa": "Denúncia aceita",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -50,8 +50,8 @@
         },
         {
           "etapa": "Equipe enviada ao local",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -59,8 +59,8 @@
         },
         {
           "etapa": "Planejamento e previsões",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -68,8 +68,8 @@
         },
         {
           "etapa": "Manutenção em andamento",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -77,8 +77,8 @@
         },
         {
           "etapa": "Obra finalizada",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -123,21 +123,12 @@
       "afetados": 1,
       "custo": "",
       "notaCusto": "",
-      "comentarios": [
-        {
-          "id": 1780675354546,
-          "usuario": 12345678900,
-          "mensagem": "Também sou afetada por isso, sempre!",
-          "data": "05/06/2026",
-          "hora": "13:02",
-          "editado": false
-        }
-      ],
+      "comentarios": [],
       "progresso": [
         {
           "etapa": "Denúncia aceita",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -145,8 +136,8 @@
         },
         {
           "etapa": "Equipe enviada ao local",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -154,8 +145,8 @@
         },
         {
           "etapa": "Planejamento e previsões",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -163,8 +154,8 @@
         },
         {
           "etapa": "Manutenção em andamento",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -172,8 +163,8 @@
         },
         {
           "etapa": "Obra finalizada",
-          "concluida": false,
           "tipo": "fixo",
+          "concluida": false,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -1491,33 +1482,6 @@
       "hora": "09:12",
       "editada": false,
       "id": "2BZuafDG0KQ"
-    },
-    {
-      "denunciaId": 2,
-      "usuario": 12345678902,
-      "mensagem": "Bom dia! Vamos iniciar?",
-      "data": "05/06/2026",
-      "hora": "09:59",
-      "editada": false,
-      "id": "PfKg5aSJQ58"
-    },
-    {
-      "denunciaId": 2,
-      "usuario": 45687612300,
-      "mensagem": "Bom dia, vamos sim!",
-      "data": "05/06/2026",
-      "hora": "10:02",
-      "editada": false,
-      "id": "w9ldlDMQ5VU"
-    },
-    {
-      "denunciaId": 2,
-      "usuario": 98723456700,
-      "mensagem": "Agora é comigo!",
-      "data": "05/06/2026",
-      "hora": "10:02",
-      "editada": false,
-      "id": "x2yhBU9ou8g"
     }
   ],
   "instituicoes": [

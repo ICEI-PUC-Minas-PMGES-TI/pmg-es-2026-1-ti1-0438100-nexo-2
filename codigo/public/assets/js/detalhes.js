@@ -45,6 +45,9 @@ async function init() {
     const btn_avanca = document.getElementById("btn-avanca");
     const btn_retorna = document.getElementById("btn-retorna");
     const btn_editar = document.getElementById("btn-editar-info");
+    const modalEditor = document.getElementById("modal-editor");
+    const iframeEditor = document.getElementById("iframe-editor");
+    const btnFecharEditor = document.getElementById("btn-fechar-editor");
     const btn_confirma = document.getElementById("btn-confirm");
     const btn_acompanha = document.getElementById("btn-follow");
     const btn_desacompanha = document.getElementById("btn-unfollow");
@@ -655,6 +658,13 @@ async function init() {
     }
 
     //-----------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
+    window.addEventListener('message', (e) => {
+        if (e.data.tipo === 'fechar-editor') {
+            document.getElementById('modal-editor').style.display = 'none';
+            location.reload();
+        }
+    });    
+    
     function getUltimoConcluido() {
         for (let i = checkpoints_denuncia.length - 1; i >= 0; i--) {
             if (checkpoints_denuncia[i].concluida) {
@@ -941,6 +951,11 @@ async function init() {
         btnExit.classList.add("d-none");
         sendMsg.classList.add("d-none");
         sendCom.classList.add("d-none");
+        dados_denuncia.notaOrgao = "";
+        dados_denuncia.notaCusto = "";
+        nota_descricao.innerHTML = "";
+        nota_descricao.classList.add("d-none");
+        document.getElementById("nota-descricao").classList.add("d-none");
 
         await calcularStatus();
         renderizar_checkpoints();
@@ -1126,5 +1141,33 @@ async function init() {
         inputChat.value = "";
         loadMessages();
     })
+
+    btn_editar.addEventListener("click", () => {
+        iframeEditor.src = `/modulos/edicao_denuncia/editor.html?id=${denunciaId}`;
+        modalEditor.classList.remove("d-none");
+    });
+
+    btnFecharEditor.addEventListener("click", fecharEditor);
+
+    modalEditor.addEventListener("click", (e) => {
+        if (e.target === modalEditor) {
+            fecharEditor();
+        }
+    });
+
+    function fecharEditor() {
+        modalEditor.classList.add("d-none");
+        iframeEditor.src = "";
+    }
+
+    window.addEventListener("message", async (event) => {
+
+        if (event.data?.tipo === "editor-fechado") {
+
+            fecharEditor();
+            location.reload();
+        }
+
+    });
 }
 init();
