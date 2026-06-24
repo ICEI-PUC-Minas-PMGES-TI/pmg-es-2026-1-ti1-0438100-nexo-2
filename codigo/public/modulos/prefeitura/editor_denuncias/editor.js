@@ -44,6 +44,7 @@ function preencherModal(denuncia){
     denuncia.checkpoints.forEach((checkpoint, indice) =>{
         lista.appendChild(criarItemCheckpoint(checkpoint, indice));
     });
+    atualizarBotaoCheckpoint();
 }
 function criarItemCheckpoint(checkpoint, indice){
     const item = document.createElement('li');
@@ -122,7 +123,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
         checkpoints.push({
             nome: label.textContent,
             descricao: item.dataset.descricao || '',
-            tipo: item.dataset.tipo || 'fixo',
+            tipo: item.dataset.tipo || 'fixo', 
             concluido: input.checked
         });
     });
@@ -140,7 +141,7 @@ document.querySelector('.btn-salvar').addEventListener('click', function(){
     })
         .then(response => response.json())
         .then(() => {
-            alteracoesPendentes = false
+            alteracoesPendentes = false;
             alert('Denúncia atualizada com sucesso!');
         })
         .finally(() =>{
@@ -171,8 +172,25 @@ document.getElementById('btn-confirmar-checkpoint').addEventListener('click', fu
         alert('Preencha o nome e a descrição do checkpoint!');
         return;
     }
+    const itens = document.querySelectorAll('.lista-checkpoints li');
+    if (itens.length >= 7){
+        alert('Limite de 7 checkpoints atingido!');
+        return;
+    }
 
-    const posicaoSelecionada = parseInt(document.getElementById('checkpoint-posicao').value);
+    let posicaoSelecionada = parseInt(document.getElementById('checkpoint-posicao').value);
+
+    const checkpointsVisiveis = Array.from(itens);
+    const ultimoConcluido = checkpointsVisiveis.reduce((ultimo, item, indice) =>{
+        const input = item.querySelector('input[type="checkbox"]');
+        return input.checked ? indice : ultimo;
+    }, -1);
+
+    if (ultimoConcluido !== -1 && posicaoSelecionada < ultimoConcluido){
+        alert('Posição inválida. O checkpoint será inserido após o último concluído.');
+        posicaoSelecionada = ultimoConcluido;
+    }
+
     const novoCheckpoint = {nome, descricao, concluido: false, tipo : 'customizado'};
 
     fetch(`http://localhost:3000/denuncias/${id}`)
@@ -204,6 +222,7 @@ function adicionarCheckpointNaLista(checkpoint, posicaoSelecionada){
         const itemReferencia = lista.children[posicaoSelecionada];
         itemReferencia.insertAdjacentElement('afterend', novoItem);
     }
+    atualizarBotaoCheckpoint();
 }
 
 let alteracoesPendentes = false;
@@ -218,3 +237,15 @@ window.addEventListener('beforeunload', (e) =>{
         e.preventDefault();
     }
 })
+
+function atualizarBotaoCheckpoint(){
+    const total = document.querySelectorAll('.lista-checkpoints li').length;
+    const botao = document.querySelector('main .btn-checkpoint');
+    if (total >= 7){
+        botao.disabled = true;
+        botao.title = 'Limite de 7 checkpoints atingido';
+    } else {
+        botao.disabled = false;
+        botao.title = '';
+    }
+}
