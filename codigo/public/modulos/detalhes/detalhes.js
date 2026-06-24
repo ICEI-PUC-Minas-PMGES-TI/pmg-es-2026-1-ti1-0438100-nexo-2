@@ -1,6 +1,6 @@
 const BASE_URL = "http://localhost:3000";
 const params = new URLSearchParams(window.location.search);
-const denunciaId = Number(params.get("id"));
+const denunciaId = params.get("id");
 
 async function init() {
     // Busca todos os objetos
@@ -66,6 +66,7 @@ async function init() {
     const nav4 = document.querySelectorAll(".nav-link-4")
     const footerlink4 = document.querySelector(".footer-link-4")
     const iconlink2 = document.querySelector(".icon-link-2")
+    const iconNotaCusto = document.getElementById("icon-nota-custo");
 
     // Função auxiliar para persistir alterações na denúncia
     async function salvarDenuncia() {
@@ -77,6 +78,10 @@ async function init() {
     }
 
     async function concluirDenuncia() {
+        const todosConcluidos = checkpoints_denuncia.every(c => c.concluida);
+        if (!todosConcluidos){
+            return;
+        }
         dados_denuncia.status_id = 1;
         await salvarDenuncia();
         atualiza_info();
@@ -86,7 +91,7 @@ async function init() {
     }
 
     //Referências aos objetos e chaves estrangeiras do JSON
-    const dados_denuncia = data.denuncias.find(d => Number(d.id) === denunciaId);
+    const dados_denuncia = data.denuncias.find(d => String(d.id) === denunciaId);
     const cpfLogado = data.usuarioLogado.cpf;
     const imagens_denuncia = dados_denuncia.imagens;
     const checkpoints_denuncia = dados_denuncia.progresso;
@@ -178,7 +183,9 @@ async function init() {
         }
         for (let i = inicio_img; i < (inicio_img + qtd); i++){
             const div_visivel = document.getElementById(`img${i}`);
-            div_visivel.classList.remove("d-none");
+            if (div_visivel) {
+                div_visivel.classList.remove("d-none");
+            }
         }
     };
     atualiza_img();
@@ -210,28 +217,43 @@ async function init() {
     });
 
     //-----------------------------------------------------COMENTÁRIOS---------------------------------------------------------------//
-    function visibilidade_comentario(){    
-        if (tipoUsuario === 'morador'){
-            const moradorLogado = usuariosMoradores.find(u => Number(u.cpf) === Number(cpfLogado));
-            if (!moradorLogado.denuncias_acompanhadas.includes(String(denunciaId))){
-                sendCom.classList.add("d-none")
-            } else {
-                sendCom.classList.remove("d-none")
-            }
-        } else if (Number(cpfLogado) !== Number(dados_denuncia.usuarioInstituicao_cpf)){
-            sendCom.classList.add("d-none")
+    async function visibilidade_comentario(){  
+        const ehInstituicaoResponsavel = tipoUsuario === "instituicao" && Number(cpfLogado) === Number(dados_denuncia.usuarioInstituicao_cpf);
+        const ehMorador = tipoUsuario === "morador";
+
+        if (ehInstituicaoResponsavel) {
+            sendCom.classList.remove("d-none");
+            return;
+        }  
+        if (!ehMorador) {
+            sendCom.classList.add("d-none");
+            return;
+        }
+        const perfis = await getPerfisMoradores();
+        const perfil = perfis.find(
+            p => Number(p.usuarioMorador_cpf) === Number(cpfLogado)
+        );
+
+        const acompanhadas = perfil?.denuncias_acompanhadas ?? [];
+
+        const ehDenunciante = Number(cpfLogado) === Number(dados_denuncia.denunciante);
+        const estaAcompanhando = acompanhadas.includes(String(denunciaId));
+
+        if (ehDenunciante || estaAcompanhando){
+            sendCom.classList.remove("d-none");
         } else {
-            sendCom.classList.remove("d-none")
+            sendCom.classList.add("d-none");
         }
     }
 
-    visibilidade_comentario()
+    await visibilidade_comentario()
 
     let editingComId = null;
     let editingCom = false
     async function carregaComentarios() {
-        const denunciaAtualizada = await fetch(`${BASE_URL}/denuncias/${denunciaId}`).then(res => res.json());
-        const comentarios = denunciaAtualizada.comentarios
+        const perfisMoradores = await getPerfisMoradores();
+        const perfisInstituicoes = await getPerfisInstituicoes();
+        const comentarios = dados_denuncia.comentarios;
         conteudo_comentarios.innerHTML = ""
         if (comentarios.length === 0) {
             const msg = document.createElement("p");
@@ -246,9 +268,9 @@ async function init() {
             if (!usuario) {
                 usuario = usuariosInstituicoes.find(u => Number(u.cpf) === Number(comentario.usuario));
             }
-            let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(comentario.usuario));
+            let infoPerfil = perfisMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(comentario.usuario));
             if (!infoPerfil) {
-                infoPerfil = infoPerfilInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(comentario.usuario));
+                infoPerfil = perfisInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(comentario.usuario));
             }
             const card_comentario = document.createElement("div");
             card_comentario.classList.add("comentario");
@@ -310,19 +332,11 @@ async function init() {
                 if (!confirmar) {
                     return;
                 }
-                denunciaAtualizada.comentarios = denunciaAtualizada.comentarios.filter(c => c.id !== comentario.id);
-
-                await fetch(`${BASE_URL}/denuncias/${denunciaId}`, {
-                    method: "PATCH",
-                    headers: {
-                        "Content-Type": "application/json"
-                    },
-                    body: JSON.stringify({
-                        comentarios: denunciaAtualizada.comentarios
-                    })
-                });
+                dados_denuncia.comentarios = dados_denuncia.comentarios.filter(c => c.id !== comentario.id);
+                await salvarDenuncia();
                 carregaComentarios();
             })
+
             editCom.addEventListener("click", () => {
                 if (editingCom === false){
                     inputComentarios.value = comentario.mensagem;
@@ -351,9 +365,11 @@ async function init() {
     async function loadMessages() {
         const res = await fetch(url_DataMsg);
         const messages = await res.json();
+        const perfisMoradores = await getPerfisMoradores();
+        const perfisInstituicoes = await getPerfisInstituicoes();
         const areaMsg = document.getElementById("area-msg");
         areaMsg.innerHTML = "";
-        const mensagensDaDenuncia = messages.filter(msg => Number(msg.denunciaId) === Number(denunciaId));
+        const mensagensDaDenuncia = messages.filter(msg => String(msg.denunciaId) === String(denunciaId));
         if (mensagensDaDenuncia.length === 0) {
             const msg = document.createElement("p");
             msg.textContent = "Nenhuma mensagem enviada.";
@@ -362,14 +378,14 @@ async function init() {
             return;
         }
         mensagensDaDenuncia.forEach(msg => {
-            if (Number(msg.denunciaId) === Number(denunciaId)) {
+            if (String(msg.denunciaId) === String(denunciaId)) {
                 let user = usuariosMoradores.find(u => Number(u.cpf) === Number(msg.usuario));
                 if (!user) {
                     user = usuariosInstituicoes.find(u => Number(u.cpf) === Number(msg.usuario));
                 };
-                let infoPerfil = infoPerfilMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
+                let infoPerfil = perfisMoradores.find(u => Number(u.usuarioMorador_cpf) === Number(user.cpf));
                 if (!infoPerfil) {
-                    infoPerfil = infoPerfilInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(user.cpf));
+                    infoPerfil = perfisInstituicoes.find(u => Number(u.usuarioInstituicao_cpf) === Number(user.cpf));
                 }
                 const div = document.createElement("div")
                 div.classList.add("d-flex", "gap-2", "ps-2", "mb-3")
@@ -508,6 +524,7 @@ async function init() {
         const instituicao = usuarioInstituicao
             ? data.instituicao.find(i => Number(i.id) === Number(usuarioInstituicao.instituicao_id))
             : null;
+
         document.getElementById("title-details").textContent = `${categoria_denuncia.nome} na ${dados_denuncia.local.logradouro}, ${dados_denuncia.local.numero}`;
         document.getElementById("category").textContent = `Categoria: ${categoria_denuncia.nome}`;
         document.getElementById("urgency").textContent = `Urgência: ${urgencia_denuncia.tipo}`;
@@ -517,25 +534,36 @@ async function init() {
         prazo.innerHTML = `Prazo estimado:`;
         custo.innerHTML = `Custo estimado:`;
         afetados.innerHTML = `Pessoas afetadas: ${dados_denuncia.afetados}`;
-        //Alterações quando assume denúncia e quando define prazo e custo    
-        if (checkpoints_denuncia[0].concluida === true) {
+
+        const primeiro = checkpoints_denuncia[0];
+        const ultimo = checkpoints_denuncia.at(-1);
+        const planejamento = checkpoints_denuncia.find(c =>
+            c.etapa === "Planejamento e previsões"
+        );
+
+        // Responsável e instituição
+        if (primeiro?.concluida && usuarioInstituicao && instituicao) {
             document.getElementById("resp").textContent = `Responsável: ${usuarioInstituicao.nome_usuario}`;
             document.getElementById("organ").textContent = `Instituição: ${instituicao.nome}`;
-            if (checkpoints_denuncia[2].concluida === true) {
-                prazo.innerHTML = `Prazo estimado: ${dados_denuncia.prazo}`;
-                custo.innerHTML = `Custo estimado: ${dados_denuncia.custo}`;
-            };
         }
-        // Controla o status da denúncia
-        if (dados_denuncia.status_id !== 1) {
-            if (checkpoints_denuncia[4].concluida === true) {
-                dados_denuncia.status_id = 4
-            } else if (checkpoints_denuncia[0].concluida === true) {
-                dados_denuncia.status_id = 2
+
+        // Prazo e custo
+        if (planejamento?.concluida) {
+            prazo.innerHTML = `Prazo estimado: ${dados_denuncia.prazo}`;
+            custo.innerHTML = `Custo estimado: ${dados_denuncia.custo}`;
+            if (dados_denuncia.notaCusto && dados_denuncia.notaCusto.trim() !== "") {
+                iconNotaCusto.classList.remove("d-none");
+                iconNotaCusto.setAttribute("title", dados_denuncia.notaCusto);
+                const tooltipExistente = bootstrap.Tooltip.getInstance(iconNotaCusto);
+                if (tooltipExistente) {
+                    tooltipExistente.setContent({".tooltip-inner": dados_denuncia.notaCusto});
+                } else {
+                    new bootstrap.Tooltip(iconNotaCusto);
+                }
             } else {
-                dados_denuncia.status_id = 3
+                iconNotaCusto.classList.add("d-none");
             }
-        };
+        }
 
         //Atualiza as informações sobre status (chave estrangeira)
         const status_denuncia = data.status.find(s => Number(s.id) === Number(dados_denuncia.status_id));
@@ -543,20 +571,25 @@ async function init() {
 
         //Status da denúncia e a implicação nos botões
         if (dados_denuncia.status_id === 1) {
+
             btnStart.classList.add("d-none")
             btnExit.classList.add("d-none")
             btn_avanca.classList.add("d-none");
             btn_retorna.classList.add("d-none");
             btn_editar.classList.add("d-none");
             btn_confirma.classList.add("d-none")
+
         } else if (dados_denuncia.status_id === 2 && tipoUsuario === "instituicao") {
                 if (Number(cpfLogado) === Number(dados_denuncia.usuarioInstituicao_cpf)) {
+
                     btnStart.classList.add("d-none")
                     btnExit.classList.remove("d-none")
                     btn_avanca.classList.remove("d-none");
                     btn_retorna.classList.remove("d-none");
                     btn_editar.classList.remove("d-none")
+
                 } else {
+
                     // Outra instituição: esconde tudo
                     btnStart.classList.add("d-none")
                     btnExit.classList.add("d-none")
@@ -565,20 +598,19 @@ async function init() {
                     btn_editar.classList.add("d-none")
                 }
         } else if (dados_denuncia.status_id === 4 && tipoUsuario === "instituicao") {
+            btnStart.classList.add("d-none")
+            btnExit.classList.add("d-none")
+            btn_avanca.classList.add("d-none");
             if (Number(cpfLogado) === Number(dados_denuncia.usuarioInstituicao_cpf)) {
-                btnStart.classList.add("d-none")
-                btnExit.classList.add("d-none")
-                btn_avanca.classList.add("d-none");
                 btn_retorna.classList.remove("d-none");
-                btn_editar.classList.add("d-none")
+
             } else {
-                btnStart.classList.add("d-none")
-                btnExit.classList.add("d-none")
-                btn_avanca.classList.add("d-none");
                 btn_retorna.classList.add("d-none");
-                btn_editar.classList.add("d-none")
             }
+            btn_editar.classList.add("d-none")
+
         } else if (dados_denuncia.status_id === 3 && tipoUsuario === "instituicao") {
+
             btnStart.classList.remove("d-none")
             btnExit.classList.add("d-none")
             btn_avanca.classList.add("d-none");
@@ -599,11 +631,13 @@ async function init() {
         btn_avanca.classList.add("d-none");
         btn_retorna.classList.add("d-none");
         const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
-        if (usuario.cpf === dados_denuncia.denunciante){
+        const acompanhadas = usuario?.denuncias_acompanhadas ?? [];
+        const ehDenunciante = Number(cpfLogado) === Number(dados_denuncia.denunciante);
+        if (ehDenunciante){
             btn_acompanha.classList.add("d-none")
             btn_desacompanha.classList.add("d-none")
         } else {
-            if (usuario.denuncias_acompanhadas.includes(dados_denuncia.id)) {
+            if (acompanhadas.includes(String(dados_denuncia.id))) {
                 btn_acompanha.classList.add("d-none")
                 btn_desacompanha.classList.remove("d-none")
             } else {
@@ -611,16 +645,45 @@ async function init() {
                 btn_desacompanha.classList.add("d-none")
             }
         }
-
-        if (checkpoints_denuncia[4].concluida === true && cpfLogado === dados_denuncia.denunciante) {
+        const ultimo = checkpoints_denuncia.at(-1);
+        if (ultimo?.concluida && ehDenunciante) {
             btn_confirma.classList.remove("d-none");
-        };
+        }
     } else {
         btn_acompanha.classList.add("d-none")
         btn_desacompanha.classList.add("d-none")
     }
 
     //-----------------------------------------------ANDAMENTO DA DENÚNCIA----------------------------------------------------------//
+    function getUltimoConcluido() {
+        for (let i = checkpoints_denuncia.length - 1; i >= 0; i--) {
+            if (checkpoints_denuncia[i].concluida) {
+                return i;
+            }
+        }
+        return -1;
+    }
+    function getProximoCheckpoint() {
+        return checkpoints_denuncia.findIndex(c => !c.concluida);
+    }
+
+    async function calcularStatus() {
+        const primeiro = checkpoints_denuncia[0];
+        const ultimo = checkpoints_denuncia.at(-1);
+        const todosMenosUltimoConcluidos = checkpoints_denuncia.slice(0, -1).every(c => c.concluida);
+
+        if (dados_denuncia.status_id === 1) {
+            return;
+        }
+        if (ultimo?.concluida) {
+            dados_denuncia.status_id = 4;
+        } else if (primeiro?.concluida) {
+            dados_denuncia.status_id = 2;
+        } else {
+            dados_denuncia.status_id = 3;
+        }
+        await salvarDenuncia();
+    }
 
     //Função para atualizar o status dos checkpoints da denúncia
     function renderizar_checkpoints() {
@@ -628,107 +691,116 @@ async function init() {
         const instituicao = usuarioInstituicao
             ? data.instituicao.find(i => Number(i.id) === Number(usuarioInstituicao.instituicao_id))
             : null;
-        //Nomeia os checkpoints
-        for (let i = 0; i < (checkpoints_denuncia.length); i++) {
-            document.querySelector(`#check${i + 1} span`).textContent = `${checkpoints_denuncia[i].etapa} | `;
-        };
 
-        for (let i = 0; i < (checkpoints_denuncia.length); i++) {
-            const checkpoint_atual = document.querySelector(`#check${i + 1}`);
-            if (checkpoints_denuncia[i].concluida === true) {
-                document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "black");
-                checkpoint_atual.classList.remove("bg-ff5900");
-                checkpoint_atual.classList.remove("rounded-5");
-                checkpoint_atual.classList.remove("pt-1");
-                checkpoint_atual.classList.remove("pb-2");
-                checkpoint_atual.classList.remove("px-2");
-                checkpoint_atual.classList.remove("me-2");
-                checkpoint_atual.classList.remove("my-2");
-                checkpoint_atual.classList.remove("text-light");
-                document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "black");
-            };
-            if (checkpoints_denuncia[i].concluida === false) {
-                if ((i > 0) && (checkpoints_denuncia[i - 1].concluida === true)) {
-                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "white");
-                    checkpoint_atual.classList.add("bg-ff5900");
-                    checkpoint_atual.classList.add("rounded-5");
-                    checkpoint_atual.classList.add("pt-1");
-                    checkpoint_atual.classList.add("pb-2");
-                    checkpoint_atual.classList.add("px-2");
-                    checkpoint_atual.classList.add("me-2");
-                    checkpoint_atual.classList.add("my-2");
-                    checkpoint_atual.classList.add("text-light");
-                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "white");
-                } else {
-                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("fill", "white");
-                    checkpoint_atual.classList.remove("bg-ff5900");
-                    checkpoint_atual.classList.remove("rounded-5");
-                    checkpoint_atual.classList.remove("pt-1");
-                    checkpoint_atual.classList.remove("pb-2");
-                    checkpoint_atual.classList.remove("px-2");
-                    checkpoint_atual.classList.remove("me-2");
-                    checkpoint_atual.classList.remove("my-2");
-                    checkpoint_atual.classList.remove("text-light");
-                    document.querySelector(`#check${i + 1} svg circle`).setAttribute("stroke", "black");
-                };
-            };
+        const lista = document.getElementById("lista-checkpoints");
+        lista.innerHTML = "";
 
-            const link = document.querySelector(`#check${i + 1} a`);
-            // Renderiza arquivos do progresso
-            if ((checkpoints_denuncia[i].arquivo.nome !== "") && (checkpoints_denuncia[i].concluida === true)) {
-                link.href = checkpoints_denuncia[i].arquivo.url;
-                link.textContent = checkpoints_denuncia[i].arquivo.nome;
-                link.target = "_blank";
+        checkpoints_denuncia.forEach((checkpoint, i) => {
+            const li = document.createElement("li");
+            li.id = `check${i + 1}`;
+            li.classList.add("d-flex", "align-items-center");
+
+            const svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
+            svg.setAttribute("width", "20px");
+            svg.setAttribute("height", "20px");
+            svg.setAttribute("viewBox", "0 0 512 512");
+            svg.classList.add("me-2");
+
+            const circle = document.createElementNS("http://www.w3.org/2000/svg", "circle");
+            circle.setAttribute("cx", "256");
+            circle.setAttribute("cy", "256");
+            circle.setAttribute("r", "220");
+            circle.setAttribute("stroke-width", "25px");
+
+            const span = document.createElement("span");
+            const link = document.createElement("a");
+            span.textContent = `${checkpoint.etapa} | `;
+
+            const isConcluido = checkpoint.concluida;
+            const isAnteriorConcluido = i === 0 || checkpoints_denuncia[i - 1].concluida;
+
+            if (isConcluido) {
+                circle.setAttribute("fill", "black");
+                circle.setAttribute("stroke", "black");
+                li.classList.remove("bg-ff5900", "rounded-5", "pt-1", "pb-2", "px-2", "me-2", "my-2", "text-light");
+
+            } else if (isAnteriorConcluido) {
+                circle.setAttribute("fill", "white");
+                circle.setAttribute("stroke", "white");
+                li.classList.add("bg-ff5900", "rounded-5", "pt-1", "pb-2", "px-2", "me-2", "my-2", "text-light");
+
             } else {
-                link.href = "";
-                link.textContent = "";
-                link.target = "";
+                circle.setAttribute("fill", "white");
+                circle.setAttribute("stroke", "black");
+                li.classList.remove("bg-ff5900", "rounded-5", "pt-1", "pb-2", "px-2", "me-2", "my-2", "text-light");
             }
-        };
-        if (checkpoints_denuncia[0].concluida === true && usuarioInstituicao && instituicao) {
-            document.querySelector(`#check1 span`).textContent = `Denuncia aceita | ${usuarioInstituicao.nome_usuario}, ${instituicao.nome}`;
-        };
-    };
+
+            if (isConcluido && checkpoint.arquivo?.nome) {
+                link.href = checkpoint.arquivo.url;
+                link.textContent = checkpoint.arquivo.nome;
+                link.download = checkpoint.arquivo.nome;
+                link.removeAttribute("target");
+            } else {
+                link.textContent = "";
+                link.removeAttribute("href");
+                link.removeAttribute("download");
+                link.removeAttribute("target");
+            }
+            if (i === 0 && isConcluido && usuarioInstituicao && instituicao) {
+                span.textContent = `Denúncia aceita | ${usuarioInstituicao.nome_usuario}, ${instituicao.nome}`;
+            }
+            
+            svg.appendChild(circle);
+            li.appendChild(svg);
+            li.appendChild(span);
+            li.appendChild(link);
+            lista.appendChild(li);
+        });
+    }
 
     // Função da lógica da barra de progresso dos checkpoints da denúncia
     function renderiza_progresso() {
-        let qt_concluidas = 0;
-        for (let j = 1; j < checkpoints_denuncia.length; j++) {
-            if (checkpoints_denuncia[j].concluida == true) {
-                qt_concluidas += 1;
-            };
-        };
-        let porcentagem = qt_concluidas / (checkpoints_denuncia.length - 1) * 100;
+        const totalEtapas = checkpoints_denuncia.length - 1;
+        if (totalEtapas <= 0) {
+            progresso.style.width = "0%";
+            return;
+        }
+        const concluidas = checkpoints_denuncia.slice(1).filter(c => c.concluida).length;
+        const porcentagem = (concluidas / totalEtapas) * 100;
         progresso.style.width = `${porcentagem}%`;
     };
 
     renderizar_checkpoints();
     atualiza_info();
     renderiza_progresso();
+    await atualizarBotoesAcompanhamento();
 
     //Lógica do botão de avança checkpoint + anexa arquivo + modal de custo e prazo
     fade.addEventListener("click", async () => {
         modal_previsao.classList.add("d-none");
         fade.classList.add("d-none");
         modal_avaliacao.classList.add("d-none");
-        if(checkpoints_denuncia[3].concluida === true){
+        const ultimo = checkpoints_denuncia.at(-1);
+        if (ultimo?.concluida) {
             await concluirDenuncia();
         }
-
     });
-    document.getElementById("btn-avanca").addEventListener("click", () => {
-        if (checkpoints_denuncia[4].concluida === false) {
-            if (checkpoints_denuncia[0].concluida === false) {
-                return;
-            }
 
-            if (checkpoints_denuncia[1].concluida === true && checkpoints_denuncia[2].concluida === false) {
-                modal_previsao.classList.remove("d-none");
-                fade.classList.remove("d-none");
-            } else {
-                fileInput.click();
-            };
-        };
+    btn_avanca.addEventListener("click", () => {
+        const proximo = getProximoCheckpoint();
+        if (proximo === -1) {
+            return;
+        }
+        if (proximo === 0) {
+            return;
+        }
+        const checkpoint = checkpoints_denuncia[proximo];
+        if (checkpoint.etapa === "Planejamento e previsões") {
+            modal_previsao.classList.remove("d-none");
+            fade.classList.remove("d-none");
+        } else {
+            fileInput.click();
+        }
     });
 
     inputCost.addEventListener("input", (e) => {
@@ -764,19 +836,35 @@ async function init() {
         if (!arquivo) {
             return;
         };
-        for (let i = 0; i < (checkpoints_denuncia.length); i++) {
-            if ((checkpoints_denuncia[i].concluida === false) && (checkpoints_denuncia[0].concluida === true)) {
-                checkpoints_denuncia[i].concluida = true;
-                const UrlArquivo = URL.createObjectURL(arquivo);
-                dados_denuncia.progresso[i].arquivo.url = UrlArquivo
-                dados_denuncia.progresso[i].arquivo.nome = arquivo.name
-                break;
-            };
-        };
-        await salvarDenuncia();
+        const LIMITE = 200 * 1024;
+        if (arquivo.size > LIMITE) {
+            alert("O arquivo deve ter no máximo 200 KB.");
+            fileInput.value = "";
+            return;
+        }
+        const base64 = await new Promise((resolve, reject) => {
+            const reader = new FileReader();
+            reader.onload = () => resolve(reader.result);
+            reader.onerror = () => reject("Erro ao ler o arquivo.");
+            reader.readAsDataURL(arquivo);
+        });
+
+        const proximoCheckpoint = checkpoints_denuncia.find((c, i) =>
+            i > 0 && c.concluida === false && checkpoints_denuncia[0].concluida === true
+        );
+        if (!proximoCheckpoint){
+            return;
+        }
+
+        proximoCheckpoint.concluida = true;
+        proximoCheckpoint.arquivo.url = base64;
+        proximoCheckpoint.arquivo.nome = arquivo.name;
+
+        await calcularStatus();
         renderizar_checkpoints();
         renderiza_progresso();
         atualiza_info();
+        fileInput.value = "";
     });
 
     form_aval.addEventListener("submit", async (event) => {
@@ -809,16 +897,16 @@ async function init() {
     });
 
     // Lógica do botão retorna checkpoint + remove arquivo
-    document.getElementById("btn-retorna").addEventListener("click", async () => {
-        for (let i = 0; i < (checkpoints_denuncia.length); i++) {
-            if ((checkpoints_denuncia[i].concluida === true) && (i === 4 || (checkpoints_denuncia[i + 1].concluida === false)) && (checkpoints_denuncia[0].concluida === true) && (i != 0)) {
-                checkpoints_denuncia[i].concluida = false;
-                checkpoints_denuncia[i].arquivo.url = "";
-                checkpoints_denuncia[i].arquivo.nome = "";
-                break;
-            };
-        };
-        await salvarDenuncia();
+    btn_retorna.addEventListener("click", async () => {
+        const ultimo = getUltimoConcluido();
+        if (ultimo <= 0) {
+            return;
+        }
+        checkpoints_denuncia[ultimo].concluida = false;
+        checkpoints_denuncia[ultimo].arquivo.url = "";
+        checkpoints_denuncia[ultimo].arquivo.nome = "";
+
+        await calcularStatus();
         renderizar_checkpoints();
         renderiza_progresso();
         atualiza_info();
@@ -828,26 +916,33 @@ async function init() {
     btnStart.addEventListener("click", async () => {
         dados_denuncia.usuarioInstituicao_cpf = cpfLogado
         checkpoints_denuncia[0].concluida = true;
+
         btnStart.classList.add("d-none");
         btnExit.classList.remove("d-none");
         sendMsg.classList.remove("d-none");
         sendCom.classList.remove("d-none");
-        await salvarDenuncia();
+        await calcularStatus();
         renderizar_checkpoints();
         atualiza_info();
     });
+
     btnExit.addEventListener("click", async () => {
-        for (let i = 0; i < checkpoints_denuncia.length; i++) {
-            checkpoints_denuncia[i].concluida = false;
-            checkpoints_denuncia[i].arquivo.url = "";
-            checkpoints_denuncia[i].arquivo.nome = "";
-        }
+        checkpoints_denuncia.forEach(checkpoint => {
+            checkpoint.concluida = false;
+            checkpoint.arquivo.nome = "";
+            checkpoint.arquivo.url = "";
+        });
+
         dados_denuncia.usuarioInstituicao_cpf = "";
+        dados_denuncia.prazo = "";
+        dados_denuncia.custo = "";
+
         btnStart.classList.remove("d-none");
         btnExit.classList.add("d-none");
         sendMsg.classList.add("d-none");
         sendCom.classList.add("d-none");
-        await salvarDenuncia();
+
+        await calcularStatus();
         renderizar_checkpoints();
         atualiza_info();
         renderiza_progresso()
@@ -858,6 +953,8 @@ async function init() {
     });
 
     btn_confirma.addEventListener("click", async () => {
+        const ultimo = checkpoints_denuncia.at(-1);
+        if (!ultimo?.concluida) return;
         const confirmar = confirm("Tem certeza de que deseja confirmar a conclusão desta obra?");
         if (!confirmar) {
             return;
@@ -865,46 +962,94 @@ async function init() {
         modal_avaliacao.classList.remove("d-none");
         fade.classList.remove("d-none");
     })
+
     btnCancelarAval.addEventListener("click", async () => {
         await concluirDenuncia();
     });
 
-    async function salvarUsuario(usuario) {
-        await fetch(`http://localhost:3000/usuariosMoradores/${usuario.id}`, {
+    async function salvarPerfilMorador(perfil) {
+        await fetch(`http://localhost:3000/infoPerfilMoradores/${perfil.id}`, {
             method: "PATCH",
             headers: {
                 "Content-Type": "application/json"
             },
-            body: JSON.stringify(usuario)
+            body: JSON.stringify(perfil)
         });
+    }
+    async function getPerfisMoradores() {
+        const res = await fetch(`${BASE_URL}/infoPerfilMoradores`);
+        return await res.json();
+    }
+
+    async function getPerfisInstituicoes() {
+        const res = await fetch(`${BASE_URL}/infoPerfilInstituicoes`);
+        return await res.json();
+    }
+
+    async function getPerfilAtualMorador() {
+        const res = await fetch(`${BASE_URL}/infoPerfilMoradores`);
+        const perfis = await res.json();
+
+        return perfis.find(p =>
+            Number(p.usuarioMorador_cpf) === Number(cpfLogado)
+        );
+    }
+
+    async function atualizarBotoesAcompanhamento() {
+        if (tipoUsuario !== "morador"){
+            return;
+        }
+        const ehDenunciante = Number(cpfLogado) === Number(dados_denuncia.denunciante);
+        if (ehDenunciante) {
+            btn_acompanha.classList.add("d-none");
+            btn_desacompanha.classList.add("d-none");
+            return;
+        }
+        const perfil = await getPerfilAtualMorador();
+        const acompanhadas = perfil?.denuncias_acompanhadas ?? [];
+        const estaAcompanhando = acompanhadas.includes(String(dados_denuncia.id));
+        if (estaAcompanhando) {
+            btn_acompanha.classList.add("d-none");
+            btn_desacompanha.classList.remove("d-none");
+        } else {
+            btn_acompanha.classList.remove("d-none");
+            btn_desacompanha.classList.add("d-none");
+        }
     }
 
     btn_acompanha.addEventListener("click", async () => {
         dados_denuncia.afetados += 1;
-        const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
-        if (!usuario.denuncias_acompanhadas.includes(dados_denuncia.id)) {
-            usuario.denuncias_acompanhadas.push(dados_denuncia.id)
+        const perfil = await getPerfilAtualMorador();
+        const acompanhadas = perfil?.denuncias_acompanhadas ?? [];
+        if (!acompanhadas.includes(String(dados_denuncia.id))) {
+            perfil.denuncias_acompanhadas.push(String(dados_denuncia.id));
         }
 
         btn_acompanha.classList.add("d-none");
         btn_desacompanha.classList.remove("d-none");
         atualiza_info();
-        visibilidade_comentario();
         await salvarDenuncia();
-        await salvarUsuario(usuario)
+        await salvarPerfilMorador(perfil);
+        await visibilidade_comentario();
+        await atualizarBotoesAcompanhamento();
     })
 
     btn_desacompanha.addEventListener("click", async () => {
-        const usuario = usuariosMoradores.find(um => Number(um.cpf) === Number(cpfLogado));
         dados_denuncia.afetados -= 1;
-        usuario.denuncias_acompanhadas = usuario.denuncias_acompanhadas.filter(id => id !== dados_denuncia.id);
+        const perfil = await getPerfilAtualMorador();
+        if (!Array.isArray(perfil.denuncias_acompanhadas)) {
+            perfil.denuncias_acompanhadas = [];
+        }
+        perfil.denuncias_acompanhadas = perfil.denuncias_acompanhadas.filter(id => String(id) !== String(dados_denuncia.id));
 
         btn_desacompanha.classList.add("d-none");
         btn_acompanha.classList.remove("d-none");
+        
         atualiza_info();
-        visibilidade_comentario();
         await salvarDenuncia();
-        await salvarUsuario(usuario)
+        await salvarPerfilMorador(perfil);
+        await visibilidade_comentario();
+        await atualizarBotoesAcompanhamento();
     })
 
     btn_comentario.addEventListener("click", async () => {
@@ -919,21 +1064,12 @@ async function init() {
             minute: "2-digit"
         });
         if(editingComId){
-            const denunciaAtualizada = await fetch(`${BASE_URL}/denuncias/${denunciaId}`).then(res => res.json());
-            const comentario = denunciaAtualizada.comentarios.find(c => c.id === editingComId);
+            const comentario = dados_denuncia.comentarios.find(c => c.id === editingComId);
             comentario.mensagem = textoComentario;
             comentario.data = dataAtual;
             comentario.hora = horaAtual;
             comentario.editado = true;
-            await fetch(`${BASE_URL}/denuncias/${denunciaId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    comentarios: denunciaAtualizada.comentarios
-                })
-            });
+            await salvarDenuncia()
         } else {
             const novoComentario = {
                 id: Date.now(),
@@ -945,17 +1081,11 @@ async function init() {
             };
             const denunciaAtualizada = await fetch(`${BASE_URL}/denuncias/${denunciaId}`).then(res => res.json());
             denunciaAtualizada.comentarios.push(novoComentario);
-            await fetch(`${BASE_URL}/denuncias/${denunciaId}`, {
-                method: "PATCH",
-                headers: {
-                    "Content-Type": "application/json"
-                },
-                body: JSON.stringify({
-                    comentarios: denunciaAtualizada.comentarios
-                })
-            });
+            dados_denuncia.comentarios.push(novoComentario);
+            await salvarDenuncia();
         }
         editingComId = null
+        editingCom = false;
         inputComentarios.value = "";
         carregaComentarios();
     })

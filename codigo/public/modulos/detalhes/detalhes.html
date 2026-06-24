@@ -32,10 +32,6 @@
                         <li class="nav-item"><a class="nav-link nav-link-4 text-light fw-semibold" href="">Outras Denúncias</a></li>
                     </ul>
                     <div class="ms-auto d-flex align-items-center gap-3">
-                        <div class="position-relative">
-                            <input type="text" id="busca" class="form-control rounded-pill ps-4 pe-5" placeholder="Buscar...">
-                            <i class="bi bi-search position-absolute top-50 end-0 translate-middle-y me-3 text-muted"></i>
-                        </div>  
                         <a href="">
                             <img src="" class="avatar rounded-circle border border-light" width="40" height="40">
                         </a>
@@ -53,7 +49,6 @@
             </div>
         </nav>
         <div class="collapse d-lg-none px-4 pb-3" id="menuMobile" style="background:#2b1d1d;">
-            <input type="text" class="form-control rounded-pill mb-3" placeholder="Buscar...">
             <a class="nav-link-1 d-block text-light text-decoration-none py-2" href="">Início</a>
             <a class="nav-link-2 d-block text-light text-decoration-none py-2" href="">Faça sua denúncia</a>
             <a class="nav-link-3 d-block text-light text-decoration-none py-2" href="">Minhas Denúncias</a>
@@ -101,53 +96,7 @@
                                                 <div class="progress-bar bg-progress" style="width: 0%"></div>
                                             </div>
                                         </div>
-                                        <ul id="lista-checkpoints" class="ms-1 ps-1 mt-2">
-                                            <li id="check1">
-                                                <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
-                                                    <circle cx="256" cy="256" r="220" fill="white" stroke="black"
-                                                        stroke-width="25px">
-                                                    </circle>
-                                                </svg>
-                                                <span></span>
-                                                <a></a>
-                                            </li>
-                                            <li id="check2">
-                                                <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
-                                                    <circle cx="256" cy="256" r="220" fill="white" stroke="black"
-                                                        stroke-width="25px">
-                                                    </circle>
-                                                </svg>
-                                                <span></span>
-                                                <a></a>
-                                            </li>
-                                            <li id="check3">
-                                                <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
-                                                    <circle cx="256" cy="256" r="220" fill="white" stroke="black"
-                                                        stroke-width="25px">
-                                                    </circle>
-                                                </svg>
-                                                <span></span>
-                                                <a></a>
-                                            </li>
-                                            <li id="check4">
-                                                <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
-                                                    <circle cx="256" cy="256" r="220" fill="white" stroke="black"
-                                                        stroke-width="25px">
-                                                    </circle>
-                                                </svg>
-                                                <span></span>
-                                                <a></a>
-                                            </li>
-                                            <li id="check5">
-                                                <svg class="me-2" width="20px" height="20px" viewBox="0 0 512 512">
-                                                    <circle cx="256" cy="256" r="220" fill="white" stroke="black"
-                                                        stroke-width="25px">
-                                                    </circle>
-                                                </svg>
-                                                <span></span>
-                                                <a></a>
-                                            </li>
-                                        </ul>
+                                        <ul id="lista-checkpoints" class="ms-1 ps-1 mt-2"></ul>
                                         <div class="row g-0 checkpoint-btn justify-content-between">
                                             <button class="col-5 btn-previous ms-3 mb-2 d-none" type="button"
                                                 id="btn-retorna">
@@ -234,7 +183,7 @@
                                         </iframe>
                                     </div>
                                 </section>
-                                <input type="file" id="file-input" class="d-none">
+                                <input type="file" id="file-input"  accept=".pdf,.txt,.doc,.docx,.png,.jpg,.jpeg" class="d-none">
                             </div>
 
                             <!--Descrição da denúncia-->
@@ -322,6 +271,8 @@
                                 <li class="mb-0">
                                     <i class="fa-solid fa-sack-dollar me-1" style="font-size: 0.9em"></i>
                                     <span id="cost"></span>
+                                    <i id="icon-nota-custo" class="fa-solid fa-circle-info ms-1 d-none" style="font-size: 0.9em; cursor:pointer;"
+                                    data-bs-toggle="tooltip" data-bs-placement="top" title=""></i>
                                 </li>
 
                             </ul>
