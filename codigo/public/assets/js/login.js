@@ -1,33 +1,25 @@
-// Trabalho Interdisciplinar 1 - Aplicações Web
-//
-// Esse módulo realiza o registro de novos usuários e login para aplicações com 
-// backend baseado em API REST provida pelo JSONServer
-// Os dados de usuário estão localizados no arquivo db.json que acompanha este projeto.
-//
-// Autor: Rommel Vieira Carneiro (rommelcarneiro@gmail.com)
-// Data: 09/09/2024
-//
-// Código LoginApp
-
-// Página inicial de Login
+const API_BASE = 'http://localhost:3000'; 
 const LOGIN_URL = "/modulos/login/login.html";
 let RETURN_URL = "/modulos/login/index.html";
-const API_URL = '/usuarios'; // ======== Alterar com o que for necessário para o backend ========
 
-// Objeto para o banco de dados de usuários baseado em JSON
-var db_usuarios = {};
+const API_MORADOR = `${API_BASE}/usuarioMorador`;
+const API_INSTITUICAO = `${API_BASE}/usuarioInstituicao`;
+const API_INSTITUICOES_LISTA = `${API_BASE}/instituicao`;  
 
-// Objeto para o usuário corrente
+// ============= DADOS GLOBAIS =============
+var dbMoradores = [];
+var dbInstituicoes = [];
+var dbInstituicoesLista = [];
 var usuarioCorrente = {};
+
+
 
 function displayMessage(msg, tipo = 'info') {
     const div = document.getElementById('mensagem');
     if (!div) return;
 
-    // Remove classes anteriores (Bootstrap)
     div.classList.remove('alert-success', 'alert-danger', 'alert-warning', 'alert-info', 'd-none');
 
-    // Mapeia o tipo para a classe do Bootstrap
     const classes = {
         success: 'alert-success',
         error: 'alert-danger',
@@ -36,97 +28,179 @@ function displayMessage(msg, tipo = 'info') {
     };
     div.classList.add('alert', classes[tipo] || 'alert-info');
 
-    // Insere a mensagem
     div.textContent = msg;
 
-    // Opcional: oculta automaticamente após 5 segundos
     clearTimeout(div._timeout);
     div._timeout = setTimeout(() => {
         div.classList.add('d-none');
     }, 5000);
 }
 
-function initLoginApp() {
-    let pagina = window.location.pathname;
-
-    if (pagina != LOGIN_URL) {
-        // Salva a URL atual para redirecionar após login
-        sessionStorage.setItem('returnURL', pagina);
-        RETURN_URL = pagina;
-
-        // Verifica se o usuário está logado
-        const usuarioCorrenteJSON = sessionStorage.getItem('usuarioCorrente');
-        if (usuarioCorrenteJSON) {
-            usuarioCorrente = JSON.parse(usuarioCorrenteJSON);
-            // Atualiza informações do usuário na página (se houver)
-            document.addEventListener('DOMContentLoaded', function () {
-                showUserInfo('userInfo');
-            });
-        } else {
-            // Não está logado → redireciona para o login
-            window.location.href = LOGIN_URL;
-        }
-    } else {
-        // Define a URL de retorno (página que o usuário tentou acessar)
-        let returnURL = sessionStorage.getItem('returnURL');
-        RETURN_URL = returnURL || RETURN_URL;
-
-        // Carrega os usuários do backend
-        carregarUsuarios(() => {
-            console.log('Usuários carregados...');
-        });
-
-        // Configura a troca de versão (CPF/CNPJ/Município) após o DOM carregar
-        document.addEventListener('DOMContentLoaded', function () {
-            setupVersionToggle();
-        });
+function limparIdentificador(valor) {
+    if (typeof valor === 'string') {
+        return valor.replace(/[^\d]/g, '');
     }
+    return String(valor);
 }
 
-function carregarUsuarios(callback) {
-    fetch(API_URL)
-        .then(response => response.json())
-        .then(data => {
-            db_usuarios = data;
-            if (callback) callback();
-        })
-        .catch(error => {
-            console.error('Erro ao ler usuários via API JSONServer:', error);
-            displayMessage("Erro ao ler usuários", "error");
-        });
+function criarUsuarioCorrente(usuario, tipo) {
+    return {
+        id: usuario.id,
+        nome: usuario.nome_usuario || usuario.nome_completo || '',
+        nomeCompleto: usuario.nome_completo || '',
+        email: usuario.email || '',
+        cpf: usuario.cpf || '',
+        instituicao_id: usuario.instituicao_id || null,
+        tipo: tipo,
+        ...usuario
+    };
 }
 
-function loginUser(login, senha) {
-    for (var i = 0; i < db_usuarios.length; i++) {
-        var usuario = db_usuarios[i];
-        // ======== Alterar com o que for necessário para o backend ========
-        if (login == usuario.login && senha == usuario.senha) {
-            usuarioCorrente.id = usuario.id;
-            usuarioCorrente.login = usuario.login;
-            usuarioCorrente.email = usuario.email;
-            usuarioCorrente.nome = usuario.nome;
+function carregarTodosDados(callback) {
+    Promise.all([
+        fetch(API_MORADOR).then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+            return res.json();
+        }).catch(() => []),
+        fetch(API_INSTITUICAO).then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+            return res.json();
+        }).catch(() => []),
+        fetch(API_INSTITUICOES_LISTA).then(res => {
+            if (!res.ok) throw new Error(`HTTP ${res.status} - ${res.statusText}`);
+            return res.json();
+        }).catch(() => [])
+    ])
+    .then(([moradores, instituicoes, listaInst]) => {
+        dbMoradores = moradores;
+        dbInstituicoes = instituicoes;
+        dbInstituicoesLista = listaInst;
+        if (callback) callback();
+        console.log('Dados carregados com sucesso.');
+    })
+    .catch(error => {
+        console.error('Erro ao carregar dados via API JSONServer:', error);
+        displayMessage("Erro ao carregar dados do servidor. Verifique se o JSON Server está rodando.", "error");
+    });
+}
 
-            sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
-            return true;
-        }
+
+function loginUser(identificador, senha, versao) {
+    const idNormalizado = limparIdentificador(identificador);
+
+    switch (versao) {
+        case 'pessoal':
+            for (let usuario of dbMoradores) {
+                if (usuario.cpf !== undefined) {
+                    let cpfNormalizado = limparIdentificador(usuario.cpf);
+                    if (cpfNormalizado === idNormalizado && usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'pessoal');
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        case 'empresa':
+            for (let usuario of dbInstituicoes) {
+                if (usuario.cpf !== undefined) {
+                    let cpfNormalizado = limparIdentificador(usuario.cpf);
+                    if (cpfNormalizado === idNormalizado && usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'empresa');
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        case 'prefeitura':
+            for (let usuario of dbInstituicoes) {
+                if (usuario.instituicao_id !== undefined) {
+                    const instituicao = dbInstituicoesLista.find(
+                        inst => String(inst.id) === String(usuario.instituicao_id)
+                    );
+                    if (instituicao && instituicao.nome.toLowerCase() === identificador.trim().toLowerCase() &&
+                        usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'prefeitura');
+                        usuarioCorrente.municipio = instituicao.nome;
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        default:
+            return false;
     }
-    return false;
+}
+function loginUser(identificador, senha, versao) {
+    const idNormalizado = limparIdentificador(identificador);
+
+    switch (versao) {
+        case 'pessoal':
+            for (let usuario of dbMoradores) {
+                if (usuario.cpf !== undefined) {
+                    let cpfNormalizado = limparIdentificador(usuario.cpf);
+                    if (cpfNormalizado === idNormalizado && usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'pessoal');
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        case 'empresa':
+            for (let usuario of dbInstituicoes) {
+                if (usuario.cpf !== undefined) {
+                    let cpfNormalizado = limparIdentificador(usuario.cpf);
+                    if (cpfNormalizado === idNormalizado && usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'empresa');
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        case 'prefeitura':
+            for (let usuario of dbInstituicoes) {
+                if (usuario.instituicao_id !== undefined) {
+                    const instituicao = dbInstituicoesLista.find(
+                        inst => String(inst.id) === String(usuario.instituicao_id)
+                    );
+                    if (instituicao && instituicao.nome.toLowerCase() === identificador.trim().toLowerCase() &&
+                        usuario.senha === senha) {
+                        usuarioCorrente = criarUsuarioCorrente(usuario, 'prefeitura');
+                        usuarioCorrente.municipio = instituicao.nome;
+                        sessionStorage.setItem('usuarioCorrente', JSON.stringify(usuarioCorrente));
+                        return true;
+                    }
+                }
+            }
+            return false;
+
+        default:
+            return false;
+    }
 }
 
 function processaFormLogin(event) {
-    event.preventDefault(); // Evita o reload da página
+    event.preventDefault(); 
 
-    // ======== Alterar com o que for necessário para o backend ========
-    const login = document.getElementById('username').value.trim();
+    const identificador = document.getElementById('username').value.trim();
     const senha = document.getElementById('password').value.trim();
+    const versao = sessionStorage.getItem('versaoLogin') || DEFAULT_VERSION;
 
-    if (!login || !senha) {
+    if (!identificador  || !senha) {
         displayMessage("Preencha todos os campos.", "warning");
         return;
     }
 
-    if (loginUser(login, senha)) {
-        // Login bem-sucedido → redireciona para a página inicial
+    if (loginUser(identificador, senha, versao)) {
         window.location.href = RETURN_URL;
     } else {
         displayMessage("Usuário ou senha inválidos.", "error");
@@ -138,32 +212,11 @@ function logoutUser() {
     window.location = LOGIN_URL;
 }
 
-function addUser(nome, login, senha, email) {
-    // ======== Alterar com o que for necessário para o backend ========// ======== Alterar com o que for necessário para o backend ========
-    let usuario = { "login": login, "senha": senha, "nome": nome, "email": email };
-
-    fetch(API_URL, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify(usuario),
-    })
-        .then(response => response.json())
-        .then(data => {
-            db_usuarios.push(usuario);
-            displayMessage("Usuário inserido com sucesso", "success");
-        })
-        .catch(error => {
-            console.error('Erro ao inserir usuário via API JSONServer:', error);
-            displayMessage("Erro ao inserir usuário", "error");
-        });
-}
-
 function showUserInfo(element) {
     var elemUser = document.getElementById(element);
     if (elemUser) {
-        elemUser.innerHTML = `${usuarioCorrente.nome} (${usuarioCorrente.login}) 
+        const nomeExibicao = usuarioCorrente.nome || usuarioCorrente.nome_usuario || 'Usuário';
+        elemUser.innerHTML = `${nomeExibicao} 
                     <a onclick="logoutUser()">❌</a>`;
     }
 }
@@ -174,8 +227,8 @@ const VERSION_CONFIG = {
         placeholder: 'Digite seu CPF'
     },
     empresa: {
-        label: 'CNPJ:',
-        placeholder: 'Digite seu CNPJ'
+        label: 'CPF/CNPJ:',
+        placeholder: 'Digite seu CPF ou CNPJ'
     },
     prefeitura: {
         label: 'Município:',
@@ -209,14 +262,9 @@ function setupVersionToggle() {
         link.addEventListener('click', function (e) {
             e.preventDefault();
             const texto = this.textContent.trim().toLowerCase();
-
-            if (texto.includes('pessoal')) {
-                setLoginVersion('pessoal');
-            } else if (texto.includes('empresa')) {
-                setLoginVersion('empresa');
-            } else if (texto.includes('prefeitura')) {
-                setLoginVersion('prefeitura');
-            }
+            if (texto.includes('pessoal')) setLoginVersion('pessoal');
+            else if (texto.includes('empresa')) setLoginVersion('empresa');
+            else if (texto.includes('prefeitura')) setLoginVersion('prefeitura');
         });
     });
 
@@ -224,5 +272,34 @@ function setupVersionToggle() {
     setLoginVersion(storedVersion);
 }
 
-// INICIALIZA
+// ================= INICIALIZAÇÃO =================
+function initLoginApp() {
+    let pagina = window.location.pathname;
+
+    if (pagina != LOGIN_URL) {
+        sessionStorage.setItem('returnURL', pagina);
+        RETURN_URL = pagina;
+
+        const usuarioCorrenteJSON = sessionStorage.getItem('usuarioCorrente');
+        if (usuarioCorrenteJSON) {
+            usuarioCorrente = JSON.parse(usuarioCorrenteJSON);
+            document.addEventListener('DOMContentLoaded', function () {
+                showUserInfo('userInfo');
+            });
+        } else {
+            window.location.href = LOGIN_URL;
+        }
+    } else {
+        let returnURL = sessionStorage.getItem('returnURL');
+        RETURN_URL = returnURL || RETURN_URL;
+
+        carregarTodosDados(() => {
+            console.log('Dados carregados com sucesso.');
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            setupVersionToggle();
+        });
+    }
+}
 initLoginApp();
