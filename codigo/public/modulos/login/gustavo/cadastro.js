@@ -38,42 +38,33 @@ const formCadastro = document.getElementById('formCadastro');
 const tituloFormulario = document.getElementById('tituloFormulario');
 const containerLista = document.getElementById('listaContas');
 
-// Retorna as configurações de rotas baseadas no tipo de cadastro
+// Retorna as configurações de rotas baseadas no tipo de cadastro (Mapeado com o novo JSON)
 function obterConfiguracaoRotas() {
     return {
         morador: { 
             endpoint: 'usuariosMoradores', 
-            endpointPerfil: 'infoPerfilMoradores',
-            campoId: 'cpf', 
-            campoRelacaoPerfil: 'usuarioMorador_cpf' 
+            campoId: 'cpf'
         },
         empresa: { 
             endpoint: 'usuariosInstituicoes', 
-            endpointPerfil: 'infoPerfilInstituicoes',
-            campoId: 'cnpj', 
-            campoRelacaoPerfil: 'usuarioInstituicao_cpf' 
+            campoId: 'cnpj'
         },
         prefeitura: { 
             endpoint: 'usuariosInstituicoes', 
-            endpointPerfil: 'infoPerfilInstituicoes',
-            campoId: 'identificador', 
-            campoRelacaoPerfil: 'usuarioInstituicao_cpf' 
+            campoId: 'cnpj' // Tratado como documento identificador institucional
         }
     }[tipoCadastro];
 }
 
-// 1. CARREGA OS DADOS DO JSON SERVER (Corrigido para não usar a rota /db)
+// 1. CARREGA OS DADOS DO JSON SERVER
 async function carregarBanco() {
     try {
         const config = obterConfiguracaoRotas();
-        
-        // CORREÇÃO: Busca direto no endpoint específico em vez de /db
         const resposta = await fetch(`${API_URL}/${config.endpoint}`);
         if (!resposta.ok) throw new Error("Não foi possível conectar ao JSON Server.");
         
         const dadosEndpoint = await resposta.json();
         
-        // Alimenta o objeto global simulando a estrutura antiga para manter compatibilidade
         db = {
             [config.endpoint]: dadosEndpoint
         };
@@ -100,14 +91,14 @@ function renderizarLista() {
     let listaFiltrada = db[config.endpoint] || [];
     
     if (tipoCadastro === 'empresa') {
-        listaFiltrada = listaFiltrada.filter(u => u.cnpj || u.instituicao_id === 1); 
+        listaFiltrada = listaFiltrada.filter(u => u.instituicao_id === 1); 
     } else if (tipoCadastro === 'prefeitura') {
-        listaFiltrada = listaFiltrada.filter(u => u.Município || u.instituicao_id === 2 || u.instituicao_id === 3);
+        listaFiltrada = listaFiltrada.filter(u => u.instituicao_id === 2 || u.instituicao_id === 3);
     }
 
     listaFiltrada.forEach(usuario => {
-        const idOriginal = usuario[config.campoId] || usuario.cpf || usuario.cnpj || usuario.identificador;
-        const nomeVisual = usuario.nome_usuario || usuario.nome_completo || usuario.nome;
+        const idOriginal = usuario[config.campoId] || usuario.cpf || usuario.cnpj;
+        const nomeVisual = usuario.nomeUsuario || usuario.nomeCompleto;
         
         const line = document.createElement('tr');
         line.innerHTML = `
@@ -151,12 +142,10 @@ if (formCadastro) {
         // MODO EDIÇÃO (PATCH)
         if (idEmEdicao) {
             const dadosAtualizados = {
-                nome_usuario: nomeExibicao,
-                nome_completo: nome,
-                nome: tipoCadastro !== 'morador' ? nome : undefined,
+                nomeUsuario: nomeExibicao,
+                nomeCompleto: nome,
                 email, 
                 [config.campoId]: idDigitado,
-                cpf: tipoCadastro === 'morador' ? idDigitado : undefined,
                 senha 
             };
 
@@ -167,7 +156,7 @@ if (formCadastro) {
                     body: JSON.stringify(dadosAtualizados)
                 });
                 
-                alert("Conta updated com sucesso!");
+                alert("Conta atualizada com sucesso!");
                 resetarFormulario();
                 carregarBanco();
             } catch (erro) {
@@ -176,59 +165,50 @@ if (formCadastro) {
 
         // MODO NOVO CADASTRO (POST)
         } else {
-            // Verifica se o identificador já existe no JSON remoto
+            // Verifica duplicidade
             const usuarioExistente = db[config.endpoint]?.find(u => {
-                const idItem = u[config.campoId] || u.cpf || u.cnpj || u.identificador;
+                const idItem = u[config.campoId] || u.cpf || u.cnpj;
                 return normalizarId(idItem) === idDigitado;
             });
 
             if (usuarioExistente) {
-                alert("Este documento (CPF/CNPJ/ID) já está cadastrado!");
+                alert("Este documento (CPF/CNPJ) já está cadastrado!");
                 return;
             }
 
-            const idGeradoAleatorio = Math.random().toString(36).substring(2, 13);
-
+            // Cria o objeto unificado adaptado exatamente ao novo formato do seu banco
             const novoUsuario = { 
-                "id": idGeradoAleatorio,
-                "nome_usuario": nomeExibicao,
-                "nome_completo": nome,
-                "nome": tipoCadastro !== 'morador' ? nome : undefined,
+                "id": Math.random().toString(36).substring(2, 13),
+                "nomeUsuario": nomeExibicao,
+                "nomeCompleto": nome,
                 "email": email, 
-                [config.campoId]: idDigitado,
-                "cpf": tipoCadastro === 'morador' ? idDigitado : undefined,
-                "cpf_responsavel": cpfResponsavelDigitado || undefined,
                 "senha": senha,
-                "denuncias_acompanhadas": tipoCadastro === 'morador' ? [] : undefined,
-                "instituicao_id": tipoCadastro === 'empresa' ? 1 : (tipoCadastro === 'prefeitura' ? 2 : undefined)
+                "fotoPerfil": "imgs/imgPerfil/default.png",
+                [config.campoId]: idDigitado
             };
 
-            const novoPerfilInfo = {
-                "id": Math.random().toString(36).substring(2, 13),
-                [config.campoRelacaoPerfil]: idDigitado,
-                "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-                "estatisticas": tipoCadastro === 'morador' 
-                    ? { "denuncias_feitas": 0 } 
-                    : { "solucionadas": 0, "obras": 0 },
-                "obras_id": tipoCadastro !== 'morador' ? [] : undefined
-            };
+            // Regras de negócio adicionadas com base no tipo de conta mapeada no JSON
+            if (tipoCadastro === 'morador') {
+                novoUsuario.cpf = idDigitado;
+                novoUsuario.denunciasAcompanhadas = [];
+                novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
+            } else {
+                novoUsuario.cnpj = idDigitado;
+                novoUsuario.cpfResponsavel = cpfResponsavelDigitado || "";
+                novoUsuario.instituicao_id = tipoCadastro === 'empresa' ? 1 : 2;
+                novoUsuario.avaliacoes = [];
+                novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
+            }
 
             try {
-                // Envia o usuário principal
+                // Envia para o banco de dados via POST
                 await fetch(`${API_URL}/${config.endpoint}`, {
                     method: "POST",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(novoUsuario)
                 });
 
-                // Cria o nó de estatísticas correspondente
-                await fetch(`${API_URL}/${config.endpointPerfil}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(novoPerfilInfo)
-                });
-
-                // Altera o usuário ativo no servidor remoto
+                // Sincroniza a sessão do usuário logado
                 await fetch(`${API_URL}/usuarioLogado`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
@@ -240,16 +220,12 @@ if (formCadastro) {
 
                 alert("Cadastro realizado com sucesso!");
                 
-                // --- AJUSTE EXCLUSIVO: Mantém o documento/CPF visível na tela ---
                 const documentoDigitadoAnteriormente = campoIdentificador ? campoIdentificador.value : '';
-                
                 resetarFormulario();
                 
-                // Reaplica o valor para permitir login direto sem reescrever
                 if (campoIdentificador) {
                     campoIdentificador.value = documentoDigitadoAnteriormente;
                 }
-                // ----------------------------------------------------------------
 
                 if (tipoCadastro === 'morador') {
                     window.location.href = './perfil-usuario.html';
@@ -290,14 +266,14 @@ window.prepararEdicao = function(idInternoJsonServer) {
     const usuario = db[config.endpoint]?.find(u => String(u.id) === String(idInternoJsonServer));
 
     if (usuario) {
-        const idOriginalDocumento = usuario[config.campoId] || usuario.cpf || usuario.cnpj || usuario.identificador;
+        const idOriginalDocumento = usuario[config.campoId] || usuario.cpf || usuario.cnpj;
 
         if (campoIdEdicao) campoIdEdicao.value = usuario.id; 
-        if (campoNome) campoNome.value = usuario.nome_completo || usuario.nome || '';
-        if (campoNomeExibicao) campoNomeExibicao.value = usuario.nome_usuario || '';
+        if (campoNome) campoNome.value = usuario.nomeCompleto || '';
+        if (campoNomeExibicao) campoNomeExibicao.value = usuario.nomeUsuario || '';
         if (campoEmail) campoEmail.value = usuario.email || '';
         if (campoIdentificador) campoIdentificador.value = idOriginalDocumento;
-        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpf_responsavel || '';
+        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpfResponsavel || '';
         if (campoSenhaPrincipal) campoSenhaPrincipal.value = usuario.senha;
         if (campoConfirmarSenha) campoConfirmarSenha.value = usuario.senha;
 
@@ -319,9 +295,8 @@ function resetarFormulario() {
     if (btnSubmit) btnSubmit.textContent = "Cadastrar";
 }
 
-// 6. LOGAR COM ENTRAR (Corrigido para buscar em tempo real do endpoint ativo)
+// 6. LOGAR COM ENTRAR
 function configurarBotaoEntrar() {
-    // Busca flexível de IDs dos botões para evitar travas entre diferentes HTMLs
     const btnEntrar = document.getElementById('entrarUsuario') || document.getElementById('entrar') || document.querySelector('.btn-entrar');
 
     if (btnEntrar) {
@@ -337,19 +312,16 @@ function configurarBotaoEntrar() {
             }
 
             try {
-                // Busca os dados atualizados direto do endpoint para a validação de login
                 const resposta = await fetch(`${API_URL}/${config.endpoint}`);
                 const listaUsuarios = await resposta.json();
 
-                // Busca inteligente: valida tanto o ID padrão da rota quanto o CPF do responsável da conta institucional
                 const usuarioEncontrado = listaUsuarios.find(u => {
-                    const idItem = normalizarId(u[config.campoId] || u.cpf || u.cnpj || u.identificador);
-                    const cpfRespItem = normalizarId(u.cpf_responsavel);
+                    const idItem = normalizarId(u[config.campoId] || u.cpf || u.cnpj);
+                    const cpfRespItem = normalizarId(u.cpfResponsavel);
                     return idItem === idDigitado || cpfRespItem === idDigitado;
                 });
 
                 if (usuarioEncontrado) {
-                    // Descobre qual chave de identificação final usar na sessão
                     const loginChaveFinal = usuarioEncontrado[config.campoId] || usuarioEncontrado.cpf || idDigitado;
 
                     await fetch(`${API_URL}/usuarioLogado`, {
@@ -361,7 +333,7 @@ function configurarBotaoEntrar() {
                     localStorage.setItem('usuarioLogado', JSON.stringify(usuarioEncontrado));
                     localStorage.setItem('cpfLogado', loginChaveFinal);
                 } else {
-                    alert("Atenção: Usuário não pré-cadastrado no sistema. Cadastre-se primeiro ou preencha o documento correto para entrar.");
+                    alert("Atenção: Usuário não cadastrado no sistema.");
                     return;
                 }
 

@@ -3,17 +3,24 @@ const API_URL = "http://localhost:3000";
 let dadosUsuarioLogado = null;
 let dadosPerfilLogado = null;
 let denunciasDoUsuario = [];
+let listaStatus = [];
+let listaUrgencias = [];
 let novaFotoBase64 = null;
-let filtroAtual = "todas"; // Guarda o estado selecionado do filtro
+let filtroAtual = "todas"; 
 
 async function carregarDadosPerfil() {
     try {
-        const [resLogado, resMoradores, resPerfilMoradores, resDenuncias] = await Promise.all([
+        // Carrega todas as dependências respeitando a estrutura do JSON fornecido
+        const [resLogado, resMoradores, resDenuncias, resStatus, resUrgencias] = await Promise.all([
             fetch(`${API_URL}/usuarioLogado`).then(r => r.json()),
             fetch(`${API_URL}/usuariosMoradores`).then(r => r.json()),
-            fetch(`${API_URL}/infoPerfilMoradores`).then(r => r.json()),
-            fetch(`${API_URL}/denuncias`).then(r => r.json())
+            fetch(`${API_URL}/denuncias`).then(r => r.json()),
+            fetch(`${API_URL}/status`).then(r => r.json()),
+            fetch(`${API_URL}/urgencias`).then(r => r.json())
         ]);
+
+        listaStatus = resStatus || [];
+        listaUrgencias = resUrgencias || [];
 
         const cpfLogado = resLogado?.cpf;
         if (!cpfLogado) {
@@ -28,11 +35,15 @@ async function carregarDadosPerfil() {
         }
 
         dadosUsuarioLogado = usuario;
-        dadosPerfilLogado = resPerfilMoradores?.find(p => p.usuarioMorador_cpf === cpfLogado);
+        // Fallback: Usa dados de estatísticas internos do usuário morador do seu JSON
+        dadosPerfilLogado = usuario;
         
-        const deunciasAcompanhadas = usuario.denuncias_acompanhadas || [];
+        // Mapeamento correto de acordo com a chave do JSON: "denunciasAcompanhadas"
+        const denunciasAcompanhadas = usuario.denunciasAcompanhadas || [];
+        
+        // Filtra denúncias vinculadas ao usuário logado
         denunciasDoUsuario = resDenuncias?.filter(d => 
-            deunciasAcompanhadas.includes(String(d.id)) || d.denunciante === cpfLogado
+            denunciasAcompanhadas.includes(Number(d.id)) || d.usuarioMorador_cpf === cpfLogado
         ) || [];
 
         const rootDinamico = document.getElementById("profile-root");
@@ -47,7 +58,6 @@ async function carregarDadosPerfil() {
 function renderizarLayoutDinamicoMorador(root) {
     root.innerHTML = "";
 
-    // Painel Lateral Esquerdo - Usando as classes exatas do seu CSS
     const aside = document.createElement("aside");
     aside.className = "col-12 col-md-4 col-xl-3 text-center d-flex flex-column align-items-center";
     aside.innerHTML = `
@@ -59,7 +69,7 @@ function renderizarLayoutDinamicoMorador(root) {
             </div>
             
             <div class="card-body p-0 mt-5 pt-3">
-                <h4 id="nome_usuario" class="fw-bold text-dark mb-4 text-center">${dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome_completo}</h4>
+                <h4 id="nome_usuario" class="fw-bold text-dark mb-4 text-center">${dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto}</h4>
                 
                 <ul class="list-unstyled text-start list-status-zella mb-4 ps-2">
                     <li class="mb-2 d-flex align-items-center">
@@ -69,12 +79,12 @@ function renderizarLayoutDinamicoMorador(root) {
                     <li class="mb-2 d-flex align-items-center">
                         <i class="bi bi-clipboard-check me-2"></i>
                         <span>Demandas atendidas:</span>
-                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.solucionadas || 0}</strong>
+                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.atendidas || 0}</strong>
                     </li>
                     <li class="mb-2 d-flex align-items-center">
                         <i class="bi bi-clipboard-data me-2"></i>
                         <span>Demandas em aberto:</span>
-                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.denuncias_feitas || 0}</strong>
+                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.abertas || 0}</strong>
                     </li>
                 </ul>
                 
@@ -85,7 +95,6 @@ function renderizarLayoutDinamicoMorador(root) {
         </div>
     `;
 
-    // Painel Conteúdo Principal (Dados Cadastrais + Histórico de Denúncias com Filtros)
     const containerPrincipal = document.createElement("div");
     containerPrincipal.className = "col-12 col-md-8 col-xl-9 ps-md-4 ps-lg-5 divider-lateral-zella";
     containerPrincipal.innerHTML = `
@@ -96,15 +105,11 @@ function renderizarLayoutDinamicoMorador(root) {
                 <div class="row g-3">
                     <div class="col-12 col-md-6">
                         <label class="form-label text-muted small fw-semibold">Nome Completo</label>
-                        <input type="text" id="crud-nome" class="form-control" value="${dadosUsuarioLogado.nome_completo || ''}" required>
+                        <input type="text" id="crud-nome" class="form-control" value="${dadosUsuarioLogado.nomeCompleto || ''}" required>
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label text-muted small fw-semibold">E-mail</label>
                         <input type="email" id="crud-email" class="form-control" value="${dadosUsuarioLogado.email || ''}" required>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label text-muted small fw-semibold">Telefone</label>
-                        <input type="text" id="crud-telefone" class="form-control" value="${dadosUsuarioLogado.telefone || ''}">
                     </div>
                     <div class="col-12 col-md-6">
                         <label class="form-label text-muted small fw-semibold">Senha</label>
@@ -124,9 +129,9 @@ function renderizarLayoutDinamicoMorador(root) {
                 
                 <div class="d-flex gap-1 flex-wrap filter-group-zella">
                     <button type="button" data-filter="todas" class="btn btn-filter-zella ${filtroAtual === 'todas' ? 'active' : ''}">TODAS</button>
-                    <button type="button" data-filter="abertas" class="btn btn-filter-zella ${filtroAtual === 'abertas' ? 'active' : ''}">ABERTAS</button>
-                    <button type="button" data-filter="em andamento" class="btn btn-filter-zella ${filtroAtual === 'em andamento' ? 'active' : ''}">EM ANDAMENTO</button>
-                    <button type="button" data-filter="resolvida" class="btn btn-filter-zella ${filtroAtual === 'resolvida' ? 'active' : ''}">REALIZADAS</button>
+                    <button type="button" data-filter="3" class="btn btn-filter-zella ${filtroAtual === '3' ? 'active' : ''}">ABERTAS</button>
+                    <button type="button" data-filter="2" class="btn btn-filter-zella ${filtroAtual === '2' ? 'active' : ''}">EM ANDAMENTO</button>
+                    <button type="button" data-filter="1" class="btn btn-filter-zella ${filtroAtual === '1' ? 'active' : ''}">REALIZADAS</button>
                 </div>
             </div>
             
@@ -209,26 +214,23 @@ function configurarEventosInteracao() {
         formPerfil.onsubmit = async function(e) {
             e.preventDefault();
             const atualizados = {
-                nome_completo: document.getElementById("crud-nome").value.trim(),
+                ...dadosUsuarioLogado,
+                nomeCompleto: document.getElementById("crud-nome").value.trim(),
                 email: document.getElementById("crud-email").value.trim(),
-                telefone: document.getElementById("crud-telefone").value.trim(),
                 senha: document.getElementById("crud-senha").value
             };
 
+            if (novaFotoBase64) {
+                atualizados.fotoPerfil = novaFotoBase64;
+            }
+
             try {
                 await fetch(`${API_URL}/usuariosMoradores/${dadosUsuarioLogado.id}`, {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(atualizados)
                 });
 
-                if (novaFotoBase64 && dadosPerfilLogado) {
-                    await fetch(`${API_URL}/infoPerfilMoradores/${dadosPerfilLogado.id}`, {
-                        method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ fotoPerfil: novaFotoBase64 })
-                    });
-                }
                 alert("Alterações salvas com sucesso!");
                 carregarDadosPerfil();
             } catch (err) { alert("Erro ao salvar dados."); }
@@ -240,14 +242,10 @@ function renderizarCardsHistorico() {
     const container = document.getElementById("container-denuncias");
     if (!container) return;
 
-    // Filtragem lógica baseada nas abas
+    // CORREÇÃO AQUI: Convertendo ambos para String para evitar falha de comparação de Tipo (Número vs String)
     const denunciasFiltradas = denunciasDoUsuario.filter(item => {
         if (filtroAtual === "todas") return true;
-        const statusItem = (item.status || "abertas").toLowerCase();
-        if (filtroAtual === "resolvida") {
-            return statusItem === "resolvida" || statusItem === "realizadas";
-        }
-        return statusItem === filtroAtual;
+        return String(item.status_id) === String(filtroAtual);
     });
 
     if (denunciasFiltradas.length === 0) {
@@ -257,26 +255,33 @@ function renderizarCardsHistorico() {
 
     let html = "";
     denunciasFiltradas.forEach(item => {
-        // Puxa a imagem do campo 'imagens' do JSON, se falhar usa o fallback estruturado
         const capa = (item.imagens && item.imagens.length > 0 && item.imagens[0] !== "") 
             ? item.imagens[0] 
             : "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&q=80&w=400";
 
-        // Determinação das classes de Status do seu CSS (.status-andamento ou .status-resolvida)
-        const statusStr = item.status || "Abertas";
-        let statusClass = "bg-secondary"; 
+        // Tradução dinâmica de status_id para texto usando a lista auxiliar carregada
+        const objStatus = listaStatus.find(s => String(s.id) === String(item.status_id));
+        const statusStr = objStatus ? objStatus.nome : "Aberto";
         
-        if (statusStr.toLowerCase() === "resolvida" || statusStr.toLowerCase() === "realizadas") {
+        // CORREÇÃO AQUI: Mapeamento de cores baseado na ID numérica convertida em número estável
+        let statusClass = "bg-secondary"; 
+        const currentStatusId = Number(item.status_id);
+        if (currentStatusId === 1 || currentStatusId === 4) {
             statusClass = "status-resolvida";
-        } else if (statusStr.toLowerCase() === "em andamento") {
+        } else if (currentStatusId === 2) {
             statusClass = "status-andamento";
+        } else if (currentStatusId === 3) {
+            statusClass = "status-aberto"; // Classe adicionada para os cards "Abertos" (Laranja)
         }
 
-        // Determinação da gravidade (.badge-urgencia-alta, .badge-urgencia-media, etc.)
-        const urgenciaStr = (item.urgencia || "Média urgência").toLowerCase();
+        // Tradução dinâmica de urgencia_id para texto
+        const objUrgencia = listaUrgencias.find(u => String(u.id) === String(item.urgencia_id));
+        const urgenciaStr = objUrgencia ? objUrgencia.nome : "Média";
+        
         let urgenciaClass = "badge-urgencia-media";
-        if (urgenciaStr.includes("alta")) urgenciaClass = "badge-urgencia-alta";
-        if (urgenciaStr.includes("baixa")) urgenciaClass = "badge-urgencia-baixa";
+        const currentUrgenciaId = Number(item.urgencia_id);
+        if (currentUrgenciaId === 3) urgenciaClass = "badge-urgencia-alta";
+        if (currentUrgenciaId === 1) urgenciaClass = "badge-urgencia-baixa";
 
         html += `
             <div class="col">
@@ -297,12 +302,12 @@ function renderizarCardsHistorico() {
                                     </span>
                                 </div>
                                 
-                                <h5 class="fw-bold text-dark mb-1 card-title-zella text-truncate-2" title="${item.descricaoDenuncia}">
-                                    ${item.descricaoDenuncia}
+                                <h5 class="fw-bold text-dark mb-1 card-title-zella text-truncate-2" title="${item.titulo}">
+                                    ${item.titulo}
                                 </h5>
                                 
                                 <div class="d-flex gap-1 mb-2 flex-wrap">
-                                    <span class="badge badge-meta-zella"><i class="bi bi-clock me-1"></i>HÁ 2 MESES</span>
+                                    <span class="badge badge-meta-zella"><i class="bi bi-clock me-1"></i>${item.dataPublicacao || 'Sem data'}</span>
                                     <span class="badge badge-meta-zella ${urgenciaClass}">${urgenciaStr.toUpperCase()}</span>
                                 </div>
                             </div>

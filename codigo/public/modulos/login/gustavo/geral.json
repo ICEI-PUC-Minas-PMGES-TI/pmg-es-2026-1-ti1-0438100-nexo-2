@@ -2,9 +2,14 @@
   "denuncias": [
     {
       "id": "1",
-      "status_id": 3,
-      "categoria_id": 1,
+      "titulo": "Buraco na Avenida Firmo de Matos",
       "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
+      "status_id": 2,
+      "categoria_id": 1,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "usuarioMorador_cpf": "12345678900",
+      "usuarioInstituicao_cpf": "98723456700",
       "imagens": [
         "imgs/buraco1.jpg",
         "imgs/buraco2.jpg",
@@ -15,46 +20,47 @@
         "imgs/buraco3.jpg",
         "imgs/buraco4.jpg"
       ],
-      "urgencia_id": 1,
-      "data": "26/04/2026",
-      "entidade_id": 1,
-      "denunciante": 12345678900,
+      "dataPublicacao": "2026-04-26",
+      "dataResolucao": null,
       "local": {
+        "logradouro": "Avenida Firmo de Matos",
+        "numero": 148,
+        "bairro": "",
         "cidade": "Contagem",
         "estado": "MG",
         "pais": "Brasil",
-        "logradouro": "Avenida Firmo de Matos",
-        "numero": 148,
         "latitude": -19.9316,
         "longitude": -44.0539
       },
-      "usuarioInstituicao_cpf": 98723456700,
-      "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-      "prazo": "03/06/2026",
-      "afetados": 32,
-      "custo": "R$ 998,90",
+      "afetados": 31,
+      "notaOrgao": "Além das chuvas, os buracos ocorrem devido à péssima qualidade do asfalto... estamos agilizando para resolver isso.",
+      "prazo": "2026-06-25",
+      "custo": 1250.97,
+      "descricaoCusto": "Valor referente aos materiais necessários para obra.",
       "comentarios": [
         {
-          "id": 1780535742402,
-          "usuario": 12345678900,
+          "id": 1780675279565,
+          "usuario_cpf": "12345678900",
           "mensagem": "Teste de comentário editado",
-          "data": "03/06/2026",
-          "hora": "22:15",
+          "data": "05/06/2026",
+          "hora": "13:01",
           "editado": true
         },
         {
-          "id": 1780535804087,
-          "usuario": 12345678900,
-          "mensagem": "teste",
-          "data": "03/06/2026",
-          "hora": "22:16",
-          "editado": false
+          "id": 1780680607556,
+          "usuario_cpf": "98723456700",
+          "mensagem": "Teste de comentário editado",
+          "data": "05/06/2026",
+          "hora": "15:09",
+          "editado": true
         }
       ],
       "progresso": [
         {
           "etapa": "Denúncia aceita",
-          "concluida": false,
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -62,7 +68,9 @@
         },
         {
           "etapa": "Equipe enviada ao local",
-          "concluida": false,
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -70,7 +78,9 @@
         },
         {
           "etapa": "Planejamento e previsões",
-          "concluida": false,
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -78,7 +88,9 @@
         },
         {
           "etapa": "Manutenção em andamento",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -86,7 +98,9 @@
         },
         {
           "etapa": "Obra finalizada",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -96,47 +110,53 @@
     },
     {
       "id": "2",
+      "titulo": "Falta de Iluminação na Avenida Edmeia",
+      "descricaoDenuncia": "Há várias semanas a avenida permanece com diversos postes de iluminação apagados em praticamente toda a sua extensão, causando insegurança constante para motoristas, motociclistas, ciclistas e pedestres que transitam pelo local diariamente. Durante a noite, a falta de iluminação reduz drasticamente a visibilidade da via, dificultando a identificação de obstáculos, animais na pista e até mesmo outros veículos, aumentando significativamente o risco de acidentes. Além disso, moradores e comerciantes da região relatam crescimento da sensação de insegurança, principalmente em horários de menor movimento, devido à escuridão intensa em determinados trechos da avenida.",
       "status_id": 3,
       "categoria_id": 5,
-      "descricaoDenuncia": "Há várias semanas a avenida permanece com diversos postes de iluminação apagados em praticamente toda a sua extensão, causando insegurança constante para motoristas, motociclistas, ciclistas e pedestres que transitam pelo local diariamente. Durante a noite, a falta de iluminação reduz drasticamente a visibilidade da via, dificultando a identificação de obstáculos, animais na pista e até mesmo outros veículos, aumentando significativamente o risco de acidentes. Além disso, moradores e comerciantes da região relatam crescimento da sensação de insegurança, principalmente em horários de menor movimento, devido à escuridão intensa em determinados trechos da avenida.",
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678902",
+      "usuarioInstituicao_cpf": null,
       "imagens": [
         "imgs/ilum1.jpg",
         "imgs/ilum2.jpg",
         "imgs/ilum3.jpg",
         "imgs/ilum4.jpg"
       ],
-      "urgencia_id": 3,
-      "data": "26/04/2025",
-      "entidade_id": 2,
-      "denunciante": 12345678902,
+      "dataPublicacao": "2025-04-26",
+      "dataResolucao": null,
       "local": {
+        "logradouro": "Avenida Edmeia Matos Lazzarotti",
+        "numero": 4100,
+        "bairro": "",
         "cidade": "Betim",
         "estado": "MG",
         "pais": "Brasil",
-        "logradouro": "Avenida Edmeia Matos Lazzarotti",
-        "numero": 4100,
         "latitude": -19.9489,
         "longitude": -44.1907
       },
-      "usuarioInstituicao_cpf": 98723456700,
-      "notaOrgao": "A equipe responsável identificou falhas em parte da rede elétrica e em alguns postes da região. Já foi solicitada a substituição dos equipamentos danificados e os reparos serão iniciados nos próximos dias para restabelecer totalmente a iluminação da avenida.",
-      "prazo": "",
       "afetados": 12,
-      "custo": "",
+      "notaOrgao": "",
+      "prazo": null,
+      "custo": null,
+      "descricaoCusto": "",
       "comentarios": [
         {
-          "id": 1780536069547,
-          "usuario": 12345678900,
+          "id": 1780675354546,
+          "usuario_cpf": "12345678900",
           "mensagem": "Também sou afetada por isso, sempre!",
-          "data": "03/06/2026",
-          "hora": "22:21",
+          "data": "05/06/2026",
+          "hora": "13:02",
           "editado": false
         }
       ],
       "progresso": [
         {
           "etapa": "Denúncia aceita",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -144,7 +164,9 @@
         },
         {
           "etapa": "Equipe enviada ao local",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -152,7 +174,9 @@
         },
         {
           "etapa": "Planejamento e previsões",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -160,7 +184,9 @@
         },
         {
           "etapa": "Manutenção em andamento",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -168,7 +194,9 @@
         },
         {
           "etapa": "Obra finalizada",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -178,38 +206,53 @@
     },
     {
       "id": "3",
+      "titulo": "Vazamento de Esgoto na Avenida Professor Mário",
+      "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto em diversos pontos ao longo de toda a via, gerando forte mau cheiro e causando grande desconforto para moradores, comerciantes e pessoas que transitam pela região diariamente. Em alguns trechos, o esgoto está acumulado próximo às calçadas, dificultando a passagem de pedestres e aumentando o risco de contaminação e proliferação de insetos.",
       "status_id": 3,
       "categoria_id": 2,
-      "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto em diversos pontos ao longo de toda a via, gerando forte mau cheiro e causando grande desconforto para moradores, comerciantes e pessoas que transitam pela região diariamente. Em alguns trechos, o esgoto está acumulado próximo às calçadas, dificultando a passagem de pedestres e aumentando o risco de contaminação e proliferação de insetos.",
+      "urgencia_id": 2,
+      "entidade_id": 3,
+      "usuarioMorador_cpf": "12345678901",
+      "usuarioInstituicao_cpf": null,
       "imagens": [
         "imgs/esg1.jpg",
         "imgs/esg2.jpg",
         "imgs/esg3.jpg",
         "imgs/esg4.jpg"
       ],
-      "urgencia_id": 2,
-      "data": "26/04/2025",
-      "entidade_id": 3,
-      "denunciante": 12345678901,
+      "dataPublicacao": "2025-04-26",
+      "dataResolucao": null,
       "local": {
+        "logradouro": "Avenida Professor Mário Werneck",
+        "numero": 21,
+        "bairro": "",
         "cidade": "Belo Horizonte",
         "estado": "MG",
         "pais": "Brasil",
-        "logradouro": "Avenida Professor Mário Werneck",
-        "numero": 21,
         "latitude": -19.9102,
         "longitude": -43.9266
       },
-      "usuarioInstituicao_cpf": 98723456700,
-      "notaOrgao": "Após vistoria técnica no local, foi identificado que o vazamento está relacionado ao desgaste da tubulação e ao aumento do fluxo de água durante períodos chuvosos. A equipe de manutenção já iniciou o planejamento para realizar os reparos necessários e minimizar os impactos para a população da região.",
-      "prazo": "",
-      "afetados": 35,
-      "custo": "",
-      "comentarios": [],
+      "afetados": 34,
+      "notaOrgao": "",
+      "prazo": null,
+      "custo": null,
+      "descricaoCusto": "",
+      "comentarios": [
+        {
+          "id": 1780664258000,
+          "usuario_cpf": "12345678902",
+          "mensagem": "Teste de comentário editado",
+          "data": "05/06/2026",
+          "hora": "09:58",
+          "editado": true
+        }
+      ],
       "progresso": [
         {
           "etapa": "Denúncia aceita",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -217,7 +260,9 @@
         },
         {
           "etapa": "Equipe enviada ao local",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -225,7 +270,9 @@
         },
         {
           "etapa": "Planejamento e previsões",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -233,7 +280,9 @@
         },
         {
           "etapa": "Manutenção em andamento",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -241,7 +290,1029 @@
         },
         {
           "etapa": "Obra finalizada",
+          "descricao": "",
           "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "titulo": "Falta de Iluminação na Avenida Edmeia",
+      "descricaoDenuncia": "A avenida está completamente sem iluminação...",
+      "status_id": 2,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678900",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-25",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Edmeia Matos Lazzarotti",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.9681,
+        "longitude": -44.1984
+      },
+      "afetados": 13,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-24",
+      "custo": 1491.4,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "titulo": "Falta de Iluminação na Avenida Edmeia",
+      "descricaoDenuncia": "A avenida está completamente sem iluminação...",
+      "status_id": 2,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678901",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto3.jpg",
+        "./img temporario/foto1.jpeg"
+      ],
+      "dataPublicacao": "2025-04-25",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Edmeia Matos Lazzarotti",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.9489,
+        "longitude": -44.1907
+      },
+      "afetados": 15,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-24",
+      "custo": 1676.75,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "titulo": "Problema na Avenida Brasil",
+      "descricaoDenuncia": "Descrição da denúncia número 6...",
+      "status_id": 2,
+      "categoria_id": 1,
+      "urgencia_id": 2,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678902",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-20",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Brasil",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.9167,
+        "longitude": -43.9345
+      },
+      "afetados": 17,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-19",
+      "custo": 1862.1,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "titulo": "Problema na Rua das Flores",
+      "descricaoDenuncia": "Descrição da denúncia número 7...",
+      "status_id": 1,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 3,
+      "usuarioMorador_cpf": "12345678900",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-19",
+      "dataResolucao": "2025-06-03",
+      "local": {
+        "logradouro": "Rua das Flores",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.955,
+        "longitude": -44.205
+      },
+      "afetados": 19,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-18",
+      "custo": 2047.45,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "titulo": "Problema na Avenida Edmeia",
+      "descricaoDenuncia": "Descrição da denúncia número 8...",
+      "status_id": 2,
+      "categoria_id": 2,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "usuarioMorador_cpf": "12345678901",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-18",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Edmeia",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Ribeirão das Neves",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.7669,
+        "longitude": -44.0867
+      },
+      "afetados": 21,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-17",
+      "custo": 2232.8,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "titulo": "Problema na Avenida Firmo de Matos",
+      "descricaoDenuncia": "Descrição da denúncia número 9...",
+      "status_id": 2,
+      "categoria_id": 3,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678902",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-17",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Firmo de Matos",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.9316,
+        "longitude": -44.0539
+      },
+      "afetados": 23,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-16",
+      "custo": 2418.15,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "titulo": "Problema na Avenida Professor Mário",
+      "descricaoDenuncia": "Descrição da denúncia número 10...",
+      "status_id": 1,
+      "categoria_id": 4,
+      "urgencia_id": 2,
+      "entidade_id": 3,
+      "usuarioMorador_cpf": "12345678900",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-16",
+      "dataResolucao": "2025-05-31",
+      "local": {
+        "logradouro": "Avenida Professor Mário",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Sabará",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.884,
+        "longitude": -43.8267
+      },
+      "afetados": 25,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-15",
+      "custo": 2603.5,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "titulo": "Problema na Avenida Brasil",
+      "descricaoDenuncia": "Descrição da denúncia número 11...",
+      "status_id": 2,
+      "categoria_id": 1,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678901",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-15",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Brasil",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.928,
+        "longitude": -43.938
+      },
+      "afetados": 27,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-14",
+      "custo": 2788.85,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "titulo": "Problema na Rua das Flores",
+      "descricaoDenuncia": "Descrição da denúncia número 12...",
+      "status_id": 1,
+      "categoria_id": 5,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "usuarioMorador_cpf": "12345678902",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-14",
+      "dataResolucao": "2025-05-29",
+      "local": {
+        "logradouro": "Rua das Flores",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.9681,
+        "longitude": -44.1984
+      },
+      "afetados": 29,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-13",
+      "custo": 2974.2,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "titulo": "Problema na Avenida Edmeia",
+      "descricaoDenuncia": "Descrição da denúncia número 13...",
+      "status_id": 2,
+      "categoria_id": 2,
+      "urgencia_id": 3,
+      "entidade_id": 3,
+      "usuarioMorador_cpf": "12345678900",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-13",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Edmeia",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Ribeirão das Neves",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.78,
+        "longitude": -44.095
+      },
+      "afetados": 31,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-12",
+      "custo": 3159.55,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "titulo": "Problema na Avenida Firmo de Matos",
+      "descricaoDenuncia": "Descrição da denúncia número 14...",
+      "status_id": 1,
+      "categoria_id": 3,
+      "urgencia_id": 2,
+      "entidade_id": 2,
+      "usuarioMorador_cpf": "12345678901",
+      "usuarioInstituicao_cpf": "45687612300",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-12",
+      "dataResolucao": "2025-05-27",
+      "local": {
+        "logradouro": "Avenida Firmo de Matos",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.92,
+        "longitude": -44.07
+      },
+      "afetados": 33,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-11",
+      "custo": 3344.9,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "titulo": "Problema na Avenida Professor Mário",
+      "descricaoDenuncia": "Descrição da denúncia número 15...",
+      "status_id": 2,
+      "categoria_id": 4,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "usuarioMorador_cpf": "12345678902",
+      "usuarioInstituicao_cpf": "98723456700",
+      "imagens": [
+        "./img temporario/foto1.jpeg",
+        "./img temporario/foto2.webp"
+      ],
+      "dataPublicacao": "2025-04-11",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Avenida Professor Mário",
+        "numero": null,
+        "bairro": "",
+        "cidade": "Sabará",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.895,
+        "longitude": -43.815
+      },
+      "afetados": 35,
+      "notaOrgao": "A denúncia foi analisada e a equipe responsável iniciou o planejamento do atendimento.",
+      "prazo": "2025-06-10",
+      "custo": 3530.25,
+      "descricaoCusto": "Estimativa de materiais, equipamentos e mão de obra.",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "descricao": "",
+          "concluida": true,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "descricao": "",
+          "concluida": false,
+          "tipo": "fixo",
           "arquivo": {
             "nome": "",
             "url": ""
@@ -252,296 +1323,165 @@
   ],
   "usuariosMoradores": [
     {
-      "nome_usuario": "Luisa Souza",
-      "nome_completo": "Luisa Souza Bernardes",
-      "email": "souzaluisa@gmail.com",
       "cpf": "12345678900",
-      "senha": "123",
-      "denuncias_acompanhadas": [
-        "1",
-        "3"
+      "nomeUsuario": "Luisa Souza",
+      "nomeCompleto": "Luisa Souza Bernardes",
+      "email": "souzaluisa@gmail.com",
+      "senha": "xyz123!",
+      "fotoPerfil": "imgs/imgPerfil/perfil_luisasouza.png",
+      "denunciasAcompanhadas": [
+        1
       ],
-      "id": "2WVdbTc4oaM"
+      "estatisticas": {
+        "atendidas": 3,
+        "abertas": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "id": "nqc3jNEKDs0"
     },
     {
-      "nome_usuario": "João Pedro",
-      "nome_completo": "João Pedro Silva",
+      "cpf": "12345678901",
+      "nomeUsuario": "João Pedro",
+      "nomeCompleto": "João Pedro Silva",
       "email": "pedrojoao@gmail.com",
-      "cpf": 12345678901,
       "senha": "xyz456!",
-      "denuncias_acompanhadas": [
-        "3",
-        "1"
+      "fotoPerfil": "imgs/imgPerfil/perfil_joaopedro.png",
+      "denunciasAcompanhadas": [
+        3
       ],
-      "id": "aQAmlDN0tws"
+      "estatisticas": {
+        "atendidas": 3,
+        "abertas": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "id": "6MeRLpSst8s"
     },
     {
-      "nome_usuario": "Maria Amélia",
-      "nome_completo": "Maria Amélia de Castro",
+      "cpf": "12345678902",
+      "nomeUsuario": "Maria Amélia",
+      "nomeCompleto": "Maria Amélia de Castro",
       "email": "mariamelia@gmail.com",
-      "cpf": 12345678902,
       "senha": "xyz789!",
-      "denuncias_acompanhadas": [
-        "2"
+      "fotoPerfil": "imgs/imgPerfil/perfil_mariaamelia.png",
+      "denunciasAcompanhadas": [
+        2,
+        3
       ],
-      "id": "baA6eNcavEI"
-    },
-    {
-      "id": "KskjgCXv2K4",
-      "nome_usuario": "1",
-      "nome_completo": "123",
-      "email": "1@email.com",
-      "cpf": "12345678907",
-      "senha": "12",
-      "denuncias_acompanhadas": []
+      "estatisticas": {
+        "atendidas": 3,
+        "abertas": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "id": "HVTFvw-ODKQ"
     }
   ],
   "usuariosInstituicoes": [
     {
+      "cpf": "45687612300",
       "instituicao_id": 2,
-      "nome_usuario": "Fernanda Rocha",
-      "nome_completo": "Fernanda Rocha Ladeira",
+      "nomeUsuario": "Fernanda Rocha",
+      "nomeCompleto": "Fernanda Rocha Ladeira",
       "email": "fernandaprefcontagem@gmail.com",
-      "cpf": 45687612300,
-      "senha": "123",
-      "id": "870GSYEP8_s",
-      "nome": "Fernanda Rocha Ladeira",
-      "identificador": "Contagem, MG"
-    },
-    {
-      "instituicao_id": 1,
-      "nome_usuario": "Ricardo Alves",
-      "nome_completo": "Ricardo Alves Teixeira",
-      "email": "ricardomegasfalt@gmail.com",
-      "cpf": 98723456700,
-      "senha": "abc123!",
-      "id": "OcIynOJHQMg"
-    }
-  ],
-  "usuarioLogado": {
-    "cpf": "Contagem, MG"
-  },
-  "infoPerfilMoradores": [
-    {
-      "usuarioMorador_cpf": 12345678900,
-      "fotoPerfil": "imgs/imgPerfil/perfil_luisasouza.png",
-      "estatisticas": {
-        "atendidas": 3,
-        "aberto": 2,
-        "atualizacoes": 2,
-        "pontos": 50
-      },
-      "denuncias_id": [],
-      "id": "ZBjuTX0Duqo"
-    },
-    {
-      "usuarioMorador_cpf": 12345678901,
-      "fotoPerfil": "imgs/imgPerfil/perfil_joaopedro.png",
-      "estatisticas": {
-        "atendidas": 3,
-        "aberto": 2,
-        "atualizacoes": 2,
-        "pontos": 50
-      },
-      "denuncias_id": [],
-      "id": "ZBjuTX0Duqo"
-    },
-    {
-      "usuarioMorador_cpf": 12345678902,
-      "fotoPerfil": "imgs/imgPerfil/perfil_mariaamelia.png",
-      "estatisticas": {
-        "atendidas": 3,
-        "aberto": 2,
-        "atualizacoes": 2,
-        "pontos": 50
-      },
-      "denuncias_id": [],
-      "id": "ZBjuTX0Duqo"
-    },
-    {
-      "id": "lnWLqVTKnDY",
-      "usuarioMorador_cpf": "11122233344",
-      "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      "estatisticas": {
-        "denuncias_feitas": 0
-      }
-    },
-    {
-      "id": "aE75pSnFxHI",
-      "usuarioMorador_cpf": "99988877766",
-      "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      "estatisticas": {
-        "denuncias_feitas": 0
-      }
-    },
-    {
-      "id": "Xf0j0_exZmI",
-      "usuarioMorador_cpf": "11122233344",
-      "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      "estatisticas": {
-        "denuncias_feitas": 0
-      }
-    },
-    {
-      "id": "JwDWXaolRS4",
-      "usuarioMorador_cpf": "11122233344",
-      "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      "estatisticas": {
-        "denuncias_feitas": 0
-      }
-    },
-    {
-      "id": "arc4N1_BL2k",
-      "usuarioMorador_cpf": "12345678907",
-      "fotoPerfil": "https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=200",
-      "estatisticas": {
-        "denuncias_feitas": 0
-      }
-    }
-  ],
-  "infoPerfilInstituicoes": [
-    {
-      "usuarioInstituicao_cpf": 45687612300,
+      "senha": "def123!",
       "fotoPerfil": "imgs/imgPerfil/perfil_fernandarocha.png",
       "estatisticas": {
         "atendidas": 67,
-        "aberto": 3,
+        "abertas": 3,
         "atualizacoes": 15
       },
-      "obras_id": [
+      "avaliacoes": [
         {
-          "id": 2
-        },
-        {
-          "id": 12
-        },
-        {
-          "id": 45
+          "id": 1,
+          "denuncia_id": 3,
+          "avaliador_cpf": "12345678901",
+          "nota": 5,
+          "descricao": "Ótimo trabalho de toda equipe!",
+          "data": "2026-06-05"
         }
       ],
-      "avaliacoes": [],
-      "id": "0F6jdZGEfRo"
+      "id": "A0thZ-vgQ7M"
     },
     {
-      "usuarioInstituicao_cpf": 98723456700,
+      "cpf": "98723456700",
+      "instituicao_id": 1,
+      "nomeUsuario": "Ricardo Alves",
+      "nomeCompleto": "Ricardo Alves Teixeira",
+      "email": "ricardomegasfalt@gmail.com",
+      "senha": "abc123!",
       "fotoPerfil": "imgs/imgPerfil/perfil_ricardoalves.png",
       "estatisticas": {
         "atendidas": 42,
-        "aberto": 4,
+        "abertas": 4,
         "atualizacoes": 5
       },
-      "obras_id": [
-        {
-          "id": 1
-        },
-        {
-          "id": 3
-        },
-        {
-          "id": 7
-        },
-        {
-          "id": 21
-        }
-      ],
       "avaliacoes": [
         {
-          "denunciaId": 1,
-          "avaliador": 12345678900,
+          "id": 1,
+          "denuncia_id": 1,
+          "avaliador_cpf": "12345678900",
           "nota": 5,
           "descricao": "TESTE",
-          "data": "03/06/2026"
+          "data": "2026-06-03"
+        },
+        {
+          "id": 2,
+          "denuncia_id": 1,
+          "avaliador_cpf": "12345678900",
+          "nota": 4,
+          "descricao": "Muito bom o serviço, mas um pouco demorado",
+          "data": "2026-06-05"
+        },
+        {
+          "id": 3,
+          "denuncia_id": 1,
+          "avaliador_cpf": "12345678900",
+          "nota": 2,
+          "descricao": "Avaliação nota 2, serviço a desejar!",
+          "data": "2026-06-05"
         }
       ],
-      "id": "peIhxndt2Ik"
+      "id": "PyQs3fnYIOI"
     }
   ],
-  "mensagensChat": [
+  "usuarioLogado": {
+    "cpf": "45687612300"
+  },
+  "instituicoes": [
     {
       "id": "1",
-      "denunciaId": 1,
-      "usuario": 12345678900,
-      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
-      "data": "27/05/2026",
-      "hora": "16:09",
-      "editada": false
+      "nome": "Megasfalt",
+      "entidade_id": 3
     },
     {
       "id": "2",
-      "denunciaId": 1,
-      "usuario": 98723456700,
-      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar ali.",
-      "data": "01/06/2026",
-      "hora": "11:41",
-      "editada": true
+      "nome": "Prefeitura de Contagem",
+      "entidade_id": 2
     },
     {
       "id": "3",
-      "denunciaId": 1,
-      "usuario": 12345678900,
-      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar!",
-      "data": "01/06/2026",
-      "hora": "14:33",
-      "editada": true
-    },
-    {
-      "denunciaId": 1,
-      "usuario": 98723456700,
-      "mensagem": "teste de mensagem",
-      "data": "01/06/2026",
-      "hora": "19:12",
-      "editada": false,
-      "id": "C259BGJ8A88"
-    },
-    {
-      "denunciaId": 1,
-      "usuario": 98723456700,
-      "mensagem": "Finalizei a obra, favor verificar e concluir!",
-      "data": "03/06/2026",
-      "hora": "13:55",
-      "editada": false,
-      "id": "gmit3L-yTmc"
-    },
-    {
-      "denunciaId": 3,
-      "usuario": 12345678901,
-      "mensagem": "Bom dia!! Gostaria de saber quando vamos dar início a obra.",
-      "data": "05/06/2026",
-      "hora": "09:12",
-      "editada": false,
-      "id": "2BZuafDG0KQ"
-    }
-  ],
-  "instituicao": [
-    {
-      "id": "1",
-      "nome": "Megasfalt"
-    },
-    {
-      "id": "2",
-      "nome": "Prefeitura de Contagem"
-    },
-    {
-      "id": "3",
-      "nome": "Prefeitura de Betim"
+      "nome": "Prefeitura de Betim",
+      "entidade_id": 2
     }
   ],
   "status": [
     {
       "id": "1",
-      "status": "Concluída"
+      "nome": "Concluída"
     },
     {
       "id": "2",
-      "status": "Em andamento"
+      "nome": "Em andamento"
     },
     {
       "id": "3",
-      "status": "Em aberto"
+      "nome": "Em aberto"
     },
     {
       "id": "4",
-      "status": "Obra finalizada"
+      "nome": "Obra finalizada"
     }
   ],
   "categorias": [
@@ -569,29 +1509,94 @@
   "urgencias": [
     {
       "id": "1",
-      "tipo": "Baixa"
+      "nome": "Baixa"
     },
     {
       "id": "2",
-      "tipo": "Média"
+      "nome": "Média"
     },
     {
       "id": "3",
-      "tipo": "Alta"
+      "nome": "Alta"
     }
   ],
   "entidades": [
     {
       "id": "1",
-      "tipo": "Todos"
+      "nome": "Todos"
     },
     {
       "id": "2",
-      "tipo": "Prefeitura"
+      "nome": "Prefeitura"
     },
     {
       "id": "3",
-      "tipo": "Empresa privada"
+      "nome": "Empresa privada"
+    }
+  ],
+  "mensagensChat": [
+    {
+      "id": "1",
+      "denuncia_id": 1,
+      "usuario_cpf": "12345678900",
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar.",
+      "data": "2026-05-27",
+      "hora": "16:09",
+      "editada": false
+    },
+    {
+      "id": "2",
+      "denuncia_id": 1,
+      "usuario_cpf": "98723456700",
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar ali.",
+      "data": "2026-06-01",
+      "hora": "11:41",
+      "editada": true
+    },
+    {
+      "id": "3",
+      "denuncia_id": 1,
+      "usuario_cpf": "12345678900",
+      "mensagem": "Está impossível de fazer minhas entregas passando por aquele trecho. Os buracos estão tão grandes que nem caminhão está conseguindo passar!",
+      "data": "2026-06-01",
+      "hora": "14:33",
+      "editada": true
+    },
+    {
+      "id": "4",
+      "denuncia_id": 3,
+      "usuario_cpf": "12345678901",
+      "mensagem": "Bom dia!! Gostaria de saber quando vamos dar início a obra.",
+      "data": "2026-06-05",
+      "hora": "09:12",
+      "editada": false
+    },
+    {
+      "id": "5",
+      "denuncia_id": 2,
+      "usuario_cpf": "12345678902",
+      "mensagem": "Bom dia! Vamos iniciar?",
+      "data": "2026-06-05",
+      "hora": "09:59",
+      "editada": false
+    },
+    {
+      "id": "6",
+      "denuncia_id": 2,
+      "usuario_cpf": "45687612300",
+      "mensagem": "Bom dia, vamos sim!",
+      "data": "2026-06-05",
+      "hora": "10:02",
+      "editada": false
+    },
+    {
+      "id": "7",
+      "denuncia_id": 2,
+      "usuario_cpf": "98723456700",
+      "mensagem": "Agora é comigo!",
+      "data": "2026-06-05",
+      "hora": "10:02",
+      "editada": false
     }
   ],
   "$schema": "./node_modules/json-server/schema.json"

@@ -8,16 +8,22 @@ let dadosPerfilLogado = null;
 let novaFotoBase64 = null;
 let filtroAtual = "TODAS";
 let listaObrasGeral = [];
+let listaStatus = [];
+let listaUrgencias = [];
 
 async function carregarDadosInstituicao() {
     try {
-        const [resLogado, resInstituicoes, resPerfilInstituicoes, resDenuncias, resAvaliacoes] = await Promise.all([
+        // Adaptado para as rotas e tabelas existentes no seu JSON
+        const [resLogado, resInstituicoes, resDenuncias, resStatus, resUrgencias] = await Promise.all([
             fetch(`${API_URL}/usuarioLogado`).then(r => r.json()),
             fetch(`${API_URL}/usuariosInstituicoes`).then(r => r.json()),
-            fetch(`${API_URL}/infoPerfilInstituicoes`).then(r => r.json()),
             fetch(`${API_URL}/denuncias`).then(r => r.json()).catch(() => []),
-            fetch(`${API_URL}/avaliacoes`).then(r => r.json()).catch(() => [])
+            fetch(`${API_URL}/status`).then(r => r.json()).catch(() => []),
+            fetch(`${API_URL}/urgencias`).then(r => r.json()).catch(() => [])
         ]);
+
+        listaStatus = resStatus || [];
+        listaUrgencias = resUrgencias || [];
 
         const cpfLogado = resLogado?.cpf;
         if (!cpfLogado) {
@@ -25,8 +31,9 @@ async function carregarDadosInstituicao() {
             return;
         }
 
+        // Busca o usuário comparando os CPFs limpos
         const usuario = resInstituicoes?.find(u => {
-            const idItem = String(u.identificador || u.cnpj || u.cpf || u.cpf_responsavel || '').replace(/\D/g, '');
+            const idItem = String(u.cpf || '').replace(/\D/g, '');
             const loginLimpo = String(cpfLogado).replace(/\D/g, '');
             return idItem === loginLimpo;
         });
@@ -37,16 +44,15 @@ async function carregarDadosInstituicao() {
         }
 
         dadosUsuarioLogado = usuario;
-        dadosPerfilLogado = resPerfilInstituicoes?.find(p => {
-            const relacaoLimpa = String(p.usuarioInstituicao_cpf || '').replace(/\D/g, '');
-            const loginLimpo = String(cpfLogado).replace(/\D/g, '');
-            return relacaoLimpa === loginLimpo;
-        });
+        dadosPerfilLogado = usuario; // No seu JSON as estatísticas e fotos já estão unificadas aqui
 
-        listaObrasGeral = resDenuncias.length ? resDenuncias : gerarObrasDemonstracao();
+        // Filtra denúncias destinadas à entidade ou instituição logada
+        listaObrasGeral = resDenuncias.filter(d => d.entidade_id === usuario.instituicao_id || d.usuarioInstituicao_cpf === cpfLogado);
 
         preencherHTMLFixo();
-        renderizarAvaliacoesDinamicas(resAvaliacoes);
+        
+        // Puxa as avaliações diretamente de dentro do usuário no seu formato JSON
+        renderizarAvaliacoesDinamicas(usuario.avaliacoes || []);
         renderizarMuralObras();
         configurarFiltrosAbas();
         configurarEfeitosInterface();
@@ -60,13 +66,12 @@ function preencherHTMLFixo() {
         document.getElementById("fotoPerfil").src = dadosPerfilLogado.fotoPerfil;
     }
     
-    document.getElementById("nome_usuario").innerText = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo;
+    document.getElementById("nome_usuario").innerText = dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto;
 
     const txtTipo = document.getElementById("txt-tipo-instituicao");
     const titulo = document.getElementById("titulo-dados-perfil");
-    const nomeLower = (dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo || "").toLowerCase();
 
-    if (nomeLower.includes("prefeitura") || dadosUsuarioLogado.instituicao_id === 2) {
+    if (dadosUsuarioLogado.instituicao_id === 2) {
         if(txtTipo) txtTipo.innerText = "Prefeitura Oficial";
         if(titulo) titulo.innerText = "Dados Municipais";
     } else {
@@ -75,15 +80,15 @@ function preencherHTMLFixo() {
     }
 
     if (document.getElementById("stat-solucionadas")) {
-        document.getElementById("stat-solucionadas").innerText = dadosPerfilLogado?.estatisticas?.solucionadas || "67";
+        document.getElementById("stat-solucionadas").innerText = dadosPerfilLogado?.estatisticas?.atendidas || "0";
     }
     if (document.getElementById("stat-obras")) {
-        document.getElementById("stat-obras").innerText = dadosPerfilLogado?.estatisticas?.obras || "12";
+        document.getElementById("stat-obras").innerText = dadosPerfilLogado?.estatisticas?.abertas || "0";
     }
 
-    document.getElementById("crud-nome").value = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo || "";
+    document.getElementById("crud-nome").value = dadosUsuarioLogado.nomeCompleto || dadosUsuarioLogado.nomeUsuario || "";
     document.getElementById("crud-email").value = dadosUsuarioLogado.email || "";
-    document.getElementById("crud-telefone").value = dadosUsuarioLogado.telefone || "(31) 3333-4444";
+    document.getElementById("crud-telefone").value = dadosUsuarioLogado.telefone || "";
     document.getElementById("crud-senha").value = dadosUsuarioLogado.senha || "";
 
     configurarEventosSalvar();
@@ -97,25 +102,27 @@ function renderizarAvaliacoesDinamicas(avaliacoes) {
     const titulo = document.getElementById("titulo-container-avaliacoes");
     if (!container) return;
 
-    const listaComentarios = avaliacoes.length ? avaliacoes : [
-        { autor: "João Pedro", data: "01/03/2025 às 13:50", texto: "Bom atendimento, nota 10!", foto: "https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=100" }
-    ];
-
-    if (titulo) titulo.innerText = `Avaliações ( ${listaComentarios.length} )`;
+    if (titulo) titulo.innerText = `Avaliações ( ${avaliacoes.length} )`;
     container.innerHTML = "";
 
-    listaComentarios.forEach(comentario => {
+    if (avaliacoes.length === 0) {
+        container.innerHTML = `<p class="text-muted small ps-2 py-2">Nenhuma avaliação recebida ainda.</p>`;
+        return;
+    }
+
+    avaliacoes.forEach(comentario => {
         const divBox = document.createElement("div");
-        divBox.className = "d-flex align-items-start gap-3 item-comentario-zella p-3 rounded-3";
+        divBox.className = "d-flex align-items-start gap-3 item-comentario-zella p-3 rounded-3 mb-2";
         
         divBox.innerHTML = `
-            <img src="${comentario.foto || 'https://images.unsplash.com/photo-1539571696357-5a69c17a67c6?auto=format&fit=crop&q=80&w=100'}" class="rounded-circle avatar-comentario-zella" alt="${comentario.autor}">
+            <img src="imgs/imgPerfil/perfil_joaopedro.png" class="rounded-circle avatar-comentario-zella" style="width:45px; height:45px; object-fit:cover;" alt="Avaliador">
             <div>
                 <div class="d-flex align-items-center gap-2 mb-1">
-                    <strong class="text-dark small">${comentario.autor || "Usuário"}</strong>
-                    <span class="text-muted data-comentario-zella">${comentario.data || "Recentemente"}</span>
+                    <strong class="text-dark small">CPF: ${comentario.avaliador_cpf}</strong>
+                    <span class="text-muted data-comentario-zella">${comentario.data}</span>
+                    <span class="badge bg-warning text-dark small">★ ${comentario.nota}</span>
                 </div>
-                <p class="text-secondary mb-0 texto-comentario-zella">${comentario.texto || ""}</p>
+                <p class="text-secondary mb-0 texto-comentario-zella">${comentario.descricao || ""}</p>
             </div>
         `;
         container.appendChild(divBox);
@@ -128,14 +135,10 @@ function renderizarMuralObras() {
 
     mural.innerHTML = "";
 
+    // CORREÇÃO 1: Normalização de tipo (String) para garantir que filtros numéricos funcionem estritamente
     const listaFiltrada = listaObrasGeral.filter(obra => {
         if (filtroAtual === "TODAS") return true;
-        
-        const statusItem = String(obra.status || '').toUpperCase();
-        if (filtroAtual === "RESOLVIDAS") {
-            return statusItem === "RESOLVIDAS" || statusItem === "RESOLVIDO" || statusItem === "REALIZADAS";
-        }
-        return statusItem === filtroAtual;
+        return String(obra.status_id) === String(filtroAtual);
     });
 
     if (listaFiltrada.length === 0) {
@@ -144,24 +147,38 @@ function renderizarMuralObras() {
     }
 
     listaFiltrada.forEach(obra => {
-        const tituloTexto = typeof obra.titulo === 'object' ? (obra.titulo.titulo || "Sem título") : (obra.titulo || "Sem título");
-        const localTexto = typeof obra.local === 'object' ? (obra.local.nome || "Não informado") : (obra.local || "Não informado");
+        const tituloTexto = obra.titulo || "Sem título";
+        const localTexto = obra.local?.logradouro || "Não informado";
         
-        const statusTexto = obra.status || "Pendente";
-        const tempoTexto = obra.tempo || "Recente";
-        const urgenciaTexto = obra.urgencia || "Média Urgência";
-        const imagemUrl = obra.imagem || "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300";
+        // CORREÇÃO 2: Normalização na busca do objeto de status
+        const objStatus = listaStatus.find(s => String(s.id) === String(obra.status_id));
+        const statusTexto = objStatus ? objStatus.nome : "Pendente";
+        
+        const tempoTexto = obra.dataPublicacao || "Recente";
+        
+        // CORREÇÃO 3: Normalização na busca do objeto de urgência
+        const objUrgencia = listaUrgencias.find(u => String(u.id) === String(obra.urgencia_id));
+        const urgenciaTexto = objUrgencia ? objUrgencia.nome : "Média Urgência";
 
-        const statusLower = statusTexto.toLowerCase();
-        let statusClass = "status-andamento";
-        if (statusLower === "resolvido" || statusLower === "realizadas" || statusLower === "resolvidas") {
-            statusClass = "status-resolvida";
+        const imagemUrl = (obra.imagens && obra.imagens.length > 0 && obra.imagens[0] !== "") 
+            ? obra.imagens[0] 
+            : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300";
+
+        // CORREÇÃO 4: Distribuição correta de classes visuais por ID numérico do status
+        let statusClass = "status-andamento"; // Padrão: Em Andamento (ID 2)
+        const idStatusVal = Number(obra.status_id);
+
+        if (idStatusVal === 1 || idStatusVal === 4) {
+            statusClass = "status-resolvida"; // Verde para Concluída / Resolvida
+        } else if (idStatusVal === 3) {
+            statusClass = "status-aberto";     // Laranja para Aberto / Novo
         }
 
+        // CORREÇÃO 5: Tratamento numérico estável para as IDs de urgência
         let urgenciaClass = "badge-urgencia-media";
-        const urgenciaLower = urgenciaTexto.toLowerCase();
-        if (urgenciaLower.includes("alta")) urgenciaClass = "badge-urgencia-alta";
-        if (urgenciaLower.includes("baixa")) urgenciaClass = "badge-urgencia-baixa";
+        const idUrgenciaVal = Number(obra.urgencia_id);
+        if (idUrgenciaVal === 3) urgenciaClass = "badge-urgencia-alta";
+        if (idUrgenciaVal === 1) urgenciaClass = "badge-urgencia-baixa";
         
         const cardCol = document.createElement("div");
         cardCol.className = "col";
@@ -176,16 +193,16 @@ function renderizarMuralObras() {
                         <div>
                             <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
                                 <span class="badge-local-zella text-truncate">${localTexto}</span>
-                                <span class="badge-status-zella ${statusClass} flex-shrink-0">${statusTexto}</span>
+                                <span class="badge badge-status-zella ${statusClass} flex-shrink-0">${statusTexto}</span>
                             </div>
                             <h5 class="fw-bold text-dark card-title-zella mb-2 text-truncate-2">${tituloTexto}</h5>
                             <div class="d-flex gap-1 flex-wrap mb-2">
                                 <span class="badge-meta-zella">${tempoTexto}</span>
-                                <span class="badge-meta-zella ${urgenciaClass}">${urgenciaTexto}</span>
+                                <span class="badge-meta-zella ${urgenciaClass}">${urgenciaTexto.toUpperCase()}</span>
                             </div>
                         </div>
                         <div class="text-end mt-auto">
-                            <a href="#" class="link-detalhes-zella fw-bold text-muted small text-decoration-none">Ver detalhes</a>
+                            <a href="detalhes-denuncia.html?id=${obra.id}" class="link-detalhes-zella fw-bold text-muted small text-decoration-none">Ver detalhes</a>
                         </div>
                     </div>
                 </div>
@@ -201,7 +218,9 @@ function configurarFiltrosAbas() {
         btn.onclick = function() {
             botoesFiltro.forEach(b => b.classList.remove("active"));
             this.classList.add("active");
-            filtroAtual = this.getAttribute("data-filtro") || this.innerText;
+            
+            // Pega o valor do atributo (Garante o ID correto vindo do HTML)
+            filtroAtual = this.getAttribute("data-filtro") || "TODAS";
             renderizarMuralObras();
         };
     });
@@ -223,7 +242,7 @@ function configurarEventosSalvar() {
 
     if (btnDeletar) {
         btnDeletar.onclick = async function() {
-            if (confirm("Deseja deletar permanentemente esta conta?")) {
+            if (confirm("Deseja deletar permanentemente esta conta institucional?")) {
                 try {
                     await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, { method: "DELETE" });
                     await fetch(`${API_URL}/usuarioLogado`, {
@@ -257,45 +276,28 @@ function configurarEventosSalvar() {
             e.preventDefault();
             const atualizados = {
                 ...dadosUsuarioLogado,
-                nome: document.getElementById("crud-nome").value.trim(),
-                nome_usuario: document.getElementById("crud-nome").value.trim(),
+                nomeCompleto: document.getElementById("crud-nome").value.trim(),
                 email: document.getElementById("crud-email").value.trim(),
                 telefone: document.getElementById("crud-telefone").value.trim(),
                 senha: document.getElementById("crud-senha").value
             };
 
+            if (novaFotoBase64) {
+                atualizados.fotoPerfil = novaFotoBase64;
+            }
+
             try {
                 await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(atualizados)
                 });
 
-                if (novaFotoBase64 && dadosPerfilLogado) {
-                    await fetch(`${API_URL}/infoPerfilInstituicoes/${dadosPerfilLogado.id}`, {
-                        method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ fotoPerfil: novaFotoBase64 })
-                    });
-                }
                 alert("Dados salvos com sucesso!");
                 carregarDadosInstituicao();
             } catch (err) { alert("Erro ao atualizar."); }
         };
     }
-}
-
-function gerarObrasDemonstracao() {
-    return [
-        {
-            titulo: "Falta de canalização e coleta",
-            local: "Contagem",
-            status: "RESOLVIIDAS",
-            tempo: "HÁ 2 HORAS",
-            urgencia: "BAIXA URGÊNCIA",
-            imagem: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300"
-        }
-    ];
 }
 
 document.addEventListener("DOMContentLoaded", carregarDadosInstituicao);
