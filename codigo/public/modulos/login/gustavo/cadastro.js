@@ -68,8 +68,6 @@ async function carregarBanco() {
         db = {
             [config.endpoint]: dadosEndpoint
         };
-        
-        renderizarLista();
     } catch (erro) {
         console.error("Erro ao conectar com o JSON Server:", erro);
         alert("Erro ao carregar dados. Certifique-se de que o JSON Server está rodando na porta 3000!");

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <link rel="stylesheet" href="geral.css">
+    <title>Cadastro Prefeitura | Zella</title>
+</head>
+
+<body>
+    <main class="conteudo-site">
+        <aside class="boas-vindas">
+            <h1>Seja <br> Bem-Vindo.</h1>
+            <p>Acesse o site com sua conta cadastrada</p>
+            <button class="btn-entrar">Entrar</button>
+        </aside>
+        <section class="main-content">
+            <div class="trocar-tipo">
+                <p><a href="cadastroEmpresa.html">Mudar para versão empresarial</a></p>
+                <p><a href="cadastroUsuario.html">Mudar para versão do usuário</a></p>
+            </div>
+            <div class="formulario">
+                <h2 id="tituloFormulario">Crie sua conta</h2>
+                <form id="formCadastro">
+                    <input type="hidden" id="idEdicao">
+                    <div>
+                        <label for="nome">Nome Completo do Responsável:</label> <br>
+                        <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required>
+                    </div>
+                    <div>
+                        <label for="nomeExibicao">Nome de Exibição (Secretaria/Órgão):</label> <br>
+                        <input type="text" id="nomeExibicao" name="nomeExibicao" placeholder="Ex: Sec. de Obras - BH" required>
+                    </div>
+                    <div>
+                        <label for="email">Email:</label> <br>
+                        <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+                    </div>
+                    <div>
+                        <label for="identificador">Município de atuação:</label> <br>
+                        <input type="text" id="identificador" name="Município" placeholder="Belo Horizonte - MG" required>
+                    </div>
+                    <div>
+                        <label for="cpfResponsavel">CPF do Servidor:</label> <br>
+                        <input type="text" id="cpfResponsavel" name="cpfResponsavel" placeholder="Digite o seu CPF" required>
+                    </div>
+                    <div>
+                        <label for="senha">Senha:</label> <br>
+                        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    </div>
+                    <div>
+                        <label for="confirmarSenha">Confirme sua senha:</label> <br>
+                        <input type="password" id="confirmarSenha" name="confirmeSenha" placeholder="Confirme sua senha" required>
+                    </div>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div class="gerenciamento-contas">
+                <h3>Contas de Prefeitura Cadastradas</h3>
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>Município</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaContas">
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="restaurarPadrao()" style="margin-top: 20px; background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    Restaurar Configuração Original
+                </button>
+            </div>
+        </section>
+    </main>
+    <script src="cadastro.js"></script>
+</body>
+
+</html>

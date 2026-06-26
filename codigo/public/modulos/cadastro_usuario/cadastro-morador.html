@@ -1,0 +1,80 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="cadastro.css">
+    <link rel="stylesheet" href="geral.css">
+    <title>Cadastro | Zella</title>
+</head>
+
+<body>
+    <main class="conteudo-site">
+        <aside class="boas-vindas">
+            <h1>Seja <br> Bem-Vindo.</h1>
+            <p>Acesse o site com sua conta cadastrada</p>
+            <button id="entrarUsuario" class="btn-entrar">Entrar</button>
+        </aside>
+        <section class="main-content">
+            <div class="trocar-tipo">
+                <p><a href="cadastroEmpresa.html">Mudar para versão empresarial</a></p>
+                <p><a href="cadastroPrefeitura.html">Mudar para versão da prefeitura</a></p>
+            </div>
+            <div class="formulario">
+                <h2 id="tituloFormulario">Crie sua conta</h2>
+                <form id="formCadastro">
+                    <input type="hidden" id="idEdicao">
+                    <div>
+                        <label for="nome">Nome Completo:</label> <br>
+                        <input type="text" id="nome" name="nome" placeholder="Ex: João da Silva" required>
+                    </div>
+                    <div>
+                        <label for="nomeExibicao">Nome de Exibição (Como os outros te verão):</label> <br>
+                        <input type="text" id="nomeExibicao" name="nomeExibicao" placeholder="Ex: JoãoSilva99" required>
+                    </div>
+                    <div>
+                        <label for="email">Email:</label> <br>
+                        <input type="email" id="email" name="email" placeholder="email@exemplo.com" required>
+                    </div>
+                    <div>
+                        <label for="cpf">CPF:</label> <br>
+                        <input type="text" id="cpf" name="cpf" placeholder="12345678901" required>
+                    </div>
+                    <div>
+                        <label for="senha">Senha:</label> <br>
+                        <input type="password" id="senha" name="senha" placeholder="Digite sua senha" required>
+                    </div>
+                    <div>
+                        <label for="confirmarSenha">Confirme sua senha:</label> <br>
+                        <input type="password" id="confirmarSenha" name="confirmeSenha" placeholder="Confirme sua senha" required>
+                    </div>
+                    <button type="submit">Cadastrar</button>
+                </form>
+            </div>
+
+            <div class="gerenciamento-contas">
+                <h3>Contas Cadastradas</h3>
+                <div class="tabela-container">
+                    <table>
+                        <thead>
+                            <tr>
+                                <th>Nome</th>
+                                <th>CPF</th>
+                                <th>Ações</th>
+                            </tr>
+                        </thead>
+                        <tbody id="listaContas">
+                        </tbody>
+                    </table>
+                </div>
+                <button onclick="restaurarPadrao()" style="margin-top: 20px; background-color: #6c757d; color: white; border: none; padding: 6px 12px; border-radius: 4px; cursor: pointer; font-size: 0.8rem;">
+                    Restaurar Configuração Original
+                </button>
+            </div>
+        </section>
+    </main>
+    <script src="cadastro.js"></script>
+</body>
+
+</html>
