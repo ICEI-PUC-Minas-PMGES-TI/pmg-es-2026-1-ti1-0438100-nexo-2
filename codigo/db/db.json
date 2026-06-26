@@ -1329,6 +1329,7 @@
   "usuariosInstituicoes": [
     {
       "instituicao_id": 2,
+      "entidade_id": 2,
       "nome_usuario": "Fernanda Rocha",
       "nome_completo": "Fernanda Rocha Ladeira",
       "email": "fernandaprefcontagem@gmail.com",
@@ -1338,6 +1339,7 @@
     },
     {
       "instituicao_id": 1,
+      "entidade_id": 3,
       "nome_usuario": "Ricardo Alves",
       "nome_completo": "Ricardo Alves Teixeira",
       "email": "ricardomegasfalt@gmail.com",
@@ -1347,7 +1349,7 @@
     }
   ],
   "usuarioLogado": {
-    "cpf": 98723456700
+    "cpf": ""
   },
   "infoPerfilMoradores": [
     {
@@ -1448,13 +1450,6 @@
       },
       "obras_id": [],
       "avaliacoes": [
-        {
-          "denunciaId": 1,
-          "avaliador": 12345678900,
-          "nota": 5,
-          "descricao": "TESTE",
-          "data": "03/06/2026"
-        },
         {
           "denunciaId": 1,
           "avaliador": 12345678900,

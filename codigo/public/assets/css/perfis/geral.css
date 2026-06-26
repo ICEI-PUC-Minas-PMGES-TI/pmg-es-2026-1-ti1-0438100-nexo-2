@@ -1,0 +1,346 @@
+body{
+    background-color: rgb(224, 224, 224);
+}
+.bg-gradient-custom {
+  background: linear-gradient(to right, #721B00, #C80F00, #FF5900);
+}
+
+.bg-ff5900{
+    background-color: #FF5900;
+}
+
+.bg-progress{
+    background-color: #00aeff;
+}
+
+#fade{
+    position:fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background-color: rgba(0,0,0,0.7);
+    z-index: 5;
+}
+
+#modal{
+    position: fixed;
+    left: 50%;
+    top: 50%;
+    z-index: 10;
+    transform: translate(-50%, -50%);
+}
+
+.w-18{
+    width: 18%;
+}
+
+.w-500px{
+    width: 500px;
+}
+
+/* --- PADRONIZAÇÃO DE TÍTULOS E TEXTOS GLOBAIS --- */
+h1{
+    font-size: 2.8rem;
+}
+
+h2{
+    font-size: 1.8rem;
+}
+
+h3{
+    font-size: 1.6rem;
+}
+
+h4{
+    font-size: 1.4rem;
+}
+
+h5{
+    font-size: 1.2rem;
+}
+
+h6{
+    font-size: 1.0rem;
+}
+
+p{
+    font-size: 1.2rem;
+}
+
+ul{
+    list-style-type: none;
+}
+
+ul>li{
+    font-size: 1.2rem;
+    line-height: 1.7;
+    transition: 0.7s;
+}
+
+button{
+    background-color: black;
+    color: white;
+    border: none;
+    border-radius: 5px;
+    font-size: 1.2rem;
+    text-align: center;
+    transition: 0.3s;
+}
+
+button:hover{
+    transform: scale(1.05);
+}
+
+
+/*-----------------------------------------EXCLUSIVO PARA TELA DE DETALHES-------------------------------------------------------*/
+
+.img-details {
+    width: 100%;
+    height: 100%;
+    max-height: 250px;
+    max-width: 300px;
+    object-fit: cover;
+}
+
+/* ---------- EXCLUSIVO TELAS DE PERFIL (CIDADÃO, EMPRESA E PREFEITURA) ---------- */
+
+/* Limpeza de transições para os elementos de perfil */
+.main-container h2, 
+.main-container h3,
+.main-container h4, 
+.main-container h5,
+.main-container p,
+.main-container ul > li,
+.main-container button {
+    transition: transform 0.3s ease, background-color 0.3s ease;
+}
+
+/* Reset limpo de listagens para o painel lateral */
+.main-container .list-unstyled > li {
+    font-size: 0.95rem;
+    color: #4a4a4a;
+    line-height: 1.5;
+    transition: none;
+}
+
+/* Divisória Vertical Estrutural */
+@media (min-width: 768px) {
+    .main-container .divider-lateral-zella {
+        border-left: 1px solid #dcdcdc;
+    }
+}
+
+/* Painel de Perfil Base */
+.main-container .card-perfil-zella {
+    background-color: #ffffff;
+    border-radius: 16px;
+    margin-top: 55px;
+}
+
+.main-container .avatar-perfil-container {
+    width: 154px;
+    height: 154px;
+    top: -77px;
+}
+
+.main-container .avatar-perfil-container img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+}
+
+/* Listagem de Status do Perfil */
+.main-container .list-status-zella strong {
+    font-size: 1rem;
+}
+
+/* Botão Flutuante de Nova Denúncia / Ação */
+.main-container .btn-nova-denuncia-zella {
+    border-radius: 12px;
+    font-size: 1.05rem;
+    background: linear-gradient(to right, #721B00, #C80F00, #FF5900);
+    border: none;
+    color: #ffffff;
+    padding: 10px 20px;
+}
+
+.main-container .btn-nova-denuncia-zella:hover {
+    transform: translateY(-2px);
+    opacity: 0.95;
+}
+
+.main-container .filter-group-zella .btn-filter-zella {
+    background-color: #dbdbdb;
+    color: #4a4a4a;
+    border: none;
+    border-radius: 15px;
+    padding: 6px 14px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    letter-spacing: 0.5px;
+}
+
+.main-container .filter-group-zella .btn-filter-zella.active, 
+.main-container .filter-group-zella .btn-filter-zella:hover {
+    background-color: #e63900;
+    color: #ffffff;
+    transform: none;
+}
+
+/* Área Interna de Rolagem (Scroll) */
+.main-container .overflow-container-zella {
+    max-height: 72vh;
+    overflow-y: auto;
+    padding-right: 5px;
+}
+
+.main-container .overflow-container-zella::-webkit-scrollbar {
+    width: 16px;
+}
+
+.main-container .overflow-container-zella::-webkit-scrollbar-track {
+    background: #e0e0e0;
+    border-radius: 20px;
+}
+
+.main-container .overflow-container-zella::-webkit-scrollbar-thumb {
+    background: #b0b0b0;
+    border-radius: 20px;
+    border: 4px solid #e0e0e0;
+}
+
+/* Cards do Feed de Denúncias e Obras */
+.main-container .card-denuncia-zella {
+    background-color: #ededed;
+    border-radius: 16px;
+    min-height: 145px;
+}
+
+.main-container .img-denuncia-cover-zella {
+    width: 100%;
+    height: 100%;
+    min-height: 110px;
+    object-fit: cover;
+    border-radius: 10px;
+}
+
+/* Elementos Internos dos Cards (Badges e Tags) */
+.main-container .badge-local-zella {
+    background-color: #ffffff;
+    color: #212529;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 600;
+    max-width: 65%;
+}
+
+.main-container .badge-status-zella {
+    font-size: 0.72rem;
+    font-weight: 700;
+    padding: 5px 14px;
+    border-radius: 20px;
+    color: #ffffff;
+}
+
+.main-container .status-andamento {
+    background-color: #f37d31;
+}
+
+.main-container .status-resolvida {
+    background-color: #00be83;
+}
+
+/* Título interno da Obra (Herdando h5 padrão global) */
+.main-container .card-title-zella {
+    /* font-size removido para herdar h5 padrão */
+    line-height: 1.3;
+}
+
+.main-container .text-truncate-2 {
+    display: -webkit-box;
+    -webkit-line-clamp: 2;
+    line-clamp: 2;
+    -webkit-box-orient: vertical;
+    overflow: hidden;
+    white-space: normal;
+}
+
+.main-container .badge-meta-zella {
+    background-color: #ffffff;
+    color: #5c636a;
+    border: 1px solid #dee2e6;
+    border-radius: 6px;
+    padding: 3px 8px;
+    font-size: 0.62rem;
+    font-weight: 700;
+}
+
+.main-container .badge-urgencia-alta {
+    color: #dc3545;
+    border-color: #f8d7da;
+}
+
+.main-container .badge-urgencia-media {
+    color: #495057;
+}
+
+.main-container .badge-urgencia-baixa {
+    color: #198754;
+}
+
+.main-container .link-detalhes-zella {
+    font-size: 0.75rem;
+    color: #495057;
+}
+
+.main-container .link-detalhes-zella:hover {
+    color: #000000;
+}
+
+/* ==============================================================================================================================
+   --- NOVOS ESTILOS COMPARTILHADOS (PERFIL CORPORATIVO, EMPRESARIAL E PREFEITURA) ---
+   ============================================================================================================================= */
+
+/* Container Base do Painel de Avaliações */
+.main-container .card-avaliacoes-zella {
+    border-radius: 16px;
+    background-color: #ffffff;
+}
+
+/* Título Interno da Seção de Avaliações/Feedback (Herdando h3 padrão global) */
+.main-container .title-secao-zella {
+    /* font-size removido para herdar h3 padrão */
+    font-weight: 700;
+    letter-spacing: -0.01em;
+}
+
+/* Elemento do Bloco de Comentário Único */
+.main-container .item-comentario-zella {
+    background-color: #f8f9fa;
+    border: 1px solid #e9ecef;
+}
+
+/* Avatar do Usuário Avaliador */
+.main-container .avatar-comentario-zella {
+    width: 44px;
+    height: 44px;
+    object-fit: cover;
+    border: 2px solid #ffffff;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.08);
+}
+
+/* Data e Hora do Comentário */
+.main-container .data-comentario-zella {
+    font-size: 0.75rem;
+    font-weight: 500;
+    color: #6c757d;
+}
+
+/* Texto do Feedback / Avaliação Corporativa */
+.main-container .texto-comentario-zella {
+    font-size: 0.92rem;
+    line-height: 1.4;
+    color: #495057;
+}

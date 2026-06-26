@@ -5,45 +5,45 @@ const ROTAS = {
   homepage: "/",
 
   visitante: {
-    denuncias: "/modulos/cidadaos/outras_denuncias/index.html",
+    denuncias: "/modulos/outras_denuncias/outras_denuncias.html",
     cadastro: "/modulos/cidadaos/cadastro/index.html",
-    login: "/modulos/login/index.html"
+    login: "/modulos/login/login.html"
   },
 
   morador: {
     cadastrarDenuncia:
-      "/modulos/cidadaos/cadastro_denuncias/index.html",
+      "/modulos/cadastro_denuncia/cadastro_denuncia.html",
 
     minhasDenuncias:
-      "/modulos/cidadaos/perfil/index.html",
+      "/modulos/perfis/perfil-usuario.html",
 
     outrasDenuncias:
-      "/modulos/cidadaos/outras_denuncias/index.html",
+      "/modulos/outras_denuncias/outras_denuncias.html",
 
     perfil:
-      "/modulos/cidadaos/perfil/index.html"
+      "/modulos/perfis/perfil-usuario.html"
   },
 
   empresa: {
     denuncias:
-      "/modulos/empresas/outras_denuncias/index.html",
+      "/modulos/outras_denuncias/outras_denuncias.html",
 
     minhasObras:
-      "/modulos/empresas/perfil/index.html",
+      "/modulos/perfis/perfil-instituicao.html",
 
     perfil:
-      "/modulos/empresas/perfil/index.html"
+      "/modulos/perfis/perfil-instituicao.html"
   },
 
   prefeitura: {
     denuncias:
-      "/modulos/prefeitura/outras_denuncias/index.html",
+      "/modulos/outras_denuncias/outras_denuncias.html",
 
     minhasObras:
-      "/modulos/prefeitura/perfil/index.html",
+      "/modulos/perfis/perfil-instituicao.html",
 
     perfil:
-      "/modulos/prefeitura/perfil/index.html"
+      "/modulos/perfis/perfil-instituicao.html"
   },
 
   detalhesDenuncia:
@@ -54,6 +54,7 @@ const ROTAS = {
 };
 
 /* ===DADOS GLOBAIS=== */
+let tipoUsuarioLogado = "visitante";
 let denuncias = [];
 let totalUsuarios = 0;
 let marcadores = [];
@@ -190,8 +191,8 @@ function encontrarInstituicaoPorId(
 ) {
   return instituicoes.find((instituicao) => {
     return (
-      Number(instituicao.id) ===
-      Number(instituicaoId)
+      String(instituicao.id) ===
+      String(instituicaoId)
     );
   });
 }
@@ -433,6 +434,51 @@ function configurarRodape(opcoes) {
           "bi-circle-fill"
       )
     );
+  });
+}
+
+function criarBotaoLogout() {
+  const botao = document.createElement("button");
+
+  botao.className = "btn btn-outline-light fw-semibold";
+  botao.textContent = "Logout";
+
+  botao.addEventListener("click", async () => {
+    try {
+      sessionStorage.clear();
+      await fetch(`${API_URL}/usuarioLogado`, {
+        method: "PUT",
+        headers: {
+          "Content-Type": "application/json"
+        },
+        body: JSON.stringify({
+          cpf: ""
+        })
+      });
+      window.location.reload();
+    } catch (err) {
+      console.error("Erro no logout:", err);
+    }
+  });
+  return botao;
+}
+
+function removerPerfilHeader() {
+  const areas = [
+    localizarAreaDireitaDesktop(),
+    localizarAreaDireitaMobile()
+  ];
+
+  areas.forEach((area) => {
+    if (!area) return;
+
+    area.querySelectorAll("[data-tipo='perfil']").forEach((el) => {
+      el.remove();
+    });
+
+    area.querySelectorAll("img.rounded-circle").forEach((img) => {
+      img.remove();
+    });
   });
 }
 
@@ -707,45 +753,45 @@ function criarBotoesVisitante(
   return container;
 }
 
-function configurarBotoesVisitante() {
+function configurarAcoesHeader(usuarioLogado) {
+  const areaDesktop = localizarAreaDireitaDesktop();
+  const areaMobile = localizarAreaDireitaMobile();
+
   removerBotoesVisitante();
 
-  const areaDesktop =
-    localizarAreaDireitaDesktop();
+  if (!usuarioLogado) {
+    if (areaDesktop) {
+      areaDesktop.appendChild(criarBotoesVisitante(false));
+    }
 
-  const areaMobile =
-    localizarAreaDireitaMobile();
+    if (areaMobile) {
+      const botoes = criarBotoesVisitante(true);
+      const botaoMenu = areaMobile.querySelector("button");
 
-  removerTodasFotosPerfil(
-    areaDesktop
-  );
+      if (botaoMenu) {
+        areaMobile.insertBefore(botoes, botaoMenu);
+      } else {
+        areaMobile.appendChild(botoes);
+      }
+    }
 
-  removerTodasFotosPerfil(
-    areaMobile
-  );
+    return;
+  }
+
+  const logoutDesktop = criarBotaoLogout();
+  const logoutMobile = criarBotaoLogout();
 
   if (areaDesktop) {
-    areaDesktop.appendChild(
-      criarBotoesVisitante(false)
-    );
+    areaDesktop.appendChild(logoutDesktop);
   }
 
   if (areaMobile) {
-    const botoes =
-      criarBotoesVisitante(true);
-
-    const botaoMenu =
-      areaMobile.querySelector("button");
+    const botaoMenu = areaMobile.querySelector("button");
 
     if (botaoMenu) {
-      areaMobile.insertBefore(
-        botoes,
-        botaoMenu
-      );
+      areaMobile.insertBefore(logoutMobile, botaoMenu);
     } else {
-      areaMobile.appendChild(
-        botoes
-      );
+      areaMobile.appendChild(logoutMobile);
     }
   }
 }
@@ -771,8 +817,8 @@ function aplicarLayoutVisitante() {
   );
 
   configurarRodape(opcoes);
-
-  configurarBotoesVisitante();
+  removerPerfilHeader();
+  configurarAcoesHeader(null);
 
   console.log(
     "Layout carregado: visitante"
@@ -816,6 +862,7 @@ function aplicarLayoutMorador(usuario) {
     usuario,
     ROTAS.morador.perfil
   );
+  configurarAcoesHeader(usuario);
 
   console.log(
     "Layout carregado: morador",
@@ -825,6 +872,7 @@ function aplicarLayoutMorador(usuario) {
 
 /* ===LAYOUT DA EMPRESA=== */
 function aplicarLayoutEmpresa(usuario) {
+  tipoUsuarioLogado = "empresa";
   const opcoes = [
     {
       texto: "Início",
@@ -853,6 +901,7 @@ function aplicarLayoutEmpresa(usuario) {
     usuario,
     ROTAS.empresa.perfil
   );
+  configurarAcoesHeader(usuario);
 
   console.log(
     "Layout carregado: empresa",
@@ -862,6 +911,7 @@ function aplicarLayoutEmpresa(usuario) {
 
 /* ===LAYOUT DA PREFEITURA=== */
 function aplicarLayoutPrefeitura(usuario) {
+  tipoUsuarioLogado = "prefeitura";
   const opcoes = [
     {
       texto: "Início",
@@ -892,6 +942,7 @@ function aplicarLayoutPrefeitura(usuario) {
     usuario,
     ROTAS.prefeitura.perfil
   );
+  configurarAcoesHeader(usuario);
 
   console.log(
     "Layout carregado: prefeitura",
@@ -2018,7 +2069,9 @@ function converterDenuncia(
 
   return {
     id:
-      Number(denuncia.id),
+    String(denuncia.id),
+
+    entidade_id: Number(denuncia.entidade_id),
 
     titulo,
 
@@ -2093,13 +2146,22 @@ async function carregarDenuncias() {
         })
         .filter((denuncia) => {
           return (
-            Number.isFinite(
-              denuncia.coords[0]
-            ) &&
-            Number.isFinite(
-              denuncia.coords[1]
-            )
+            Number.isFinite(denuncia.coords[0]) &&
+            Number.isFinite(denuncia.coords[1])
           );
+        })
+        .filter((denuncia) => {
+          const entidade = Number(denuncia.entidade_id);
+
+          if (tipoUsuarioLogado === "prefeitura") {
+            return entidade === 1 || entidade === 2;
+          }
+
+          if (tipoUsuarioLogado === "empresa") {
+            return entidade === 1 || entidade === 3;
+          }
+
+          return true;
         });
 
     atualizarTela(denuncias);
