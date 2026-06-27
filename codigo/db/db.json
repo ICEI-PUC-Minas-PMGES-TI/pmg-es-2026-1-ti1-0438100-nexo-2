@@ -89,12 +89,12 @@
     {
       "id": "2",
       "titulo": "Iluminação pública comprometida - Centro",
-      "status_id": 3,
+      "status_id": 2,
       "categoria_id": 5,
       "urgencia_id": 3,
       "entidade_id": 2,
       "denunciante": 12345678901,
-      "usuarioInstituicao_cpf": "",
+      "usuarioInstituicao_cpf": 45687612300,
       "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 3401 e tem afetado moradores e comerciantes da região.",
       "imagens": [
         "/assets/images/denuncias/ilum1.jpg",
@@ -128,7 +128,7 @@
         {
           "etapa": "Denúncia aceita",
           "tipo": "fixo",
-          "concluida": false,
+          "concluida": true,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -137,7 +137,7 @@
         {
           "etapa": "Equipe enviada ao local",
           "tipo": "fixo",
-          "concluida": false,
+          "concluida": true,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -1560,5 +1560,6 @@
       "id": "3",
       "tipo": "Empresa privada"
     }
-  ]
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

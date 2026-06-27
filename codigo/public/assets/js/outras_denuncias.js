@@ -165,7 +165,7 @@ function renderCards(list) {
         detailsDiv.className = 'mt-auto d-flex justify-content-end';
 
         detailsDiv.innerHTML = `
-            <a href="#" class="text-decoration-none small" style="color:black">
+            <a href="/modulos/detalhes/detalhes.html?id=${item.id}" class="text-decoration-none small" style="color:black">
                 Ver detalhes
             </a>
         `;

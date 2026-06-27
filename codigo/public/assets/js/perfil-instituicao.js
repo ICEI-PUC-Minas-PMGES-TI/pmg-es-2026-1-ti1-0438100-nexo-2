@@ -114,13 +114,13 @@ function configurarInterfaceUsuario() {
         const opcoes = ehPrefeitura
             ? [
                 { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/prefeitura/outras_denuncias/index.html" },
-                { texto: "Minhas obras", href: "/modulos/prefeitura/perfil/index.html" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html" }
               ]
             : [
                 { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/empresas/outras_denuncias/index.html" },
-                { texto: "Minhas obras", href: "/modulos/empresas/perfil/index.html" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html" }
               ];
 
         opcoes.forEach(({ texto, href }) => {
@@ -142,13 +142,13 @@ function configurarInterfaceUsuario() {
         const opcoes = ehPrefeitura
             ? [
                 { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/prefeitura/outras_denuncias/index.html" },
-                { texto: "Minhas obras", href: "/modulos/prefeitura/perfil/index.html" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html" }
               ]
             : [
                 { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/empresas/outras_denuncias/index.html" },
-                { texto: "Minhas obras", href: "/modulos/empresas/perfil/index.html" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html" }
               ];
 
         opcoes.forEach(({ texto, href }) => {
@@ -160,8 +160,8 @@ function configurarInterfaceUsuario() {
         });
     }
     const linkPerfil = ehPrefeitura
-        ? "/modulos/prefeitura/perfil/index.html"
-        : "/modulos/empresas/perfil/index.html";
+        ? "/modulos/perfis/perfil-instituicao.html"
+        : "/modulos/perfis/perfilEmpresa.html";
 
     const foto = dadosPerfilLogado?.fotoPerfil || "";
     const nome = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome_completo || "Usuário";
@@ -200,13 +200,13 @@ function configurarInterfaceUsuario() {
         const opcoesFooter = ehPrefeitura
             ? [
                 { texto: "Início", href: "/", icone: "bi-house-fill" },
-                { texto: "Denúncias", href: "/modulos/prefeitura/outras_denuncias/index.html", icone: "bi-megaphone-fill" },
-                { texto: "Minhas obras", href: "/modulos/prefeitura/perfil/index.html", icone: "bi-buildings-fill" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html", icone: "bi-megaphone-fill" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html", icone: "bi-buildings-fill" }
             ]
             : [
                 { texto: "Início", href: "/", icone: "bi-house-fill" },
-                { texto: "Denúncias", href: "/modulos/empresas/outras_denuncias/index.html", icone: "bi-megaphone-fill" },
-                { texto: "Minhas obras", href: "/modulos/empresas/perfil/index.html", icone: "bi-buildings-fill" }
+                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html", icone: "bi-megaphone-fill" },
+                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html", icone: "bi-buildings-fill" }
             ];
 
         footerNav.innerHTML = "";

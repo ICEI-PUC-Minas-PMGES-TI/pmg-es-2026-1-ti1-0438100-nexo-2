@@ -70,8 +70,8 @@ function configurarInterfaceUsuario() {
     const opcoes = [
         { texto: "Início", href: "/" },
         { texto: "Faça sua denúncia", href: "/modulos/cadastro_denuncia/cadastro_denuncia.html" },
-        { texto: "Minhas denúncias", href: "/modulos/cidadaos/perfil/index.html" },
-        { texto: "Outras denúncias", href: "/modulos/cidadaos/outras_denuncias/index.html" }
+        { texto: "Minhas denúncias", href: "/modulos/perfis/index.html" },
+        { texto: "Outras denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" }
     ];
 
     const menuDesktop = document.querySelector(
@@ -104,7 +104,7 @@ function configurarInterfaceUsuario() {
     }
 
     // Foto de perfil no header
-    const linkPerfil = "/modulos/cidadaos/perfil/index.html";
+    const linkPerfil = "/modulos/perfis/perfil-usuario.html";
 
     [
         document.querySelector("header .collapse.navbar-collapse .ms-auto.d-flex"),
@@ -140,8 +140,8 @@ function configurarInterfaceUsuario() {
         const opcoesFooter = [
             { texto: "Início", href: "/", icone: "bi-house-fill" },
             { texto: "Faça sua denúncia", href: "/modulos/cadastro_denuncia/cadastro_denuncia.html", icone: "bi-megaphone-fill" },
-            { texto: "Minhas denúncias", href: "/modulos/cidadaos/perfil/index.html", icone: "bi-clipboard-data-fill" },
-            { texto: "Outras denúncias", href: "/modulos/cidadaos/outras_denuncias/index.html", icone: "bi-buildings-fill" }
+            { texto: "Minhas denúncias", href: "/modulos/perfis/index.html", icone: "bi-clipboard-data-fill" },
+            { texto: "Outras denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html", icone: "bi-buildings-fill" }
         ];
 
         footerNav.innerHTML = "";
