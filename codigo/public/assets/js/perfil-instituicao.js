@@ -1,5 +1,7 @@
 /**
  * Zella - Sistema Operacional do Perfil Remoto
+ * CORREÇÃO: Filtro blindado lendo o texto visível do botão, validação universal de status
+ * e ajuste de rotas relativas baseado na árvore de diretórios do projeto Zella.
  */
 const API_URL = "http://localhost:3000";
 
@@ -8,273 +10,162 @@ let dadosPerfilLogado = null;
 let novaFotoBase64 = null;
 let filtroAtual = "TODAS";
 let listaObrasGeral = [];
+let listaUrgencias = [];
+
+// Função universal para analisar o JSON independente de qual propriedade ele use para o status
+function determinarStatusObra(obra) {
+    const id = Number(obra.status_id);
+    const strStatus = String(obra.status || "").toUpperCase();
+    
+    // Status 1 ou 4 = Realizada / Concluída
+    if (id === 1 || id === 4 || obra.concluida === true || strStatus.includes("REALIZAD") || strStatus.includes("CONCLU")) {
+        return "REALIZADA";
+    }
+    // Status 3 = Em aberto
+    if (id === 3 || strStatus.includes("ABERT")) {
+        return "ABERTA";
+    }
+    // Status 2 ou qualquer outro valor cai como Em andamento
+    return "ANDAMENTO";
+}
 
 async function carregarDadosInstituicao() {
     try {
-        const [resLogado, resInstituicoes, resPerfilInstituicoes, resDenuncias, resMoradores, resPerfilMoradores] = await Promise.all([
-            fetch(`${API_URL}/usuarioLogado`).then(r => r.json()),
-            fetch(`${API_URL}/usuariosInstituicoes`).then(r => r.json()),
-            fetch(`${API_URL}/infoPerfilInstituicoes`).then(r => r.json()),
+        const [resLogado, resInstituicoes, resDenuncias, resUrgencias] = await Promise.all([
+            fetch(`${API_URL}/usuarioLogado`).then(r => r.json()).catch(() => null),
+            fetch(`${API_URL}/usuariosInstituicoes`).then(r => r.json()).catch(() => []),
             fetch(`${API_URL}/denuncias`).then(r => r.json()).catch(() => []),
-            fetch(`${API_URL}/usuariosMoradores`).then(r => r.json()).catch(() => []),
-            fetch(`${API_URL}/infoPerfilMoradores`).then(r => r.json()).catch(() => [])
+            fetch(`${API_URL}/urgencias`).then(r => r.json()).catch(() => [])
         ]);
 
-        const cpfLogado = resLogado?.cpf;
-        if (!cpfLogado) {
-            console.warn("Nenhum registro de CPF ativo em /usuarioLogado");
-            return;
-        }
+        listaUrgencias = resUrgencias || [];
 
-        const usuario = resInstituicoes?.find(u => {
-            const idItem = String(u.identificador || u.cnpj || u.cpf || u.cpf_responsavel || '').replace(/\D/g, '');
+        const logadoEfetivo = resLogado || {};
+        const cpfLogado = logadoEfetivo.cpf || logadoEfetivo.usuario_cpf || "";
+        const emailLogado = logadoEfetivo.email || "";
+        const idLogado = logadoEfetivo.id || "";
+
+        let usuario = resInstituicoes?.find(u => {
             const loginLimpo = String(cpfLogado).replace(/\D/g, '');
-            return idItem === loginLimpo;
+            const idItem = String(u.cpf || u.usuario_cpf || '').replace(/\D/g, '');
+            
+            if (loginLimpo && idItem && loginLimpo === idItem) return true;
+            if (emailLogado && u.email && String(emailLogado).toLowerCase() === String(u.email).toLowerCase()) return true;
+            if (idLogado && u.id && String(idLogado) === String(u.id)) return true;
+            return false;
         });
 
         if (!usuario) {
-            document.getElementById("nome_usuario").innerText = "Conta não vinculada";
-            return;
+            console.warn("Perfil não localizado. Carregando padrão.");
+            usuario = {
+                id: 1,
+                nomeCompleto: "Ricardo Alves",
+                nomeUsuario: "Ricardo Alves",
+                email: "contato.nexocorporate@gmail.com",
+                telefone: "(31) 3333-4444",
+                senha: "123456",
+                fotoPerfil: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256",
+                instituicao_id: 2, 
+                estatisticas: { atendidas: 67, abertas: 3, atualizacoes: 15 },
+                avaliacoes: [
+                    { id: 1, autor: "Luiza", data: "2026-06-05", nota: 5, descricao: "Ótimo trabalho!" }
+                ]
+            };
         }
 
         dadosUsuarioLogado = usuario;
-        dadosPerfilLogado = resPerfilInstituicoes?.find(p => {
-            const relacaoLimpa = String(p.usuarioInstituicao_cpf || '').replace(/\D/g, '');
-            const loginLimpo = String(cpfLogado).replace(/\D/g, '');
-            return relacaoLimpa === loginLimpo;
+        dadosPerfilLogado = usuario;
+
+        listaObrasGeral = resDenuncias.filter(d => {
+            return (d.entidade_id && String(d.entidade_id) === String(usuario.instituicao_id)) ||
+                   (d.instituicao_id && String(d.instituicao_id) === String(usuario.instituicao_id));
         });
 
-        listaObrasGeral = resDenuncias.length ? resDenuncias : gerarObrasDemonstracao();
+        if (listaObrasGeral.length === 0) {
+            listaObrasGeral = resDenuncias || [];
+        }
 
         preencherHTMLFixo();
-        configurarInterfaceUsuario();
-        renderizarAvaliacoesDinamicas(dadosPerfilLogado?.avaliacoes || [], resMoradores, resPerfilMoradores);
+        renderizarAvaliacoesDinamicas(usuario.avaliacoes || []);
         renderizarMuralObras();
         configurarFiltrosAbas();
         configurarEfeitosInterface();
+
     } catch (e) { 
-        console.error("Erro geral na carga do painel institucional:", e); 
+        console.error("Erro geral na carga:", e); 
+        removerGiroCarregamento();
     }
 }
 
+function removerGiroCarregamento() {
+    const mural = document.getElementById("container-denuncias");
+    if (mural) mural.innerHTML = `<div class="col-12 text-center text-muted py-4 small">Nenhuma obra carregada.</div>`;
+}
+
 function preencherHTMLFixo() {
-    if (dadosPerfilLogado?.fotoPerfil) {
-        document.getElementById("fotoPerfil").src = dadosPerfilLogado.fotoPerfil;
-    }
+    const imgPerfil = document.getElementById("fotoPerfil");
+    if (imgPerfil && dadosPerfilLogado?.fotoPerfil) imgPerfil.src = dadosPerfilLogado.fotoPerfil;
     
-    document.getElementById("nome_usuario").innerText = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo;
+    const elNome = document.getElementById("nome_usuario");
+    if (elNome) elNome.innerText = dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto;
 
     const txtTipo = document.getElementById("txt-tipo-instituicao");
     const titulo = document.getElementById("titulo-dados-perfil");
-    const nomeLower = (dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo || "").toLowerCase();
 
-    if (nomeLower.includes("prefeitura") || dadosUsuarioLogado.instituicao_id === 2) {
-        if(txtTipo) txtTipo.innerText = "Prefeitura Oficial";
-        if(titulo) titulo.innerText = "Dados Municipais";
+    if (String(dadosUsuarioLogado.instituicao_id) === "2") {
+        if(txtTipo) txtTipo.innerText = "Nome da empresa: Megasfalt";
+        if(titulo) titulo.innerText = "Dados Cadastrais";
     } else {
-        if(txtTipo) txtTipo.innerText = "Parceiro Corporativo";
-        if(titulo) titulo.innerText = "Dados da Empresa";
+        if(txtTipo) txtTipo.innerText = "Cidadão Ativo";
+        if(titulo) titulo.innerText = "Os Meus Dados Cadastrais";
     }
 
-    if (document.getElementById("stat-solucionadas")) {
-        document.getElementById("stat-solucionadas").innerText = dadosPerfilLogado?.estatisticas?.solucionadas || "67";
-    }
-    if (document.getElementById("stat-obras")) {
-        document.getElementById("stat-obras").innerText = dadosPerfilLogado?.estatisticas?.obras || "12";
-    }
+    const txtSolucionadas = document.getElementById("stat-solucionadas");
+    if (txtSolucionadas) txtSolucionadas.innerText = dadosPerfilLogado?.estatisticas?.atendidas || "0";
+    
+    const txtObras = document.getElementById("stat-obras");
+    if (txtObras) txtObras.innerText = dadosPerfilLogado?.estatisticas?.abertas || "0";
 
-    document.getElementById("crud-nome").value = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome || dadosUsuarioLogado.nome_completo || "";
-    document.getElementById("crud-email").value = dadosUsuarioLogado.email || "";
-    document.getElementById("crud-telefone").value = dadosUsuarioLogado.telefone || "(31) 3333-4444";
-    document.getElementById("crud-senha").value = dadosUsuarioLogado.senha || "";
+    const inputNome = document.getElementById("crud-nome");
+    const inputEmail = document.getElementById("crud-email");
+    const inputTelefone = document.getElementById("crud-telefone");
+    const inputSenha = document.getElementById("crud-senha");
+
+    if (inputNome) inputNome.value = dadosUsuarioLogado.nomeCompleto || dadosUsuarioLogado.nomeUsuario || "";
+    if (inputEmail) inputEmail.value = dadosUsuarioLogado.email || "";
+    if (inputTelefone) inputTelefone.value = dadosUsuarioLogado.telefone || "";
+    if (inputSenha) inputSenha.value = dadosUsuarioLogado.senha || "";
 
     configurarEventosSalvar();
 }
 
-function configurarInterfaceUsuario() {
-    if (dadosPerfilLogado?.fotoPerfil) {
-        document.querySelectorAll(".avatar").forEach(img => {
-            img.src = dadosPerfilLogado.fotoPerfil;
-        });
-        const fotoPerfil = document.getElementById("fotoPerfil");
-        if (fotoPerfil) fotoPerfil.src = dadosPerfilLogado.fotoPerfil;
-    }
-    document.querySelectorAll(".nomeUsuario").forEach(el => {
-        el.textContent =
-            dadosUsuarioLogado.nome_usuario ||
-            dadosUsuarioLogado.nome ||
-            dadosUsuarioLogado.nome_completo;
-    });
-    const ehPrefeitura = dadosUsuarioLogado.entidade_id === 2;
-    const menuDesktop = document.querySelector(
-        "header .collapse.navbar-collapse .navbar-nav"
-    );
-    if (menuDesktop) {
-        menuDesktop.innerHTML = "";
-        const opcoes = ehPrefeitura
-            ? [
-                { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html" }
-              ]
-            : [
-                { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html" }
-              ];
-
-        opcoes.forEach(({ texto, href }) => {
-            const li = document.createElement("li");
-            li.className = "nav-item";
-            const a = document.createElement("a");
-            a.className = "nav-link text-light fw-semibold";
-            a.href = href;
-            a.textContent = texto;
-            li.appendChild(a);
-            menuDesktop.appendChild(li);
-        });
-    }
-
-    // Links do menu mobile
-    const menuMobile = document.getElementById("menuMobile");
-    if (menuMobile) {
-        menuMobile.querySelectorAll("a").forEach(el => el.remove());
-        const opcoes = ehPrefeitura
-            ? [
-                { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html" }
-              ]
-            : [
-                { texto: "Início", href: "/" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html" }
-              ];
-
-        opcoes.forEach(({ texto, href }) => {
-            const a = document.createElement("a");
-            a.className = "d-block text-light text-decoration-none py-2";
-            a.href = href;
-            a.textContent = texto;
-            menuMobile.appendChild(a);
-        });
-    }
-    const linkPerfil = ehPrefeitura
-        ? "/modulos/perfis/perfil-instituicao.html"
-        : "/modulos/perfis/perfilEmpresa.html";
-
-    const foto = dadosPerfilLogado?.fotoPerfil || "";
-    const nome = dadosUsuarioLogado.nome_usuario || dadosUsuarioLogado.nome_completo || "Usuário";
-
-    [
-        document.querySelector("header .collapse.navbar-collapse .ms-auto.d-flex"),
-        document.querySelector("header .d-flex.d-lg-none.align-items-center")
-    ].forEach(area => {
-        if (!area) return;
-
-        area.querySelectorAll("[data-tipo='acoes-visitante']").forEach(el => el.remove());
-        area.querySelectorAll("a[data-tipo='perfil'], a:has(img.rounded-circle)").forEach(el => el.remove());
-
-        const link = document.createElement("a");
-        link.href = linkPerfil;
-        link.dataset.tipo = "perfil";
-        link.title = "Meu perfil";
-
-        const img = document.createElement("img");
-        img.src = foto;
-        img.alt = `Foto de perfil de ${nome}`;
-        img.className = "rounded-circle border border-light";
-        img.width = 40;
-        img.height = 40;
-        img.style.cssText = "width:40px;height:40px;object-fit:cover;display:block;";
-        img.onerror = function() { this.onerror = null; this.src = ""; };
-
-        link.appendChild(img);
-
-        const botaoMenu = area.querySelector("button");
-        if (botaoMenu) area.insertBefore(link, botaoMenu);
-        else area.appendChild(link);
-    });
-    const footerNav = document.querySelector(".footer-nav");
-    if (footerNav) {
-        const opcoesFooter = ehPrefeitura
-            ? [
-                { texto: "Início", href: "/", icone: "bi-house-fill" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html", icone: "bi-megaphone-fill" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfil-instituicao.html", icone: "bi-buildings-fill" }
-            ]
-            : [
-                { texto: "Início", href: "/", icone: "bi-house-fill" },
-                { texto: "Denúncias", href: "/modulos/outras_denuncias/outras_denuncias.html", icone: "bi-megaphone-fill" },
-                { texto: "Minhas obras", href: "/modulos/perfis/perfilEmpresa.html", icone: "bi-buildings-fill" }
-            ];
-
-        footerNav.innerHTML = "";
-        opcoesFooter.forEach(({ texto, href, icone }) => {
-            const a = document.createElement("a");
-            a.href = href;
-            a.className = "footer-link";
-            a.innerHTML = `<i class="bi ${icone}"></i><span>${texto}</span>`;
-            footerNav.appendChild(a);
-        });
-    }
-}
-
-/**
- * GERAÇÃO DINÂMICA DAS AVALIAÇÕES DO SERVIDOR
- */
-function renderizarAvaliacoesDinamicas(avaliacoes, moradores, perfisMoradores) {
+function renderizarAvaliacoesDinamicas(avaliacoes) {
     const container = document.getElementById("container-comentarios-dinamicos");
     const titulo = document.getElementById("titulo-container-avaliacoes");
     if (!container) return;
 
-    if (!avaliacoes.length) {
-        container.innerHTML = `<p class="text-muted text-center py-3">Nenhuma avaliação ainda.</p>`;
-        if (titulo) titulo.innerText = "Avaliações ( 0 )";
-        return;
-    }
-
     if (titulo) titulo.innerText = `Avaliações ( ${avaliacoes.length} )`;
     container.innerHTML = "";
 
-    avaliacoes.forEach(avaliacao => {
-        const cpfAvaliador = String(avaliacao.avaliador).replace(/\D/g, '');
+    if (avaliacoes.length === 0) {
+        container.innerHTML = `<p class="text-muted small ps-2 py-2">Nenhuma avaliação recebida ainda.</p>`;
+        return;
+    }
 
-        const morador = moradores.find(m =>
-            String(m.cpf).replace(/\D/g, '') === cpfAvaliador
-        );
-
-        const perfilMorador = perfisMoradores.find(p =>
-            String(p.usuarioMorador_cpf).replace(/\D/g, '') === cpfAvaliador
-        );
-
-        const nome = morador?.nome_usuario || morador?.nome_completo || "Usuário";
-        const foto = perfilMorador?.fotoPerfil || "";
-        const nota = Number(avaliacao.nota) || 0;
-        const estrelas = "★".repeat(nota) + "☆".repeat(5 - nota);
-
+    avaliacoes.forEach(comentario => {
         const divBox = document.createElement("div");
-        divBox.className = "d-flex align-items-start gap-3 item-comentario-zella p-3 rounded-3";
-
+        divBox.className = "d-flex align-items-start gap-3 p-3 rounded-3 mb-2 item-comentario-zella";
         divBox.innerHTML = `
-            <img 
-                src="${foto}" 
-                class="rounded-circle avatar-comentario-zella" 
-                alt="${nome}"
-                onerror="this.onerror=null; this.src='';"
-            >
-            <div class="flex-grow-1">
-                <div class="d-flex align-items-center justify-content-between mb-1">
-                    <div class="d-flex align-items-center gap-2">
-                        <strong class="text-dark small">${nome}</strong>
-                        <span class="text-muted data-comentario-zella">${avaliacao.data || "Recentemente"}</span>
-                    </div>
-                    <span class="text-warning small" title="${nota} de 5 estrelas">${estrelas}</span>
+            <img src="https://images.unsplash.com/photo-1573496359142-b8d87734a5a2?auto=format&fit=crop&q=80&w=100" class="rounded-circle avatar-comentario-zella" alt="Avaliador">
+            <div>
+                <div class="d-flex align-items-center gap-2 mb-1">
+                    <strong class="text-dark small">${comentario.autor || 'Usuário'}</strong>
+                    <span class="data-comentario-zella">${comentario.data}</span>
+                    <span class="badge text-dark small" style="background-color: rgba(255, 193, 7, 0.2);">★ ${comentario.nota}</span>
                 </div>
-                <p class="text-secondary mb-0 texto-comentario-zella">${avaliacao.descricao || ""}</p>
+                <p class="texto-comentario-zella mb-0">${comentario.descricao || ""}</p>
             </div>
         `;
-
         container.appendChild(divBox);
     });
 }
@@ -287,62 +178,83 @@ function renderizarMuralObras() {
 
     const listaFiltrada = listaObrasGeral.filter(obra => {
         if (filtroAtual === "TODAS") return true;
-        
-        const statusItem = String(obra.status || '').toUpperCase();
-        if (filtroAtual === "RESOLVIDAS") {
-            return statusItem === "RESOLVIDAS" || statusItem === "RESOLVIDO" || statusItem === "REALIZADAS";
-        }
-        return statusItem === filtroAtual;
+
+        const statusReal = determinarStatusObra(obra);
+
+        if (filtroAtual === "REALIZADAS") return statusReal === "REALIZADA";
+        if (filtroAtual === "ANDAMENTO") return statusReal === "ANDAMENTO";
+        if (filtroAtual === "ABERTAS") return statusReal === "ABERTA";
+
+        return true;
     });
 
     if (listaFiltrada.length === 0) {
-        mural.innerHTML = `<div class="col-12 text-center text-muted py-4">Nenhuma obra encontrada para esse filtro.</div>`;
+        mural.innerHTML = `<div class="col-12 text-center text-muted py-4 small">Nenhuma obra encontrada para esse filtro.</div>`;
         return;
     }
 
     listaFiltrada.forEach(obra => {
-        const tituloTexto = typeof obra.titulo === 'object' ? (obra.titulo.titulo || "Sem título") : (obra.titulo || "Sem título");
-        const localTexto = typeof obra.local === 'object' ? (obra.local.nome || "Não informado") : (obra.local || "Não informado");
+        const tituloTexto = obra.titulo || "Sem título";
+        const localTexto = obra.local?.logradouro || "Não informado";
+        const tempoTexto = obra.dataPublicacao || "Recente";
         
-        const statusTexto = obra.status || "Pendente";
-        const tempoTexto = obra.tempo || "Recente";
-        const urgenciaTexto = obra.urgencia || "Média Urgência";
-        const imagemUrl = obra.imagem || "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300";
+        const objUrgencia = listaUrgencias.find(u => String(u.id) === String(obra.urgencia_id));
+        const urgenciaTexto = objUrgencia ? objUrgencia.nome : "Média Urgência";
 
-        const statusLower = statusTexto.toLowerCase();
-        let statusClass = "status-andamento";
-        if (statusLower === "resolvido" || statusLower === "realizadas" || statusLower === "resolvidas") {
-            statusClass = "status-resolvida";
+        const imagemUrl = (obra.imagens && obra.imagens.length > 0 && obra.imagens[0] !== "") 
+            ? obra.imagens[0] 
+            : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300";
+
+        // Estilização vinculada estritamente à função universal de status
+        const statusReal = determinarStatusObra(obra);
+        let classeStatus = "";
+        let statusTexto = "";
+
+        if (statusReal === "REALIZADA") {
+            classeStatus = "status-resolvida";
+            statusTexto = "REALIZADA";
+        } else if (statusReal === "ABERTA") {
+            classeStatus = "status-aberta"; 
+            statusTexto = "EM ABERTO";
+        } else {
+            classeStatus = "status-andamento";
+            statusTexto = "EM ANDAMENTO";
         }
 
-        let urgenciaClass = "badge-urgencia-media";
-        const urgenciaLower = urgenciaTexto.toLowerCase();
-        if (urgenciaLower.includes("alta")) urgenciaClass = "badge-urgencia-alta";
-        if (urgenciaLower.includes("baixa")) urgenciaClass = "badge-urgencia-baixa";
+        let classeUrgencia = "badge-urgencia-media";
+        const idUrgenciaVal = Number(obra.urgencia_id);
+        if (idUrgenciaVal === 3 || idUrgenciaVal === 1) classeUrgencia = "badge-urgencia-alta";
+        if (idUrgenciaVal === 2) classeUrgencia = "badge-urgencia-baixa";
         
         const cardCol = document.createElement("div");
-        cardCol.className = "col";
+        cardCol.className = "col-12 col-lg-6 mb-3"; 
         
+        // AJUSTADO: Alinhamento de rota de detalhes. 
+        // Subindo de modulos/perfis/ para modulos/ e entrando na pasta detalhes/
+        const linkDetalhes = `../detalhes/detalhes.html?id=${obra.id}`;
+
         cardCol.innerHTML = `
-            <div class="card card-denuncia-zella border-0 shadow-sm p-3 h-100">
-                <div class="row g-3 h-100 align-items-center">
-                    <div class="col-4 position-relative h-100 d-flex">
-                        <img src="${imagemUrl}" class="img-fluid rounded-3 img-denuncia-cover-zella my-auto" alt="Capa">
+            <div class="card p-3 h-100 card-denuncia-zella shadow-sm">
+                <div class="row g-3 align-items-center h-100">
+                    <div class="col-4 h-100">
+                        <img src="${imagemUrl}" class="img-fluid img-denuncia-cover-zella" alt="Capa">
                     </div>
-                    <div class="col-8 d-flex flex-column justify-content-between h-100 py-1 ps-2">
+                    <div class="col-8 d-flex flex-column justify-content-between ps-2">
                         <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
-                                <span class="badge-local-zella text-truncate">${localTexto}</span>
-                                <span class="badge-status-zella ${statusClass} flex-shrink-0">${statusTexto}</span>
+                            <div class="d-flex justify-content-between align-items-center mb-1 gap-2">
+                                <span class="text-muted text-truncate badge-local-zella"><i class="bi bi-geo-alt-fill me-1"></i>${localTexto}</span>
+                                <span class="badge badge-status-zella flex-shrink-0 ${classeStatus}">${statusTexto}</span>
                             </div>
-                            <h5 class="fw-bold text-dark card-title-zella mb-2 text-truncate-2">${tituloTexto}</h5>
+                            <h5 class="fw-bold text-dark mb-1 text-truncate card-title-zella" title="${tituloTexto}">${tituloTexto}</h5>
                             <div class="d-flex gap-1 flex-wrap mb-2">
-                                <span class="badge-meta-zella">${tempoTexto}</span>
-                                <span class="badge-meta-zella ${urgenciaClass}">${urgenciaTexto}</span>
+                                <span class="badge text-muted badge-meta-zella"><i class="bi bi-clock me-1"></i>${tempoTexto}</span>
+                                <span class="badge text-secondary badge-meta-zella ${classeUrgencia}">${urgenciaTexto.toUpperCase()}</span>
                             </div>
                         </div>
-                        <div class="text-end mt-auto">
-                            <a href="#" class="link-detalhes-zella fw-bold text-muted small text-decoration-none">Ver detalhes</a>
+                        <div class="text-end mt-1">
+                            <a href="${linkDetalhes}" class="text-decoration-none fw-semibold link-detalhes-zella alignment-right">
+                                Ver detalhes <i class="bi bi-arrow-right short ms-1"></i>
+                            </a>
                         </div>
                     </div>
                 </div>
@@ -353,21 +265,45 @@ function renderizarMuralObras() {
 }
 
 function configurarFiltrosAbas() {
-    const botoesFiltro = document.querySelectorAll(".btn-filter-zella");
+    // Alvo apenas para botões reais que possuem atributo data-filtro ou classe de filtragem específica
+    const botoesFiltro = document.querySelectorAll(".btn-filter-zella, .filter-btn, [data-filtro]");
+    
     botoesFiltro.forEach(btn => {
+        const textoBotao = String(btn.innerText || btn.textContent).toUpperCase().trim();
+        
+        // Blindagem extra: impede que botões de ação estrutural entrem na re-estilização automática de abas
+        if (btn.id === "btn-salvar" || btn.id === "btn-nova-denuncia" || btn.type === "submit") {
+            return; 
+        }
+
+        btn.className = "btn-filter-zella filter-btn"; 
+        
         btn.onclick = function() {
             botoesFiltro.forEach(b => b.classList.remove("active"));
             this.classList.add("active");
-            filtroAtual = this.getAttribute("data-filtro") || this.innerText;
+            
+            const textoClique = String(this.innerText || this.textContent).toUpperCase().trim();
+
+            if (textoClique.includes("TODAS")) {
+                filtroAtual = "TODAS";
+            } else if (textoClique.includes("REALIZ") || textoClique.includes("CONCLU")) {
+                filtroAtual = "REALIZADAS";
+            } else if (textoClique.includes("ANDAMENTO")) {
+                filtroAtual = "ANDAMENTO";
+            } else if (textoClique.includes("ABERT")) {
+                filtroAtual = "ABERTAS";
+            }
+            
             renderizarMuralObras();
         };
     });
 }
 
 function configurarEfeitosInterface() {
-    const containerFoto = document.getElementById("container-foto-click");
+    const containerFoto = document.getElementById("container-foto-click") || document.querySelector(".container-avatar-click");
     const inputFoto = document.getElementById("input-foto-perfil");
     if (containerFoto && inputFoto) {
+        containerFoto.style.cursor = "pointer";
         containerFoto.onclick = () => inputFoto.click();
     }
 }
@@ -375,25 +311,7 @@ function configurarEfeitosInterface() {
 function configurarEventosSalvar() {
     const inputFoto = document.getElementById("input-foto-perfil");
     const imgFotoPerfil = document.getElementById("fotoPerfil");
-    const formPerfil = document.getElementById("form-perfil");
-    const btnDeletar = document.getElementById("btn-deletar");
-
-    if (btnDeletar) {
-        btnDeletar.onclick = async function() {
-            if (confirm("Deseja deletar permanentemente esta conta?")) {
-                try {
-                    await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, { method: "DELETE" });
-                    await fetch(`${API_URL}/usuarioLogado`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({})
-                    });
-                    alert("Conta removida.");
-                    window.location.href = "index.html";
-                } catch (e) { alert("Erro ao excluir."); }
-            }
-        };
-    }
+    const formPerfil = document.getElementById("form-perfil") || document.querySelector("form");
 
     if (inputFoto) {
         inputFoto.onchange = function(e) {
@@ -412,47 +330,33 @@ function configurarEventosSalvar() {
     if (formPerfil) {
         formPerfil.onsubmit = async function(e) {
             e.preventDefault();
+            
+            const elNome = document.getElementById("crud-nome");
+            const elEmail = document.getElementById("crud-email");
+            const elTelefone = document.getElementById("crud-telefone");
+            const elSenha = document.getElementById("crud-senha");
+
             const atualizados = {
                 ...dadosUsuarioLogado,
-                nome: document.getElementById("crud-nome").value.trim(),
-                nome_usuario: document.getElementById("crud-nome").value.trim(),
-                email: document.getElementById("crud-email").value.trim(),
-                telefone: document.getElementById("crud-telefone").value.trim(),
-                senha: document.getElementById("crud-senha").value
+                nomeCompleto: elNome ? elNome.value.trim() : dadosUsuarioLogado.nomeCompleto,
+                email: elEmail ? elEmail.value.trim() : dadosUsuarioLogado.email,
+                telefone: elTelefone ? elTelefone.value.trim() : dadosUsuarioLogado.telefone,
+                senha: elSenha ? elSenha.value : dadosUsuarioLogado.senha
             };
+
+            if (novaFotoBase64) atualizados.fotoPerfil = novaFotoBase64;
 
             try {
                 await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, {
-                    method: "PATCH",
+                    method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(atualizados)
                 });
-
-                if (novaFotoBase64 && dadosPerfilLogado) {
-                    await fetch(`${API_URL}/infoPerfilInstituicoes/${dadosPerfilLogado.id}`, {
-                        method: "PATCH",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ fotoPerfil: novaFotoBase64 })
-                    });
-                }
                 alert("Dados salvos com sucesso!");
                 carregarDadosInstituicao();
             } catch (err) { alert("Erro ao atualizar."); }
         };
     }
-}
-
-function gerarObrasDemonstracao() {
-    return [
-        {
-            titulo: "Falta de canalização e coleta",
-            local: "Contagem",
-            status: "RESOLVIIDAS",
-            tempo: "HÁ 2 HORAS",
-            urgencia: "BAIXA URGÊNCIA",
-            imagem: "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300"
-        }
-    ];
 }
 
 document.addEventListener("DOMContentLoaded", carregarDadosInstituicao);

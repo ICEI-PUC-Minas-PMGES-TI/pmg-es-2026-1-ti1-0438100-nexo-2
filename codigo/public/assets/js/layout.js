@@ -4,7 +4,7 @@ const ROTAS = {
   homepage: "/",
   visitante: {
     denuncias: "/modulos/outras_denuncias/outras_denuncias.html",
-    cadastro: "/modulos/cadastro_usuarios/cadastro_usuarios.html",
+    cadastro: "/modulos/cadastro_usuarios/cadastroUsuario.html",
     login: "/modulos/login/login.html"
   },
   morador: {
