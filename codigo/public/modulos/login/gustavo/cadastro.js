@@ -1,5 +1,6 @@
 /**
  * Zella - Lógica de Cadastro e Login
+ * AJUSTADO: Rotas alteradas para abrir os HTMLs que estão na mesma pasta (login/gustavo/)
  */
 
 const API_URL = "http://localhost:3000";
@@ -66,13 +67,15 @@ function normalizarId(id, apenasNumeros = true) {
     return String(id).trim();
 }
 
-// Função para centralizar o redirecionamento baseado na nova estrutura de pastas
+// MODIFICAÇÃO CRUCIAL: Como os arquivos de perfil estão na mesma pasta que o cadastro.js,
+// o redirecionamento agora aponta direto para os arquivos locais sem voltar pastas (sem ../../)
 function redirecionarParaPerfil() {
     if (tipoCadastro === 'morador') {
-        window.location.href = '../perfis/perfil-usuario.html';
-    } else {
-        // Tanto empresa quanto prefeitura agora vão para a mesma página dinâmica
-        window.location.href = '../perfis/perfil-instituicao.html';
+        window.location.href = 'perfil-usuario.html';
+    } else if (tipoCadastro === 'prefeitura') {
+        window.location.href = 'perfil-instituicao.html';
+    } else if (tipoCadastro === 'empresa') {
+        window.location.href = 'perfilEmpresa.html';
     }
 }
 
@@ -115,15 +118,15 @@ if (formCadastro) {
             return;
         }
 
-        // Monta o usuário base com a flag "tipo" identificando o perfil de instituição
+        // Monta o usuário base
         const novoUsuario = { 
             "id": Math.random().toString(36).substring(2, 13),
-            "tipo": tipoCadastro, // Salva 'morador', 'empresa' ou 'prefeitura' para distinção posterior
+            "tipo": tipoCadastro, 
             "nomeUsuario": nomeExibicao,
             "nomeCompleto": nome,
             "email": email, 
             "senha": senha,
-            "fotoPerfil": "imgs/imgPerfil/default.png",
+            "fotoPerfil": "https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200",
             [config.campoId]: idDigitado
         };
 
@@ -221,7 +224,6 @@ function configurarBotaoEntrar() {
                 if (usuarioEncontrado) {
                     const loginChaveFinal = usuarioEncontrado.cpf || usuarioEncontrado.cpfResponsavel || usuarioEncontrado.cnpj;
 
-                    // Garante que o tipo correto seja guardado mesmo se for um registro antigo sem a propriedade "tipo"
                     const tipoDetectado = usuarioEncontrado.tipo || (tipoCadastro === 'morador' ? 'morador' : (usuarioEncontrado.instituicao_id === 2 ? 'prefeitura' : 'empresa'));
 
                     await fetch(`${API_URL}/usuarioLogado`, {
@@ -233,7 +235,6 @@ function configurarBotaoEntrar() {
                         })
                     });
 
-                    // Atualiza o objeto com o tipo detectado antes de salvar no localStorage
                     usuarioEncontrado.tipo = tipoDetectado;
                     localStorage.setItem('usuarioLogado', JSON.stringify(usuarioEncontrado));
                     localStorage.setItem('cpfLogado', loginChaveFinal);
@@ -251,7 +252,7 @@ function configurarBotaoEntrar() {
     }
 }
 
-// Inicia
+// Inicia o processo
 carregarBanco().then(() => {
     configurarBotaoEntrar();
 });

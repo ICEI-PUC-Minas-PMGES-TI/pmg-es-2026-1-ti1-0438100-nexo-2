@@ -1,177 +1,124 @@
+/**
+ * Zella - Sistema Operacional do Perfil da Instituição / Empresa
+ * PADRONIZADO: Mesma estrutura lógica, tratamento de dados e tratamento de fotos do morador
+ */
 const API_URL = "http://localhost:3000";
 
 let dadosUsuarioLogado = null;
 let dadosPerfilLogado = null;
-let denunciasDoUsuario = [];
+let obrasDaInstituicao = [];
 let listaStatus = [];
-let listaUrgencias = [];
 let novaFotoBase64 = null;
-let filtroAtual = "todas"; 
+let filtroAtual = "TODAS"; 
 
 async function carregarDadosPerfil() {
     try {
-        // Carrega todas as dependências respeitando a estrutura do JSON fornecido
-        const [resLogado, resMoradores, resDenuncias, resStatus, resUrgencias] = await Promise.all([
-            fetch(`${API_URL}/usuarioLogado`).then(r => r.json()),
-            fetch(`${API_URL}/usuariosMoradores`).then(r => r.json()),
-            fetch(`${API_URL}/denuncias`).then(r => r.json()),
-            fetch(`${API_URL}/status`).then(r => r.json()),
-            fetch(`${API_URL}/urgencias`).then(r => r.json())
+        // Busca paralela de dados simulando a mesma lógica do morador
+        const [resLogado, resInstituicoes, resDenuncias, resStatus] = await Promise.all([
+            fetch(`${API_URL}/usuarioLogado`).then(r => r.json()).catch(() => ({})),
+            fetch(`${API_URL}/usuariosEmpresas`).then(r => r.json()).catch(() => []), 
+            fetch(`${API_URL}/denuncias`).then(r => r.json()).catch(() => []),
+            fetch(`${API_URL}/status`).then(r => r.json()).catch(() => [])
         ]);
 
         listaStatus = resStatus || [];
-        listaUrgencias = resUrgencias || [];
 
-        const cpfLogado = resLogado?.cpf;
-        if (!cpfLogado) {
-            alert("Nenhum usuário logado encontrado.");
+        // Recupera o identificador único
+        let emailLogado = resLogado?.email || localStorage.getItem("emailLogado");
+        
+        if (!emailLogado) {
+            console.warn("Nenhuma instituição logada encontrada.");
             return;
         }
 
-        const usuario = resMoradores?.find(u => u.cpf === cpfLogado);
-        if (!usuario) {
-            alert("Erro: Usuário não encontrado na base de moradores.");
-            return;
+        // Procura a instituição correspondente
+        const instituicao = resInstituicoes?.find(i => i.emailInstitucional === emailLogado || i.email === emailLogado);
+        
+        if (!instituicao) {
+            const localUser = localStorage.getItem("usuarioLogado");
+            if (localUser) {
+                dadosUsuarioLogado = JSON.parse(localUser);
+                dadosPerfilLogado = dadosUsuarioLogado;
+            } else {
+                console.warn("Sessão inválida ou sem dados locais.");
+                return;
+            }
+        } else {
+            dadosUsuarioLogado = instituicao;
+            dadosPerfilLogado = instituicao;
         }
-
-        dadosUsuarioLogado = usuario;
-        // Fallback: Usa dados de estatísticas internos do usuário morador do seu JSON
-        dadosPerfilLogado = usuario;
         
-        // Mapeamento correto de acordo com a chave do JSON: "denunciasAcompanhadas"
-        const denunciasAcompanhadas = usuario.denunciasAcompanhadas || [];
-        
-        // Filtra denúncias vinculadas ao usuário logado
-        denunciasDoUsuario = resDenuncias?.filter(d => 
-            denunciasAcompanhadas.includes(Number(d.id)) || d.usuarioMorador_cpf === cpfLogado
+        // Filtra as obras associadas a essa empresa/órgão público
+        obrasDaInstituicao = resDenuncias?.filter(d => 
+            String(d.empresaResponsavel_id) === String(dadosUsuarioLogado.id)
         ) || [];
 
-        const rootDinamico = document.getElementById("profile-root");
-        if (rootDinamico) {
-            renderizarLayoutDinamicoMorador(rootDinamico);
-        }
+        // Atualiza os dados estáticos diretamente no HTML
+        atualizarComponentesInterface();
+        
     } catch (erro) {
-        console.error("Erro ao carregar dados:", erro);
+        console.error("Erro fatal ao carregar dados da instituição:", erro);
     }
 }
 
-function renderizarLayoutDinamicoMorador(root) {
-    root.innerHTML = "";
+function atualizarComponentesInterface() {
+    // 1. Sidebar Dados da Esquerda
+    const nomeUsuario = document.getElementById("nome_usuario");
+    const fotoPerfil = document.getElementById("fotoPerfil");
+    const txtTipoInstituicao = document.getElementById("txt-tipo-instituicao");
+    const statSolucionadas = document.getElementById("stat-solucionadas");
+    const statObras = document.getElementById("stat-obras");
 
-    const aside = document.createElement("aside");
-    aside.className = "col-12 col-md-4 col-xl-3 text-center d-flex flex-column align-items-center";
-    aside.innerHTML = `
-        <div class="card card-perfil-zella border-0 shadow-sm px-4 pb-4 pt-5 position-relative w-100">
-            <input type="file" id="input-foto-perfil" accept="image/*" style="display: none;">
-            
-            <div class="avatar-perfil-container position-absolute start-50 translate-middle-x" style="cursor: pointer;" title="Mudar foto">
-                <img id="fotoPerfil" src="${dadosPerfilLogado?.fotoPerfil || 'https://images.unsplash.com/photo-1534528741775-53994a69daeb?auto=format&fit=crop&q=80&w=200'}" class="rounded-circle border border-4 border-white shadow" alt="Avatar">
-            </div>
-            
-            <div class="card-body p-0 mt-5 pt-3">
-                <h4 id="nome_usuario" class="fw-bold text-dark mb-4 text-center">${dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto}</h4>
-                
-                <ul class="list-unstyled text-start list-status-zella mb-4 ps-2">
-                    <li class="mb-2 d-flex align-items-center">
-                        <i class="bi bi-check-circle-fill text-success me-2"></i>
-                        <span>Cidadão Ativo</span>
-                    </li>
-                    <li class="mb-2 d-flex align-items-center">
-                        <i class="bi bi-clipboard-check me-2"></i>
-                        <span>Demandas atendidas:</span>
-                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.atendidas || 0}</strong>
-                    </li>
-                    <li class="mb-2 d-flex align-items-center">
-                        <i class="bi bi-clipboard-data me-2"></i>
-                        <span>Demandas em aberto:</span>
-                        <strong class="text-dark ms-auto">${dadosPerfilLogado?.estatisticas?.abertas || 0}</strong>
-                    </li>
-                </ul>
-                
-                <button type="button" id="btn-nova-denuncia" class="btn btn-nova-denuncia-zella w-100 fw-bold shadow-sm">
-                    Nova denúncia +
-                </button>
-            </div>
-        </div>
-    `;
+    if (nomeUsuario) nomeUsuario.textContent = dadosUsuarioLogado.representante || dadosUsuarioLogado.nomeCompleto || 'Órgão Responsável';
+    if (fotoPerfil && dadosPerfilLogado.fotoPerfil) {
+        fotoPerfil.src = dadosPerfilLogado.fotoPerfil;
+    }
+    if (txtTipoInstituicao) txtTipoInstituicao.textContent = dadosUsuarioLogado.tipoInstituicao || "Prestador de Serviço";
+    
+    // Contagem de estatísticas
+    const totalConcluidas = obrasDaInstituicao.filter(o => String(o.status_id) === "1").length;
+    const totalAndamento = obrasDaInstituicao.filter(o => String(o.status_id) === "2").length;
 
-    const containerPrincipal = document.createElement("div");
-    containerPrincipal.className = "col-12 col-md-8 col-xl-9 ps-md-4 ps-lg-5 divider-lateral-zella";
-    containerPrincipal.innerHTML = `
-        <section class="card-avaliacoes-zella border-0 shadow-sm p-4 mb-5 bg-white">
-            <h3 class="fw-bold text-dark mb-3 title-secao-zella">Os Meus Dados Cadastrais</h3>
-            <hr class="mb-4 text-muted opacity-25">
-            <form id="form-perfil">
-                <div class="row g-3">
-                    <div class="col-12 col-md-6">
-                        <label class="form-label text-muted small fw-semibold">Nome Completo</label>
-                        <input type="text" id="crud-nome" class="form-control" value="${dadosUsuarioLogado.nomeCompleto || ''}" required>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label text-muted small fw-semibold">E-mail</label>
-                        <input type="email" id="crud-email" class="form-control" value="${dadosUsuarioLogado.email || ''}" required>
-                    </div>
-                    <div class="col-12 col-md-6">
-                        <label class="form-label text-muted small fw-semibold">Senha</label>
-                        <input type="password" id="crud-senha" class="form-control" value="${dadosUsuarioLogado.senha || ''}" required>
-                    </div>
-                </div>
-                <div class="d-flex justify-content-end gap-2 mt-4">
-                    <button type="button" id="btn-deletar" class="btn btn-outline-danger px-4 rounded-pill small fw-semibold" style="background-color: transparent; color: #dc3545; border: 1px solid #dc3545;">Excluir Conta</button>
-                    <button type="submit" id="btn-salvar" class="btn btn-dark px-4 rounded-pill small fw-semibold">Salvar Alterações</button>
-                </div>
-            </form>
-        </section>
-        
-        <section class="main-content p-0">
-            <div class="d-flex flex-column flex-sm-row align-items-sm-center justify-content-between mb-4 gap-3">
-                <h2 class="fw-bold text-dark mb-0 title-secao-zella">Histórico de denúncias</h2>
-                
-                <div class="d-flex gap-1 flex-wrap filter-group-zella">
-                    <button type="button" data-filter="todas" class="btn btn-filter-zella ${filtroAtual === 'todas' ? 'active' : ''}">TODAS</button>
-                    <button type="button" data-filter="3" class="btn btn-filter-zella ${filtroAtual === '3' ? 'active' : ''}">ABERTAS</button>
-                    <button type="button" data-filter="2" class="btn btn-filter-zella ${filtroAtual === '2' ? 'active' : ''}">EM ANDAMENTO</button>
-                    <button type="button" data-filter="1" class="btn btn-filter-zella ${filtroAtual === '1' ? 'active' : ''}">REALIZADAS</button>
-                </div>
-            </div>
-            
-            <div id="container-denuncias" class="row row-cols-1 row-cols-lg-2 g-4 overflow-container-zella"></div>
-        </section>
-    `;
+    if (statSolucionadas) statSolucionadas.textContent = totalConcluidas;
+    if (statObras) statObras.textContent = totalAndamento;
 
-    root.appendChild(aside);
-    root.appendChild(containerPrincipal);
+    // 2. Formulário de Dados Cadastrais (Inputs)
+    const inputNome = document.getElementById("crud-nome");
+    const inputEmail = document.getElementById("crud-email");
+    const inputTelefone = document.getElementById("crud-telefone");
+    const inputSenha = document.getElementById("crud-senha");
 
-    configurarRedirecionamento();
+    if (inputNome) inputNome.value = dadosUsuarioLogado.representante || dadosUsuarioLogado.nomeCompleto || '';
+    if (inputEmail) inputEmail.value = dadosUsuarioLogado.emailInstitucional || dadosUsuarioLogado.email || '';
+    if (inputTelefone) inputTelefone.value = dadosUsuarioLogado.telefoneContato || dadosUsuarioLogado.telefone || '';
+    if (inputSenha) inputSenha.value = dadosUsuarioLogado.senha || '';
+
+    // Inicializa os Listeners de eventos e renderizações de listas
     configurarEventosInteracao();
     configurarEventosFiltro();
-    renderizarCardsHistorico();
-}
-
-function configurarRedirecionamento() {
-    const btnNovaDenuncia = document.getElementById("btn-nova-denuncia");
-    if (btnNovaDenuncia) {
-        btnNovaDenuncia.onclick = function() {
-            window.location.href = "faca-sua-denuncia.html"; 
-        };
-    }
+    renderizarCardsObras();
+    renderizarAvaliacoes();
 }
 
 function configurarEventosFiltro() {
     const botoes = document.querySelectorAll(".btn-filter-zella");
     botoes.forEach(botao => {
         botao.onclick = function() {
-            botoes.forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
+            botoes.forEach(b => {
+                b.classList.remove("active", "btn-dark");
+                b.classList.add("btn-outline-secondary");
+            });
+            this.classList.add("active", "btn-dark");
+            this.classList.remove("btn-outline-secondary");
 
-            filtroAtual = this.getAttribute("data-filter");
-            renderizarCardsHistorico();
+            filtroAtual = this.getAttribute("data-filtro");
+            renderizarCardsObras();
         };
     });
 }
 
 function configurarEventosInteracao() {
-    const containerAvatar = document.querySelector(".avatar-perfil-container");
+    const clickAvatar = document.getElementById("container-foto-click");
     const inputFoto = document.getElementById("input-foto-perfil");
     const imgFotoPerfil = document.getElementById("fotoPerfil");
     const formPerfil = document.getElementById("form-perfil");
@@ -179,22 +126,17 @@ function configurarEventosInteracao() {
 
     if (btnDeletar) {
         btnDeletar.onclick = async function() {
-            if (confirm("Tem certeza que deseja excluir sua conta permanentemente?")) {
+            if (confirm("Deseja remover o cadastro desta instituição permanentemente?")) {
                 try {
-                    await fetch(`${API_URL}/usuariosMoradores/${dadosUsuarioLogado.id}`, { method: "DELETE" });
-                    await fetch(`${API_URL}/usuarioLogado`, {
-                        method: "PUT",
-                        headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({})
-                    });
-                    alert("Conta removida com sucesso.");
-                    window.location.href = "index.html";
-                } catch (e) { alert("Erro ao deletar conta."); }
+                    await fetch(`${API_URL}/usuariosEmpresas/${dadosUsuarioLogado.id}`, { method: "DELETE" });
+                    localStorage.clear();
+                    window.location.href = "login.html";
+                } catch (e) { alert("Erro ao deletar conta institucional."); }
             }
         };
     }
 
-    if (containerAvatar && inputFoto) containerAvatar.onclick = () => inputFoto.click();
+    if (clickAvatar && inputFoto) clickAvatar.onclick = () => inputFoto.click();
 
     if (inputFoto) {
         inputFoto.onchange = function(e) {
@@ -215,8 +157,9 @@ function configurarEventosInteracao() {
             e.preventDefault();
             const atualizados = {
                 ...dadosUsuarioLogado,
-                nomeCompleto: document.getElementById("crud-nome").value.trim(),
-                email: document.getElementById("crud-email").value.trim(),
+                representante: document.getElementById("crud-nome").value.trim(),
+                emailInstitucional: document.getElementById("crud-email").value.trim(),
+                telefoneContato: document.getElementById("crud-telefone").value.trim(),
                 senha: document.getElementById("crud-senha").value
             };
 
@@ -225,105 +168,111 @@ function configurarEventosInteracao() {
             }
 
             try {
-                await fetch(`${API_URL}/usuariosMoradores/${dadosUsuarioLogado.id}`, {
+                await fetch(`${API_URL}/usuariosEmpresas/${dadosUsuarioLogado.id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(atualizados)
                 });
 
-                alert("Alterações salvas com sucesso!");
+                localStorage.setItem("usuarioLogado", JSON.stringify(atualizados));
+                alert("Dados institucionais atualizados com sucesso!");
                 carregarDadosPerfil();
-            } catch (err) { alert("Erro ao salvar dados."); }
+            } catch (err) { alert("Erro ao salvar alterações."); }
         };
     }
 }
 
-function renderizarCardsHistorico() {
+function renderizarCardsObras() {
     const container = document.getElementById("container-denuncias");
     if (!container) return;
 
-    // CORREÇÃO AQUI: Convertendo ambos para String para evitar falha de comparação de Tipo (Número vs String)
-    const denunciasFiltradas = denunciasDoUsuario.filter(item => {
-        if (filtroAtual === "todas") return true;
-        return String(item.status_id) === String(filtroAtual);
+    // Limpa o estado de loading interno
+    const loading = document.getElementById("loading-obras");
+    if (loading) loading.remove();
+
+    // Mapeamento nominal idêntico ao do morador 
+    const deParaStatus = { "TODAS": "todas", "ABERTAS": "3", "EM ANDAMENTO": "2", "REALIZADAS": "1" };
+    const filtroId = deParaStatus[filtroAtual];
+
+    const obrasFiltradas = obrasDaInstituicao.filter(item => {
+        if (filtroId === "todas") return true;
+        return String(item.status_id) === String(filtroId);
     });
 
-    if (denunciasFiltradas.length === 0) {
-        container.innerHTML = `<div class="col-12 py-3"><p class="text-muted small ps-2">Nenhuma ocorrência encontrada para este filtro.</p></div>`;
+    if (obrasFiltradas.length === 0) {
+        container.innerHTML = `<div class="col-12 py-3 w-100 text-center"><p class="text-muted small">Nenhuma obra sob sua responsabilidade neste filtro.</p></div>`;
         return;
     }
 
     let html = "";
-    denunciasFiltradas.forEach(item => {
+    obrasFiltradas.forEach(item => {
         const capa = (item.imagens && item.imagens.length > 0 && item.imagens[0] !== "") 
             ? item.imagens[0] 
             : "https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&q=80&w=400";
 
-        // Tradução dinâmica de status_id para texto usando a lista auxiliar carregada
         const objStatus = listaStatus.find(s => String(s.id) === String(item.status_id));
-        const statusStr = objStatus ? objStatus.nome : "Aberto";
+        const statusStr = objStatus ? objStatus.nome : "Pendente";
         
-        // CORREÇÃO AQUI: Mapeamento de cores baseado na ID numérica convertida em número estável
-        let statusClass = "bg-secondary"; 
-        const currentStatusId = Number(item.status_id);
-        if (currentStatusId === 1 || currentStatusId === 4) {
-            statusClass = "status-resolvida";
-        } else if (currentStatusId === 2) {
-            statusClass = "status-andamento";
-        } else if (currentStatusId === 3) {
-            statusClass = "status-aberto"; // Classe adicionada para os cards "Abertos" (Laranja)
-        }
+        let badgeBg = "#6c757d";
+        let badgeColor = "#ffffff";
+        if (item.status_id == 3) { badgeBg = "rgba(220, 53, 69, 0.15)"; badgeColor = "#dc3545"; } 
+        if (item.status_id == 2) { badgeBg = "rgba(255, 138, 0, 0.15)"; badgeColor = "#ff8a00"; } 
+        if (item.status_id == 1) { badgeBg = "rgba(66, 197, 154, 0.15)"; badgeColor = "#42c59a"; }
 
-        // Tradução dinâmica de urgencia_id para texto
-        const objUrgencia = listaUrgencias.find(u => String(u.id) === String(item.urgencia_id));
-        const urgenciaStr = objUrgencia ? objUrgencia.nome : "Média";
-        
-        let urgenciaClass = "badge-urgencia-media";
-        const currentUrgenciaId = Number(item.urgencia_id);
-        if (currentUrgenciaId === 3) urgenciaClass = "badge-urgencia-alta";
-        if (currentUrgenciaId === 1) urgenciaClass = "badge-urgencia-baixa";
+        const linkDetalhes = `../../detalhes/detalhes.html?id=${item.id}`;
 
         html += `
             <div class="col">
-                <div class="card card-denuncia-zella border-0 shadow-sm p-3 h-100 position-relative">
-                    <div class="row g-3 align-items-start h-100">
-                        <div class="col-4 d-flex align-self-stretch">
-                            <img src="${capa}" class="img-fluid img-denuncia-cover-zella my-auto" alt="Ocorrência">
+                <div class="card border-0 p-3 h-100 bg-white" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
+                    <div class="row g-3 align-items-center">
+                        <div class="col-4 col-sm-3 col-md-4">
+                            <img src="${capa}" class="img-fluid rounded" style="height: 95px; width: 100%; object-fit: cover; border-radius: 12px !important;" alt="Obra" onerror="this.src='https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&q=80&w=400'">
                         </div>
-                        
-                        <div class="col-8 d-flex flex-column h-100 justify-content-between">
+                        <div class="col-8 col-sm-9 col-md-8 d-flex flex-column justify-content-between">
                             <div>
-                                <div class="d-flex align-items-center justify-content-between mb-1">
-                                    <span class="badge-local-zella text-truncate pe-2">
-                                        <i class="bi bi-geo-alt-fill me-1"></i>${item.local?.logradouro || 'Local não informado'}
-                                    </span>
-                                    <span class="badge badge-status-zella ${statusClass}">
-                                        ${statusStr}
-                                    </span>
-                                </div>
-                                
-                                <h5 class="fw-bold text-dark mb-1 card-title-zella text-truncate-2" title="${item.titulo}">
-                                    ${item.titulo}
-                                </h5>
-                                
-                                <div class="d-flex gap-1 mb-2 flex-wrap">
-                                    <span class="badge badge-meta-zella"><i class="bi bi-clock me-1"></i>${item.dataPublicacao || 'Sem data'}</span>
-                                    <span class="badge badge-meta-zella ${urgenciaClass}">${urgenciaStr.toUpperCase()}</span>
-                                </div>
+                                <span class="badge mb-1" style="font-size: 0.7rem; background-color: ${badgeBg}; color: ${badgeColor}; padding: 4px 10px; border-radius: 12px;">${statusStr.toUpperCase()}</span>
+                                <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.92rem;" title="${item.titulo || ''}">${item.titulo || 'Obra Pública'}</h6>
+                                <small class="text-muted d-block mb-2" style="font-size: 0.78rem;"><i class="bi bi-clock me-1"></i>${item.dataPublicacao || 'Sem data'}</small>
                             </div>
-                            
-                            <div class="d-flex justify-content-end mt-auto">
-                                <a href="detalhes-denuncia.html?id=${item.id}" class="text-decoration-none fw-bold link-details link-detalhes-zella">
-                                    Ver detalhes
+                            <div class="text-end">
+                                <a href="${linkDetalhes}" class="text-decoration-none fw-semibold" style="font-size: 0.78rem; color: #f28b0c;">
+                                    Atualizar Status <i class="bi bi-arrow-right ms-1"></i>
                                 </a>
                             </div>
                         </div>
                     </div>
                 </div>
-            </div>
-        `;
+            </div>`;
     });
     container.innerHTML = html;
+}
+
+function renderizarAvaliacoes() {
+    const containerComentarios = document.getElementById("container-comentarios-dinamicos");
+    const tituloAvaliacoes = document.getElementById("titulo-container-avaliacoes");
+    
+    if (!containerComentarios) return;
+
+    const avaliacoes = dadosUsuarioLogado.avaliacoesRecebidas || [];
+    if (tituloAvaliacoes) tituloAvaliacoes.textContent = `Avaliações (${avaliacoes.length})`;
+
+    if (avaliacoes.length === 0) {
+        containerComentarios.innerHTML = `<div class="text-muted small py-1">Nenhuma avaliação recebida até o momento.</div>`;
+        return;
+    }
+
+    let html = "";
+    avaliacoes.forEach(av => {
+        html += `
+            <div class="p-3 rounded-3" style="background-color: #f8f9fa; border-left: 4px solid #f28b0c;">
+                <div class="d-flex justify-content-between align-items-center mb-1">
+                    <strong class="text-dark small">${av.autor || 'Cidadão Anônimo'}</strong>
+                    <span class="text-warning small">${'★'.repeat(av.nota)}${'☆'.repeat(5 - av.nota)}</span>
+                </div>
+                <p class="text-muted mb-0 small">${av.comentario || 'Sem comentário preenchido.'}</p>
+            </div>`;
+    });
+    containerComentarios.innerHTML = html;
 }
 
 document.addEventListener("DOMContentLoaded", carregarDadosPerfil);
