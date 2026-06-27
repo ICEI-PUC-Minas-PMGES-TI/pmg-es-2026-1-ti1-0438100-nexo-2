@@ -1,5 +1,5 @@
 /**
- * Zella - Lógica de Cadastro Integrada com JSON Server (Ajustada para o Perfil Híbrido)
+ * Zella - Lógica de Cadastro e Login
  */
 
 const API_URL = "http://localhost:3000";
@@ -16,7 +16,7 @@ if (urlAtual.includes('cadastroEmpresa')) {
     tipoCadastro = 'morador';
 }
 
-// Mapeamento dos elementos do DOM
+// Mapeamento dinâmico dos elementos do DOM
 const campoIdEdicao = document.getElementById('idEdicao');
 const campoNome = document.getElementById('nome');
 const campoNomeExibicao = document.getElementById('nomeExibicao'); 
@@ -25,9 +25,8 @@ const campoEmail = document.getElementById('email');
 let campoIdentificador = null;
 if (tipoCadastro === 'morador') {
     campoIdentificador = document.getElementById('cpf');
-} else if (tipoCadastro === 'empresa') {
-    campoIdentificador = document.getElementById('cnpj') || document.getElementById('identificador');
 } else {
+    // Empresa e Prefeitura utilizam id="identificador" 
     campoIdentificador = document.getElementById('identificador');
 }
 
@@ -35,24 +34,13 @@ const campoCpfResponsavel = document.getElementById('cpfResponsavel');
 const campoSenhaPrincipal = document.getElementById('senha');
 const campoConfirmarSenha = document.getElementById('confirmarSenha');
 const formCadastro = document.getElementById('formCadastro');
-const tituloFormulario = document.getElementById('tituloFormulario');
-const containerLista = document.getElementById('listaContas');
 
-// Retorna as configurações de rotas baseadas no tipo de cadastro (Mapeado com o novo JSON)
+// Retorna as rotas baseadas no tipo de cadastro
 function obterConfiguracaoRotas() {
     return {
-        morador: { 
-            endpoint: 'usuariosMoradores', 
-            campoId: 'cpf'
-        },
-        empresa: { 
-            endpoint: 'usuariosInstituicoes', 
-            campoId: 'cnpj'
-        },
-        prefeitura: { 
-            endpoint: 'usuariosInstituicoes', 
-            campoId: 'cnpj' // Tratado como documento identificador institucional
-        }
+        morador: { endpoint: 'usuariosMoradores', campoId: 'cpf' },
+        empresa: { endpoint: 'usuariosInstituicoes', campoId: 'cnpj' },
+        prefeitura: { endpoint: 'usuariosInstituicoes', campoId: 'municipioAtuacao' }
     }[tipoCadastro];
 }
 
@@ -62,56 +50,33 @@ async function carregarBanco() {
         const config = obterConfiguracaoRotas();
         const resposta = await fetch(`${API_URL}/${config.endpoint}`);
         if (!resposta.ok) throw new Error("Não foi possível conectar ao JSON Server.");
-        
-        const dadosEndpoint = await resposta.json();
-        
-        db = {
-            [config.endpoint]: dadosEndpoint
-        };
+        db = { [config.endpoint]: await resposta.json() };
     } catch (erro) {
         console.error("Erro ao conectar com o JSON Server:", erro);
-        alert("Erro ao carregar dados. Certifique-se de que o JSON Server está rodando na porta 3000!");
     }
 }
 
-function normalizarId(id) {
+// Limpa pontuações para salvar e comparar apenas números (quando necessário)
+function normalizarId(id, apenasNumeros = true) {
     if (!id) return '';
-    const limpo = String(id).replace(/\D/g, '');
-    return limpo ? String(limpo) : String(id).trim();
-}
-
-// 2. RENDERIZA A TABELA DE CONTAS CADASTRADAS (Lendo em tempo real da API)
-function renderizarLista() {
-    if (!containerLista) return;
-    containerLista.innerHTML = '';
-    const config = obterConfiguracaoRotas();
-    
-    let listaFiltrada = db[config.endpoint] || [];
-    
-    if (tipoCadastro === 'empresa') {
-        listaFiltrada = listaFiltrada.filter(u => u.instituicao_id === 1); 
-    } else if (tipoCadastro === 'prefeitura') {
-        listaFiltrada = listaFiltrada.filter(u => u.instituicao_id === 2 || u.instituicao_id === 3);
+    if (apenasNumeros) {
+        const limpo = String(id).replace(/\D/g, '');
+        return limpo ? String(limpo) : String(id).trim();
     }
-
-    listaFiltrada.forEach(usuario => {
-        const idOriginal = usuario[config.campoId] || usuario.cpf || usuario.cnpj;
-        const nomeVisual = usuario.nomeUsuario || usuario.nomeCompleto;
-        
-        const line = document.createElement('tr');
-        line.innerHTML = `
-            <td>${nomeVisual}</td>
-            <td>${idOriginal}</td>
-            <td>
-                <button type="button" class="btn-acao-editar me-1" onclick="prepararEdicao('${usuario.id}')">Editar</button>
-                <button type="button" class="btn-acao-excluir" onclick="deletarConta('${usuario.id}')">Excluir</button>
-            </td>
-        `;
-        containerLista.appendChild(line);
-    });
+    return String(id).trim();
 }
 
-// 3. ENVIO DO FORMULÁRIO (CADASTRAR OU ATUALIZAR VIA API)
+// Função para centralizar o redirecionamento baseado na nova estrutura de pastas
+function redirecionarParaPerfil() {
+    if (tipoCadastro === 'morador') {
+        window.location.href = '../perfis/perfil-usuario.html';
+    } else {
+        // Tanto empresa quanto prefeitura agora vão para a mesma página dinâmica
+        window.location.href = '../perfis/perfil-instituicao.html';
+    }
+}
+
+// 2. CADASTRAR VIA API
 if (formCadastro) {
     formCadastro.addEventListener('submit', async function(event) {
         event.preventDefault();
@@ -120,13 +85,17 @@ if (formCadastro) {
         const nome = campoNome ? campoNome.value.trim() : '';
         const nomeExibicao = campoNomeExibicao ? campoNomeExibicao.value.trim() : '';
         const email = campoEmail ? campoEmail.value.trim() : '';
-        const idDigitado = campoIdentificador ? normalizarId(campoIdentificador.value) : '';
-        const cpfResponsavelDigitado = campoCpfResponsavel ? String(campoCpfResponsavel.value.replace(/\D/g, '')) : '';
+        
+        // Se for prefeitura, mantém o nome da cidade. Se não, limpa os números do CPF/CNPJ
+        const deveraLimparNumeros = (tipoCadastro !== 'prefeitura');
+        const idDigitado = campoIdentificador ? normalizarId(campoIdentificador.value, deveraLimparNumeros) : '';
+        
+        const cpfResponsavelDigitado = campoCpfResponsavel ? normalizarId(campoCpfResponsavel.value, true) : '';
         const senha = campoSenhaPrincipal ? campoSenhaPrincipal.value : '';
         const confirmaSenha = campoConfirmarSenha ? campoConfirmarSenha.value : '';
 
-        if (!nome || !nomeExibicao || !idDigitado || !senha) {
-            alert("Preencha todos os campos corretamente.");
+        if (!nome || !idDigitado || !senha) {
+            alert("Preencha todos os campos obrigatórios corretamente.");
             return;
         }
 
@@ -135,165 +104,82 @@ if (formCadastro) {
             return;
         }
 
-        const idEmEdicao = campoIdEdicao ? campoIdEdicao.value : '';
+        // Verifica duplicidade no banco
+        const usuarioExistente = db[config.endpoint]?.find(u => {
+            const idItem = u[config.campoId] || u.cpf || u.cnpj || u.municipioAtuacao;
+            return normalizarId(idItem, deveraLimparNumeros) === idDigitado;
+        });
 
-        // MODO EDIÇÃO (PATCH)
-        if (idEmEdicao) {
-            const dadosAtualizados = {
-                nomeUsuario: nomeExibicao,
-                nomeCompleto: nome,
-                email, 
-                [config.campoId]: idDigitado,
-                senha 
-            };
+        if (usuarioExistente) {
+            alert("Este identificador/documento já está cadastrado no sistema!");
+            return;
+        }
 
-            try {
-                await fetch(`${API_URL}/${config.endpoint}/${idEmEdicao}`, {
-                    method: "PATCH",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(dadosAtualizados)
-                });
-                
-                alert("Conta atualizada com sucesso!");
-                resetarFormulario();
-                carregarBanco();
-            } catch (erro) {
-                console.error("Erro ao atualizar:", erro);
-            }
+        // Monta o usuário base com a flag "tipo" identificando o perfil de instituição
+        const novoUsuario = { 
+            "id": Math.random().toString(36).substring(2, 13),
+            "tipo": tipoCadastro, // Salva 'morador', 'empresa' ou 'prefeitura' para distinção posterior
+            "nomeUsuario": nomeExibicao,
+            "nomeCompleto": nome,
+            "email": email, 
+            "senha": senha,
+            "fotoPerfil": "imgs/imgPerfil/default.png",
+            [config.campoId]: idDigitado
+        };
 
-        // MODO NOVO CADASTRO (POST)
-        } else {
-            // Verifica duplicidade
-            const usuarioExistente = db[config.endpoint]?.find(u => {
-                const idItem = u[config.campoId] || u.cpf || u.cnpj;
-                return normalizarId(idItem) === idDigitado;
+        // Regras específicas
+        if (tipoCadastro === 'morador') {
+            novoUsuario.cpf = idDigitado;
+            novoUsuario.denunciasAcompanhadas = [];
+            novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
+        } else if (tipoCadastro === 'empresa') {
+            novoUsuario.cnpj = idDigitado;
+            novoUsuario.cpfResponsavel = cpfResponsavelDigitado;
+            novoUsuario.instituicao_id = 1; 
+            novoUsuario.avaliacoes = [];
+            novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
+        } else if (tipoCadastro === 'prefeitura') {
+            novoUsuario.municipioAtuacao = idDigitado;
+            novoUsuario.cnpj = "00000000000000"; 
+            novoUsuario.cpfResponsavel = cpfResponsavelDigitado;
+            novoUsuario.instituicao_id = 2; 
+            novoUsuario.avaliacoes = [];
+            novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
+        }
+
+        try {
+            // Salva no banco via POST
+            await fetch(`${API_URL}/${config.endpoint}`, {
+                method: "POST",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify(novoUsuario)
             });
 
-            if (usuarioExistente) {
-                alert("Este documento (CPF/CNPJ) já está cadastrado!");
-                return;
-            }
+            // Atualiza sessão injetando o CPF e o tipo correspondente
+            const chaveSessaoLogado = (tipoCadastro === 'morador') ? idDigitado : cpfResponsavelDigitado;
+            await fetch(`${API_URL}/usuarioLogado`, {
+                method: "PUT",
+                headers: { "Content-Type": "application/json" },
+                body: JSON.stringify({ 
+                    "cpf": chaveSessaoLogado,
+                    "tipo": tipoCadastro 
+                })
+            });
 
-            // Cria o objeto unificado adaptado exatamente ao novo formato do seu banco
-            const novoUsuario = { 
-                "id": Math.random().toString(36).substring(2, 13),
-                "nomeUsuario": nomeExibicao,
-                "nomeCompleto": nome,
-                "email": email, 
-                "senha": senha,
-                "fotoPerfil": "imgs/imgPerfil/default.png",
-                [config.campoId]: idDigitado
-            };
+            localStorage.setItem('usuarioLogado', JSON.stringify(novoUsuario));
+            localStorage.setItem('cpfLogado', chaveSessaoLogado);
 
-            // Regras de negócio adicionadas com base no tipo de conta mapeada no JSON
-            if (tipoCadastro === 'morador') {
-                novoUsuario.cpf = idDigitado;
-                novoUsuario.denunciasAcompanhadas = [];
-                novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
-            } else {
-                novoUsuario.cnpj = idDigitado;
-                novoUsuario.cpfResponsavel = cpfResponsavelDigitado || "";
-                novoUsuario.instituicao_id = tipoCadastro === 'empresa' ? 1 : 2;
-                novoUsuario.avaliacoes = [];
-                novoUsuario.estatisticas = { "atendidas": 0, "abertas": 0 };
-            }
+            alert("Cadastro realizado com sucesso! Você já pode clicar em 'Entrar'.");
+            await carregarBanco(); 
 
-            try {
-                // Envia para o banco de dados via POST
-                await fetch(`${API_URL}/${config.endpoint}`, {
-                    method: "POST",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify(novoUsuario)
-                });
-
-                // Sincroniza a sessão do usuário logado
-                await fetch(`${API_URL}/usuarioLogado`, {
-                    method: "PUT",
-                    headers: { "Content-Type": "application/json" },
-                    body: JSON.stringify({ "cpf": idDigitado })
-                });
-
-                localStorage.setItem('usuarioLogado', JSON.stringify(novoUsuario));
-                localStorage.setItem('cpfLogado', idDigitado);
-
-                alert("Cadastro realizado com sucesso!");
-                
-                const documentoDigitadoAnteriormente = campoIdentificador ? campoIdentificador.value : '';
-                resetarFormulario();
-                
-                if (campoIdentificador) {
-                    campoIdentificador.value = documentoDigitadoAnteriormente;
-                }
-
-                if (tipoCadastro === 'morador') {
-                    window.location.href = './perfil-usuario.html';
-                } else {
-                    window.location.href = './perfil-instituicao.html';
-                }
-
-            } catch (erro) {
-                console.error("Erro ao efetuar cadastro no servidor:", erro);
-                alert("Não foi possível salvar os dados no servidor local.");
-            }
+        } catch (erro) {
+            console.error("Erro ao efetuar cadastro:", erro);
+            alert("Não foi possível salvar os dados no servidor local.");
         }
     });
 }
 
-// 4. DELETAR CONTA DIRETAMENTE DO SERVIDOR (DELETE)
-window.deletarConta = async function(idParaDeletar) {
-    const config = obterConfiguracaoRotas();
-    if (confirm("Tem certeza que deseja excluir esta conta?")) {
-        try {
-            await fetch(`${API_URL}/${config.endpoint}/${idParaDeletar}`, {
-                method: "DELETE"
-            });
-            alert("Conta removida com sucesso!");
-            carregarBanco();
-            if (campoIdEdicao && campoIdEdicao.value === String(idParaDeletar)) {
-                resetarFormulario();
-            }
-        } catch (erro) {
-            console.error("Erro ao deletar conta:", erro);
-        }
-    }
-};
-
-// 5. SELECIONAR CONTA PARA EDIÇÃO
-window.prepararEdicao = function(idInternoJsonServer) {
-    const config = obterConfiguracaoRotas();
-    const usuario = db[config.endpoint]?.find(u => String(u.id) === String(idInternoJsonServer));
-
-    if (usuario) {
-        const idOriginalDocumento = usuario[config.campoId] || usuario.cpf || usuario.cnpj;
-
-        if (campoIdEdicao) campoIdEdicao.value = usuario.id; 
-        if (campoNome) campoNome.value = usuario.nomeCompleto || '';
-        if (campoNomeExibicao) campoNomeExibicao.value = usuario.nomeUsuario || '';
-        if (campoEmail) campoEmail.value = usuario.email || '';
-        if (campoIdentificador) campoIdentificador.value = idOriginalDocumento;
-        if (campoCpfResponsavel) campoCpfResponsavel.value = usuario.cpfResponsavel || '';
-        if (campoSenhaPrincipal) campoSenhaPrincipal.value = usuario.senha;
-        if (campoConfirmarSenha) campoConfirmarSenha.value = usuario.senha;
-
-        if (tituloFormulario) tituloFormulario.textContent = "Editar Informações da Conta";
-        
-        if (formCadastro) {
-            const btnSubmit = formCadastro.querySelector('button[type="submit"]') || formCadastro.querySelector('button');
-            if (btnSubmit) btnSubmit.textContent = "Salvar Alterações";
-        }
-    }
-};
-
-function resetarFormulario() {
-    if (formCadastro) formCadastro.reset();
-    if (campoIdEdicao) campoIdEdicao.value = '';
-    if (tituloFormulario) tituloFormulario.textContent = "Crie sua conta";
-    
-    const btnSubmit = formCadastro ? (formCadastro.querySelector('button[type="submit"]') || formCadastro.querySelector('button')) : null;
-    if (btnSubmit) btnSubmit.textContent = "Cadastrar";
-}
-
-// 6. LOGAR COM ENTRAR
+// 3. ENTRAR (LOGIN)
 function configurarBotaoEntrar() {
     const btnEntrar = document.getElementById('entrarUsuario') || document.getElementById('entrar') || document.querySelector('.btn-entrar');
 
@@ -301,11 +187,21 @@ function configurarBotaoEntrar() {
         btnEntrar.addEventListener('click', async function(event) {
             event.preventDefault();
             
-            const idDigitado = campoIdentificador ? normalizarId(campoIdentificador.value) : '';
             const config = obterConfiguracaoRotas();
+            let valorParaLogin = '';
 
-            if (!idDigitado) {
-                alert("Por favor, digite o documento de identificação ou CPF para entrar.");
+            // Lógica de qual campo o sistema deve olhar para fazer login
+            if (tipoCadastro === 'morador') {
+                valorParaLogin = campoIdentificador ? normalizarId(campoIdentificador.value, true) : '';
+            } else if (tipoCadastro === 'empresa') {
+                valorParaLogin = (campoIdentificador && campoIdentificador.value) ? normalizarId(campoIdentificador.value, true) : (campoCpfResponsavel ? normalizarId(campoCpfResponsavel.value, true) : '');
+            } else if (tipoCadastro === 'prefeitura') {
+                valorParaLogin = campoCpfResponsavel ? normalizarId(campoCpfResponsavel.value, true) : '';
+            }
+
+            if (!valorParaLogin) {
+                let rotulo = (tipoCadastro === 'morador') ? 'CPF' : (tipoCadastro === 'prefeitura' ? 'CPF do Servidor' : 'CNPJ');
+                alert(`Por favor, preencha o campo [${rotulo}] no formulário para entrar.`);
                 return;
             }
 
@@ -313,32 +209,39 @@ function configurarBotaoEntrar() {
                 const resposta = await fetch(`${API_URL}/${config.endpoint}`);
                 const listaUsuarios = await resposta.json();
 
+                // Busca o usuário batendo a chave correta
                 const usuarioEncontrado = listaUsuarios.find(u => {
-                    const idItem = normalizarId(u[config.campoId] || u.cpf || u.cnpj);
-                    const cpfRespItem = normalizarId(u.cpfResponsavel);
-                    return idItem === idDigitado || cpfRespItem === idDigitado;
+                    const dbCpf = normalizarId(u.cpf, true);
+                    const dbCnpj = normalizarId(u.cnpj, true);
+                    const dbCpfResp = normalizarId(u.cpfResponsavel, true);
+                    
+                    return (dbCpf === valorParaLogin) || (dbCnpj === valorParaLogin) || (dbCpfResp === valorParaLogin);
                 });
 
                 if (usuarioEncontrado) {
-                    const loginChaveFinal = usuarioEncontrado[config.campoId] || usuarioEncontrado.cpf || idDigitado;
+                    const loginChaveFinal = usuarioEncontrado.cpf || usuarioEncontrado.cpfResponsavel || usuarioEncontrado.cnpj;
+
+                    // Garante que o tipo correto seja guardado mesmo se for um registro antigo sem a propriedade "tipo"
+                    const tipoDetectado = usuarioEncontrado.tipo || (tipoCadastro === 'morador' ? 'morador' : (usuarioEncontrado.instituicao_id === 2 ? 'prefeitura' : 'empresa'));
 
                     await fetch(`${API_URL}/usuarioLogado`, {
                         method: "PUT",
                         headers: { "Content-Type": "application/json" },
-                        body: JSON.stringify({ "cpf": loginChaveFinal })
+                        body: JSON.stringify({ 
+                            "cpf": loginChaveFinal,
+                            "tipo": tipoDetectado
+                        })
                     });
 
+                    // Atualiza o objeto com o tipo detectado antes de salvar no localStorage
+                    usuarioEncontrado.tipo = tipoDetectado;
                     localStorage.setItem('usuarioLogado', JSON.stringify(usuarioEncontrado));
                     localStorage.setItem('cpfLogado', loginChaveFinal);
-                } else {
-                    alert("Atenção: Usuário não cadastrado no sistema.");
-                    return;
-                }
 
-                if (tipoCadastro === 'morador') {
-                    window.location.href = './perfil-usuario.html';
+                    redirecionarParaPerfil();
+                    
                 } else {
-                    window.location.href = './perfil-instituicao.html';
+                    alert("Atenção: Credenciais informadas não constam registradas no sistema.");
                 }
             } catch (erro) {
                 console.error("Erro ao tentar logar:", erro);
@@ -348,7 +251,7 @@ function configurarBotaoEntrar() {
     }
 }
 
-// Inicializa buscando do Servidor de Banco
+// Inicia
 carregarBanco().then(() => {
     configurarBotaoEntrar();
 });

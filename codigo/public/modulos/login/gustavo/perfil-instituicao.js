@@ -1,5 +1,5 @@
 /**
- * Zella - Sistema Operacional do Perfil Remoto
+ * Zella - Sistema Operacional do Perfil Remoto (Unificado)
  */
 const API_URL = "http://localhost:3000";
 
@@ -11,9 +11,9 @@ let listaObrasGeral = [];
 let listaStatus = [];
 let listaUrgencias = [];
 
+// 1. CARGA DINÂMICA DOS DADOS DA ENTIDADE LOGADA
 async function carregarDadosInstituicao() {
     try {
-        // Adaptado para as rotas e tabelas existentes no seu JSON
         const [resLogado, resInstituicoes, resDenuncias, resStatus, resUrgencias] = await Promise.all([
             fetch(`${API_URL}/usuarioLogado`).then(r => r.json()),
             fetch(`${API_URL}/usuariosInstituicoes`).then(r => r.json()),
@@ -27,31 +27,33 @@ async function carregarDadosInstituicao() {
 
         const cpfLogado = resLogado?.cpf;
         if (!cpfLogado) {
-            console.warn("Nenhum registro de CPF ativo em /usuarioLogado");
+            console.warn("Nenhum registro de identificador ativo em /usuarioLogado");
             return;
         }
 
-        // Busca o usuário comparando os CPFs limpos
+        // CORREÇÃO CRÍTICA: Varre de forma abrangente para achar novos cadastros de prefeituras ou empresas
         const usuario = resInstituicoes?.find(u => {
-            const idItem = String(u.cpf || '').replace(/\D/g, '');
+            const dbCpf = String(u.cpf || '').replace(/\D/g, '');
+            const dbCnpj = String(u.cnpj || '').replace(/\D/g, '');
+            const dbCpfResp = String(u.cpfResponsavel || '').replace(/\D/g, '');
             const loginLimpo = String(cpfLogado).replace(/\D/g, '');
-            return idItem === loginLimpo;
+            
+            return (dbCpf === loginLimpo) || (dbCnpj === loginLimpo) || (dbCpfResp === loginLimpo);
         });
 
         if (!usuario) {
-            document.getElementById("nome_usuario").innerText = "Conta não vinculada";
+            const campoNome = document.getElementById("nome_usuario");
+            if (campoNome) campoNome.innerText = "Conta não vinculada";
             return;
         }
 
         dadosUsuarioLogado = usuario;
-        dadosPerfilLogado = usuario; // No seu JSON as estatísticas e fotos já estão unificadas aqui
+        dadosPerfilLogado = usuario;
 
-        // Filtra denúncias destinadas à entidade ou instituição logada
+        // Associa denúncias destinadas à instituição logada
         listaObrasGeral = resDenuncias.filter(d => d.entidade_id === usuario.instituicao_id || d.usuarioInstituicao_cpf === cpfLogado);
 
         preencherHTMLFixo();
-        
-        // Puxa as avaliações diretamente de dentro do usuário no seu formato JSON
         renderizarAvaliacoesDinamicas(usuario.avaliacoes || []);
         renderizarMuralObras();
         configurarFiltrosAbas();
@@ -61,17 +63,29 @@ async function carregarDadosInstituicao() {
     }
 }
 
+// 2. PREENCHIMENTO DOS CAMPOS FIXOS E SINCRONIZAÇÃO DE AVATARES
 function preencherHTMLFixo() {
     if (dadosPerfilLogado?.fotoPerfil) {
-        document.getElementById("fotoPerfil").src = dadosPerfilLogado.fotoPerfil;
+        const urlFoto = dadosPerfilLogado.fotoPerfil;
+        
+        // Foto do Painel Central
+        const imgPerfil = document.getElementById("fotoPerfil");
+        if (imgPerfil) imgPerfil.src = urlFoto;
+        
+        // PADRONIZAÇÃO: Atualiza a foto de perfil do cabeçalho mapeada no seu CSS
+        const imgHeader = document.querySelector('header a[data-tipo="perfil"] img') || document.querySelector('.foto-perfil');
+        if (imgHeader) imgHeader.src = urlFoto;
     }
     
-    document.getElementById("nome_usuario").innerText = dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto;
+    const campoNomeUsuario = document.getElementById("nome_usuario");
+    if (campoNomeUsuario) {
+        campoNomeUsuario.innerText = dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto;
+    }
 
     const txtTipo = document.getElementById("txt-tipo-instituicao");
     const titulo = document.getElementById("titulo-dados-perfil");
 
-    if (dadosUsuarioLogado.instituicao_id === 2) {
+    if (dadosUsuarioLogado.instituicao_id === 2 || dadosUsuarioLogado.tipo === 'prefeitura') {
         if(txtTipo) txtTipo.innerText = "Prefeitura Oficial";
         if(titulo) titulo.innerText = "Dados Municipais";
     } else {
@@ -86,17 +100,21 @@ function preencherHTMLFixo() {
         document.getElementById("stat-obras").innerText = dadosPerfilLogado?.estatisticas?.abertas || "0";
     }
 
-    document.getElementById("crud-nome").value = dadosUsuarioLogado.nomeCompleto || dadosUsuarioLogado.nomeUsuario || "";
-    document.getElementById("crud-email").value = dadosUsuarioLogado.email || "";
-    document.getElementById("crud-telefone").value = dadosUsuarioLogado.telefone || "";
-    document.getElementById("crud-senha").value = dadosUsuarioLogado.senha || "";
+    // Alimenta formulário de modificações
+    const campoCrudNome = document.getElementById("crud-nome");
+    const campoCrudEmail = document.getElementById("crud-email");
+    const campoCrudTelefone = document.getElementById("crud-telefone");
+    const campoCrudSenha = document.getElementById("crud-senha");
+
+    if(campoCrudNome) campoCrudNome.value = dadosUsuarioLogado.nomeCompleto || dadosUsuarioLogado.nomeUsuario || "";
+    if(campoCrudEmail) campoCrudEmail.value = dadosUsuarioLogado.email || "";
+    if(campoCrudTelefone) campoCrudTelefone.value = dadosUsuarioLogado.telefone || "";
+    if(campoCrudSenha) campoCrudSenha.value = dadosUsuarioLogado.senha || "";
 
     configurarEventosSalvar();
 }
 
-/**
- * GERAÇÃO DINÂMICA DAS AVALIAÇÕES DO SERVIDOR
- */
+// 3. RENDERIZAÇÃO DAS AVALIAÇÕES DO FORMULÁRIO DE SEGUIDORES
 function renderizarAvaliacoesDinamicas(avaliacoes) {
     const container = document.getElementById("container-comentarios-dinamicos");
     const titulo = document.getElementById("titulo-container-avaliacoes");
@@ -129,13 +147,13 @@ function renderizarAvaliacoesDinamicas(avaliacoes) {
     });
 }
 
+// 4. MURAL DE CARDS ALINHADOS E PADRONIZADOS COM O SEU CSS
 function renderizarMuralObras() {
-    const mural = document.getElementById("container-denuncias");
+    const mural = document.getElementById("container-denuncias") || document.getElementById("lista-denuncias");
     if (!mural) return;
 
     mural.innerHTML = "";
 
-    // CORREÇÃO 1: Normalização de tipo (String) para garantir que filtros numéricos funcionem estritamente
     const listaFiltrada = listaObrasGeral.filter(obra => {
         if (filtroAtual === "TODAS") return true;
         return String(obra.status_id) === String(filtroAtual);
@@ -150,13 +168,10 @@ function renderizarMuralObras() {
         const tituloTexto = obra.titulo || "Sem título";
         const localTexto = obra.local?.logradouro || "Não informado";
         
-        // CORREÇÃO 2: Normalização na busca do objeto de status
         const objStatus = listaStatus.find(s => String(s.id) === String(obra.status_id));
         const statusTexto = objStatus ? objStatus.nome : "Pendente";
-        
         const tempoTexto = obra.dataPublicacao || "Recente";
         
-        // CORREÇÃO 3: Normalização na busca do objeto de urgência
         const objUrgencia = listaUrgencias.find(u => String(u.id) === String(obra.urgencia_id));
         const urgenciaTexto = objUrgencia ? objUrgencia.nome : "Média Urgência";
 
@@ -164,68 +179,63 @@ function renderizarMuralObras() {
             ? obra.imagens[0] 
             : "https://images.unsplash.com/photo-1541888946425-d81bb19240f5?auto=format&fit=crop&q=80&w=300";
 
-        // CORREÇÃO 4: Distribuição correta de classes visuais por ID numérico do status
-        let statusClass = "status-andamento"; // Padrão: Em Andamento (ID 2)
+        // PADRONIZAÇÃO DE STATUS (.aberta, .andamento, .resolvida)
+        let statusClass = "andamento"; 
         const idStatusVal = Number(obra.status_id);
-
         if (idStatusVal === 1 || idStatusVal === 4) {
-            statusClass = "status-resolvida"; // Verde para Concluída / Resolvida
+            statusClass = "resolvida"; 
         } else if (idStatusVal === 3) {
-            statusClass = "status-aberto";     // Laranja para Aberto / Novo
+            statusClass = "aberta";    
         }
 
-        // CORREÇÃO 5: Tratamento numérico estável para as IDs de urgência
-        let urgenciaClass = "badge-urgencia-media";
+        // PADRONIZAÇÃO DE URGÊNCIA (.urgencia-texto-baixa, .urgencia-texto-media, .urgencia-texto-alta)
+        let urgenciaClass = "urgencia-texto-media";
         const idUrgenciaVal = Number(obra.urgencia_id);
-        if (idUrgenciaVal === 3) urgenciaClass = "badge-urgencia-alta";
-        if (idUrgenciaVal === 1) urgenciaClass = "badge-urgencia-baixa";
+        if (idUrgenciaVal === 3) urgenciaClass = "urgencia-texto-alta";
+        if (idUrgenciaVal === 1) urgenciaClass = "urgencia-texto-baixa";
         
-        const cardCol = document.createElement("div");
-        cardCol.className = "col";
+        const wrapperCard = document.createElement("div");
+        wrapperCard.className = "col-12 mb-3";
         
-        cardCol.innerHTML = `
-            <div class="card card-denuncia-zella border-0 shadow-sm p-3 h-100">
-                <div class="row g-3 h-100 align-items-center">
-                    <div class="col-4 position-relative h-100 d-flex">
-                        <img src="${imagemUrl}" class="img-fluid rounded-3 img-denuncia-cover-zella my-auto" alt="Capa">
+        // Montagem estrutural seguindo fielmente as regras estruturais e classes do seu CSS
+        wrapperCard.innerHTML = `
+            <div class="card-denuncia">
+                <div class="card-topo">
+                    <img src="${imagemUrl}" alt="Capa">
+                    <div class="card-info">
+                        <p>${localTexto}</p>
+                        <h3>${tituloTexto}</h3>
+                        <p class="tempo-denuncia">${tempoTexto}</p>
+                        <span class="urgencia-texto ${urgenciaClass}">${urgenciaTexto.toUpperCase()}</span>
                     </div>
-                    <div class="col-8 d-flex flex-column justify-content-between h-100 py-1 ps-2">
-                        <div>
-                            <div class="d-flex justify-content-between align-items-center mb-2 gap-2">
-                                <span class="badge-local-zella text-truncate">${localTexto}</span>
-                                <span class="badge badge-status-zella ${statusClass} flex-shrink-0">${statusTexto}</span>
-                            </div>
-                            <h5 class="fw-bold text-dark card-title-zella mb-2 text-truncate-2">${tituloTexto}</h5>
-                            <div class="d-flex gap-1 flex-wrap mb-2">
-                                <span class="badge-meta-zella">${tempoTexto}</span>
-                                <span class="badge-meta-zella ${urgenciaClass}">${urgenciaTexto.toUpperCase()}</span>
-                            </div>
-                        </div>
-                        <div class="text-end mt-auto">
-                            <a href="detalhes-denuncia.html?id=${obra.id}" class="link-detalhes-zella fw-bold text-muted small text-decoration-none">Ver detalhes</a>
-                        </div>
+                </div>
+                <div class="card-rodape">
+                    <div class="status ${statusClass}">${statusTexto}</div>
+                    <div class="acoes-card">
+                        <a href="detalhes-denuncia.html?id=${obra.id}" class="btn-detalhes">Ver detalhes</a>
                     </div>
                 </div>
             </div>
         `;
-        mural.appendChild(cardCol);
+        mural.appendChild(wrapperCard);
     });
 }
 
+// 5. INTERAÇÃO E FILTROS DE ABAS (.btn-filtro.ativo)
 function configurarFiltrosAbas() {
-    const botoesFiltro = document.querySelectorAll(".btn-filter-zella");
+    const botoesFiltro = document.querySelectorAll(".btn-filtro");
     botoesFiltro.forEach(btn => {
         btn.onclick = function() {
-            botoesFiltro.forEach(b => b.classList.remove("active"));
-            this.classList.add("active");
+            botoesFiltro.forEach(b => b.classList.remove("ativo"));
+            this.classList.add("ativo");
             
-            // Pega o valor do atributo (Garante o ID correto vindo do HTML)
             filtroAtual = this.getAttribute("data-filtro") || "TODAS";
             renderizarMuralObras();
         };
     });
 }
 
+// 6. EVENTOS DE INTERFACE DE TRABALHO
 function configurarEfeitosInterface() {
     const containerFoto = document.getElementById("container-foto-click");
     const inputFoto = document.getElementById("input-foto-perfil");
@@ -234,6 +244,7 @@ function configurarEfeitosInterface() {
     }
 }
 
+// 7. SUBSISTEMA DE ATUALIZAÇÃO E SALVAMENTO VIA API (PUT)
 function configurarEventosSalvar() {
     const inputFoto = document.getElementById("input-foto-perfil");
     const imgFotoPerfil = document.getElementById("fotoPerfil");
@@ -265,6 +276,10 @@ function configurarEventosSalvar() {
                 leitor.onload = function(ev) {
                     novaFotoBase64 = ev.target.result;
                     if (imgFotoPerfil) imgFotoPerfil.src = novaFotoBase64;
+                    
+                    // Altera em tempo real o avatar do menu superior
+                    const imgHeader = document.querySelector('header a[data-tipo="perfil"] img') || document.querySelector('.foto-perfil');
+                    if (imgHeader) imgHeader.src = novaFotoBase64;
                 };
                 leitor.readAsDataURL(arquivo);
             }
