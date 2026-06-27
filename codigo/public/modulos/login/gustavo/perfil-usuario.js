@@ -1,6 +1,6 @@
 /**
  * Zella - Sistema Operacional do Perfil da Instituição / Empresa
- * PADRONIZADO: Mesma estrutura lógica, tratamento de dados e tratamento de fotos do morador
+ * PADRONIZADO: Estrutura lógica, tratamento de dados, tratamento de fotos e rotas corrigidas de acordo com o diretório.
  */
 const API_URL = "http://localhost:3000";
 
@@ -130,7 +130,8 @@ function configurarEventosInteracao() {
                 try {
                     await fetch(`${API_URL}/usuariosEmpresas/${dadosUsuarioLogado.id}`, { method: "DELETE" });
                     localStorage.clear();
-                    window.location.href = "login.html";
+                    // AJUSTADO: Saindo de 'perfis/' e entrando na pasta 'login/'
+                    window.location.href = "../login/login.html";
                 } catch (e) { alert("Erro ao deletar conta institucional."); }
             }
         };
@@ -175,7 +176,7 @@ function configurarEventosInteracao() {
                 });
 
                 localStorage.setItem("usuarioLogado", JSON.stringify(atualizados));
-                alert("Dados institucionais atualizados com sucesso!");
+                alert("Dados institucionais updated com sucesso!");
                 carregarDadosPerfil();
             } catch (err) { alert("Erro ao salvar alterações."); }
         };
@@ -219,7 +220,8 @@ function renderizarCardsObras() {
         if (item.status_id == 2) { badgeBg = "rgba(255, 138, 0, 0.15)"; badgeColor = "#ff8a00"; } 
         if (item.status_id == 1) { badgeBg = "rgba(66, 197, 154, 0.15)"; badgeColor = "#42c59a"; }
 
-        const linkDetalhes = `../../detalhes/detalhes.html?id=${item.id}`;
+        // AJUSTADO: Voltando de 'perfis/' para 'modulos/' e acessando a pasta 'detalhes/' diretamente
+        const linkDetalhes = `../detalhes/detalhes.html?id=${item.id}`;
 
         html += `
             <div class="col">

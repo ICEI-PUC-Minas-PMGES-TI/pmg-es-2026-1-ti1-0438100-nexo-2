@@ -1,6 +1,7 @@
 /**
  * Zella - Sistema Operacional do Perfil Remoto
- * CORREÇÃO: Filtro blindado lendo o texto visível do botão e validação universal de status.
+ * CORREÇÃO: Filtro blindado lendo o texto visível do botão, validação universal de status
+ * e ajuste de rotas relativas baseado na árvore de diretórios do projeto Zella.
  */
 const API_URL = "http://localhost:3000";
 
@@ -228,6 +229,10 @@ function renderizarMuralObras() {
         const cardCol = document.createElement("div");
         cardCol.className = "col-12 col-lg-6 mb-3"; 
         
+        // AJUSTADO: Alinhamento de rota de detalhes. 
+        // Subindo de modulos/perfis/ para modulos/ e entrando na pasta detalhes/
+        const linkDetalhes = `../detalhes/detalhes.html?id=${obra.id}`;
+
         cardCol.innerHTML = `
             <div class="card p-3 h-100 card-denuncia-zella shadow-sm">
                 <div class="row g-3 align-items-center h-100">
@@ -247,7 +252,7 @@ function renderizarMuralObras() {
                             </div>
                         </div>
                         <div class="text-end mt-1">
-                            <a href="detalhes-denuncia.html?id=${obra.id}" class="text-decoration-none fw-semibold link-detalhes-zella alignment-right">
+                            <a href="${linkDetalhes}" class="text-decoration-none fw-semibold link-detalhes-zella alignment-right">
                                 Ver detalhes <i class="bi bi-arrow-right short ms-1"></i>
                             </a>
                         </div>
@@ -260,26 +265,32 @@ function renderizarMuralObras() {
 }
 
 function configurarFiltrosAbas() {
-    const botoesFiltro = document.querySelectorAll(".btn-filter-zella, .filter-btn, [data-filtro], button");
+    // Alvo apenas para botões reais que possuem atributo data-filtro ou classe de filtragem específica
+    const botoesFiltro = document.querySelectorAll(".btn-filter-zella, .filter-btn, [data-filtro]");
+    
     botoesFiltro.forEach(btn => {
-        if (btn.innerText.trim() !== "" && btn.id !== "btn-salvar" && btn.id !== "btn-nova-denuncia") {
-            btn.className = "btn-filter-zella filter-btn"; 
+        const textoBotao = String(btn.innerText || btn.textContent).toUpperCase().trim();
+        
+        // Blindagem extra: impede que botões de ação estrutural entrem na re-estilização automática de abas
+        if (btn.id === "btn-salvar" || btn.id === "btn-nova-denuncia" || btn.type === "submit") {
+            return; 
         }
+
+        btn.className = "btn-filter-zella filter-btn"; 
         
         btn.onclick = function() {
             botoesFiltro.forEach(b => b.classList.remove("active"));
             this.classList.add("active");
             
-            // O SEGredo ESTÁ AQUI: ignoramos data-filtro e lemos apenas o texto visível do botão!
-            const textoBotao = String(this.innerText || this.textContent).toUpperCase().trim();
+            const textoClique = String(this.innerText || this.textContent).toUpperCase().trim();
 
-            if (textoBotao.includes("TODAS")) {
+            if (textoClique.includes("TODAS")) {
                 filtroAtual = "TODAS";
-            } else if (textoBotao.includes("REALIZ") || textoBotao.includes("CONCLU")) {
+            } else if (textoClique.includes("REALIZ") || textoClique.includes("CONCLU")) {
                 filtroAtual = "REALIZADAS";
-            } else if (textoBotao.includes("ANDAMENTO")) {
+            } else if (textoClique.includes("ANDAMENTO")) {
                 filtroAtual = "ANDAMENTO";
-            } else if (textoBotao.includes("ABERT")) {
+            } else if (textoClique.includes("ABERT")) {
                 filtroAtual = "ABERTAS";
             }
             

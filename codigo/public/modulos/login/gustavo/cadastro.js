@@ -1,6 +1,6 @@
 /**
  * Zella - Lógica de Cadastro e Login
- * AJUSTADO: Rotas alteradas para abrir os HTMLs que estão na mesma pasta (login/gustavo/)
+ * AJUSTADO: Rotas corrigidas para navegar de 'modulos/login/' para 'modulos/perfis/'
  */
 
 const API_URL = "http://localhost:3000";
@@ -67,15 +67,15 @@ function normalizarId(id, apenasNumeros = true) {
     return String(id).trim();
 }
 
-// MODIFICAÇÃO CRUCIAL: Como os arquivos de perfil estão na mesma pasta que o cadastro.js,
-// o redirecionamento agora aponta direto para os arquivos locais sem voltar pastas (sem ../../)
+// CORREÇÃO: Caminhos ajustados baseados na árvore de diretórios.
+// Partindo de 'modulos/login/login.html', voltamos um nível com '../' e entramos em 'perfis/'
 function redirecionarParaPerfil() {
     if (tipoCadastro === 'morador') {
-        window.location.href = 'perfil-usuario.html';
+        window.location.href = '../perfis/perfil-usuario.html';
     } else if (tipoCadastro === 'prefeitura') {
-        window.location.href = 'perfil-instituicao.html';
+        window.location.href = '../perfis/perfil-instituicao.html';
     } else if (tipoCadastro === 'empresa') {
-        window.location.href = 'perfilEmpresa.html';
+        window.location.href = '../perfis/perfilEmpresa.html';
     }
 }
 
