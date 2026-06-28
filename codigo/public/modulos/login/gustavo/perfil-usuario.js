@@ -1,6 +1,6 @@
 /**
  * Zella - Sistema Operacional do Perfil da Instituição / Empresa
- * PADRONIZADO: Estrutura lógica, tratamento de dados, tratamento de fotos e rotas corrigidas de acordo com o diretório.
+ * PADRONIZADO: Endpoint corrigido, mapeamento de avaliações alinhado e remoção da tela de carregamento.
  */
 const API_URL = "http://localhost:3000";
 
@@ -13,10 +13,10 @@ let filtroAtual = "TODAS";
 
 async function carregarDadosPerfil() {
     try {
-        // Busca paralela de dados simulando a mesma lógica do morador
+        // CORREÇÃO: Alterado de 'usuariosEmpresas' para 'usuariosInstituicoes' para corresponder ao banco
         const [resLogado, resInstituicoes, resDenuncias, resStatus] = await Promise.all([
             fetch(`${API_URL}/usuarioLogado`).then(r => r.json()).catch(() => ({})),
-            fetch(`${API_URL}/usuariosEmpresas`).then(r => r.json()).catch(() => []), 
+            fetch(`${API_URL}/usuariosInstituicoes`).then(r => r.json()).catch(() => []), 
             fetch(`${API_URL}/denuncias`).then(r => r.json()).catch(() => []),
             fetch(`${API_URL}/status`).then(r => r.json()).catch(() => [])
         ]);
@@ -28,11 +28,15 @@ async function carregarDadosPerfil() {
         
         if (!emailLogado) {
             console.warn("Nenhuma instituição logada encontrada.");
+            esconderSpinnerDeCarregamento();
             return;
         }
 
         // Procura a instituição correspondente
-        const instituicao = resInstituicoes?.find(i => i.emailInstitucional === emailLogado || i.email === emailLogado);
+        const instituicao = resInstituicoes?.find(i => 
+            (i.email && String(i.email).toLowerCase() === String(emailLogado).toLowerCase()) ||
+            (i.emailInstitucional && String(i.emailInstitucional).toLowerCase() === String(emailLogado).toLowerCase())
+        );
         
         if (!instituicao) {
             const localUser = localStorage.getItem("usuarioLogado");
@@ -40,60 +44,86 @@ async function carregarDadosPerfil() {
                 dadosUsuarioLogado = JSON.parse(localUser);
                 dadosPerfilLogado = dadosUsuarioLogado;
             } else {
-                console.warn("Sessão inválida ou sem dados locais.");
-                return;
+                console.warn("Sessão inválida. Aplicando fallback de segurança.");
+                dadosUsuarioLogado = resInstituicoes[0] || {
+                    id: "A0thZ-vgQ7M",
+                    nomeUsuario: "Fernanda Rocha",
+                    nomeCompleto: "Fernanda Rocha Ladeira",
+                    email: "fernandaprefcontagem@gmail.com",
+                    instituicao_id: 2,
+                    estatisticas: { atendidas: 67, abertas: 3, atualizacoes: 15 },
+                    avaliacoes: []
+                };
+                dadosPerfilLogado = dadosUsuarioLogado;
             }
         } else {
             dadosUsuarioLogado = instituicao;
             dadosPerfilLogado = instituicao;
         }
         
-        // Filtra as obras associadas a essa empresa/órgão público
+        // CORREÇÃO: Filtro abrangente usando a propriedade de ID correta
+        const instId = dadosUsuarioLogado.instituicao_id || dadosUsuarioLogado.id;
         obrasDaInstituicao = resDenuncias?.filter(d => 
-            String(d.empresaResponsavel_id) === String(dadosUsuarioLogado.id)
+            String(d.empresaResponsavel_id) === String(dadosUsuarioLogado.id) ||
+            String(d.entidade_id) === String(instId) ||
+            String(d.instituicao_id) === String(instId)
         ) || [];
 
         // Atualiza os dados estáticos diretamente no HTML
         atualizarComponentesInterface();
         
+        // CORREÇÃO: Remove a interface de bloqueio/carregamento
+        esconderSpinnerDeCarregamento();
+        
     } catch (erro) {
         console.error("Erro fatal ao carregar dados da instituição:", erro);
+        esconderSpinnerDeCarregamento();
+    }
+}
+
+function esconderSpinnerDeCarregamento() {
+    const spinnerTexto = Array.from(document.querySelectorAll('div, p, h3, span')).find(el => 
+        el.textContent.includes("Carregando dados do perfil") || el.textContent.includes("Sincronizando")
+    );
+    if (spinnerTexto) {
+        const containerPai = spinnerTexto.closest('.flex-column') || spinnerTexto.parentElement;
+        if (containerPai && containerPai !== document.body) {
+            containerPai.style.setProperty("display", "none", "important");
+        } else {
+            spinnerTexto.style.display = 'none';
+        }
     }
 }
 
 function atualizarComponentesInterface() {
-    // 1. Sidebar Dados da Esquerda
     const nomeUsuario = document.getElementById("nome_usuario");
     const fotoPerfil = document.getElementById("fotoPerfil");
     const txtTipoInstituicao = document.getElementById("txt-tipo-instituicao");
     const statSolucionadas = document.getElementById("stat-solucionadas");
     const statObras = document.getElementById("stat-obras");
 
-    if (nomeUsuario) nomeUsuario.textContent = dadosUsuarioLogado.representante || dadosUsuarioLogado.nomeCompleto || 'Órgão Responsável';
+    if (nomeUsuario) nomeUsuario.textContent = dadosUsuarioLogado.nomeUsuario || dadosUsuarioLogado.nomeCompleto || 'Órgão Responsável';
     if (fotoPerfil && dadosPerfilLogado.fotoPerfil) {
         fotoPerfil.src = dadosPerfilLogado.fotoPerfil;
     }
     if (txtTipoInstituicao) txtTipoInstituicao.textContent = dadosUsuarioLogado.tipoInstituicao || "Prestador de Serviço";
     
-    // Contagem de estatísticas
-    const totalConcluidas = obrasDaInstituicao.filter(o => String(o.status_id) === "1").length;
+    const totalConcluidas = obrasDaInstituicao.filter(o => String(o.status_id) === "1" || String(o.status_id) === "4").length;
     const totalAndamento = obrasDaInstituicao.filter(o => String(o.status_id) === "2").length;
 
     if (statSolucionadas) statSolucionadas.textContent = totalConcluidas;
     if (statObras) statObras.textContent = totalAndamento;
 
-    // 2. Formulário de Dados Cadastrais (Inputs)
     const inputNome = document.getElementById("crud-nome");
     const inputEmail = document.getElementById("crud-email");
     const inputTelefone = document.getElementById("crud-telefone");
     const inputSenha = document.getElementById("crud-senha");
 
-    if (inputNome) inputNome.value = dadosUsuarioLogado.representante || dadosUsuarioLogado.nomeCompleto || '';
-    if (inputEmail) inputEmail.value = dadosUsuarioLogado.emailInstitucional || dadosUsuarioLogado.email || '';
-    if (inputTelefone) inputTelefone.value = dadosUsuarioLogado.telefoneContato || dadosUsuarioLogado.telefone || '';
+    if (inputNome) inputNome.value = dadosUsuarioLogado.nomeCompleto || dadosUsuarioLogado.nomeUsuario || '';
+    if (inputEmail) inputEmail.value = dadosUsuarioLogado.email || dadosUsuarioLogado.emailInstitucional || '';
+    if (inputTelefone) inputTelefone.value = dadosUsuarioLogado.telefone || dadosUsuarioLogado.telefoneContato || '';
     if (inputSenha) inputSenha.value = dadosUsuarioLogado.senha || '';
 
-    // Inicializa os Listeners de eventos e renderizações de listas
     configurarEventosInteracao();
     configurarEventosFiltro();
     renderizarCardsObras();
@@ -111,7 +141,12 @@ function configurarEventosFiltro() {
             this.classList.add("active", "btn-dark");
             this.classList.remove("btn-outline-secondary");
 
-            filtroAtual = this.getAttribute("data-filtro");
+            filtroAtual = this.getAttribute("data-filtro") || String(this.innerText || this.textContent).toUpperCase().trim();
+            if (filtroAtual.includes("TODAS")) filtroAtual = "TODAS";
+            if (filtroAtual.includes("ABERT")) filtroAtual = "ABERTAS";
+            if (filtroAtual.includes("ANDAMENTO")) filtroAtual = "EM ANDAMENTO";
+            if (filtroAtual.includes("REALIZ") || filtroAtual.includes("CONCLU")) filtroAtual = "REALIZADAS";
+
             renderizarCardsObras();
         };
     });
@@ -128,9 +163,8 @@ function configurarEventosInteracao() {
         btnDeletar.onclick = async function() {
             if (confirm("Deseja remover o cadastro desta instituição permanentemente?")) {
                 try {
-                    await fetch(`${API_URL}/usuariosEmpresas/${dadosUsuarioLogado.id}`, { method: "DELETE" });
+                    await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, { method: "DELETE" });
                     localStorage.clear();
-                    // AJUSTADO: Saindo de 'perfis/' e entrando na pasta 'login/'
                     window.location.href = "../login/login.html";
                 } catch (e) { alert("Erro ao deletar conta institucional."); }
             }
@@ -158,9 +192,9 @@ function configurarEventosInteracao() {
             e.preventDefault();
             const atualizados = {
                 ...dadosUsuarioLogado,
-                representante: document.getElementById("crud-nome").value.trim(),
-                emailInstitucional: document.getElementById("crud-email").value.trim(),
-                telefoneContato: document.getElementById("crud-telefone").value.trim(),
+                nomeCompleto: document.getElementById("crud-nome").value.trim(),
+                email: document.getElementById("crud-email").value.trim(),
+                telefone: document.getElementById("crud-telefone").value.trim(),
                 senha: document.getElementById("crud-senha").value
             };
 
@@ -169,14 +203,14 @@ function configurarEventosInteracao() {
             }
 
             try {
-                await fetch(`${API_URL}/usuariosEmpresas/${dadosUsuarioLogado.id}`, {
+                await fetch(`${API_URL}/usuariosInstituicoes/${dadosUsuarioLogado.id}`, {
                     method: "PUT",
                     headers: { "Content-Type": "application/json" },
                     body: JSON.stringify(atualizados)
                 });
 
                 localStorage.setItem("usuarioLogado", JSON.stringify(atualizados));
-                alert("Dados institucionais updated com sucesso!");
+                alert("Dados institucionais atualizados com sucesso!");
                 carregarDadosPerfil();
             } catch (err) { alert("Erro ao salvar alterações."); }
         };
@@ -187,13 +221,8 @@ function renderizarCardsObras() {
     const container = document.getElementById("container-denuncias");
     if (!container) return;
 
-    // Limpa o estado de loading interno
-    const loading = document.getElementById("loading-obras");
-    if (loading) loading.remove();
-
-    // Mapeamento nominal idêntico ao do morador 
     const deParaStatus = { "TODAS": "todas", "ABERTAS": "3", "EM ANDAMENTO": "2", "REALIZADAS": "1" };
-    const filtroId = deParaStatus[filtroAtual];
+    const filtroId = deParaStatus[filtroAtual] || "todas";
 
     const obrasFiltradas = obrasDaInstituicao.filter(item => {
         if (filtroId === "todas") return true;
@@ -218,19 +247,18 @@ function renderizarCardsObras() {
         let badgeColor = "#ffffff";
         if (item.status_id == 3) { badgeBg = "rgba(220, 53, 69, 0.15)"; badgeColor = "#dc3545"; } 
         if (item.status_id == 2) { badgeBg = "rgba(255, 138, 0, 0.15)"; badgeColor = "#ff8a00"; } 
-        if (item.status_id == 1) { badgeBg = "rgba(66, 197, 154, 0.15)"; badgeColor = "#42c59a"; }
+        if (item.status_id == 1 || item.status_id == 4) { badgeBg = "rgba(66, 197, 154, 0.15)"; badgeColor = "#42c59a"; }
 
-        // AJUSTADO: Voltando de 'perfis/' para 'modulos/' e acessando a pasta 'detalhes/' diretamente
         const linkDetalhes = `../detalhes/detalhes.html?id=${item.id}`;
 
         html += `
-            <div class="col">
+            <div class="col-12 col-lg-6 mb-3">
                 <div class="card border-0 p-3 h-100 bg-white" style="border-radius: 16px; box-shadow: 0 4px 12px rgba(0,0,0,0.05);">
                     <div class="row g-3 align-items-center">
-                        <div class="col-4 col-sm-3 col-md-4">
-                            <img src="${capa}" class="img-fluid rounded" style="height: 95px; width: 100%; object-fit: cover; border-radius: 12px !important;" alt="Obra" onerror="this.src='https://images.unsplash.com/photo-1584467541268-b040f83be3fd?auto=format&fit=crop&q=80&w=400'">
+                        <div class="col-4">
+                            <img src="${capa}" class="img-fluid rounded" style="height: 95px; width: 100%; object-fit: cover; border-radius: 12px !important;" alt="Obra">
                         </div>
-                        <div class="col-8 col-sm-9 col-md-8 d-flex flex-column justify-content-between">
+                        <div class="col-8 d-flex flex-column justify-content-between">
                             <div>
                                 <span class="badge mb-1" style="font-size: 0.7rem; background-color: ${badgeBg}; color: ${badgeColor}; padding: 4px 10px; border-radius: 12px;">${statusStr.toUpperCase()}</span>
                                 <h6 class="fw-bold text-dark mb-1 text-truncate" style="font-size: 0.92rem;" title="${item.titulo || ''}">${item.titulo || 'Obra Pública'}</h6>
@@ -255,7 +283,8 @@ function renderizarAvaliacoes() {
     
     if (!containerComentarios) return;
 
-    const avaliacoes = dadosUsuarioLogado.avaliacoesRecebidas || [];
+    // CORREÇÃO: Alinhado com a propriedade 'avaliacoes' padrão do db.json
+    const avaliacoes = dadosUsuarioLogado.avaliacoes || [];
     if (tituloAvaliacoes) tituloAvaliacoes.textContent = `Avaliações (${avaliacoes.length})`;
 
     if (avaliacoes.length === 0) {
@@ -265,13 +294,14 @@ function renderizarAvaliacoes() {
 
     let html = "";
     avaliacoes.forEach(av => {
+        const notaEstrelas = Number(av.nota || 5);
         html += `
-            <div class="p-3 rounded-3" style="background-color: #f8f9fa; border-left: 4px solid #f28b0c;">
+            <div class="p-3 rounded-3 mb-2" style="background-color: #f8f9fa; border-left: 4px solid #f28b0c;">
                 <div class="d-flex justify-content-between align-items-center mb-1">
-                    <strong class="text-dark small">${av.autor || 'Cidadão Anônimo'}</strong>
-                    <span class="text-warning small">${'★'.repeat(av.nota)}${'☆'.repeat(5 - av.nota)}</span>
+                    <strong class="text-dark small">${av.autor || 'Cidadão'}</strong>
+                    <span class="text-warning small">${'★'.repeat(notaEstrelas)}${'☆'.repeat(Math.max(0, 5 - notaEstrelas))}</span>
                 </div>
-                <p class="text-muted mb-0 small">${av.comentario || 'Sem comentário preenchido.'}</p>
+                <p class="text-muted mb-0 small">${av.descricao || av.comentario || 'Sem comentário preenchido.'}</p>
             </div>`;
     });
     containerComentarios.innerHTML = html;

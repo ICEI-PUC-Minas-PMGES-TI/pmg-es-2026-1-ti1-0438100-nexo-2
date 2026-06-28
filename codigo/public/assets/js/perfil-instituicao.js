@@ -55,63 +55,45 @@ async function carregarDadosInstituicao() {
             return false;
         });
 
-        // Fallback caso o usuário não seja encontrado após o update
         if (!usuario) {
             console.warn("Perfil não localizado. Carregando padrão.");
             usuario = {
-                id: "A0thZ-vgQ7M", // ID compatível com seu db.json
-                nomeCompleto: "Fernanda Rocha Ladeira",
-                nomeUsuario: "Fernanda Rocha",
-                email: "fernandaprefcontagem@gmail.com",
-                fotoPerfil: "imgs/imgPerfil/perfil_fernandarocha.png",
+                id: 1,
+                nomeCompleto: "Ricardo Alves",
+                nomeUsuario: "Ricardo Alves",
+                email: "contato.nexocorporate@gmail.com",
+                telefone: "(31) 3333-4444",
+                senha: "123456",
+                fotoPerfil: "https://images.unsplash.com/photo-1560250097-0b93528c311a?auto=format&fit=crop&q=80&w=256",
                 instituicao_id: 2, 
                 estatisticas: { atendidas: 67, abertas: 3, atualizacoes: 15 },
-                avaliacoes: []
+                avaliacoes: [
+                    { id: 1, autor: "Luiza", data: "2026-06-05", nota: 5, descricao: "Ótimo trabalho!" }
+                ]
             };
         }
 
         dadosUsuarioLogado = usuario;
         dadosPerfilLogado = usuario;
 
-        // Filtro seguro para evitar quebra caso instituicao_id suma do objeto
-        const instId = usuario.instituicao_id || 2; 
         listaObrasGeral = resDenuncias.filter(d => {
-            return (d.entidade_id && String(d.entidade_id) === String(instId)) ||
-                   (d.instituicao_id && String(d.instituicao_id) === String(instId));
+            return (d.entidade_id && String(d.entidade_id) === String(usuario.instituicao_id)) ||
+                   (d.instituicao_id && String(d.instituicao_id) === String(usuario.instituicao_id));
         });
 
         if (listaObrasGeral.length === 0) {
             listaObrasGeral = resDenuncias || [];
         }
 
-        // Executa as renderizações verificando seletores internamente
         preencherHTMLFixo();
         renderizarAvaliacoesDinamicas(usuario.avaliacoes || []);
         renderizarMuralObras();
         configurarFiltrosAbas();
         configurarEfeitosInterface();
 
-        // Desativa o spinner sumindo com a div de carregamento caso ela exista por ID ou classe
-        esconderSpinnerDeCarregamento();
-
     } catch (e) { 
         console.error("Erro geral na carga:", e); 
         removerGiroCarregamento();
-    }
-}
-
-// Nova função auxiliar para limpar o estado de carregamento da tela inteira
-function esconderSpinnerDeCarregamento() {
-    // Alvo no contêiner ou elemento de texto que você mostrou na imagem
-    const spinnerTexto = document.xpath || Array.from(document.querySelectorAll('div, p')).find(el => el.textContent.includes("Carregando dados do perfil"));
-    if (spinnerTexto) {
-        // Se houver um container pai segurando o spinner, removemos ou ocultamos ele
-        const containerPai = spinnerTexto.closest('.flex-column') || spinnerTexto.parentElement;
-        if (containerPai && containerPai !== document.body) {
-            containerPai.style.display = 'none';
-        } else {
-            spinnerTexto.style.display = 'none';
-        }
     }
 }
 

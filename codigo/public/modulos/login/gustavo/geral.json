@@ -1595,6 +1595,5 @@
       "hora": "10:02",
       "editada": false
     }
-  ],
-  "$schema": "./node_modules/json-server/schema.json"
+  ]
 }
