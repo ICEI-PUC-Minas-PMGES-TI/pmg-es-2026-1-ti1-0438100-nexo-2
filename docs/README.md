@@ -129,9 +129,6 @@ DÚVIDAS:
 ![Mapa de stakeholders](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/bd552b9a7ad891947df4608448d819032b8216f6/docs/images/G9%20-%20Infraestrutura%20Urbana%202.jpg)
 
 
-> * **Entrevistas qualitativas**: série de entrevistas qualitativas para validar suposições e solucionar as dúvidas com as principais pessoas envolvidas;
-> * **Highlights de pesquisa**: um compilado do levantamento realizado por meio das entrevistas.
-
 ## Etapa de Definição
 
 ### Personas
@@ -234,22 +231,6 @@ As tabelas que se seguem apresentam os requisitos funcionais e não funcionais q
 | RNF-006 | A interface deve ser responsiva para desktop, tablet e mobile | ALTA |
 | RNF-007 | Todas as imagens devem possuir texto alternativo (alt text) | MÉDIA |
 | RNF-008 | Todos os registros devem armazenar timestamp e user_id | ALTA |
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Os requisitos de um projeto são classificados em dois grupos:
->
-> - [Requisitos Funcionais (RF)](https://pt.wikipedia.org/wiki/Requisito_funcional):
->   correspondem a uma funcionalidade que deve estar presente na plataforma (ex: cadastro de usuário).
-> - [Requisitos Não Funcionais (RNF)](https://pt.wikipedia.org/wiki/Requisito_n%C3%A3o_funcional):
->   correspondem a uma característica técnica, seja de usabilidade, desempenho, confiabilidade, segurança ou outro (ex: suporte a dispositivos iOS e Android).
->
-> Lembre-se que cada requisito deve corresponder à uma e somente uma característica alvo da sua solução. Além disso, certifique-se de que todos os aspectos capturados nas Histórias de Usuário foram cobertos.
->
-> **Orientações**:
->
-> - [O que são Requisitos Funcionais e Requisitos Não Funcionais?](https://codificar.com.br/requisitos-funcionais-nao-funcionais/)
-> - [O que são requisitos funcionais e requisitos não funcionais?](https://analisederequisitos.com.br/requisitos-funcionais-e-requisitos-nao-funcionais-o-que-sao/)
-
 
 ## Projeto de Interface
 
@@ -263,25 +244,26 @@ Estes são os protótipos de telas do sistema.
 
 Página para cadastrar um membro da população utilizando seu nome, email, CPF e senha.
 
-![Cadastro de População](images/cadastropopulacao.jpeg)
+![Cadastro de População](images/cadastromorador.jpg)
+
 
 ##### Login de Usuário da População
 
 Página que possibilita o login de um membro da população, usando o CPF e a senha utilizados no cadastro.
 
-![Login População](images/loginpopulacao.jpeg)
+![Login População](images/loginmorador.jpg)
 
 ##### HomePage População
 
 Página inicial após cadastro/login do membro da população, mostrando o mapa interativo, denúncias e quantitativos sobre as denúncias e usuários cadastrados.
 
-![Homepage População](images/homepagepopulacao.jpeg)
+![Homepage População](images/homemorador.jpg)
 
 ##### Criação de Denúncia
 
 Página para a criação de uma denúncia, onde o usuário pode adicionar fotos, descrição e informações relacionadas à denúncia, como a categoria, localização, urgência e entidade direcionada.
 
-![Criação de Denúncia](images/criacaodenuncia.jpeg)
+![Criação de Denúncia](images/cadastro_denuncia.jpg)
 
 ##### Opções de Categoria
 
@@ -305,7 +287,7 @@ Opções de urgência na criação da denúncia.
 
 Página de exibição das demais denúncias, com opção de filtrar por data, categoria e urgência, além de possibilitar a busca pelo nome da denúncia.
 
-![Outras Denúncias](images/outrasdenuncias.jpeg)
+![Outras Denúncias](images/outrasdenuncias.jpg)
 
 ##### Filtragem por Categoria
 
@@ -329,97 +311,97 @@ Opções de filtragem da denúncia pela urgência.
 
 Página para exibir o perfil de um usuário membro da população, mostrando o histórico de denúncias que o usuário se envolveu, além de exibir as demandas atendidas, em aberto, atualizações em suas denúncias e sua pontuação no site.
 
-![Perfil Usuário](images/perfilusuario.jpeg)
+![Perfil Usuário](images/perfilmorador.jpg)
 
 ##### Detalhes da Denúncia
 
 Página para exibir informações detalhadas sobre uma denúncia, exibindo o andamento, fotos, descrição da denúncia, categorias, órgão responsável, denunciante, etc. Além disso, a página possui uma seção de comentários que possibilita o diálogo entre os moradores afetados, e também possui um chat porta-voz que estabelece a relação entre o morador e o representante da entidade envolvida na denúncia.
 
-![Detalhes Denúncia](images/detalhesdenuncia.jpeg)
+![Detalhes Denúncia](images/detalhesmorador.jpg)
 
 ##### Cadastro Empresa
 
 Página que possibilita cadastro de uma empresa, usando nome, email, CNPJ e uma senha.
 
-![Cadastro Empresa](images/cadastroempresa.jpeg)
+![Cadastro Empresa](images/cadastroempresa.jpg)
 
 ##### Login de Usuário da Empresa
 
 Página de login de um funcionário da empresa por meio de CNPJ e senha cadastrados.
 
-![Login Empresa](images/loginempresa.jpeg)
+![Login Empresa](images/loginempresa.jpg)
 
 ##### HomePage Empresa
 
 Página inicial após cadastro/login do membro da empresa, mostrando o mapa interativo, denúncias e quantitativos sobre as denúncias e usuários cadastrados.
 
-![Homepage Empresa](images/homepageempresa.jpeg)
+![Homepage Empresa](images/homeempresa.jpg)
 
 ##### Outras Denúncias Empresa
 
 Página de exibição das demais denúncias, com opção de filtrar por data, categoria e urgência, além de possibilitar a busca pelo nome da denúncia.
 
-![Outras Denúncias Empresa](images/outrasdenunciasempresa.jpeg)
+![Outras Denúncias Empresa](images/outrasdenuncias.jpg)
 
 ##### Detalhes da Denúncia Empresa
 
 Página para exibir informações detalhadas sobre uma denúncia incluindo a descrição, comentários, fotos, órgão responsável, local, e demais informações. A página possibilita que o membro da empresa edite o andamento da denúncia, dialogue com membros da população envolvidos na denúncia e também permite que ele edite informações relacionadas à empresa na denúncia.
 
-![Detalhes Empresa](images/detalhesempresa.jpeg)
+![Detalhes Empresa](images/detalhesempresa.jpg)
 
 ##### Perfil Empresa
 
 Página para exibir o perfil de um usuário membro da empresa, mostrando o nome da empresa, denúncias solucionadas, obras em andamento e avaliações recebidas pelos usuários.
 
-![Perfil Empresa](images/perfilempresa.jpeg)
+![Perfil Empresa](images/perfilempresa.jpg)
 
 ##### Editor de Informações da Denúncia
 
 Tela que permite que o membro da empresa adicione uma nota à denúncia, novos checkpoints conforme a necessidade da empresa, altere o curso estimado e também o prazo estimado da conclusão da obra.
 
-![Editor Empresa](images/editorempresa.jpeg)
+![Editor Empresa](images/editardenuncia.jpg)
 
 ##### Cadastro Prefeitura
 
 Página que possibilita cadastro de uma prefeitura, usando nome, email, município e uma senha.
 
-![Cadastro Prefeitura](images/cadastroprefeitura.png)
+![Cadastro Prefeitura](images/cadastromunicipio.jpg)
 
 ##### Login de Usuário da Prefeitura
 
 Página de login de um funcionário da prefeitura por meio do município e senha cadastrados.
 
-![Login Prefeitura](images/loginprefeitura.jpeg)
+![Login Prefeitura](images/loginmunicipio.jpg)
 
 ##### Outras Denúncias Prefeitura
 
 Página de exibição das demais denúncias, com opção de filtrar por data, categoria e urgência, além de possibilitar a busca pelo nome da denúncia.
 
-![Outras Denúncias Prefeitura](images/outrasdenunciasprefeitura.jpeg)
+![Outras Denúncias Prefeitura](images/outrasdenuncias.jpg)
 
 ##### Detalhes da Denúncia Prefeitura
 
 Página para exibir informações detalhadas sobre uma denúncia incluindo a descrição, comentários, fotos, órgão responsável, local, e demais informações. A página possibilita que o membro da prefeitura edite o andamento da denúncia, dialogue com membros da população envolvidos na denúncia e também permite que ele edite informações relacionadas à prefeitura na denúncia.
 
-![Detalhes Prefeitura](images/detalhesprefeitura.jpeg)
+![Detalhes Prefeitura](images/detalhesempresa.jpg)
 
 ##### HomePage Prefeitura
 
 Página inicial após cadastro/login do membro da prefeitura, mostrando o mapa interativo, denúncias e quantitativos sobre as denúncias e usuários cadastrados.
 
-![Homepage Prefeitura](images/homepageprefeitura.jpeg)
+![Homepage Prefeitura](images/homeempresa.jpg)
 
 ##### Perfil Prefeitura
 
 Página para exibir o perfil de um usuário membro da prefeitura, mostrando o município da prefeitura, denúncias solucionadas, obras em andamento e avaliações recebidas pelos usuários.
 
-![Perfil Prefeitura](images/perfilprefeitura.jpeg)
+![Perfil Prefeitura](images/perfilempresa.jpg)
 
 ##### Editor Prefeitura
 
 Tela que permite que o membro da prefeitura adicione uma nota à denúncia, novos checkpoints conforme a necessidade prefeitura, altere o curso estimado e também o prazo estimado da conclusão da obra.
 
-![Editor Prefeitura](images/editorprefeitura.jpeg)
+![Editor Prefeitura](images/editardenuncia.jpg)
 
 ### User Flow
 
@@ -437,14 +419,8 @@ Tela que permite que o membro da prefeitura adicione uma nota à denúncia, novo
   allowfullscreen>
 </iframe>
 
-
 ✅ [Protótipo Interativo (Figma)](https://www.figma.com/proto/FIEmOBz2bmTWoPy2U3CFam/Zella?node-id=1-334&t=MR2BjRzAHsF5PjPY-1)
 
-
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Um protótipo interativo apresenta o projeto de interfaces e permite ao usuário navegar pelas funcionalidades como se estivesse lidando com o software pronto. Utilize as mesmas ferramentas de construção de wireframes para montagem do seu protótipo interativo. Inclua o link para o protótipo interativo do projeto.
 
 # Metodologia
 
@@ -482,9 +458,6 @@ Relação de ferramentas empregadas pelo grupo durante o projeto.
 
 * **GitHub:** utilizado para hospedagem do projeto e controle de versionamento, permitindo colaboração entre os integrantes, organização do código e acompanhamento das alterações realizadas.
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Liste as ferramentas empregadas no desenvolvimento do projeto, justificando a escolha delas, sempre que possível. Inclua itens como: (1) Editor de código, (2) )ferramentas de comunicação, (3) )ferramentas de diagramação, (4) )plataformas de hospedagem, entre outras.
 
 ## Gerenciamento do Projeto
 
@@ -497,20 +470,6 @@ Divisão de papéis no grupo e apresentação da estrutura da ferramenta de cont
 ![Kanban](images/Kanban%20-%20Nexo%20-%20Rafael.png)
 ![Kanban](images/Kanban%20-%20Nexo%20-%20Sophia.png)
 ![Kanban](images/Kanban%20-%20Nexo%20-%20Warlley.png)
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Nesta parte do documento, você deve apresentar  o processo de trabalho baseado nas metodologias ágeis, a divisão de papéis e tarefas, as ferramentas empregadas e como foi realizada a gestão de configuração do projeto via GitHub.
->
-> Coloque detalhes sobre o processo de Design Thinking e a implementação do Framework Scrum seguido pelo grupo. O grupo poderá fazer uso de ferramentas on-line para acompanhar o andamento do projeto, a execução das tarefas e o status de desenvolvimento da solução.
->
-> **Orientações**:
->
-> - [Sobre Projects - GitHub Docs](https://docs.github.com/pt/issues/planning-and-tracking-with-projects/learning-about-projects/about-projects)
-> - [Gestão de projetos com GitHub | balta.io](https://balta.io/blog/gestao-de-projetos-com-github)
-> - [(460) GitHub Projects - YouTube](https://www.youtube.com/playlist?list=PLiO7XHcmTsldZR93nkTFmmWbCEVF_8F5H)
-> - [11 Passos Essenciais para Implantar Scrum no seu Projeto](https://mindmaster.com.br/scrum-11-passos/)
-> - [Scrum em 9 minutos](https://www.youtube.com/watch?v=XfvQWnRgxG0)
 
 # Solução Implementada
 
@@ -593,11 +552,10 @@ A HomePage é responsável pela visualização das denúncias urbanas, navegaç�
   * Utilize os controles laterais para:
   * Alternar entre mapa padrão e satélite
   * Retornar para a localização atual
-  * Acessar o mapa de calor
 
 * **Tela da funcionalidade**:
 
-![Mapa Interativo](images/mapa_iterativo.jpeg)
+![Mapa Interativo](images/mapa_iterativo.jpg)
 
 ---
 
@@ -663,7 +621,7 @@ Permite acesso rápido às denúncias através de cards dinâmicos com informaç
 
 * **Tela da funcionalidade**:
 
-![Atalhos Denúncias](images/atalhos_denuncia.jpeg)
+![Atalhos Denúncias](images/atalhos_denuncia.jpg)
 
 ---
 
@@ -721,78 +679,10 @@ Permite pesquisar endereços e localizar regiões específicas diretamente no ma
 
 * **Tela da funcionalidade**:
 
-![Busca e Direcionamentos](images/busca_mapa.jpeg)
+![Busca e Direcionamentos](images/mapa_iterativo.jpg)
 
 ---
 
-##### Funcionalidade 4 - Mapa de Calor
-
-Permite visualizar regiões com maior concentração de denúncias através de um mapa de calor dinâmico.
-
-* **Estrutura de dados:**
-
-```json
-{
-    
-    "mapaCalor": [
-        {
-            "latitude": -18.6473,
-            "longitude": -48.1870,
-            "peso": 10
-        }
-    ],
-    "regioes": [
-        {
-            "nome": "Centro",
-            "totalDenuncias": 120,
-            "maisComum": "infraestrutura"
-        }
-    ],
-    "estatisticas": [
-        {
-            "totalDenuncias": 650,
-            "emAndamento": 273,
-            "resolvidas": 250,
-            "usuarios": 2000
-        }
-    ]
-}
-```
-
-```json
-{
-    "regioes": [
-        {
-            "nome": "Centro",
-            "total_denuncias": 120,
-            "mais_comum": "Infraestrutura"
-        }
-    ]
-}
-```
-
-```json
-{
-    "estatisticas": {
-        "total_denuncias": 650,
-        "em_andamento": 273,
-        "resolvidas": 250,
-        "usuarios": 2000
-    }
-}
-```
-
-* **Instruções de acesso:**
-
-  * Utilize o botão de transição entre mapa comum e mapa de calor
-  * O sistema exibirá áreas críticas com cores quentes
-  * Áreas menos problemáticas serão exibidas com cores frias
-
-* **Tela da funcionalidade**:
-
-![Mapa de Calor](images/mapa_calor.jpeg)
-
----
 
 # Funcionalidades da Tela de Cadastro de Usuário
 
@@ -800,7 +690,7 @@ A tela de Cadastro de Usuário permite que cidadãos realizem o registro na plat
 
 ---
 
-##### Funcionalidade 5 - Painel de Boas-Vindas e Acesso
+##### Funcionalidade 4 - Painel de Boas-Vindas e Acesso
 
 Permite que usuários que já possuem um perfil cadastrado no sistema naveguem rapidamente para a área de login.
 
@@ -825,11 +715,11 @@ Permite que usuários que já possuem um perfil cadastrado no sistema naveguem r
 
 * **Tela da funcionalidade**:
 
-![Painel de Boas-Vindas](images/cadastro.jpeg)
+![Painel de Boas-Vindas](images/cadastromorador.jpg)
 
 ---
 
-##### Funcionalidade 6 - Seleção de Perfil Corporativo/Governamental
+##### Funcionalidade 5 - Seleção de Perfil Corporativo/Governamental
 
 Permite alternar o fluxo de cadastro caso o usuário não seja um cidadão comum (Pessoa Física), direcionando para os formulários de empresas ou prefeituras.
 
@@ -859,11 +749,11 @@ Permite alternar o fluxo de cadastro caso o usuário não seja um cidadão comum
 
 * **Tela da funcionalidade**:
 
-![Seleção Perfil](images/cadastro.jpeg)
+![Seleção Perfil](images/cadastromorador.jpg)
 
 ---
 
-##### Funcionalidade 7 - Formulário e Submissão de Cadastro
+##### Funcionalidade 6 - Formulário e Submissão de Cadastro
 
 Permite criar uma nova conta de cidadão na plataforma.
 
@@ -894,7 +784,7 @@ Permite criar uma nova conta de cidadão na plataforma.
 
 * **Tela da funcionalidade**:
 
-![Cadastro Usuário](images/cadastro.jpeg)
+![Cadastro Usuário](images/cadastromorador.jpeg)
 
 ---
 
@@ -904,7 +794,7 @@ A tela de Perfil do Usuário apresenta estatísticas pessoais e histórico de de
 
 ---
 
-##### Funcionalidade 8 - Exibição de Perfil e Estatísticas
+##### Funcionalidade 7 - Exibição de Perfil e Estatísticas
 
 Apresenta de forma consolidada os dados do usuário logado, junto com suas métricas de engajamento na plataforma (pontuação e status de demandas).
 
@@ -940,11 +830,11 @@ Apresenta de forma consolidada os dados do usuário logado, junto com suas métr
 
 * **Tela da funcionalidade**:
 
-![Perfil Usuário](images/tela_perfil.jpeg)
+![Perfil Usuário](images/perfilmorador.jpg)
 
 ---
 
-##### Funcionalidade 9 - Filtragem do Histórico de Ocorrências
+##### Funcionalidade 8 - Filtragem do Histórico de Ocorrências
 
 Disponibiliza abas interativas para que o usuário filtre a listagem de suas denúncias conforme o andamento atual.
 
@@ -969,11 +859,11 @@ Disponibiliza abas interativas para que o usuário filtre a listagem de suas den
 
 * **Tela da funcionalidade**:
 
-![Perfil Usuário](images/tela_perfil.jpeg)
+![Perfil Usuário](images/perfilmorador.jpg)
 
 ---
 
-##### Funcionalidade 10 - Listagem de Cards de Denúncias
+##### Funcionalidade 9 - Listagem de Cards de Denúncias
 
 Exibe as denúncias enviadas pelo usuário em formato de cartões resumidos, permitindo a rolagem vertical e o direcionamento para os detalhes completos da ocorrência.
 
@@ -1000,7 +890,7 @@ Exibe as denúncias enviadas pelo usuário em formato de cartões resumidos, per
 
 * **Tela da funcionalidade**:
 
-![Perfil Usuário](images/tela_perfil.jpeg)
+![Perfil Usuário](images/perfilmorador.jpg)
 
 ---
 
@@ -1010,7 +900,7 @@ Permite visualizar denúncias cadastradas por outros usuários.
 
 ---
 
-##### Funcionalidade 11 - Listagem de Todas as Denúncias
+##### Funcionalidade 10 - Listagem de Todas as Denúncias
 
 Permite visualizar denúncias cadastradas na plataforma.
 
@@ -1070,11 +960,11 @@ Permite visualizar denúncias cadastradas na plataforma.
 
 * **Tela da funcionalidade**:
 
-![Outras Denúncias](images/funcionalidade_outrasdenuncias.jpeg)
+![Outras Denúncias](images/outrasdenuncias.jpg)
 
 ---
 
-##### Funcionalidade 12 - Busca e Filtragem de Denúncias
+##### Funcionalidade 11 - Busca e Filtragem de Denúncias
 
 Permite aplicar filtros nas denúncias.
 
@@ -1139,7 +1029,7 @@ Permite aplicar filtros nas denúncias.
 
 * **Tela da funcionalidade**:
 
-![Filtro Denúncias](images/funcionalidade_outrasdenuncias.jpeg)
+![Filtro Denúncias](images/outrasdenuncias.jpg)
 
 ---
 
@@ -1149,7 +1039,7 @@ Apresenta informações completas relacionadas à denúncia.
 
 ---
 
-##### Funcionalidade 13 - Visualização Completa da Denúncia
+##### Funcionalidade 12 - Visualização Completa da Denúncia
 
 Permite a visualização de todas as informações da denúncia, desde categoria, urgência, imagens, localização exata no mapa, entre outros. Também permite a visualização do progresso da denúncia, avanço de etapas (se usuário do tipo instituição) e interação entre usuários por meio dos comentários e do chat porta-voz.
 
@@ -1270,7 +1160,7 @@ Permite a visualização de todas as informações da denúncia, desde categoria
 
 * **Tela da funcionalidade**:
 
-![Detalhes Denúncia](images/funcionalidade_detalhes.png)
+![Detalhes Denúncia](images/detalhesempresa.jpg)
 
 ---
 
@@ -1280,7 +1170,7 @@ Permite que empresas e prefeituras atualizem denúncias.
 
 ---
 
-##### Funcionalidade 14 - Edição de Denúncias
+##### Funcionalidade 13 - Edição de Denúncias
 
 Permite ao membro da empresa/prefeitura adicionar informações à denúncia e alterar alguns campos da denúncia, como a descrição, checkpoints, custo estimado e prazo estimado da conclusão de uma obra.
 
@@ -1314,11 +1204,11 @@ Permite ao membro da empresa/prefeitura adicionar informações à denúncia e a
 
 * **Tela da funcionalidade**:
 
-![Edição Denúncias](images/tela_editar.jpeg)
+![Edição Denúncias](images/editardenuncia.jpg)
 
 ---
 
-##### Funcionalidade 15 - Adicionar Checkpoint
+##### Funcionalidade 14 - Adicionar Checkpoint
 
 Permite ao membro da empresa/prefeitura criar novos checkpoints conforme a necessidade da empresa.
 
@@ -1347,7 +1237,7 @@ Permite ao membro da empresa/prefeitura criar novos checkpoints conforme a neces
 
 * **Tela da funcionalidade**:
 
-![Adicionar Progresso](images/tela_editar.jpeg)
+![Adicionar Progresso](images/editardenuncia.jpg)
 
 ---
 
@@ -1357,7 +1247,7 @@ Permite que usuários registrem novas denúncias.
 
 ---
 
-##### Funcionalidade 16 - Cadastro de Denúncias
+##### Funcionalidade 15 - Cadastro de Denúncias
 
 Permite o cadastro de uma denúncia, registrando categoria, urgência, detalhes, imagens, localização e entidade. Também permite deletar denúncias e editar campos específicos das denúncias criadas pelo usuário.
 
@@ -1412,118 +1302,123 @@ Permite o cadastro de uma denúncia, registrando categoria, urgência, detalhes,
 
 * **Tela da funcionalidade**:
 
-![Cadastro Denúncias](images/cadastro_denuncia.png)
+![Cadastro Denúncias](images/cadastro_denuncia.jpg)
 
 ---
 
-```
-```
+## Estrutura de Dados – Nova Versão (JSON)
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente cada uma das funcionalidades que a aplicação fornece tanto para os usuários quanto aos administradores da solução.
->
-> Inclua, para cada funcionalidade, itens como: (1) titulos e descrição da funcionalidade; (2) Estrutura de dados associada; (3) o detalhe sobre as instruções de acesso e uso.
----
-
-## Estruturas de Dados
-
-Descrição das estruturas de dados utilizadas no sistema de denúncias de infraestrutura, apresentadas em formato JSON.
+O sistema agora utiliza um único arquivo JSON com as seguintes coleções principais. Todas as chaves e valores seguem o formato apresentado.
 
 ---
 
-##### Estrutura de Dados - Denúncias
+### 1. **Denúncias** (`denuncias`)
 
-Armazena todas as informações relacionadas às denúncias cadastradas pelos moradores, incluindo descrição, localização, imagens, andamento da obra, arquivos anexados e dados da instituição responsável.
+Lista de todas as denúncias cadastradas.
 
 ```json
 {
-  "id": 1,
-  "status_id": 2,
-  "categoria_id": 1,
-  "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres.",
-  "imagens": [
-    "imgs/buraco1.jpg",
-    "imgs/buraco2.jpg",
-    "imgs/buraco3.jpg"
+  "id": "1",                             
+  "titulo": "Cratera próxima a faixa de pedestres - Centro",
+  "status_id": 3,                     
+  "categoria_id": 1,                 
+  "urgencia_id": 1,                      
+  "entidade_id": 1,                      
+  "denunciante": 12345678900,              
+  "usuarioInstituicao_cpf": "",            
+  "descricaoDenuncia": "O pavimento apresenta danos extensos...",
+  "imagens": [                             
+    "/assets/images/denuncias/buraco1.jpg"
   ],
-  "urgencia_id": 1,
-  "data": "2026-04-26",
-  "entidade_id": 1,
-  "usuarioMorador_cpf": 12345678900,
+  "dataPublicacao": "26/04/2026",          
+  "dataResolucao": null,                 
   "local": {
-    "cidade": "Contagem",
+    "logradouro": "Rua do Rosário",
+    "numero": 4256,
+    "cidade": "Betim",
     "estado": "MG",
     "pais": "Brasil",
-    "logradouro": "Avenida Firmo de Matos",
-    "numero": 148,
-    "latitude": -19.9316,
-    "longitude": -44.0539
+    "latitude": -19.969916,
+    "longitude": -44.198447,
+    "bairro": "Centro"                    
   },
-  "usuarioInstituicao_cpf": 98723456700,
-  "notaOrgao": "Estamos agilizando para resolver isso.",
-  "prazo": "12/05/2026",
-  "afetados": 21,
-  "custo": "R$ 987,95",
-  "progresso": [
+  "afetados": 2,                          
+  "notaOrgao": "",                       
+  "prazo": "",                           
+  "custo": "",                              
+  "notaCusto": "",                          
+  "comentarios": [                        
+    {
+      "id": 1780664258000,             
+      "usuario": 12345678902,              
+      "mensagem": "Teste de comentário editado",
+      "data": "05/06/2026",
+      "hora": "09:58",
+      "editado": true
+    }
+  ],
+  "progresso": [                       
     {
       "etapa": "Denúncia aceita",
-      "concluida": true,
-      "arquivo": {
-        "nome": "relatorio.pdf",
-        "url": "files/relatorio.pdf"
-      }
-    },
-    {
-      "etapa": "Equipe enviada ao local",
+      "tipo": "fixo",                   
       "concluida": false,
       "arquivo": {
-        "nome": "vistoria.pdf",
-        "url": "files/vistoria.pdf"
+        "nome": "",
+        "url": ""
       }
-    }
+    },
+   
   ]
 }
 ```
 
+**Observações**:
+- Os campos `dataResolucao`, `notaOrgao`, `prazo`, `custo`, `notaCusto` e `usuarioInstituicao_cpf` podem ser vazios ou `null` até que a denúncia seja assumida.
+- O array `progresso` sempre contém as 5 etapas fixas, com `concluida` alternando conforme o andamento.
+- `imagens` aceita até 8 URLs.
+
 ---
 
-##### Estrutura de Dados - Usuário Morador
+### 2. **Usuários Moradores** (`usuariosMoradores`)
 
-Responsável pelos dados de moradores cadastrados no sistema, utilizados para autenticação e registro de denúncias.
+Dados de autenticação e identificação dos cidadãos.
 
 ```json
 {
   "nome_usuario": "Luisa Souza",
   "nome_completo": "Luisa Souza Bernardes",
   "email": "souzaluisa@gmail.com",
-  "cpf": 12345678900,
-  "senha": "xyz123!"
+  "cpf": 12345678900,                    
+  "senha": "xyz123!",
+  "id": "2WVdbTc4oaM",                  
+  "telefone": ""                         
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Usuário Instituição
+### 3. **Usuários Instituições** (`usuariosInstituicoes`)
 
-Armazena os dados de representantes de instituições responsáveis pelo gerenciamento das denúncias.
+Representantes de órgãos ou empresas responsáveis.
 
 ```json
 {
-  "instituicao_id": 2,
+  "instituicao_id": 2,                   
+  "entidade_id": 2,                       
   "nome_usuario": "Fernanda Rocha",
   "nome_completo": "Fernanda Rocha Ladeira",
   "email": "fernandaprefcontagem@gmail.com",
   "cpf": 45687612300,
-  "senha": "def123!"
+  "senha": "def123!",
+  "id": "870GSYEP8_s"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Usuário Logado
+### 4. **Usuário Logado** (`usuarioLogado`)
 
-Define qual usuário está autenticado no sistema no momento.
+Define quem está autenticado no momento.
 
 ```json
 {
@@ -1533,233 +1428,174 @@ Define qual usuário está autenticado no sistema no momento.
 
 ---
 
-##### Estrutura de Dados - Perfil do Morador
+### 5. **Perfil do Morador** (`infoPerfilMoradores`)
 
-Contém informações adicionais do perfil do morador, estatísticas e denúncias realizadas.
+Informações complementares, estatísticas e relações do morador.
 
 ```json
 {
   "usuarioMorador_cpf": 12345678900,
-  "fotoPerfil": "imgs/img1.jpg",
+  "fotoPerfil": "data:image/png;base64,...",  
   "estatisticas": {
     "atendidas": 3,
     "aberto": 2,
     "atualizacoes": 2,
     "pontos": 50
   },
-  "denuncias_id": [
-    {
-      "id": 1
-    },
-    {
-      "id": 12
-    }
-  ]
+  "denuncias_acompanhadas": [],            
+  "denuncias_criadas": [                    
+    "1", "4", "7", "10", "13"
+  ],
+  "id": "1"                                
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Perfil da Instituição
+### 6. **Perfil da Instituição** (`infoPerfilInstituicoes`)
 
-Armazena estatísticas da instituição e obras relacionadas às denúncias atendidas.
+Estatísticas, obras e avaliações da instituição.
 
 ```json
 {
   "usuarioInstituicao_cpf": 45687612300,
-  "fotoPerfil": "imgs/img1.jpg",
+  "fotoPerfil": "/assets/images/perfis/perfil_fernandarocha.png",
   "estatisticas": {
-    "atendidas": 67,
-    "aberto": 3,
+    "atendidas": 0,
+    "aberto": 0,
     "atualizacoes": 15
   },
-  "obras_id": [
+  "obras_id": [],                          
+  "avaliacoes": [                          
     {
-      "id": 2
-    },
-    {
-      "id": 12
-    },
-    {
-      "id": 45
+      "denunciaId": 3,
+      "avaliador": 12345678901,             
+      "nota": 5,
+      "descricao": "Ótimo trabalho de toda equipe!",
+      "data": "05/06/2026"
     }
-  ]
+  ],
+  "id": "0F6jdZGEfRo"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Instituições
+### 7. **Mensagens do Chat** (`mensagensChat`)
 
-Lista das instituições responsáveis pelas denúncias e obras cadastradas no sistema.
+Registro de conversas associadas a uma denúncia.
 
 ```json
 {
-  "id": 1,
+  "denunciaId": 3,
+  "usuario": 12345678901,                 
+  "mensagem": "Bom dia!! Gostaria de saber quando vamos dar início a obra.",
+  "data": "05/06/2026",
+  "hora": "09:12",
+  "editada": false,
+  "id": "2BZuafDG0KQ"
+}
+```
+
+---
+
+### 8. **Instituições** (`instituicoes`)
+
+Lista das entidades prestadoras de serviço.
+
+```json
+{
+  "id": "1",
   "nome": "Megasfalt"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Status
+### 9. **Status** (`status`)
 
-Define os possíveis status das denúncias no sistema.
+Possíveis situações da denúncia.
 
 ```json
 {
-  "id": 2,
-  "status": "Em andamento"
+  "id": "1",
+  "status": "Concluída"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Categorias
+### 10. **Categorias** (`categorias`)
 
-Representa as categorias disponíveis para classificação das denúncias.
+Tipos de problema.
 
 ```json
 {
-  "id": 1,
+  "id": "1",
   "nome": "Buraco"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Urgências
+### 11. **Urgências** (`urgencias`)
 
-Define o nível de urgência das denúncias.
+Níveis de prioridade.
 
 ```json
 {
-  "id": 3,
-  "tipo": "Alta"
+  "id": "1",
+  "tipo": "Baixa"
+}
+
+```
+
+---
+
+### 12. **Entidades** (`entidades`)
+
+Tipo de órgão responsável.
+
+```json
+{
+  "id": "1",
+  "tipo": "Todos"
 }
 ```
 
 ---
 
-##### Estrutura de Dados - Entidades
+### 13. **Estrutura Completa** (`$schema`)
 
-Representa o tipo de entidade responsável pela denúncia.
-
-```json
-{
-  "id": 2,
-  "tipo": "Prefeitura"
-}
-```
-
----
-
-##### Estrutura de Dados - Localização
-
-Armazena os dados geográficos utilizados para identificar o local da denúncia.
-
-```json
-{
-  "cidade": "Belo Horizonte",
-  "estado": "MG",
-  "pais": "Brasil",
-  "logradouro": "Avenida Professor Mário Werneck",
-  "numero": 21,
-  "latitude": -19.9102,
-  "longitude": -43.9266
-}
-```
-
----
-
-##### Estrutura de Dados - Progresso da Obra
-
-Representa cada etapa de andamento da denúncia e os arquivos anexados pela instituição.
-
-```json
-{
-  "etapa": "Planejamento e previsões",
-  "concluida": false,
-  "arquivo": {
-    "nome": "planejamento.pdf",
-    "url": "files/planejamento.pdf"
-  }
-}
-```
-
----
-
-##### Estrutura de Dados - Arquivos
-
-Armazena informações de arquivos enviados pela instituição durante o andamento da denúncia.
-
-```json
-{
-  "nome": "relatorio_vistoria.pdf",
-  "url": "files/relatorio_vistoria.pdf"
-}
-```
-
----
-
-##### Estrutura de Dados - Estatísticas
-
-Estrutura utilizada para armazenar indicadores de desempenho e acompanhamento dos usuários.
-
-```json
-{
-  "atendidas": 67,
-  "aberto": 3,
-  "atualizacoes": 15,
-  "pontos": 50
-}
-```
-
----
-
-##### Estrutura de Dados - Sistema Completo
-
-Representa a estrutura geral do banco JSON utilizado pela aplicação.
+O arquivo JSON raiz contém todas as coleções acima e um campo de esquema (para json-server).
 
 ```json
 {
   "denuncias": [],
-  "usuarioMorador": [],
-  "usuarioInstituicao": [],
+  "usuariosMoradores": [],
+  "usuariosInstituicoes": [],
   "usuarioLogado": {},
-  "infoPerfilMorador": [],
-  "infoPerfilInstituicao": [],
-  "instituicao": [],
+  "infoPerfilMoradores": [],
+  "infoPerfilInstituicoes": [],
+  "mensagensChat": [],
+  "instituicoes": [],
   "status": [],
   "categorias": [],
   "urgencias": [],
-  "entidades": []
+  "entidades": [],
+  "$schema": "./node_modules/json-server/schema.json"
 }
 ```
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente as estruturas de dados utilizadas na solução tanto para dados utilizados na essência da aplicação quanto outras estruturas que foram criadas para algum tipo de configuração
->
-> Nomeie a estrutura, coloque uma descrição sucinta e apresente um exemplo em formato JSON.
->
-> **Orientações:**
->
-> * [JSON Introduction](https://www.w3schools.com/js/js_json_intro.asp)
-> * [Trabalhando com JSON - Aprendendo desenvolvimento web | MDN](https://developer.mozilla.org/pt-BR/docs/Learn/JavaScript/Objects/JSON)
+---
 
 ## Módulos e APIs
 
 Esta seção apresenta os módulos, bibliotecas e APIs utilizados no desenvolvimento da solução de denúncias de infraestrutura.
 
-### Maps
-
 * [Google Maps Embed API](https://developers.google.com/maps/documentation/embed/?utm_source=chatgpt.com)
   Utilizada para exibir mapas e localização das denúncias cadastradas no sistema.
 
 ---
-
-### Fonts
 
 * [Google Fonts - Inter](https://fonts.google.com/specimen/Inter?utm_source=chatgpt.com)
   Fonte utilizada na interface principal do sistema.
@@ -1769,30 +1605,48 @@ Esta seção apresenta os módulos, bibliotecas e APIs utilizados no desenvolvim
 
 ---
 
-### Icons Font Face
-
 * [Font Awesome 6](https://fontawesome.com/?utm_source=chatgpt.com)
   Biblioteca de ícones utilizada para representar funcionalidades e elementos visuais da aplicação.
 
 ---
 
+* **[Leaflet 1.9.4](https://leafletjs.com/)**
+  Biblioteca JavaScript open‑source para criação de mapas interativos. Utilizada para exibir a localização das denúncias, com suporte a marcadores arrastáveis, zoom, camadas de tiles (OpenStreetMap) e interação por clique no mapa.
+
+---
+
+* **[Nominatim API (OpenStreetMap)](https://nominatim.org/)**
+  Serviço de geocodificação gratuito que converte coordenadas em endereços (reverse geocoding) e localiza endereços a partir de texto (forward geocoding). Utilizado para preencher automaticamente os campos de localização e para buscar endereços digitados pelo usuário.
+
+---
+
+
 ### Scripts
 
-* [Bootstrap 5.3.8](https://getbootstrap.com/?utm_source=chatgpt.com)
-  Framework CSS utilizado para criação do layout responsivo e componentes visuais da aplicação.
+* **Bootstrap 5.3.3** (CSS)
+  Framework CSS utilizado para criação do layout responsivo e componentes visuais da aplicação.  
+  *Importado via:* `https://cdn.jsdelivr.net/npm/bootstrap@5.3.3/dist/css/bootstrap.min.css`
 
-* [Fetch API](https://developer.mozilla.org/pt-BR/docs/Web/API/Fetch_API?utm_source=chatgpt.com)
-  Utilizada para realizar requisições assíncronas e manipulação de dados JSON.
+* **Bootstrap Icons 1.11.3**
+  Biblioteca de ícones vetoriais que complementa o Bootstrap, usada para botões, indicadores visuais e elementos de interface.  
+  *Importado via:* `https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.3/font/bootstrap-icons.css`
 
-* [DOM API](https://developer.mozilla.org/pt-BR/docs/Web/API/Document_Object_Model?utm_source=chatgpt.com)
+* **Leaflet 1.9.4**
+  Biblioteca JavaScript open-source para mapas interativos. Utilizada para exibir a localização geográfica das denúncias, permitindo zoom, marcadores e visualização de coordenadas.  
+  *Importado via:*  
+  - CSS: `https://unpkg.com/leaflet@1.9.4/dist/leaflet.css`  
+  - JS: `https://unpkg.com/leaflet@1.9.4/dist/leaflet.js`
+
+* **Fetch API**
+  Utilizada para realizar requisições assíncronas e manipulação de dados JSON (comunicação com o JSON Server).
+
+* **DOM API**
   Responsável pela manipulação dinâmica dos elementos HTML da aplicação.
 
-* [URL API - createObjectURL()](https://developer.mozilla.org/pt-BR/docs/Web/API/URL/createObjectURL_static?utm_source=chatgpt.com)
-  Utilizada para gerar URLs temporárias de arquivos e imagens enviados pelos usuários.
+* **URL API – `createObjectURL()`**
+  Utilizada para gerar URLs temporárias de arquivos e imagens enviados pelos usuários (pré-visualização de uploads).
 
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Apresente os módulos e APIs utilizados no desenvolvimento da solução. Inclua itens como: (1) Frameworks, bibliotecas, módulos, etc. utilizados no desenvolvimento da solução; (2) APIs utilizadas para acesso a dados, serviços, etc.
+---
 
 # Referências
 
@@ -1825,12 +1679,3 @@ As referências utilizadas no desenvolvimento da solução foram:
 * MDN WEB DOCS. *URL.createObjectURL()*. Mozilla, c2026. Disponível em: [https://developer.mozilla.org/pt-BR/docs/Web/API/URL/createObjectURL_static](https://developer.mozilla.org/pt-BR/docs/Web/API/URL/createObjectURL_static). 
 
 * NOMINATIM. *Nominatim API*. OpenStreetMap Foundation, c2026. Disponível em: [https://nominatim.org/](https://nominatim.org/).
-
-> ⚠️ **APAGUE ESSA PARTE ANTES DE ENTREGAR SEU TRABALHO**
->
-> Inclua todas as referências (livros, artigos, sites, etc) utilizados no desenvolvimento do trabalho.
->
-> **Orientações**:
->
-> - [Formato ABNT](https://www.normastecnicas.com/abnt/trabalhos-academicos/referencias/)
-> - [Referências Bibliográficas da ABNT](https://comunidade.rockcontent.com/referencia-bibliografica-abnt/)

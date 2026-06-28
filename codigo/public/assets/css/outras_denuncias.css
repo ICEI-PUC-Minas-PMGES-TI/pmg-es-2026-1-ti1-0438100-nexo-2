@@ -1,0 +1,298 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #e9ecef;
+}
+
+a {
+    text-decoration: none;
+    color: #e9ecef;
+}
+
+/* Main content */
+main {
+    padding: 2rem 0;
+}
+
+.cards-section {
+    margin-bottom: 2rem;
+    max-height: 55vh;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding-right: 0.5rem;
+}
+
+/* Bootstrap form overrides */
+.form-control-lg, .form-select {
+    border-color: #dcdcdc;
+    font-size: 16px;
+}
+
+.form-control:focus, .form-select:focus {
+    outline: 3px solid rgba(26, 115, 232, 0.25);
+    box-shadow: 0 0 0 4px rgba(26,115,232,0.08);
+    border-color: #1a73e8;
+}
+
+.form-select {
+    background-image: url("data:image/svg+xml,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 16'%3e%3cpath fill='none' stroke='%23343a40' stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M2 5l6 6 6-6'/%3e%3c/svg%3e");
+}
+
+@media (max-width: 900px) {
+    .cards-section {
+        min-height: auto;
+    }
+}
+
+/* ===CABEÇALHO=== */
+/* Linha principal */
+header .navbar > .container,
+header .navbar > .container-fluid {
+  display: flex;
+  align-items: center;
+  flex-wrap: nowrap;
+}
+
+/* Logo */
+header .navbar-brand {
+  display: flex;
+  align-items: center;
+  flex-shrink: 0;
+  margin-right: auto;
+}
+
+header .navbar-brand img {
+  display: block;
+  width: auto;
+  height: 40px;
+  max-height: 55px;
+}
+
+/* Menu desktop */
+.navbar-nav .nav-link {
+  padding: 8px 16px;
+  font-size: 16px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  transition: 0.3s;
+}
+
+.navbar-nav .nav-link:hover {
+  color: #ff8a00;
+}
+
+/* Área mobile */
+header .d-flex.d-lg-none.align-items-center {
+  align-items: center;
+  justify-content: flex-end;
+  flex-wrap: nowrap;
+  width: auto;
+  margin-left: auto;
+  gap: 14px;
+}
+
+/* Link da foto de perfil */
+header a[data-tipo="perfil"] {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  width: 44px;
+  height: 44px;
+  padding: 0;
+  margin: 0;
+  text-decoration: none;
+}
+
+/* Imagem de perfil */
+header a[data-tipo="perfil"] img {
+  display: block;
+  width: 44px !important;
+  height: 44px !important;
+  min-width: 44px;
+  object-fit: cover;
+  border-radius: 50%;
+  margin: 0;
+}
+
+/* Botão do menu mobile */
+header .navbar-toggler {
+  align-items: center;
+  justify-content: center;
+  flex-shrink: 0;
+  margin: 0;
+  padding: 6px;
+  border: none;
+}
+
+.navbar-toggler {
+  border-color: rgba(255, 255, 255, 0.5);
+}
+
+.navbar-toggler:focus {
+  box-shadow: none;
+}
+
+.navbar-toggler-icon {
+  filter: invert(1);
+}
+
+/* Busca do cabeçalho */
+#busca {
+  width: 280px;
+  height: 42px;
+  padding-left: 16px;
+  padding-right: 40px;
+  font-size: 14px;
+}
+
+/* Perfil */
+.perfil-link {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  text-decoration: none;
+}
+
+.foto-perfil {
+  cursor: pointer;
+  transition: 0.25s ease;
+}
+
+.foto-perfil:hover {
+  transform: scale(1.08);
+  box-shadow: 0 0 12px rgba(255, 255, 255, 0.35);
+}   
+
+
+/* ===RODAPÉ=== */
+footer {
+  padding: 55px 0 20px !important;
+  background: #2b1d1d;
+}
+
+footer .container-fluid {
+  padding-left: 60px;
+  padding-right: 60px;
+}
+
+/* Logo */
+.footer-logo {
+  width: 170px;
+  height: auto;
+  margin-bottom: 15px;
+}
+
+/* Títulos */
+footer h5 {
+  margin-bottom: 20px !important;
+  font-size: 17px;
+  font-weight: 700;
+  color: white;
+}
+
+/* Textos */
+footer p {
+  font-size: 14px;
+  line-height: 1.7;
+  color: rgba(255, 255, 255, 0.72);
+}
+
+/* Links */
+footer a {
+  color: rgba(255, 255, 255, 0.72) !important;
+  font-size: 14px;
+  text-decoration: none;
+  transition: 0.25s;
+}
+
+footer a:hover {
+  color: #ff8a00 !important;
+  transform: translateX(3px);
+}
+
+/* Navegação */
+.footer-nav {
+  display: flex;
+  flex-direction: column;
+  gap: 10px;
+  margin-bottom: 25px;
+}
+
+.footer-link {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  width: fit-content;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  transition: 0.25s;
+}
+
+/* Redes sociais */
+.footer-social-vertical {
+  display: flex;
+  flex-direction: column;
+  gap: 12px;
+}
+
+.footer-social-vertical a {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  width: fit-content;
+  padding: 8px 12px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 10px;
+  transition: 0.25s;
+}
+
+/* Contato */
+.footer-contato {
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+}
+
+.footer-contato-item {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 10px 14px;
+  background: rgba(255, 255, 255, 0.04);
+  border: 1px solid rgba(255, 255, 255, 0.06);
+  border-radius: 12px;
+  transition: 0.25s;
+}
+
+.footer-contato-item:hover {
+  background: rgba(255, 255, 255, 0.07);
+  transform: translateX(3px);
+}
+
+.footer-contato-item i,
+.footer-contato-item span {
+  transition: 0.25s;
+}
+
+.footer-contato-item i {
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.footer-contato-item span {
+  font-size: 14px;
+  color: rgba(255, 255, 255, 0.78);
+}
+
+.footer-contato-item:hover i,
+.footer-contato-item:hover span {
+  color: #ff8a00;
+}

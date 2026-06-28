@@ -1,204 +1,1566 @@
 {
-    "denuncias":[
+  "denuncias": [
+    {
+      "id": "1",
+      "titulo": "Cratera próxima a faixa de pedestres - Centro",
+      "status_id": 2,
+      "categoria_id": 1,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "denunciante": 12345678900,
+      "usuarioInstituicao_cpf": 45687612300,
+      "descricaoDenuncia": "O pavimento apresenta danos extensos, obrigando veículos a invadirem a pista contrária para desviar. Após as chuvas o buraco aumentou e já provocou danos em pneus. A situação foi observada nas proximidades do nº 4256 e tem afetado moradores e comerciantes da região.",
+      "imagens": [
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg",
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg"
+      ],
+      "dataPublicacao": "26/04/2026",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua do Rosário",
+        "numero": 4256,
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.969916,
+        "longitude": -44.198447,
+        "bairro": "Centro"
+      },
+      "afetados": 2,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
         {
-            "id": 1,
-            "status_id": 2,
-            "categoria_id": 1,
-            "descricaoDenuncia": "Há aproximadamente duas semanas surgiu um buraco de grandes proporções no cruzamento desta via, causando transtornos constantes para motoristas, motociclistas e pedestres que passam pelo local diariamente. O asfalto está cedendo cada vez mais, principalmente após períodos de chuva, aumentando o risco de acidentes e danos aos veículos. Durante a noite o problema se torna ainda mais perigoso devido à baixa iluminação da rua, dificultando a visualização do buraco a tempo de desviar.",
-            "imagens": ["imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg", "imgs/buraco1.jpg", "imgs/buraco2.jpg", "imgs/buraco3.jpg", "imgs/buraco4.jpg"],
-            "urgencia_id": 1,
-            "data": "2026-04-26",
-            "entidade_id": 1,
-            "usuarioMorador_cpf": 12345678900,      
-            "local": {
-                "cidade": "Contagem",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenida Firmo de Matos",
-                "numero": 148,
-                "latitude": -19.9316,
-                "longitude": -44.0539
-            },
-            "usuarioInstituicao_cpf": 98723456700,
-            "notaOrgao": "Além das chuvas, os buracos ocorrem devido à pessima qualidade do asfalto... estamos agilizando para resolver isso.",
-            "prazo": "12/05/2026",
-            "afetados": 21,
-            "custo": "R$ 987,95",
-            "progresso": [
-                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
-                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
-            ]
+          "etapa": "Denúncia aceita",
+          "tipo": "fixo",
+          "concluida": true,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         },
         {
-            "id": 2,
-            "status_id": 2,
-            "categoria_id": 5,
-            "descricaoDenuncia": "Há várias semanas a avenida permanece com diversos postes de iluminação apagados em praticamente toda a sua extensão, causando insegurança constante para motoristas, motociclistas, ciclistas e pedestres que transitam pelo local diariamente. Durante a noite, a falta de iluminação reduz drasticamente a visibilidade da via, dificultando a identificação de obstáculos, animais na pista e até mesmo outros veículos, aumentando significativamente o risco de acidentes. Além disso, moradores e comerciantes da região relatam crescimento da sensação de insegurança, principalmente em horários de menor movimento, devido à escuridão intensa em determinados trechos da avenida.",
-            "imagens": ["imgs/ilum1.jpg", "imgs/ilum2.jpg", "imgs/ilum3.jpg", "imgs/ilum4.jpg"],
-            "urgencia_id": 3,
-            "data": "26-04-2025",
-            "entidade_id": 2,
-            "usuarioMorador_cpf":12345678900,
-            "local": {
-                "cidade": "Betim",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenida Edmeia Matos Lazzarotti",
-                "numero": 4100,
-                "latitude": -19.9489,
-                "longitude": -44.1907
-            },
-            "usuarioInstituicao_cpf":45687612300,
-            "notaOrgao": "A equipe responsável identificou falhas em parte da rede elétrica e em alguns postes da região. Já foi solicitada a substituição dos equipamentos danificados e os reparos serão iniciados nos próximos dias para restabelecer totalmente a iluminação da avenida.",
-            "prazo": "",
-            "afetados": 12,
-            "custo": "",
-            "progresso": [
-                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
-                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
-            ]           
+          "etapa": "Equipe enviada ao local",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         },
         {
-            "id": 3,
-            "status_id": 2,
-            "categoria_id": 2,
-            "descricaoDenuncia": "A avenida apresenta vazamentos de esgoto em diversos pontos ao longo de toda a via, gerando forte mau cheiro e causando grande desconforto para moradores, comerciantes e pessoas que transitam pela região diariamente. Em alguns trechos, o esgoto está acumulado próximo às calçadas, dificultando a passagem de pedestres e aumentando o risco de contaminação e proliferação de insetos.",
-            "imagens": ["imgs/esg1.jpg", "imgs/esg2.jpg", "imgs/esg3.jpg", "imgs/esg4.jpg"],
-            "urgencia_id": 2,
-            "data": "26/04/2025",
-            "entidade_id": 3,
-            "usuarioMorador_cpf":12345678900,
-            "local": {
-                "cidade": "Belo Horizonte",
-                "estado": "MG",
-                "pais": "Brasil",
-                "logradouro": "Avenida Professor Mário Werneck",
-                "numero": 21,
-                "latitude": -19.9102,
-                "longitude": -43.9266
-            },
-            "usuarioInstituicao_cpf":98723456700,
-            "notaOrgao": "Após vistoria técnica no local, foi identificado que o vazamento está relacionado ao desgaste da tubulação e ao aumento do fluxo de água durante períodos chuvosos. A equipe de manutenção já iniciou o planejamento para realizar os reparos necessários e minimizar os impactos para a população da região.",
-            "prazo": "",
-            "afetados": 34,
-            "custo": "",
-            "progresso": [
-                {"etapa": "Denúncia aceita", "concluida": false, "arquivo": [{"nome": "", "url": ""}]},
-                {"etapa": "Equipe enviada ao local", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Planejamento e previsões", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Manutenção em andamento", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}},
-                {"etapa": "Obra finalizada", "concluida": false, "arquivo": {"nome": "teste", "url": "files/arquivo_teste.txt"}}
-            ]
-        }
-    ],
-
-    "usuarioMorador":[
-        {
-            "nome_usuario":"Luisa Souza",
-            "nome_completo": "Luisa Souza Bernardes",
-            "email": "souzaluisa@gmail.com",
-            "cpf": 12345678900,
-            "senha": "xyz123!"  
-        }
-    ],
-
-    "usuarioInstituicao":[
-        {
-            "instituicao_id": 2,
-            "nome_usuario": "Fernanda Rocha",
-            "nome_completo": "Fernanda Rocha Ladeira",
-            "email": "fernandaprefcontagem@gmail.com",
-            "cpf": 45687612300,
-            "senha": "def123!"             
+          "etapa": "Planejamento e previsões",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         },
         {
-            "instituicao_id": 1,
-            "nome_usuario":"Ricardo Alves",
-            "nome_completo": "Ricardo Alves Teixeira",
-            "email":"ricardomegasfalt@gmail.com",
-            "cpf": 98723456700,
-            "senha":"abc123!"
+          "etapa": "Manutenção em andamento",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         }
-    ],
-
-    "usuarioLogado":{
-        "cpf": 98723456700
+      ]
     },
-
-
-    "infoPerfilMorador": [
+    {
+      "id": "2",
+      "titulo": "Iluminação pública comprometida - Centro",
+      "status_id": 2,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "denunciante": 12345678901,
+      "usuarioInstituicao_cpf": 45687612300,
+      "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 3401 e tem afetado moradores e comerciantes da região.",
+      "imagens": [
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg",
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg"
+      ],
+      "dataPublicacao": "26/04/2025",
+      "dataResolucao": "null",
+      "local": {
+        "logradouro": "Av. Amazonas",
+        "numero": 3401,
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.932542,
+        "longitude": -44.055488,
+        "bairro": "Centro"
+      },
+      "notaOrgao": "",
+      "prazo": "",
+      "afetados": 1,
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
         {
-            "usuarioMorador_cpf": 12345678900,
-            "fotoPerfil": "imgs/img1.jpg",
-            "estatisticas": {
-                "atendidas": 3,
-                "aberto": 2,
-                "atualizacoes": 2,
-                "pontos": 50
-            },
-            "denuncias_id": [{"id": 1}, {"id": 12}  ]
-        }
-    ],
-
-    "infoPerfilInstituicao": [
-        {
-            "usuarioInstituicao_cpf": 45687612300,
-            "fotoPerfil": "imgs/img1.jpg",
-            "estatisticas": {
-                "atendidas": 67,
-                "aberto": 3,
-                "atualizacoes": 15
-            },
-            "obras_id": [{"id": 2}, {"id": 12},{"id": 45}]
+          "etapa": "Denúncia aceita",
+          "tipo": "fixo",
+          "concluida": true,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         },
         {
-            "usuarioInstituicao_cpf": 98723456700,
-            "fotoPerfil": "imgs/img1.jpg", 
-            "estatisticas": {
-                "atendidas": 42,
-                "aberto": 4,
-                "atualizacoes": 5
-            },
-            "obras_id": [{"id": 1}, {"id": 3},{"id": 7}, {"id": 21}]
+          "etapa": "Equipe enviada ao local",
+          "tipo": "fixo",
+          "concluida": true,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "tipo": "fixo",
+          "concluida": false,
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
         }
-    ],
-
-    "instituicao":[
-        {"id": 1, "nome": "Megasfalt"},
-        {"id": 2, "nome": "Prefeitura de Contagem"},
-        {"id": 3, "nome":"Prefeitura de Betim"}
-    ],
-
-    "status":[
-        {"id": 1, "status": "Concluída"},
-        {"id": 2, "status": "Em andamento"},
-        {"id": 3, "status": "Em aberto"}, 
-        {"id": 4, "status": "Obra finalizada"}
-    ],
-
-    "categorias":[
-        {"id": 1, "nome": "Buraco"},
-        {"id": 2, "nome": "Problema de esgoto"},
-        {"id": 3, "nome": "Deslizamento"},
-        {"id": 4, "nome": "Falta de limpeza"},
-        {"id": 5, "nome": "Falta de iluminação"}
-    ],
-
-    "urgencias":[
-        {"id": 1, "tipo": "Baixa"},
-        {"id": 2, "tipo": "Média"},
-        {"id": 3, "tipo": "Alta"}
-    ],
-
-    "entidades":[
-        {"id": 1, "tipo": "Todos"},
-        {"id": 2, "tipo": "Prefeitura"},
-        {"id": 3, "tipo": "Empresa privada"}
-    ]
+      ]
+    },
+    {
+      "id": "3",
+      "titulo": "Esgoto escorrendo pela calçada - Funcionários",
+      "status_id": 3,
+      "categoria_id": 2,
+      "urgencia_id": 2,
+      "entidade_id": 3,
+      "denunciante": 12345678902,
+      "usuarioInstituicao_cpf": "",
+      "descricaoDenuncia": "Há vazamento contínuo de esgoto formando poças com forte odor. Moradores relatam aumento de insetos e dificuldade para caminhar pelo passeio. A situação foi observada nas proximidades do nº 374 e tem afetado moradores e comerciantes da região.",
+      "imagens": [
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg",
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg"
+      ],
+      "dataPublicacao": "26/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Timbiras",
+        "numero": 374,
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.922085,
+        "longitude": -43.941792,
+        "bairro": "Funcionários"
+      },
+      "notaOrgao": "",
+      "prazo": "",
+      "afetados": 1,
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [
+        {
+          "id": 1780664258000,
+          "usuario": 12345678902,
+          "mensagem": "Teste de comentário editado",
+          "data": "05/06/2026",
+          "hora": "09:58",
+          "editado": true
+        }
+      ],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "4",
+      "titulo": "Iluminação pública comprometida - Industrial",
+      "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 1132 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "denunciante": 12345678900,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg",
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg"
+      ],
+      "dataPublicacao": "25/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Pará de Minas",
+        "numero": 1132,
+        "bairro": "Industrial",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.939983,
+        "longitude": -44.058223
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "5",
+      "titulo": "Postes apagados em trecho residencial - Jardim Teresópolis",
+      "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 1183 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "denunciante": 12345678901,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg",
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg"
+      ],
+      "dataPublicacao": "25/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Av. Marco Túlio",
+        "numero": 1183,
+        "bairro": "Jardim Teresópolis",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.953177,
+        "longitude": -44.185623
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "6",
+      "titulo": "Asfalto cedendo em via movimentada - Centro",
+      "descricaoDenuncia": "O pavimento apresenta danos extensos, obrigando veículos a invadirem a pista contrária para desviar. Após as chuvas o buraco aumentou e já provocou danos em pneus. A situação foi observada nas proximidades do nº 4184 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 1,
+      "urgencia_id": 2,
+      "entidade_id": 2,
+      "denunciante": 12345678902,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg",
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg"
+      ],
+      "dataPublicacao": "25/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua dos Goitacazes",
+        "numero": 4184,
+        "bairro": "Centro",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.917616,
+        "longitude": -43.940971
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "7",
+      "titulo": "Postes apagados em trecho residencial - Riacho",
+      "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 1891 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 5,
+      "urgencia_id": 3,
+      "entidade_id": 3,
+      "denunciante": 12345678900,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg",
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg"
+      ],
+      "dataPublicacao": "25/04/2025",
+      "dataResolucao": "null",
+      "local": {
+        "logradouro": "Rua Rio Comprido",
+        "numero": 1891,
+        "bairro": "Riacho",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.944747,
+        "longitude": -44.040921
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "8",
+      "titulo": "Vazamento constante de rede de esgoto - Mangabeiras",
+      "descricaoDenuncia": "Há vazamento contínuo de esgoto formando poças com forte odor. Moradores relatam aumento de insetos e dificuldade para caminhar pelo passeio. A situação foi observada nas proximidades do nº 1837 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 2,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "denunciante": 12345678901,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg",
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg"
+      ],
+      "dataPublicacao": "18/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Av. Bandeirantes",
+        "numero": 1837,
+        "bairro": "Mangabeiras",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.946691,
+        "longitude": -43.920648
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "9",
+      "titulo": "Risco de deslizamento em encosta - Centro",
+      "descricaoDenuncia": "Após as últimas chuvas surgiram rachaduras na encosta e parte da terra deslizou para a rua. Existe risco de novos deslizamentos. A situação foi observada nas proximidades do nº 4710 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 3,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "denunciante": 12345678902,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/desliz1.jpg",
+        "/assets/images/denuncias/desliz2.jpg",
+        "/assets/images/denuncias/desliz3.jpg",
+        "/assets/images/denuncias/desliz4.jpg",
+        "/assets/images/denuncias/desliz1.jpg",
+        "/assets/images/denuncias/desliz2.jpg",
+        "/assets/images/denuncias/desliz3.jpg",
+        "/assets/images/denuncias/desliz4.jpg"
+      ],
+      "dataPublicacao": "17/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Inconfidentes",
+        "numero": 4710,
+        "bairro": "Centro",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.970086,
+        "longitude": -44.200681
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "10",
+      "titulo": "Descarte irregular de resíduos - Cidade Industrial",
+      "descricaoDenuncia": "O lote vem recebendo descarte irregular de entulho, móveis e lixo doméstico, favorecendo proliferação de insetos e mau cheiro. A situação foi observada nas proximidades do nº 363 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 4,
+      "urgencia_id": 2,
+      "entidade_id": 3,
+      "denunciante": 12345678900,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/sujeira1.jpg",
+        "/assets/images/denuncias/sujeira2.jpg",
+        "/assets/images/denuncias/sujeira3.jpg",
+        "/assets/images/denuncias/sujeira4.jpg",
+        "/assets/images/denuncias/sujeira1.jpg",
+        "/assets/images/denuncias/sujeira2.jpg",
+        "/assets/images/denuncias/sujeira3.jpg",
+        "/assets/images/denuncias/sujeira4.jpg"
+      ],
+      "dataPublicacao": "16/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Av. Babita Camargos",
+        "numero": 363,
+        "bairro": "Cidade Industrial",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.949223,
+        "longitude": -44.033882
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "11",
+      "titulo": "Cratera próxima a faixa de pedestres - Funcionários",
+      "descricaoDenuncia": "O pavimento apresenta danos extensos, obrigando veículos a invadirem a pista contrária para desviar. Após as chuvas o buraco aumentou e já provocou danos em pneus. A situação foi observada nas proximidades do nº 1853 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 1,
+      "urgencia_id": 3,
+      "entidade_id": 2,
+      "denunciante": 12345678901,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg",
+        "/assets/images/denuncias/buraco1.jpg",
+        "/assets/images/denuncias/buraco2.jpg",
+        "/assets/images/denuncias/buraco3.jpg",
+        "/assets/images/denuncias/buraco4.jpg"
+      ],
+      "dataPublicacao": "15/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Ceará",
+        "numero": 1853,
+        "bairro": "Funcionários",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.932804,
+        "longitude": -43.932387
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "12",
+      "titulo": "Iluminação pública comprometida - Jardim Alterosas",
+      "descricaoDenuncia": "Três postes consecutivos permanecem apagados durante toda a noite, reduzindo a visibilidade e aumentando a sensação de insegurança. A situação foi observada nas proximidades do nº 4452 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 5,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "denunciante": 12345678902,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg",
+        "/assets/images/denuncias/ilum1.jpg",
+        "/assets/images/denuncias/ilum2.jpg",
+        "/assets/images/denuncias/ilum3.jpg",
+        "/assets/images/denuncias/ilum4.jpg"
+      ],
+      "dataPublicacao": "14/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Felipe dos Santos",
+        "numero": 4452,
+        "bairro": "Jardim Alterosas",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.973687,
+        "longitude": -44.174398
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "13",
+      "titulo": "Esgoto escorrendo pela calçada - Eldorado",
+      "descricaoDenuncia": "Há vazamento contínuo de esgoto formando poças com forte odor. Moradores relatam aumento de insetos e dificuldade para caminhar pelo passeio. A situação foi observada nas proximidades do nº 1736 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 2,
+      "urgencia_id": 3,
+      "entidade_id": 3,
+      "denunciante": 12345678900,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg",
+        "/assets/images/denuncias/esg1.jpg",
+        "/assets/images/denuncias/esg2.jpg",
+        "/assets/images/denuncias/esg3.jpg",
+        "/assets/images/denuncias/esg4.jpg"
+      ],
+      "dataPublicacao": "13/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Av. José Faria da Rocha",
+        "numero": 1736,
+        "bairro": "Eldorado",
+        "cidade": "Contagem",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.93622,
+        "longitude": -44.032866
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "14",
+      "titulo": "Barranco com sinais de erosão - Savassi",
+      "descricaoDenuncia": "Após as últimas chuvas surgiram rachaduras na encosta e parte da terra deslizou para a rua. Existe risco de novos deslizamentos. A situação foi observada nas proximidades do nº 1942 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 3,
+      "urgencia_id": 2,
+      "entidade_id": 2,
+      "denunciante": 12345678901,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/desliz1.jpg",
+        "/assets/images/denuncias/desliz2.jpg",
+        "/assets/images/denuncias/desliz3.jpg",
+        "/assets/images/denuncias/desliz4.jpg",
+        "/assets/images/denuncias/desliz1.jpg",
+        "/assets/images/denuncias/desliz2.jpg",
+        "/assets/images/denuncias/desliz3.jpg",
+        "/assets/images/denuncias/desliz4.jpg"
+      ],
+      "dataPublicacao": "12/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua Alagoas",
+        "numero": 1942,
+        "bairro": "Savassi",
+        "cidade": "Belo Horizonte",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.93837,
+        "longitude": -43.933014
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    },
+    {
+      "id": "15",
+      "titulo": "Acúmulo de lixo em lote vago - Angola",
+      "descricaoDenuncia": "O lote vem recebendo descarte irregular de entulho, móveis e lixo doméstico, favorecendo proliferação de insetos e mau cheiro. A situação foi observada nas proximidades do nº 522 e tem afetado moradores e comerciantes da região.",
+      "status_id": 3,
+      "categoria_id": 4,
+      "urgencia_id": 1,
+      "entidade_id": 1,
+      "denunciante": 12345678902,
+      "usuarioInstituicao_cpf": "",
+      "imagens": [
+        "/assets/images/denuncias/sujeira1.jpg",
+        "/assets/images/denuncias/sujeira2.jpg",
+        "/assets/images/denuncias/sujeira3.jpg",
+        "/assets/images/denuncias/sujeira4.jpg",
+        "/assets/images/denuncias/sujeira1.jpg",
+        "/assets/images/denuncias/sujeira2.jpg",
+        "/assets/images/denuncias/sujeira3.jpg",
+        "/assets/images/denuncias/sujeira4.jpg"
+      ],
+      "dataPublicacao": "11/04/2025",
+      "dataResolucao": null,
+      "local": {
+        "logradouro": "Rua do Carmo",
+        "numero": 522,
+        "bairro": "Angola",
+        "cidade": "Betim",
+        "estado": "MG",
+        "pais": "Brasil",
+        "latitude": -19.965081,
+        "longitude": -44.189779
+      },
+      "afetados": 1,
+      "notaOrgao": "",
+      "prazo": "",
+      "custo": "",
+      "notaCusto": "",
+      "comentarios": [],
+      "progresso": [
+        {
+          "etapa": "Denúncia aceita",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Equipe enviada ao local",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Planejamento e previsões",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Manutenção em andamento",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        },
+        {
+          "etapa": "Obra finalizada",
+          "concluida": false,
+          "tipo": "fixo",
+          "arquivo": {
+            "nome": "",
+            "url": ""
+          }
+        }
+      ]
+    }
+  ],
+  "usuariosMoradores": [
+    {
+      "nome_usuario": "Luisa Souza",
+      "nome_completo": "Luisa Souza Bernardes",
+      "email": "souzaluisa@gmail.com",
+      "cpf": 12345678900,
+      "senha": "xyz123!",
+      "id": "2WVdbTc4oaM",
+      "telefone": ""
+    },
+    {
+      "nome_usuario": "João Pedro",
+      "nome_completo": "João Pedro Silva",
+      "email": "pedrojoao@gmail.com",
+      "cpf": 12345678901,
+      "senha": "xyz456!",
+      "id": "aQAmlDN0tws"
+    },
+    {
+      "nome_usuario": "Maria Amélia",
+      "nome_completo": "Maria Amélia de Castro",
+      "email": "mariamelia@gmail.com",
+      "cpf": 12345678902,
+      "senha": "xyz789!",
+      "id": "baA6eNcavEI"
+    }
+  ],
+  "usuariosInstituicoes": [
+    {
+      "instituicao_id": 2,
+      "entidade_id": 2,
+      "nome_usuario": "Fernanda Rocha",
+      "nome_completo": "Fernanda Rocha Ladeira",
+      "email": "fernandaprefcontagem@gmail.com",
+      "cpf": 45687612300,
+      "senha": "def123!",
+      "id": "870GSYEP8_s"
+    },
+    {
+      "instituicao_id": 1,
+      "entidade_id": 3,
+      "nome_usuario": "Ricardo Alves",
+      "nome_completo": "Ricardo Alves Teixeira",
+      "email": "ricardomegasfalt@gmail.com",
+      "cpf": 98723456700,
+      "senha": "abc123!",
+      "id": "OcIynOJHQMg"
+    }
+  ],
+  "usuarioLogado": {
+    "cpf": 12345678900
+  },
+  "infoPerfilMoradores": [
+    {
+      "usuarioMorador_cpf": 12345678900,
+      "fotoPerfil": "data:image/png;base64,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",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_acompanhadas": [],
+      "denuncias_criadas": [
+        "1",
+        "4",
+        "7",
+        "10",
+        "13"
+      ],
+      "id": "1"
+    },
+    {
+      "usuarioMorador_cpf": 12345678901,
+      "fotoPerfil": "/assets/images/perfis/perfil_joaopedro.png",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_acompanhadas": [
+        "1"
+      ],
+      "denuncias_criadas": [
+        "2",
+        "5",
+        "8",
+        "11",
+        "14"
+      ],
+      "id": "2"
+    },
+    {
+      "usuarioMorador_cpf": 12345678902,
+      "fotoPerfil": "/assets/images/perfis/perfil_mariaamelia.png",
+      "estatisticas": {
+        "atendidas": 3,
+        "aberto": 2,
+        "atualizacoes": 2,
+        "pontos": 50
+      },
+      "denuncias_acompanhadas": [],
+      "denuncias_criadas": [
+        "3",
+        "6",
+        "9",
+        "12",
+        "15"
+      ],
+      "id": "3"
+    }
+  ],
+  "infoPerfilInstituicoes": [
+    {
+      "usuarioInstituicao_cpf": 45687612300,
+      "fotoPerfil": "/assets/images/perfis/perfil_fernandarocha.png",
+      "estatisticas": {
+        "atendidas": 0,
+        "aberto": 0,
+        "atualizacoes": 15
+      },
+      "obras_id": [],
+      "avaliacoes": [
+        {
+          "denunciaId": 3,
+          "avaliador": 12345678901,
+          "nota": 5,
+          "descricao": "Ótimo trabalho de toda equipe!",
+          "data": "05/06/2026"
+        },
+        {
+          "denunciaId": "1",
+          "avaliador": 12345678900,
+          "nota": 4,
+          "descricao": "Teste de avaliação para Fernanda",
+          "data": "23/06/2026"
+        }
+      ],
+      "id": "0F6jdZGEfRo"
+    },
+    {
+      "usuarioInstituicao_cpf": 98723456700,
+      "fotoPerfil": "/assets/images/perfis/perfil_ricardoalves.png",
+      "estatisticas": {
+        "atendidas": 0,
+        "aberto": 0,
+        "atualizacoes": 5
+      },
+      "obras_id": [],
+      "avaliacoes": [
+        {
+          "denunciaId": 1,
+          "avaliador": 12345678900,
+          "nota": 4,
+          "descricao": "Muito bom o serviço, mas um pouco demorado",
+          "data": "05/06/2026"
+        },
+        {
+          "denunciaId": 1,
+          "avaliador": 12345678900,
+          "nota": 2,
+          "descricao": "Avaliação nota 2, serviço a desejar!",
+          "data": "05/06/2026"
+        }
+      ],
+      "id": "peIhxndt2Ik"
+    }
+  ],
+  "mensagensChat": [
+    {
+      "denunciaId": 3,
+      "usuario": 12345678901,
+      "mensagem": "Bom dia!! Gostaria de saber quando vamos dar início a obra.",
+      "data": "05/06/2026",
+      "hora": "09:12",
+      "editada": false,
+      "id": "2BZuafDG0KQ"
+    }
+  ],
+  "instituicoes": [
+    {
+      "id": "1",
+      "nome": "Megasfalt"
+    },
+    {
+      "id": "2",
+      "nome": "Prefeitura de Contagem"
+    },
+    {
+      "id": "3",
+      "nome": "Prefeitura de Betim"
+    }
+  ],
+  "status": [
+    {
+      "id": "1",
+      "status": "Concluída"
+    },
+    {
+      "id": "2",
+      "status": "Em andamento"
+    },
+    {
+      "id": "3",
+      "status": "Em aberto"
+    },
+    {
+      "id": "4",
+      "status": "Obra finalizada"
+    }
+  ],
+  "categorias": [
+    {
+      "id": "1",
+      "nome": "Buraco"
+    },
+    {
+      "id": "2",
+      "nome": "Problema de esgoto"
+    },
+    {
+      "id": "3",
+      "nome": "Deslizamento"
+    },
+    {
+      "id": "4",
+      "nome": "Falta de limpeza"
+    },
+    {
+      "id": "5",
+      "nome": "Falta de iluminação"
+    }
+  ],
+  "urgencias": [
+    {
+      "id": "1",
+      "tipo": "Baixa"
+    },
+    {
+      "id": "2",
+      "tipo": "Média"
+    },
+    {
+      "id": "3",
+      "tipo": "Alta"
+    }
+  ],
+  "entidades": [
+    {
+      "id": "1",
+      "tipo": "Todos"
+    },
+    {
+      "id": "2",
+      "tipo": "Prefeitura"
+    },
+    {
+      "id": "3",
+      "tipo": "Empresa privada"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
 }

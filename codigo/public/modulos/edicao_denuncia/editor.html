@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Editar Informações</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="../../assets/css/editor.css">
+    <link rel="stylesheet" href="../../assets/css/base.css">
+</head>
+<body>
+    <h1 class="mb-4">Editar Informações</h1>
+    <main>
+        <div class="row g-4">
+
+            <div class="col-12 col-lg-8">
+                <div class="card h-100">
+                    <h2 class="card-titulo">1. Nota</h2>
+                    <div class="card-body">
+                        <textarea id="nota" placeholder="Escreva uma nota para acrescentar à descrição..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="card">
+                    <h2 class="card-titulo">3. Custo estimado</h2>
+                    <div class="card-body">
+                        <label for="valor">Valor:</label>
+                        <input type="text" id="valor" placeholder="R$ 0,00">
+
+                        <label for="descricao-custo">Descrição:</label>
+                        <textarea id="descricao-custo" placeholder="Insira uma descrição..."></textarea>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-8">
+                <div class="card h-100">
+                    <h2 class="card-titulo">2. Checkpoints</h2>
+                    <div class="card-body d-flex align-items-center justify-content-between">
+                        <ul class="lista-checkpoints">
+                            <li>
+                                <input type="checkbox" id="checkpoint-1">
+                                <label for="checkpoint-1">Denúncia aceita</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="checkpoint-2">
+                                <label for="checkpoint-2">Equipe enviada ao local</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="checkpoint-3">
+                                <label for="checkpoint-3">Planejamento e previsões</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="checkpoint-4">
+                                <label for="checkpoint-4">Manutenção em andamento</label>
+                            </li>
+                            <li>
+                                <input type="checkbox" id="checkpoint-5">
+                                <label for="checkpoint-5">Obra finalizada</label>
+                            </li>
+                        </ul>
+                        <button type="button" class="btn-checkpoint">Adicionar Checkpoint +</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="col-12 col-lg-4">
+                <div class="card">
+                    <h2 class="card-titulo">4. Prazo estimado</h2>
+                    <div class="card-body">
+                        <label for="prazo">Data:</label>
+                        <input type="text" id="prazo" placeholder="Selecione uma data...">
+                    </div>
+                </div>
+
+                <div class="d-flex justify-content-center mt-3">
+                    <button type="button" class="btn-salvar">Salvar</button>
+                </div>
+            </div>
+        </div>
+    </main>
+    <div class="modal" id="modal-checkpoint">
+        <div class="modal-caixa">
+            <h2>Novo Checkpoint</h2>
+            <div class="mb-3">
+                <label for="checkpoint-nome">Nome: </label>
+                <input type="text" id="checkpoint-nome" placeholder="Nome do checkpoint...">
+            </div>
+            <div class="mb-3">
+                <label for="checkpoint-posicao">Inserir após:</label>
+                <select id="checkpoint-posicao"></select>
+            </div>
+            <div class="d-flex justify-content-end gap-2">
+                <button type="button" class="btn-cancelar" id="btn-cancelar">Cancelar</button>
+                <button type="button" class="btn-checkpoint" id="btn-confirmar-checkpoint">Salvar</button>
+            </div>
+        </div>
+    </div>
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/flatpickr/dist/flatpickr.min.css">
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/pt.js"></script>
+    <script src="/assets/js/editor.js"></script>
+    
+</body>
+</html>
