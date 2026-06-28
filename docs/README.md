@@ -126,22 +126,22 @@ DÚVIDAS:
  * Como integrar a plataforma com sistemas já utilizados por órgãos responsáveis?
  * Como garantir visibilidade as dores dos nossos usuários?
 
-![Mapa de stakeholders](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/bd552b9a7ad891947df4608448d819032b8216f6/docs/images/G9%20-%20Infraestrutura%20Urbana%202.jpg)
+![Mapa de stakeholders](./images/G9%20-%20Infraestrutura%20Urbana%202.jpg)
 
 
 ## Etapa de Definição
 
 ### Personas
 
-![Persona Luiza](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20LUIZA.jpg)
+![Persona Luiza](./images/PERSONA%20LUIZA.jpg)
 
-![Persona João](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20JO%C3%83O.jpg)
+![Persona João](./images/PERSONA%20JO%C3%83O.jpg)
 
-![Persona Dona Maria](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20DONA%20MARIA.jpg)
+![Persona Dona Maria](./images/PERSONA%20DONA%20MARIA.jpg)
 
-![Persona Ricardo](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20RICARDO.jpg)
+![Persona Ricardo](./images/PERSONA%20RICARDO.jpg)
 
-![Persona Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PERSONA%20FERNANDA.jpg)
+![Persona Fernanda](./images/PERSONA%20FERNANDA.jpg)
 
 # Product Design
 
@@ -166,19 +166,19 @@ Com base na análise das personas foram identificadas as seguintes histórias de
 ## Proposta de Valor
 
 ##### Proposta de Valor de Luiza:
-![Proposta de valor de Luiza](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20LUIZA.jpg)
+![Proposta de valor de Luiza](./images/PROPOSTA%20DE%20VALOR%20-%20LUIZA.jpg)
 
 ##### Proposta de Valor de João Pedro:
-![Proposta de valor de João](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20JO%C3%83O.jpg)
+![Proposta de valor de João](./images/PROPOSTA%20DE%20VALOR%20-%20JO%C3%83O.jpg)
 
 ##### Proposta de Valor de Dona Maria:
-![Proposta de valor de Dona Maria](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20DONA%20MARIA.jpg)
+![Proposta de valor de Dona Maria](./images/PROPOSTA%20DE%20VALOR%20-%20DONA%20MARIA.jpg)
 
 ##### Proposta de Valor de Ricardo:
-![Proposta de valor de Ricardo](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
+![Proposta de valor de Ricardo](./images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
 ##### Proposta de Valor de Fernanda:
-![Proposta de valor de Fernanda](https://github.com/ICEI-PUC-Minas-PMGES-TI/pmg-es-2026-1-ti1-0438100-nexo-2/blob/af72e145435cabc1925ac2f65b003208709ba391/docs/images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
+![Proposta de valor de Fernanda](./images/PROPOSTA%20DE%20VALOR%20-%20RICARDO.jpg)
 
 
 ## Requisitos
@@ -469,9 +469,9 @@ Esta seção apresenta todos os detalhes da solução criada no projeto.
 
 ## Vídeo do Projeto
 
-O vídeo a seguir traz uma apresentação do problema que a equipe está tratando e a proposta de solução. ⚠️ EXEMPLO ⚠️
+O vídeo a seguir traz uma apresentação do problema que a equipe está tratando e a proposta de solução. 
 
-[![Vídeo do projeto](images/video.png)](./images/Video_Solucao_Zella.mp4)
+[![Vídeo do projeto](images/video.png)](https://www.youtube.com/watch?v=u1Bg9cVVMvM&feature=youtu.be)
 
 # Funcionalidades
 
