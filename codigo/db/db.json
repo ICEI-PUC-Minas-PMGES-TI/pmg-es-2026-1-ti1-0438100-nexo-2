@@ -3,12 +3,12 @@
     {
       "id": "1",
       "titulo": "Cratera próxima a faixa de pedestres - Centro",
-      "status_id": 3,
+      "status_id": 2,
       "categoria_id": 1,
       "urgencia_id": 1,
       "entidade_id": 1,
       "denunciante": 12345678900,
-      "usuarioInstituicao_cpf": "",
+      "usuarioInstituicao_cpf": 45687612300,
       "descricaoDenuncia": "O pavimento apresenta danos extensos, obrigando veículos a invadirem a pista contrária para desviar. Após as chuvas o buraco aumentou e já provocou danos em pneus. A situação foi observada nas proximidades do nº 4256 e tem afetado moradores e comerciantes da região.",
       "imagens": [
         "/assets/images/denuncias/buraco1.jpg",
@@ -42,7 +42,7 @@
         {
           "etapa": "Denúncia aceita",
           "tipo": "fixo",
-          "concluida": false,
+          "concluida": true,
           "arquivo": {
             "nome": "",
             "url": ""
@@ -1307,7 +1307,8 @@
       "email": "souzaluisa@gmail.com",
       "cpf": 12345678900,
       "senha": "xyz123!",
-      "id": "2WVdbTc4oaM"
+      "id": "2WVdbTc4oaM",
+      "telefone": ""
     },
     {
       "nome_usuario": "João Pedro",
@@ -1349,12 +1350,12 @@
     }
   ],
   "usuarioLogado": {
-    "cpf": 12345678900
+    "cpf": 12345678901
   },
   "infoPerfilMoradores": [
     {
       "usuarioMorador_cpf": 12345678900,
-      "fotoPerfil": "/assets/images/perfis/perfil_luisasouza.png",
+      "fotoPerfil": "data:image/png;base64,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",
       "estatisticas": {
         "atendidas": 3,
         "aberto": 2,
